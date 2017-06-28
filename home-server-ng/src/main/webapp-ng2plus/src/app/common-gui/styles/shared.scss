@@ -1,0 +1,38 @@
+@import 'variables.scss';
+.screencenter {
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    position: absolute;
+}
+
+// masque un composant sur un small device
+@media(orientation:portrait) {
+    .sd-hidden {
+        display: none!important;
+    }
+}
+
+// masque un composant sur un device standard
+@media(orientation:landscape) {
+    .hd-hidden {
+        display: none!important;
+    }
+}
+
+// // pour afficher du contenu texte désactivé
+// .disabled-data {
+//     font-style: italic;
+//     color: grey;
+// }
+.masking-background {
+    background-color: #BBBBBB;
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    z-index: $popupZindex;
+    opacity: 0.5;
+}

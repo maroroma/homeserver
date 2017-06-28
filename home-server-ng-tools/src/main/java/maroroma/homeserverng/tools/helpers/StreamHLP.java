@@ -1,0 +1,32 @@
+package maroroma.homeserverng.tools.helpers;
+
+import java.io.Closeable;
+import java.io.IOException;
+
+import lombok.extern.log4j.Log4j2;
+
+/**
+ * Classe utilitaire pour la gestion des streams.
+ * @author RLEVEXIE
+ *
+ */
+@Log4j2
+public abstract class StreamHLP {
+
+	/**
+	 * Permet de fermer une implémentation de {@link Closeable}.
+	 * <br /> cette version trappe les exceptions liées à la fermeture du {@link Closeable}.
+	 * <br /> a n'utiliser que lorsqu'une erreur ne doit pas être prise en compte.
+	 * @param toClose -
+	 */
+	public static void safeClose(final Closeable toClose) {
+		if (toClose != null) {
+			try {
+				toClose.close();
+			} catch (IOException e) {
+				log.warn("Erreur rencontrée lors de la fermeture du closeable");
+			}
+		}
+	}
+	
+}

@@ -1,0 +1,40 @@
+<div class="card card-block filters">
+    <h4 class="card-title">Filtres</h4>
+    <ul>
+        <li *ngFor="let fileType of availableFileTypes.displayList">
+            <button class="btn btn-primary btn-sm" [homeserverToggleButton]="fileType" (toggle)="fileTypeFilterToggle($event)">
+            <span class="{{fileType.item.item1 | fileGlyphiconResolver}}"></span>
+            <span>{{fileType.item.item1}}</span>
+            </button>
+        </li>
+    </ul>
+</div>
+
+<ul class="list-group completed-files edit-zone-target">
+    <li class="list-group-item justify-content-between completed-file" [ngClass]="{'completed-file-selected': completedFile.selected}" *ngFor="let completedFile of completedFiles?.displayList" (click)="completedFiles.toggleItemSelection(completedFile)">
+        <div class="d-flex">
+            <div class="align-self-center completed-file-infos">
+                <div>
+                    <span class="{{completedFile.item | fileGlyphiconResolver}}" [ngClass]="{'new': completedFile.item.new}"></span>
+                </div>
+            </div>
+            <div class="align-self-center completed-file-name">
+                {{completedFile.item.name}}
+            </div>
+        </div>
+    </li>
+</ul>
+
+<div class="edit-zone">
+    <button class="btn btn-danger btn-lg secondary-action circle" [disabled]="!completedFiles?.hasItemSelected" [ngClass]="{'animated bounce': completedFiles?.hasItemSelected}" (click)="deleteSelectedFiles()"><span class="glyphicon glyphicon-trash"></span></button>
+    <button class="btn btn-primary btn-lg secondary-action circle" (click)="updateList()"><span class="glyphicon glyphicon-refresh"></span></button>
+    <button class="btn btn-primary btn-lg secondary-action circle" (click)="completedFiles.selectAllDisplayedItems()"><span class="glyphicon glyphicon-check"></span></button>
+    <!--<button class="btn btn-primary btn-lg secondary-action circle" [disabled]="!completedFiles?.hasItemSelected" [ngClass]="{'animated bounce': completedFiles?.hasItemSelected}" (click)="completedFiles.unselectAll()"><span class="">X</span></button>-->
+    <button class="btn btn-primary btn-lg secondary-action circle" [disabled]="!completedFiles?.hasItemSelected" [ngClass]="{'animated bounce': completedFiles?.hasItemSelected}" (click)="completedFiles.unselectAll()"><span class="glyphicon glyphicon-unchecked"></span></button>
+    <button class="btn btn-primary btn-lg main-action circle" (click)="goToTargetSelection()" [disabled]="!completedFiles?.hasItemSelected" [ngClass]="{'animated flip': completedFiles?.hasItemSelected}"><span class="glyphicon glyphicon-share-alt"></span></button>
+</div>
+
+<homeserver-popup #popupConfirmation title="Suppression de fichiers à trier" (ok)="confirmDeletion()">
+    <p class="card-text" *ngIf="nbFileToDelete==1">Êtes-vous sur de vouloir supprimer ce fichier ?</p>
+    <p class="card-text" *ngIf="nbFileToDelete>1">Êtes-vous sur de vouloir supprimer ces {{nbFileToDelete}} fichiers ?</p>
+</homeserver-popup>

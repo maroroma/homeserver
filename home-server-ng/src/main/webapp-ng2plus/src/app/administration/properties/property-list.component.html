@@ -1,0 +1,10 @@
+<homeserver-simple-datagrid *ngIf="!popup.isVisible" [fieldConfigs]="headers" [dataSource]="properties" (savedItem)="saveProperty($event)" (savedItems)="saveProperties($event)" (zoomOnItem)="editProperty($event)">
+</homeserver-simple-datagrid>
+
+<homeserver-popup #popup title="Editer une propriété" (ok)="saveEditedProperty()" (ko)="cancelEdit()">
+    <p class="card-text">{{propertyToEdit?.item.description}}</p>
+    <div class="md-form">
+        <input [(ngModel)]="propertyToEdit?.item.value" type="text" id="form6" class="form-control">
+        <label class="active" for="form6">{{propertyToEdit?.item.id}}</label>
+    </div>
+</homeserver-popup>

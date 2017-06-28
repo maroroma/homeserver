@@ -1,0 +1,56 @@
+<homeserver-edit-collapsable-panel [title]="serverItem.item.nom" [item]="serverItem" [displaySaveButton]="true" [displayDeleteButton]="true" (save)="innerSave($event)" (delete)="innerDelete($event)">
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Nom</label>
+        <input type="email" class="form-control" [(ngModel)]="serverItem.item.nom" disabled>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Adresse IP</label>
+        <homeserver-cancelable-input-text [(text)]="serverItem.item.ip"></homeserver-cancelable-input-text>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Description</label>
+        <homeserver-cancelable-input-text [(text)]="serverItem.item.description"></homeserver-cancelable-input-text>
+    </div>
+    <div>
+        <div class="services-container">
+            <div class="services-container-label">
+                <h5 class="text-capitalize">Services</h5>
+            </div>
+            <div class="services-container-content">
+                <div *ngFor="let serviceItem of serverItem.item.urls" class="service-detail">
+                    <div class="form-inline">
+                        <div class="form-group service-detail-name">
+                            <label for="exampleInputEmail1">Nom</label>
+                            <homeserver-cancelable-input-text [(text)]="serviceItem.name"></homeserver-cancelable-input-text>
+                        </div>
+                        <div class="form-group service-detail-url">
+                            <label for="exampleInputEmail1">url</label>
+                            <homeserver-cancelable-input-text [(text)]="serviceItem.url"></homeserver-cancelable-input-text>
+                        </div>
+                        <div class="form-group service-detail-delete">
+                            <button class="btn btn-warning" (click)="removeService(serviceItem)"><span class="glyphicon glyphicon-trash"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-detail">
+                    <div class="">Ajouter un service</div>
+                    <div class="form-inline">
+                        <div class="form-group service-detail-name">
+                            <label for="exampleInputEmail1">Nom</label>
+                            <input type="text" [(ngModel)]="newService.name" />
+                        </div>
+                        <div class="form-group service-detail-url">
+                            <label for="exampleInputEmail1">url</label>
+                            <input type="text" [(ngModel)]="newService.url" />
+                        </div>
+                        <div class="form-group service-detail-delete">
+                            <button class="btn btn-primary" (click)="addService()"><span class="glyphicon glyphicon-plus"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</homeserver-edit-collapsable-panel>

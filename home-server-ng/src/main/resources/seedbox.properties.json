@@ -1,0 +1,36 @@
+[ {
+  "id" : "homeserver.seedbox.target.directory.movies",
+  "value" : "D:/temp/TEST/Videos/Films",
+  "description" : "Emplacement cible de base pour les fichiers de type films",
+  "readOnly" : false
+}, {
+  "id" : "homeserver.seedbox.transmission.geturi",
+  "value" : "/rpc",
+  "description" : "path pour la récupération des torrents en cours sur l'api transmission",
+  "readOnly" : false
+}, {
+  "id" : "homeserver.seedbox.transmission.removeuri",
+  "value" : "torrent-get-response1.json/",
+  "description" : "path pour la suppression des torrents en cours sur l'api transmission",
+  "readOnly" : false
+}, {
+  "id" : "homeserver.seedbox.transmission.url",
+  "value" : "http://melchior:9091/transmission",
+  "description" : "Url principale de l'api transmission",
+  "readOnly" : false
+}, {
+  "id" : "homeserver.seedbox.client.stream.fixedDelay",
+  "value" : "1000",
+  "description" : "Fréquence d'appel du client torrent",
+  "readOnly" : false
+}, {
+  "id" : "homeserver.seedbox.todo.directory",
+  "value" : "D:/temp/TEST/COMPLETED",
+  "description" : "Emplacement des fichiers à trier",
+  "readOnly" : false
+}, {
+  "id" : "homeserver.seedbox.target.directory.tvshows",
+  "value" : "D:/temp/TEST/Videos/Series",
+  "description" : "Emplacement cible de base pour les fichiers de type series",
+  "readOnly" : false
+} ]

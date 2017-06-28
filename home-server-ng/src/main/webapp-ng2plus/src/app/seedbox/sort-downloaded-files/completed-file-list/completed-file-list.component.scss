@@ -1,0 +1,31 @@
+@import '../../../common-gui/styles/variables.scss';
+.filters {
+    padding-top: 0.2vw;
+    padding-bottom: 0;
+    ul {
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+.completed-file {
+    &-selected {
+        background-color: $default-selected-background;
+        &:hover {
+            background-color: $default-selected-background;
+        }
+    }
+    &:hover {
+        background-color: $default-hover-background;
+    }
+    &-infos {
+        text-align: center;
+        .new {
+            color: $classic-green;
+        }
+    }
+    &-name {
+        padding-left: 3vw;
+        word-break: break-all;
+    }
+}

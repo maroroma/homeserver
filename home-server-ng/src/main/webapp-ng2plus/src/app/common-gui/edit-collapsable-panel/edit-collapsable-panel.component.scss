@@ -1,0 +1,18 @@
+.detail {
+    padding: 1vw;
+    border: 1px solid rgba(0, 0, 0, .125);
+    margin-bottom: -1px;
+    &-footer {
+        .btn {
+            padding: 0;
+            @media(orientation: landscape) {
+                width: 2vw;
+                height: 2vw;
+            }
+            @media(orientation: portrait) {
+                width: 14vw;
+                height: 14vw;
+            }
+        }
+    }
+}

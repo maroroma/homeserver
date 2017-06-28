@@ -1,0 +1,2 @@
+<div class="blocking" *ngIf="notifyer.blocking"></div>
+<div class="notifyer-content" [ngClass]="{'notifyer-content-success': notifyer.forSuccess, 'notifyer-content-info': notifyer.forInfo, 'notifyer-content-error': notifyer.forError}" [@flyInOut]="notifyer.currentState">{{notifyer.message}}</div>

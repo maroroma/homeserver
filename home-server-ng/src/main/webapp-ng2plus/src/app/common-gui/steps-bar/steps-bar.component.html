@@ -1,0 +1,8 @@
+<ul class="steps-bar">
+    <li *ngFor="let stepItem of steps" class="step" [ngClass]="{'step-completed': stepItem.isCompleted, 'step-current':stepItem.isCurrent, 'step-todo':stepItem.isTodo}">
+        <a class="step-content">
+            <!--<span class="hd-hidden step-number circle glyphicon glyphicon-backward" *ngIf="stepItem.index>0"></span>-->
+            <span class="circle step-number">{{stepItem.index + 1}}</span>{{stepItem.label}}
+        </a>
+    </li>
+</ul>

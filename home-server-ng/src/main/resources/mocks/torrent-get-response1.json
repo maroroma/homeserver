@@ -1,0 +1,633 @@
+{
+	"arguments" : {
+		"torrents" : [{
+				"addedDate" : 1479760552,
+				"error" : 0,
+				"errorString" : "",
+				"eta" : 109641,
+				"id" : 11,
+				"isFinished" : false,
+				"isStalled" : false,
+				"leftUntilDone" : 548208640,
+				"metadataPercentComplete" : 1,
+				"name" : "test.The.Walking.Dead.S07E05.VOSTFR.HDTV.XviD-ZT.www.torrent9.biz.avi",
+				"peersConnected" : 9,
+				"peersGettingFromUs" : 3,
+				"peersSendingToUs" : 4,
+				"percentDone" : 0.0336,
+				"queuePosition" : 0,
+				"rateDownload" : 5000,
+				"rateUpload" : 3000,
+				"recheckProgress" : 0,
+				"seedRatioLimit" : 2,
+				"seedRatioMode" : 0,
+				"sizeWhenDone" : 567274430,
+				"status" : 4,
+				"totalSize" : 567274430,
+				"trackers" : [{
+						"announce" : "udp://tracker.opentrackr.org:1337/announce",
+						"id" : 0,
+						"scrape" : "udp://tracker.opentrackr.org:1337/scrape",
+						"tier" : 0
+					}, {
+						"announce" : "udp://tracker.leechers-paradise.org:6969",
+						"id" : 1,
+						"scrape" : "",
+						"tier" : 1
+					}, {
+						"announce" : "udp://tracker.coppersurfer.tk:6969",
+						"id" : 2,
+						"scrape" : "",
+						"tier" : 2
+					}, {
+						"announce" : "udp://coppersurfer.tk:6969/announce",
+						"id" : 3,
+						"scrape" : "udp://coppersurfer.tk:6969/scrape",
+						"tier" : 3
+					}, {
+						"announce" : "udp://tracker4.piratux.com:6969/announce",
+						"id" : 4,
+						"scrape" : "udp://tracker4.piratux.com:6969/scrape",
+						"tier" : 4
+					}, {
+						"announce" : "udp://eddie4.nl:6969/announce",
+						"id" : 5,
+						"scrape" : "udp://eddie4.nl:6969/scrape",
+						"tier" : 5
+					}, {
+						"announce" : "udp://tracker.coppersurfer.tk:80",
+						"id" : 6,
+						"scrape" : "",
+						"tier" : 6
+					}, {
+						"announce" : "udp://tracker.openbittorrent.com:80/announce",
+						"id" : 7,
+						"scrape" : "udp://tracker.openbittorrent.com:80/scrape",
+						"tier" : 7
+					}, {
+						"announce" : "udp://open.demonii.com:1337/announce",
+						"id" : 8,
+						"scrape" : "udp://open.demonii.com:1337/scrape",
+						"tier" : 8
+					}, {
+						"announce" : "udp://tracker.pomf.se",
+						"id" : 9,
+						"scrape" : "",
+						"tier" : 9
+					}, {
+						"announce" : "udp://tracker.blackunicorn.xyz:6969",
+						"id" : 10,
+						"scrape" : "",
+						"tier" : 10
+					}, {
+						"announce" : "http://retracker.uln-ix.ru/announce",
+						"id" : 11,
+						"scrape" : "http://retracker.uln-ix.ru/scrape",
+						"tier" : 11
+					}, {
+						"announce" : "http://tracker1.infohash.org/announce",
+						"id" : 12,
+						"scrape" : "http://tracker1.infohash.org/scrape",
+						"tier" : 12
+					}, {
+						"announce" : "udp://p4p.arenabg.ch:1337",
+						"id" : 13,
+						"scrape" : "",
+						"tier" : 13
+					}, {
+						"announce" : "udp://p4p.arenabg.com:1337",
+						"id" : 14,
+						"scrape" : "",
+						"tier" : 14
+					}, {
+						"announce" : "udp://glotorrents.pw:6969/announce",
+						"id" : 15,
+						"scrape" : "udp://glotorrents.pw:6969/scrape",
+						"tier" : 15
+					}, {
+						"announce" : "http://tracker.nwps.ws:6969/announce",
+						"id" : 16,
+						"scrape" : "http://tracker.nwps.ws:6969/scrape",
+						"tier" : 16
+					}, {
+						"announce" : "http://tracker.dler.org:6969/announce",
+						"id" : 17,
+						"scrape" : "http://tracker.dler.org:6969/scrape",
+						"tier" : 17
+					}, {
+						"announce" : "http://tracker.flashtorrents.org:6969/announce",
+						"id" : 18,
+						"scrape" : "http://tracker.flashtorrents.org:6969/scrape",
+						"tier" : 18
+					}, {
+						"announce" : "http://mgtracker.org:2710/announce",
+						"id" : 19,
+						"scrape" : "http://mgtracker.org:2710/scrape",
+						"tier" : 19
+					}, {
+						"announce" : "http://retracker.adminko.org/announce",
+						"id" : 20,
+						"scrape" : "http://retracker.adminko.org/scrape",
+						"tier" : 20
+					}, {
+						"announce" : "http://torrent.fedoraproject.org:6969/announce",
+						"id" : 21,
+						"scrape" : "http://torrent.fedoraproject.org:6969/scrape",
+						"tier" : 21
+					}, {
+						"announce" : "http://tracker.best-torrents.net:6969/announce",
+						"id" : 22,
+						"scrape" : "http://tracker.best-torrents.net:6969/scrape",
+						"tier" : 22
+					}, {
+						"announce" : "http://tracker.tfile.me/announce",
+						"id" : 23,
+						"scrape" : "http://tracker.tfile.me/scrape",
+						"tier" : 23
+					}, {
+						"announce" : "udp://exodus.desync.com:6969",
+						"id" : 24,
+						"scrape" : "",
+						"tier" : 24
+					}, {
+						"announce" : "udp://torrent.gresille.org:80/announce",
+						"id" : 25,
+						"scrape" : "udp://torrent.gresille.org:80/scrape",
+						"tier" : 25
+					}, {
+						"announce" : "http://tracker.aletorrenty.pl:2710/announce",
+						"id" : 26,
+						"scrape" : "http://tracker.aletorrenty.pl:2710/scrape",
+						"tier" : 26
+					}, {
+						"announce" : "http://tracker.pubt.net:2710/announce",
+						"id" : 27,
+						"scrape" : "http://tracker.pubt.net:2710/scrape",
+						"tier" : 27
+					}, {
+						"announce" : "http://exodus.desync.com/announce",
+						"id" : 28,
+						"scrape" : "http://exodus.desync.com/scrape",
+						"tier" : 28
+					}, {
+						"announce" : "udp://tracker.publichd.eu:80/announce",
+						"id" : 29,
+						"scrape" : "udp://tracker.publichd.eu:80/scrape",
+						"tier" : 29
+					}, {
+						"announce" : "http://inferno.demonoid.ph:3389/announce",
+						"id" : 30,
+						"scrape" : "http://inferno.demonoid.ph:3389/scrape",
+						"tier" : 30
+					}, {
+						"announce" : "udp://tracker.publicbt.com:80/announce",
+						"id" : 31,
+						"scrape" : "udp://tracker.publicbt.com:80/scrape",
+						"tier" : 31
+					}, {
+						"announce" : "http://tracker.ex.ua/announce",
+						"id" : 32,
+						"scrape" : "http://tracker.ex.ua/scrape",
+						"tier" : 32
+					}, {
+						"announce" : "udp://exodus.desync.com:6969",
+						"id" : 33,
+						"scrape" : "",
+						"tier" : 33
+					}, {
+						"announce" : "http://exodus.desync.com/announce",
+						"id" : 34,
+						"scrape" : "http://exodus.desync.com/scrape",
+						"tier" : 34
+					}, {
+						"announce" : "udp://tracker.istole.it:80/announce",
+						"id" : 35,
+						"scrape" : "udp://tracker.istole.it:80/scrape",
+						"tier" : 35
+					}, {
+						"announce" : "udp://tracker.1337x.org:80/announce",
+						"id" : 36,
+						"scrape" : "udp://tracker.1337x.org:80/scrape",
+						"tier" : 36
+					}, {
+						"announce" : "http://fr33dom.h33t.com:3310/announce",
+						"id" : 37,
+						"scrape" : "http://fr33dom.h33t.com:3310/scrape",
+						"tier" : 37
+					}, {
+						"announce" : "udp://tracker.1337x.org:80/announce",
+						"id" : 38,
+						"scrape" : "udp://tracker.1337x.org:80/scrape",
+						"tier" : 38
+					}, {
+						"announce" : "http://tracker.torrentbay.to:6969/announce",
+						"id" : 39,
+						"scrape" : "http://tracker.torrentbay.to:6969/scrape",
+						"tier" : 39
+					}, {
+						"announce" : "udp://tracker.publichd.eu:80/announce",
+						"id" : 40,
+						"scrape" : "udp://tracker.publichd.eu:80/scrape",
+						"tier" : 40
+					}, {
+						"announce" : "http://tracker.trackerfix.com/announce",
+						"id" : 41,
+						"scrape" : "http://tracker.trackerfix.com/scrape",
+						"tier" : 41
+					}, {
+						"announce" : "udp://tracker.ccc.de:80/announce",
+						"id" : 42,
+						"scrape" : "udp://tracker.ccc.de:80/scrape",
+						"tier" : 42
+					}, {
+						"announce" : "udp://pow7.com:80/announce",
+						"id" : 43,
+						"scrape" : "udp://pow7.com:80/scrape",
+						"tier" : 43
+					}, {
+						"announce" : "udp://tracker.token.ro:80/announce",
+						"id" : 44,
+						"scrape" : "udp://tracker.token.ro:80/scrape",
+						"tier" : 44
+					}, {
+						"announce" : "udp://ipv4.tracker.harry.lu:80/announce",
+						"id" : 45,
+						"scrape" : "udp://ipv4.tracker.harry.lu:80/scrape",
+						"tier" : 45
+					}, {
+						"announce" : "http://bt.rghost.net/announce",
+						"id" : 46,
+						"scrape" : "http://bt.rghost.net/scrape",
+						"tier" : 46
+					}, {
+						"announce" : "http://cpleft.com:2710/announce",
+						"id" : 47,
+						"scrape" : "http://cpleft.com:2710/scrape",
+						"tier" : 47
+					}, {
+						"announce" : "udp://9.rarbg.me:2710/announce",
+						"id" : 48,
+						"scrape" : "udp://9.rarbg.me:2710/scrape",
+						"tier" : 48
+					}, {
+						"announce" : "udp://9.rarbg.com:2710/announce",
+						"id" : 49,
+						"scrape" : "udp://9.rarbg.com:2710/scrape",
+						"tier" : 49
+					}, {
+						"announce" : "udp://9.rarbg.to:2710/announce",
+						"id" : 50,
+						"scrape" : "udp://9.rarbg.to:2710/scrape",
+						"tier" : 50
+					}, {
+						"announce" : "udp://10.rarbg.me:80/announce",
+						"id" : 51,
+						"scrape" : "udp://10.rarbg.me:80/scrape",
+						"tier" : 51
+					}, {
+						"announce" : "udp://12.rarbg.me:80/announce",
+						"id" : 52,
+						"scrape" : "udp://12.rarbg.me:80/scrape",
+						"tier" : 52
+					}, {
+						"announce" : "udp://tracker.zond.org:80/announce",
+						"id" : 53,
+						"scrape" : "udp://tracker.zond.org:80/scrape",
+						"tier" : 53
+					}, {
+						"announce" : "udp://tracker.ilibr.org:6969/announce",
+						"id" : 54,
+						"scrape" : "udp://tracker.ilibr.org:6969/scrape",
+						"tier" : 54
+					}, {
+						"announce" : "http://announce.torrentsmd.com:6969/announce",
+						"id" : 55,
+						"scrape" : "http://announce.torrentsmd.com:6969/scrape",
+						"tier" : 55
+					}, {
+						"announce" : "udp://fr33domtracker.h33t.com:3310/announce",
+						"id" : 56,
+						"scrape" : "udp://fr33domtracker.h33t.com:3310/scrape",
+						"tier" : 56
+					}
+				],
+				"uploadRatio" : 0.4057,
+				"uploadedEver" : 7874376
+			}, {
+				"addedDate" : 1479760552,
+				"error" : 0,
+				"errorString" : "",
+				"eta" : 26,
+				"id" : 12,
+				"isFinished" : true,
+				"isStalled" : false,
+				"leftUntilDone" : 13713408,
+				"metadataPercentComplete" : 1,
+				"name" : "Westworld.S01E08.VOSTFR.WEBRip.XviD-ZT.www.torrent9.biz.avi",
+				"peersConnected" : 53,
+				"peersGettingFromUs" : 11,
+				"peersSendingToUs" : 14,
+				"percentDone" : 0.9758,
+				"queuePosition" : 1,
+				"rateDownload" : 526000,
+				"rateUpload" : 86000,
+				"recheckProgress" : 0,
+				"seedRatioLimit" : 2,
+				"seedRatioMode" : 0,
+				"sizeWhenDone" : 568407846,
+				"status" : 4,
+				"totalSize" : 568407846,
+				"trackers" : [{
+						"announce" : "udp://tracker.opentrackr.org:1337/announce",
+						"id" : 0,
+						"scrape" : "udp://tracker.opentrackr.org:1337/scrape",
+						"tier" : 0
+					}, {
+						"announce" : "udp://tracker.leechers-paradise.org:6969",
+						"id" : 1,
+						"scrape" : "",
+						"tier" : 1
+					}, {
+						"announce" : "udp://tracker.coppersurfer.tk:6969",
+						"id" : 2,
+						"scrape" : "",
+						"tier" : 2
+					}, {
+						"announce" : "udp://coppersurfer.tk:6969/announce",
+						"id" : 3,
+						"scrape" : "udp://coppersurfer.tk:6969/scrape",
+						"tier" : 3
+					}, {
+						"announce" : "udp://tracker4.piratux.com:6969/announce",
+						"id" : 4,
+						"scrape" : "udp://tracker4.piratux.com:6969/scrape",
+						"tier" : 4
+					}, {
+						"announce" : "udp://eddie4.nl:6969/announce",
+						"id" : 5,
+						"scrape" : "udp://eddie4.nl:6969/scrape",
+						"tier" : 5
+					}, {
+						"announce" : "udp://tracker.coppersurfer.tk:80",
+						"id" : 6,
+						"scrape" : "",
+						"tier" : 6
+					}, {
+						"announce" : "udp://tracker.openbittorrent.com:80/announce",
+						"id" : 7,
+						"scrape" : "udp://tracker.openbittorrent.com:80/scrape",
+						"tier" : 7
+					}, {
+						"announce" : "udp://open.demonii.com:1337/announce",
+						"id" : 8,
+						"scrape" : "udp://open.demonii.com:1337/scrape",
+						"tier" : 8
+					}, {
+						"announce" : "udp://tracker.pomf.se",
+						"id" : 9,
+						"scrape" : "",
+						"tier" : 9
+					}, {
+						"announce" : "udp://tracker.blackunicorn.xyz:6969",
+						"id" : 10,
+						"scrape" : "",
+						"tier" : 10
+					}, {
+						"announce" : "http://retracker.uln-ix.ru/announce",
+						"id" : 11,
+						"scrape" : "http://retracker.uln-ix.ru/scrape",
+						"tier" : 11
+					}, {
+						"announce" : "http://tracker1.infohash.org/announce",
+						"id" : 12,
+						"scrape" : "http://tracker1.infohash.org/scrape",
+						"tier" : 12
+					}, {
+						"announce" : "udp://p4p.arenabg.ch:1337",
+						"id" : 13,
+						"scrape" : "",
+						"tier" : 13
+					}, {
+						"announce" : "udp://p4p.arenabg.com:1337",
+						"id" : 14,
+						"scrape" : "",
+						"tier" : 14
+					}, {
+						"announce" : "udp://glotorrents.pw:6969/announce",
+						"id" : 15,
+						"scrape" : "udp://glotorrents.pw:6969/scrape",
+						"tier" : 15
+					}, {
+						"announce" : "http://tracker.nwps.ws:6969/announce",
+						"id" : 16,
+						"scrape" : "http://tracker.nwps.ws:6969/scrape",
+						"tier" : 16
+					}, {
+						"announce" : "http://tracker.dler.org:6969/announce",
+						"id" : 17,
+						"scrape" : "http://tracker.dler.org:6969/scrape",
+						"tier" : 17
+					}, {
+						"announce" : "http://tracker.flashtorrents.org:6969/announce",
+						"id" : 18,
+						"scrape" : "http://tracker.flashtorrents.org:6969/scrape",
+						"tier" : 18
+					}, {
+						"announce" : "http://mgtracker.org:2710/announce",
+						"id" : 19,
+						"scrape" : "http://mgtracker.org:2710/scrape",
+						"tier" : 19
+					}, {
+						"announce" : "http://retracker.adminko.org/announce",
+						"id" : 20,
+						"scrape" : "http://retracker.adminko.org/scrape",
+						"tier" : 20
+					}, {
+						"announce" : "http://torrent.fedoraproject.org:6969/announce",
+						"id" : 21,
+						"scrape" : "http://torrent.fedoraproject.org:6969/scrape",
+						"tier" : 21
+					}, {
+						"announce" : "http://tracker.best-torrents.net:6969/announce",
+						"id" : 22,
+						"scrape" : "http://tracker.best-torrents.net:6969/scrape",
+						"tier" : 22
+					}, {
+						"announce" : "http://tracker.tfile.me/announce",
+						"id" : 23,
+						"scrape" : "http://tracker.tfile.me/scrape",
+						"tier" : 23
+					}, {
+						"announce" : "udp://exodus.desync.com:6969",
+						"id" : 24,
+						"scrape" : "",
+						"tier" : 24
+					}, {
+						"announce" : "udp://torrent.gresille.org:80/announce",
+						"id" : 25,
+						"scrape" : "udp://torrent.gresille.org:80/scrape",
+						"tier" : 25
+					}, {
+						"announce" : "http://tracker.aletorrenty.pl:2710/announce",
+						"id" : 26,
+						"scrape" : "http://tracker.aletorrenty.pl:2710/scrape",
+						"tier" : 26
+					}, {
+						"announce" : "http://tracker.pubt.net:2710/announce",
+						"id" : 27,
+						"scrape" : "http://tracker.pubt.net:2710/scrape",
+						"tier" : 27
+					}, {
+						"announce" : "http://exodus.desync.com/announce",
+						"id" : 28,
+						"scrape" : "http://exodus.desync.com/scrape",
+						"tier" : 28
+					}, {
+						"announce" : "udp://tracker.publichd.eu:80/announce",
+						"id" : 29,
+						"scrape" : "udp://tracker.publichd.eu:80/scrape",
+						"tier" : 29
+					}, {
+						"announce" : "http://inferno.demonoid.ph:3389/announce",
+						"id" : 30,
+						"scrape" : "http://inferno.demonoid.ph:3389/scrape",
+						"tier" : 30
+					}, {
+						"announce" : "udp://tracker.publicbt.com:80/announce",
+						"id" : 31,
+						"scrape" : "udp://tracker.publicbt.com:80/scrape",
+						"tier" : 31
+					}, {
+						"announce" : "http://tracker.ex.ua/announce",
+						"id" : 32,
+						"scrape" : "http://tracker.ex.ua/scrape",
+						"tier" : 32
+					}, {
+						"announce" : "udp://exodus.desync.com:6969",
+						"id" : 33,
+						"scrape" : "",
+						"tier" : 33
+					}, {
+						"announce" : "http://exodus.desync.com/announce",
+						"id" : 34,
+						"scrape" : "http://exodus.desync.com/scrape",
+						"tier" : 34
+					}, {
+						"announce" : "udp://tracker.istole.it:80/announce",
+						"id" : 35,
+						"scrape" : "udp://tracker.istole.it:80/scrape",
+						"tier" : 35
+					}, {
+						"announce" : "udp://tracker.1337x.org:80/announce",
+						"id" : 36,
+						"scrape" : "udp://tracker.1337x.org:80/scrape",
+						"tier" : 36
+					}, {
+						"announce" : "http://fr33dom.h33t.com:3310/announce",
+						"id" : 37,
+						"scrape" : "http://fr33dom.h33t.com:3310/scrape",
+						"tier" : 37
+					}, {
+						"announce" : "udp://tracker.1337x.org:80/announce",
+						"id" : 38,
+						"scrape" : "udp://tracker.1337x.org:80/scrape",
+						"tier" : 38
+					}, {
+						"announce" : "http://tracker.torrentbay.to:6969/announce",
+						"id" : 39,
+						"scrape" : "http://tracker.torrentbay.to:6969/scrape",
+						"tier" : 39
+					}, {
+						"announce" : "udp://tracker.publichd.eu:80/announce",
+						"id" : 40,
+						"scrape" : "udp://tracker.publichd.eu:80/scrape",
+						"tier" : 40
+					}, {
+						"announce" : "http://tracker.trackerfix.com/announce",
+						"id" : 41,
+						"scrape" : "http://tracker.trackerfix.com/scrape",
+						"tier" : 41
+					}, {
+						"announce" : "udp://tracker.ccc.de:80/announce",
+						"id" : 42,
+						"scrape" : "udp://tracker.ccc.de:80/scrape",
+						"tier" : 42
+					}, {
+						"announce" : "udp://pow7.com:80/announce",
+						"id" : 43,
+						"scrape" : "udp://pow7.com:80/scrape",
+						"tier" : 43
+					}, {
+						"announce" : "udp://tracker.token.ro:80/announce",
+						"id" : 44,
+						"scrape" : "udp://tracker.token.ro:80/scrape",
+						"tier" : 44
+					}, {
+						"announce" : "udp://ipv4.tracker.harry.lu:80/announce",
+						"id" : 45,
+						"scrape" : "udp://ipv4.tracker.harry.lu:80/scrape",
+						"tier" : 45
+					}, {
+						"announce" : "http://bt.rghost.net/announce",
+						"id" : 46,
+						"scrape" : "http://bt.rghost.net/scrape",
+						"tier" : 46
+					}, {
+						"announce" : "http://cpleft.com:2710/announce",
+						"id" : 47,
+						"scrape" : "http://cpleft.com:2710/scrape",
+						"tier" : 47
+					}, {
+						"announce" : "udp://9.rarbg.me:2710/announce",
+						"id" : 48,
+						"scrape" : "udp://9.rarbg.me:2710/scrape",
+						"tier" : 48
+					}, {
+						"announce" : "udp://9.rarbg.com:2710/announce",
+						"id" : 49,
+						"scrape" : "udp://9.rarbg.com:2710/scrape",
+						"tier" : 49
+					}, {
+						"announce" : "udp://9.rarbg.to:2710/announce",
+						"id" : 50,
+						"scrape" : "udp://9.rarbg.to:2710/scrape",
+						"tier" : 50
+					}, {
+						"announce" : "udp://10.rarbg.me:80/announce",
+						"id" : 51,
+						"scrape" : "udp://10.rarbg.me:80/scrape",
+						"tier" : 51
+					}, {
+						"announce" : "udp://12.rarbg.me:80/announce",
+						"id" : 52,
+						"scrape" : "udp://12.rarbg.me:80/scrape",
+						"tier" : 52
+					}, {
+						"announce" : "udp://tracker.zond.org:80/announce",
+						"id" : 53,
+						"scrape" : "udp://tracker.zond.org:80/scrape",
+						"tier" : 53
+					}, {
+						"announce" : "udp://tracker.ilibr.org:6969/announce",
+						"id" : 54,
+						"scrape" : "udp://tracker.ilibr.org:6969/scrape",
+						"tier" : 54
+					}, {
+						"announce" : "http://announce.torrentsmd.com:6969/announce",
+						"id" : 55,
+						"scrape" : "http://announce.torrentsmd.com:6969/scrape",
+						"tier" : 55
+					}, {
+						"announce" : "udp://fr33domtracker.h33t.com:3310/announce",
+						"id" : 56,
+						"scrape" : "udp://fr33domtracker.h33t.com:3310/scrape",
+						"tier" : 56
+					}
+				],
+				"uploadRatio" : 0.0484,
+				"uploadedEver" : 26930038
+			}
+		]
+	},
+	"result" : "success"
+}

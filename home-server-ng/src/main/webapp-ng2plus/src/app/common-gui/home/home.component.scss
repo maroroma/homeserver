@@ -1,0 +1,9 @@
+@import '../styles/shared.scss';
+.home-server-logo {
+    background-image: url("/assets/img/home.png");
+    background-repeat: no-repeat;
+    width: 20vw;
+    height: 20vw;
+    background-size: 100% 100%;
+    @extend .screencenter;
+}

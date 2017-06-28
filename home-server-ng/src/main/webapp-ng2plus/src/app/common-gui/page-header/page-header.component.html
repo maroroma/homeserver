@@ -1,0 +1,25 @@
+<div class="sd-hidden sub-menu-hide-zone-hd"></div>
+<div *ngIf="module" class="sub-menu">
+    <div class="sub-menu-item-container">
+        <div (click)="displaySubMenu()" class="dropdown-toggle">
+            <span class="{{module.cssMenu}}"></span>
+            <span *ngIf="!selectedItem" class="text-capitalize">{{module.displayName}}</span>
+            <span *ngIf="selectedItem" class="text-capitalize">{{selectedItem.label}}</span>
+            <span class="caret"></span>
+        </div>
+        <ul class="dropdown-menu" [ngClass]="{'open':isSubMenuDisplayed}">
+            <li class="title-icon text-capitalize"><span class="{{module.cssMenu}}"></span>
+            </li>
+            <li class="title-content text-capitalize">{{module.displayName}}</li>
+            <!--<li class="active" (click)="hideSubMenu()"><a> Item </a></li>-->
+            <li *ngFor="let subItem of subMenuItems" (click)="selectItem(subItem)" [ngClass]="{'active':subItem.selected}" class="text-capitalize">
+                <a>{{subItem.label}}</a>
+            </li>
+        </ul>
+
+    </div>
+    <div class="sub-menu-search-field">
+        <input *ngIf="selectedItem && selectedItem.hasSearchField" type="text" placeholder="Rechercher dans {{selectedItem.label}}" [(ngModel)]="searchField" (keyup)="onKey()" />
+        <input *ngIf="genericSearch" type="text" placeholder="Rechercher" [(ngModel)]="searchField" (keyup)="onKey()" />
+    </div>
+</div>

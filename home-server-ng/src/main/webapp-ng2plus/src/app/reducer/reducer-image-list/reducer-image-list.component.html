@@ -1,0 +1,28 @@
+<div class="card edit-zone-target">
+    <h3 class="card-header default-color white-text">Images réduites</h3>
+    <div class="card-block image-container-list">
+        <div class="image-container-inline" *ngFor="let reducedImage of reducedImages.displayList" (click)="toggleImage(reducedImage)">
+            <div class="image-container">
+                <img src="api/reducer/reducedImage/{{reducedImage.item.name}}/" [ngClass]="{'fadein': reducedImage.selected, 'semi-fadeout':!reducedImage.selected}" />
+                <div class="image-container-action">
+                    <button class="btn btn-primary circle" *ngIf="reducedImage.selected">
+                        <span class="glyphicon glyphicon-check"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="edit-zone">
+    <button class="btn btn-danger btn-lg secondary-action circle" [disabled]="!reducedImages?.hasItemSelected" [ngClass]="{'animated bounce': reducedImages?.hasItemSelected}" (click)="deleteSelectedFiles()"><span class="glyphicon glyphicon-trash"></span></button>
+    <button class="btn btn-primary btn-lg secondary-action circle" [disabled]="reducedImages == null || reducedImages.displayList == null || reducedImages.displayList.length == 0" (click)="displayImageGallery()"><span class="glyphicon glyphicon-zoom-in"></span></button>
+    <button class="btn btn-primary btn-lg main-action circle" [disabled]="!reducedImages?.hasItemSelected" [ngClass]="{'animated flip': reducedImages?.hasItemSelected}" (click)="innerSendMail()"><span class="glyphicon glyphicon-envelope"></span></button>
+</div>
+
+<homeserver-popup #popupConfirmation title="Suppression de fichiers à trier" (ok)="confirmDeletion()">
+    <p class="card-text" *ngIf="nbFileToDelete==1">Êtes-vous sur de vouloir supprimer ce fichier ?</p>
+    <p class="card-text" *ngIf="nbFileToDelete>1">Êtes-vous sur de vouloir supprimer ces {{nbFileToDelete}} fichiers ?</p>
+</homeserver-popup>
+
+<homeserver-image-viewer #imageViewer></homeserver-image-viewer>

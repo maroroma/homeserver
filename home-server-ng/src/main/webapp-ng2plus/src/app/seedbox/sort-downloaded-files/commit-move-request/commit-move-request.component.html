@@ -1,0 +1,38 @@
+<div class="card">
+    <h3 class="card-header default-color white-text">Fichiers sélectionnés</h3>
+</div>
+
+<ul class="list-group completed-files ">
+    <li class="list-group-item justify-content-between completed-file" *ngFor="let fileToMove of moveRequest.selectedFiles">
+        <div class="d-flex xl">
+            <div class="align-self-center completed-file-infos">
+                <div>
+                    <span class="{{fileToMove.item | fileGlyphiconResolver}}"></span>
+                </div>
+            </div>
+            <div class="align-self-center completed-file-name xl">
+                <!--<input type="text" [(ngModel)]="fileToMove.item.name" />-->
+                <!--{{fileToMove.item.name}}-->
+                <homeserver-cancelable-input-text [(text)]="fileToMove.item.newName"></homeserver-cancelable-input-text>
+            </div>
+        </div>
+    </li>
+</ul>
+
+<div class="card edit-zone-target">
+    <h3 class="card-header default-color white-text">Cible</h3>
+    <div class="card-block break-text">
+        {{moveRequest.targetDirectory.fullName}}
+    </div>
+</div>
+
+<div class="edit-zone">
+    <button class="btn btn-primary btn-lg secondary-action circle" (click)="innerGotoSelectFiles()"><span class="glyphicon glyphicon-fast-backward"></span></button>
+    <button class="btn btn-primary btn-lg secondary-action circle" (click)="innerGotoSelectTarget()"><span class="glyphicon glyphicon-backward"></span></button>
+    <button class="btn btn-primary btn-lg main-action circle" (click)="commit()"><span class="glyphicon glyphicon-share-alt"></span></button>
+</div>
+
+<homeserver-popup #popupConfirmation title="Fichiers déplacés" (ok)="innerGotoSelectFiles()" [koButton]="false">
+    <h4 class="card-title">Les fichiers suivants ont bien été déplacés :</h4>
+    <p class="card-text" *ngFor="let item of result">{{item.sourceFile.newName}}</p>
+</homeserver-popup>

@@ -1,0 +1,36 @@
+<div>
+    <div class="collapsed d-flex justify-content-between detail" (click)="innerExpand()" *ngIf="!item.selected">
+        <div class="align-self-center">
+            <h2 class="text-capitalize">{{title}}</h2>
+        </div>
+        <div class="align-self-center">
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        </div>
+    </div>
+
+    <div class="expanded detail" *ngIf="item.selected">
+        <div class="d-flex justify-content-between">
+            <div class="align-self-center">
+                <h2 class="text-capitalize">{{title}}</h2>
+            </div>
+        </div>
+        <div>
+            <ng-content></ng-content>
+        </div>
+        <div class="detail-footer d-flex justify-content-between">
+            <div class="align-self-center">
+                <button class="btn btn-danger circle" (click)="innerDelete()" *ngIf="displayDeleteButton">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+                <button class="btn btn-primary circle" (click)="innerSave()" *ngIf="displaySaveButton">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                </button>
+            </div>
+            <div class="align-self-center">
+                <button class="btn btn-primary circle" (click)="innerCollapse()">
+                <span class="glyphicon glyphicon-chevron-up"></span>
+            </button>
+            </div>
+        </div>
+    </div>
+</div>

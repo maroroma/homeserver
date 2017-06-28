@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+	<formats>
+		<format>tar.gz</format>
+	</formats>
+
+	<id>home-server-${project.version}</id>
+	<includeBaseDirectory>false</includeBaseDirectory>
+
+
+	<files>
+		<!-- inclusion du fichier de properties -->
+		<file>
+			<source>${basedir}/src/main/packaging/application-build.properties</source>
+			<outputDirectory>/config/</outputDirectory>
+			<lineEnding>unix</lineEnding>
+			<destName>application.properties</destName>
+			<filtered>true</filtered>
+		</file>
+		<!-- inclusion fichier de properties pour les logs -->
+		<file>
+			<source>${basedir}/src/main/resources/log4j.xml</source>
+			<outputDirectory>/config/</outputDirectory>
+			<lineEnding>unix</lineEnding>
+		</file>
+
+		<!-- inclusion du jar principal -->
+		<file>
+			<source>${project.build.directory}/home-server-ng-${project.version}.jar
+			</source>
+			<filtered>false</filtered>
+			<outputDirectory>/</outputDirectory>
+		</file>
+
+		<!-- inclusion du script de lancement linux -->
+		<file>
+			<source>${basedir}/src/main/packaging/run.sh</source>
+			<filtered>true</filtered>
+			<fileMode>775</fileMode>
+			<outputDirectory>/</outputDirectory>
+		</file>
+		<!-- inclusion du script de lancement windows -->
+		<file>
+			<source>${basedir}/src/main/packaging/run.bat</source>
+			<filtered>true</filtered>
+			<fileMode>775</fileMode>
+			<outputDirectory>/</outputDirectory>
+		</file>
+		
+		<!-- inclusion des fichies de configuration des modules -->
+		<file>
+			<source>${basedir}/src/main/resources/scanner.properties.json</source>
+			<filtered>true</filtered>
+			<fileMode>775</fileMode>
+			<outputDirectory>/config/</outputDirectory>
+		</file>
+		<file>
+			<source>${basedir}/src/main/resources/seedbox.properties.json</source>
+			<filtered>true</filtered>
+			<fileMode>775</fileMode>
+			<outputDirectory>/config/</outputDirectory>
+		</file>
+		<file>
+			<source>${basedir}/src/main/resources/network.properties.json</source>
+			<filtered>true</filtered>
+			<fileMode>775</fileMode>
+			<outputDirectory>/config/</outputDirectory>
+		</file>
+		<file>
+			<source>${basedir}/src/main/resources/watch.properties.json</source>
+			<filtered>true</filtered>
+			<fileMode>775</fileMode>
+			<outputDirectory>/config/</outputDirectory>
+		</file>
+		<file>
+			<source>${basedir}/src/main/resources/reducer.properties.json</source>
+			<filtered>true</filtered>
+			<fileMode>775</fileMode>
+			<outputDirectory>/config/</outputDirectory>
+		</file>
+		<file>
+			<source>${basedir}/src/main/resources/notifyer.properties.json</source>
+			<filtered>true</filtered>
+			<fileMode>775</fileMode>
+			<outputDirectory>/config/</outputDirectory>
+		</file>
+		<file>
+			<source>${basedir}/src/main/resources/photo.properties.json</source>
+			<filtered>true</filtered>
+			<fileMode>775</fileMode>
+			<outputDirectory>/config/</outputDirectory>
+		</file>
+		<file>
+			<source>${basedir}/src/main/resources/music.properties.json</source>
+			<filtered>true</filtered>
+			<fileMode>775</fileMode>
+			<outputDirectory>/config/</outputDirectory>
+		</file>
+	</files>
+
+
+
+
+
+	<fileSets>
+
+		<!-- inclusion du site web -->
+		<fileSet>
+			<!-- <directory>${basedir}/src/main/webapp/</directory> -->
+			
+			<!-- on utilise maintenant la sortie du build grunt -->
+			<!-- <directory>${project.build.directory}/webapp/</directory> -->
+			<directory>${basedir}/src/main/webapp-ng2plus/dist</directory>
+			<filtered>false</filtered>
+			<outputDirectory>/static</outputDirectory>
+			<fileMode>775</fileMode>
+			<directoryMode>0777</directoryMode>
+		</fileSet>
+		
+	</fileSets>
+
+
+
+</assembly>
+

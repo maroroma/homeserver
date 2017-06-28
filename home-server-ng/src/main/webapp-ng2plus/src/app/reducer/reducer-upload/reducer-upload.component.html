@@ -1,0 +1,9 @@
+<div class="card">
+    <h3 class="card-header default-color white-text">Dépôt</h3>
+    <div class="card-block">
+        <p class="card-text sd-hidden">Selectionner des images : </p>
+        <div class="upload-zone">
+            <homeserver-import-file-button (fileChanged)="startUploadFile($event)" [isMultiple]="true"></homeserver-import-file-button>
+        </div>
+    </div>
+</div>

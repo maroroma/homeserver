@@ -1,0 +1,31 @@
+[ {
+  "id" : "music",
+  "enabled" : false
+}, {
+  "id" : "watch",
+  "enabled" : false
+}, {
+  "id" : "administration",
+  "enabled" : true
+}, {
+  "id" : "notifyer",
+  "enabled" : true
+}, {
+  "id" : "scanner",
+  "enabled" : false
+}, {
+  "id" : "photo",
+  "enabled" : false
+}, {
+  "id" : "reducer",
+  "enabled" : true
+}, {
+  "id" : "filemanager",
+  "enabled" : true
+}, {
+  "id" : "seedbox",
+  "enabled" : true
+}, {
+  "id" : "network",
+  "enabled" : true
+} ]

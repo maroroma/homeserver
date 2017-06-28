@@ -1,0 +1,60 @@
+<div class="file-browser-currentpath">
+    <a *ngFor="let item of pathStack" (click)="selectSubDirectoryFromStack(item)"><span class="glyphicon glyphicon-triangle-right" ></span>{{item.name}}</a>
+</div>
+<div class="file-browser-currentdirectory">
+    <ul class="list-group directories">
+        <li class="list-group-item justify-content-between" *ngIf="options.displayToolBar">
+            <homeserver-file-browser-toolbar [options]="options"></homeserver-file-browser-toolbar>
+            <!--<div>
+                <button class="btn btn-sm btn-secondary" (click)="refreshCurrentDirectory()" *ngIf="allowRefresh"><span class="glyphicon glyphicon-refresh"></span></button>
+                <button class="btn btn-sm btn-secondary" (click)="displayDirectoryCreation()" *ngIf="allowDirectoryCreation" [disabled]="!allowDirectoryCreationOnStarter && pathStack?.length==1"><span class="glyphicon glyphicon-plus"></span></button>
+                <button class="btn btn-sm btn-danger" (click)="displayDirectoryDeleteConfirmation()" *ngIf="allowDeletion" [disabled]="pathStack?.length==1 || !someFileSelected"><span class="glyphicon glyphicon-trash"></span></button>
+            </div>-->
+        </li>
+        <li class="list-group-item justify-content-between" *ngIf="pathStack?.length>1" (click)="selectParentDirectory()">..</li>
+        <li class="list-group-item justify-content-between" [ngClass]="{'selected': options.allowItemSelection && oneDirectory.selected}" *ngFor="let oneDirectory of directoryList.displayList" (click)="selectSubDirectoryFromList(oneDirectory.item)">
+            <div class="d-flex">
+                <div class="align-self-center file-selection" *ngIf="options.allowItemSelection">
+                    <input type="checkbox" (click)="selectItem($event, directoryList, oneDirectory)" />
+                </div>
+                <div class="align-self-center file-infos">
+                    <div>
+                        <span class="glyphicon glyphicon-folder-open"></span>
+                    </div>
+                </div>
+                <div class="align-self-center file-name">
+                    {{oneDirectory.item.name}}
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item justify-content-between" [ngClass]="{'selected': options.allowItemSelection && oneFile.selected}" *ngFor="let oneFile of fileList.displayList">
+            <div class="d-flex">
+                <div class="align-self-center file-selection" *ngIf="options.allowItemSelection">
+                    <input type="checkbox" (click)="selectItem($event, fileList, oneFile)" />
+                </div>
+                <div class="align-self-center file-infos">
+                    <div>
+                        <span class="{{oneFile.item | fileGlyphiconResolver}}"></span>
+                    </div>
+                </div>
+                <div class="align-self-center file-name">
+                    {{oneFile.item.name}}
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<homeserver-popup #popupCreateDirectory title="Création d'un nouveau répertoire" (ok)="confirmCreation()">
+    <div class="md-form">
+        <input [(ngModel)]="dirCreationRequest.directoryName" type="text" id="form6" class="form-control">
+        <label class="active" for="form6">Nom du nouveau répertoire</label>
+    </div>
+</homeserver-popup>
+
+<homeserver-popup #popupDeleteFile title="Suppression d'un fichier" (ok)="confirmDeletion()">
+    <div class="md-form">
+        <p class="card-text" *ngIf="nbFilesSelected==1">Êtes-vous sur de vouloir supprimer ce fichier ?</p>
+        <p class="card-text" *ngIf="nbFilesSelected>1">Êtes-vous sur de vouloir supprimer ces {{nbFilesSelected}} fichiers ?</p>
+    </div>
+</homeserver-popup>

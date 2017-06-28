@@ -1,0 +1,52 @@
+<div class="card edit-zone-target">
+    <h3 class="card-header default-color white-text">Envoi d'un mail</h3>
+    <div class="card-block">
+        <p class="card-text">{{imagesToSend.length}} images sélectionnées</p>
+        <div class="image-container-inline" *ngFor="let reducedImage of imagesToSend">
+            <div class="image-container">
+                <img src="api/reducer/reducedImage/{{reducedImage.name}}/" />
+                <div class="image-container-action">
+
+                </div>
+            </div>
+        </div>
+        <div class="md-form">
+            <input [(ngModel)]="sendMailRequest.subject" type="text" id="form6" class="form-control" (keyup)="sendMailRequest.validate()">
+            <label class="active" for="form6">Objet</label>
+        </div>
+        <div class="md-form">
+            <input [(ngModel)]="sendMailRequest.message" type="text" id="inputMessage" class="form-control" (keyup)="sendMailRequest.validate()">
+            <label class="active" for="inputMessage">Message</label>
+        </div>
+        <div class="d-flex justify-content-between xl md-form">
+            <div class="align-self-center mail-address xl">
+                <input type="text" id="inputMail" class="xl form-control" [(ngModel)]="contactSearch" (keyup)="doSearchContact($event)" />
+                <label class="active" for="inputMail">Sélectionner des contacts</label>
+                <ul class="dropdown-menu xl" aria-labelledby="dropdownMenu1" [ngClass]="{'dropdown-menu-open': displayContactSearchResult}">
+                    <li *ngFor="let emailProposition of availableContacts" (click)="selectContactProposition(emailProposition)">{{emailProposition.email}}</li>
+                </ul>
+            </div>
+            <div class="align-self-center mail-address">
+                <button class="btn btn-primary" (click)="addContact()" [disabled]="contactSearch?.length == 0 || mailAlreadyPresent"><span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let mail of sendMailRequest.emailList">
+                <div class="d-flex justify-content-between xl">
+                    <div class="align-self-center mail-address">
+                        {{mail}}</div>
+                    <div class="align-self-center">
+                        <button class="btn btn-sm btn-danger" (click)="removeContact(mail)"><span class="glyphicon glyphicon-trash"></span></button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="edit-zone">
+    <button class="btn btn-primary btn-lg secondary-action circle" (click)="innerCancel()"><span class="glyphicon glyphicon-fast-backward"></span></button>
+
+    <button class="btn btn-primary btn-lg main-action circle" [disabled]="!sendMailRequest.isValid" [ngClass]="{'animated flip': sendMailRequest.isValid}" (click)="innerSendMail()"><span class="glyphicon glyphicon-envelope"></span></button>
+</div>

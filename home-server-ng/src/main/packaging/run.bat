@@ -1,0 +1,1 @@
+java -jar home-server-ng-${project.version}.jar

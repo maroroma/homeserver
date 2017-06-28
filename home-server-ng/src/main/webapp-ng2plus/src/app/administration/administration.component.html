@@ -1,0 +1,11 @@
+<homeserver-page-header [subMenuItems]="subMenuItems"></homeserver-page-header>
+
+<div class="page-content">
+    <homeserver-plugin-list *ngIf="subMenuItems[0].selected"></homeserver-plugin-list>
+
+    <homeserver-property-list *ngIf="subMenuItems[1].selected"></homeserver-property-list>
+    <homeserver-repository-list *ngIf="subMenuItems[2].selected"></homeserver-repository-list>
+    <homeserver-cache-list *ngIf="subMenuItems[3].selected"></homeserver-cache-list>
+    <homeserver-network *ngIf="subMenuItems[4].selected"></homeserver-network>
+    <homeserver-power-management *ngIf="subMenuItems[5].selected"></homeserver-power-management>
+</div>

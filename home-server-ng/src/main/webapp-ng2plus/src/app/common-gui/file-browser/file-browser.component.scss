@@ -1,0 +1,36 @@
+@import '../styles/variables.scss';
+.selectable {
+    &:hover {
+        background-color: $default-hover-background;
+    }
+}
+
+.selected {
+    background-color: $default-selected-background;
+}
+
+.file-browser-currentpath {
+    word-break: break-all;
+    ul {
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+.directories {
+    li {
+        @extend .selectable;
+        .file {
+            &-name {
+                padding-left: 3vw;
+                word-break: break-all;
+            }
+            &-infos {
+                text-align: center;
+            }
+            &-selection {
+                padding-right: 3vw;
+            }
+        }
+    }
+}

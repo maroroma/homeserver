@@ -1,0 +1,25 @@
+[ {
+  "id" : "homeserver.network.localnetwork.scan.timeout",
+  "value" : "10",
+  "description" : "timeout en millisecondes pour le scan des adresses",
+  "readOnly" : false,
+  "moduleId" : "network"
+}, {
+  "id" : "homeserver.network.servers.store",
+  "value" : "D:/RORO/WorkspaceHomeServerV2/home-server-ng/src/main/resources/servers.json",
+  "description" : "Emplacement de sauvegarde pour la liste des serveurs.",
+  "readOnly" : false,
+  "moduleId" : "network"
+}, {
+  "id" : "homeserver.network.localnetwork.address.min",
+  "value" : "127.0.0.0",
+  "description" : "Adresse (préfixe) IP du réseau local pour le scan des serveurs existants",
+  "readOnly" : false,
+  "moduleId" : "network"
+}, {
+  "id" : "homeserver.network.localnetwork.address.max",
+  "value" : "127.0.0.10",
+  "description" : "Adresse (préfixe) IP du réseau local pour le scan des serveurs existants",
+  "readOnly" : false,
+  "moduleId" : "network"
+} ]

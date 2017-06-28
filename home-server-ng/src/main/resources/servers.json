@@ -1,0 +1,34 @@
+[ {
+  "nom" : "melchior",
+  "ip" : "192.168.0.53",
+  "description" : "NAS sur raspberry. Sert de seedbox et de serveur local",
+  "urls" : [ {
+    "url" : "http://192.168.0.53",
+    "name" : "homeserver"
+  }, {
+    "url" : "http://192.168.0.53:9091/transmission/web/",
+    "name" : "transmission (seedbox)"
+  }, {
+    "url" : "https://192.168.0.53:631/printers/HP_Deskjet_F4100_series",
+    "name" : "cups (imprimante)"
+  } ]
+}, {
+  "nom" : "dlink-98C762",
+  "ip" : "192.168.0.52",
+  "description" : "NAS photos, musique et caméra",
+  "urls" : [ {
+    "url" : "http://dlink-98c762/",
+    "name" : "administration nas"
+  }, {
+    "url" : "http://192.168.0.52",
+    "name" : "administration nas (bis)"
+  } ]
+}, {
+  "nom" : "mediacenter",
+  "ip" : "192.168.0.51",
+  "description" : "raspberry openelec (media center)",
+  "urls" : [ {
+    "url" : "http://192.168.0.51",
+    "name" : "KODI"
+  } ]
+} ]

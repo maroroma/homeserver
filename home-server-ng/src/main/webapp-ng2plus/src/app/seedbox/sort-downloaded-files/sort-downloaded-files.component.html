@@ -1,0 +1,12 @@
+<homeserver-steps-bar #stepsBar [steps]="steps"></homeserver-steps-bar>
+<div *ngIf="steps[0].isCurrent">
+    <homeserver-completed-file-list (goToNextStep)="stepsBar.nextStep()"></homeserver-completed-file-list>
+</div>
+
+<div *ngIf="steps[1].isCurrent">
+    <homeserver-target-directory-list (stepBack)="stepsBar.previousStep()" (goToNextStep)="stepsBar.nextStep()"></homeserver-target-directory-list>
+</div>
+
+<div *ngIf="steps[2].isCurrent">
+    <homeserver-commit-move-request (returnToTarget)="stepsBar.previousStep()" (returnToFiles)="stepsBar.firstStep()"></homeserver-commit-move-request>
+</div>

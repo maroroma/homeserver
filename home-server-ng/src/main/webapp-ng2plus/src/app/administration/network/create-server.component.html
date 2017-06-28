@@ -1,0 +1,30 @@
+<div>
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" (click)="switchMenu()">
+    Sélectionner un seveur ou saisissez le directement
+    <span class="caret"></span>
+  </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" [ngClass]="{'dropdown-menu-open': isMenuOpen}">
+            <li *ngFor="let serverItem of availableServers.displayList" (click)="preselectServer(serverItem.item)">{{serverItem.item.ip}}</li>
+            <li role="separator" class="divider"></li>
+            <li (click)="loadAvailableServers()">Recharger la liste</li>
+            <li role="separator" class="divider"></li>
+            <li (click)="reinit()">Ne rien Sélectionner</li>
+        </ul>
+    </div>
+</div>
+<div>OU</div>
+<div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Nom</label>
+        <input type="text" [(ngModel)]="newServerDescriptor.nom" placeholder="Nom du serveur" />
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Adresse IP</label>
+        <input type="text" [(ngModel)]="newServerDescriptor.ip" placeholder="Adresse ip du serveur" />
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Description</label>
+        <input type="text" [(ngModel)]="newServerDescriptor.description" placeholder="Description du serveur" />
+    </div>
+</div>

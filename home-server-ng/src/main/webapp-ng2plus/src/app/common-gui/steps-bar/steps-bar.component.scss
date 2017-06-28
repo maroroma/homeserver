@@ -1,0 +1,114 @@
+@import '../styles/variables.scss';
+@import '../styles/shared.scss';
+ul.steps-bar {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-top: solid 1px black;
+    margin-top: 1.6vw;
+    li.step {
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
+        width: 100%;
+        text-align: center;
+        margin-top: -1.2vw;
+        height: 1.6vw;
+        font-size: 1.6vw;
+        &:last-child {
+            text-align: right;
+            padding-right: 0;
+        }
+        &:first-child {
+            text-align: left;
+            padding-left: 0;
+        }
+        &-completed {
+            font-style: italic;
+            color: grey;
+            .step-number {
+                font-style: initial;
+                background-color: $classic-green;
+                color: white;
+            }
+        }
+        &-current {
+            .step-number {
+                font-style: initial;
+                background-color: $classic-blue;
+                color: white;
+            }
+        }
+        &-todo {
+            font-style: italic;
+            color: grey;
+            .step-number {
+                font-style: initial;
+                background-color: initial;
+                border: solid 1px black;
+            }
+        }
+        .step-content {
+            background-color: white;
+            padding: 1vw;
+            .step-number {
+                height: 1.6vw;
+                width: 1.6vw;
+                display: inline-block;
+                text-align: center;
+                font-size: 1vw;
+                vertical-align: middle;
+                padding-top: 0.1vw;
+                margin-right: 1vw;
+                margin-left: 1vw;
+                margin-bottom: 0.4vw;
+            }
+        }
+    }
+}
+
+@media(orientation:portrait) {
+    ul.steps-bar {
+        height: 13vw;
+        margin-top: 4vw;
+        margin-bottom: 1vw;
+        border: none;
+        li.step {
+            padding-left: 0.5vw;
+            padding-right: 0.5vw;
+            width: 100%;
+            text-align: left!important;
+            font-size: 6vw;
+            &-completed {
+                display: none;
+            }
+            &-current {
+                .step-number {
+                    font-style: initial;
+                    background-color: $classic-blue;
+                    color: white;
+                }
+            }
+            &-todo {
+                display: none;
+            }
+            .step-content {
+                background-color: white;
+                padding: 1vw;
+                .step-number {
+                    height: 8vw;
+                    width: 12vw;
+                    display: inline-block;
+                    text-align: center;
+                    font-size: 6vw;
+                    vertical-align: middle;
+                    /* padding-top: 0vw; */
+                    // padding-right: 1vw;
+                    margin-right: 1vw;
+                    margin-left: 1vw;
+                    /* margin-bottom: 0.4vw; */
+                    border-radius: 1vw;
+                }
+            }
+        }
+    }
+}

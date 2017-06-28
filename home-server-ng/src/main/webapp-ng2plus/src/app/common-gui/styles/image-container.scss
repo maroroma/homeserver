@@ -1,0 +1,36 @@
+.image-container {
+    display: inline-block;
+    position: relative;
+    img {
+        width: 10vw;
+        height: 10vw;
+        object-fit: cover;
+        @media(orientation: portrait) {
+            width: 40vw;
+            height: 40vw;
+        }
+    }
+    &-inline {
+        display: inline-table;
+        margin: 0.1vw;
+    }
+    &-list {
+        text-align: center;
+    }
+    &-action {
+        position: absolute;
+        top: 0.3vw;
+        button {
+            width: 2vw;
+            height: 2vw;
+            padding: 0;
+        }
+        @media(orientation: portrait) {
+            top: 1vw;
+            button {
+                width: 10vw;
+                height: 10vw;
+            }
+        }
+    }
+}

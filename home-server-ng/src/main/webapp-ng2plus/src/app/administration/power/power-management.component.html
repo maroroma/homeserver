@@ -1,0 +1,13 @@
+<div class="xl">
+    <button class="btn btn-danger btn-xl" (click)="shutdown()">
+                <span><span class="glyphicon glyphicon-off text-align"></span> Eteindre le serveur</span>
+            </button>
+</div>
+
+
+<homeserver-popup #popupConfirmation title="Eteindre le serveur" (ok)="confirmShutdown()">
+    <p class="card-text">Êtes-vous sûr de vouloir éteindre le serveur ?</p>
+</homeserver-popup>
+<homeserver-popup #popupStopping title="Extinction du serveur">
+    <p class="card-text">L'arrêt du serveur est en cours, ce qui va rendre ce site indisponible</p>
+</homeserver-popup>

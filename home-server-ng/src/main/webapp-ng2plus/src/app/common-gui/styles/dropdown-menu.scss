@@ -1,0 +1,22 @@
+.dropdown-menu {
+    margin-left: 2vw;
+    @media(orientation: portrait) {
+        margin-left: 7vw;
+    }
+    &-open {
+        display: block
+    }
+    li {
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
+        &.divider {
+            background-color: rgb(204, 204, 204);
+            height: 1px;
+        }
+        @media(orientation: portrait) {
+            padding-left: 2.5vw;
+            padding-right: 2.5vw;
+            font-size: 6vw;
+        }
+    }
+}

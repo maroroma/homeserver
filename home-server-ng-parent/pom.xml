@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<!-- <version>1.3.3.RELEASE</version> -->
+		<version>1.4.3.RELEASE</version>
+	</parent>
+
+	<modules>
+		<module>../home-server-ng-tools</module>
+		<module>../home-server-ng</module>
+	</modules>
+
+
+	<properties>
+		<mvn.homeserver.java.version>1.8</mvn.homeserver.java.version>
+	</properties>
+
+
+	<groupId>maro.roma</groupId>
+	<artifactId>home-server-ng-parent</artifactId>
+	<version>0.0.11-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.16.10</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.mail</groupId>
+				<artifactId>mail</artifactId>
+				<version>1.4.7</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.mail</groupId>
+				<artifactId>javax.mail-api</artifactId>
+				<version>1.5.5</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+
+</project>

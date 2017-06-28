@@ -1,0 +1,22 @@
+[ {
+  "id" : "Integrated Webcam 0",
+  "name" : "azdadz",
+  "emplacement" : "azdazdazd",
+  "viewPorts" : [ {
+    "width" : 176.0,
+    "height" : 144.0
+  }, {
+    "width" : 320.0,
+    "height" : 240.0
+  }, {
+    "width" : 640.0,
+    "height" : 480.0
+  } ],
+  "webCamstarted" : false,
+  "motionDetectionStarted" : false,
+  "selectedViewPort" : {
+    "width" : 176.0,
+    "height" : 144.0
+  },
+  "frequency" : 50
+} ]

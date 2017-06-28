@@ -1,0 +1,16 @@
+.input-container {
+    position: relative;
+    input {}
+    .encapsulated-container {
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 97%;
+        .encapsulated-button {
+            margin-top: 50%;
+            @media(orientation: portrait) {
+                right: 2vw;
+            }
+        }
+    }
+}

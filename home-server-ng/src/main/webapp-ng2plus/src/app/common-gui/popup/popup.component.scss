@@ -1,0 +1,26 @@
+@import '../styles/shared.scss';
+@import '../styles/variables.scss';
+.popup {
+    &-background {
+        @extend .masking-background;
+        // background-color: #BBBBBB;
+        // position: fixed;
+        // top: 0px;
+        // bottom: 0px;
+        // right: 0px;
+        // left: 0px;
+        // z-index: $popupZindex;
+        // opacity: 0.5;
+    }
+    &-body {
+        transform: translate(0%, -50%);
+        top: 50%;
+        position: fixed;
+        left: 2vw;
+        right: 2vw;
+        z-index: $popupZindex+1;
+        .card-footer {
+            text-align: right;
+        }
+    }
+}

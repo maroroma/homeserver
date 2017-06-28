@@ -1,0 +1,13 @@
+[ {
+  "id" : "homeserver.watch.cameras.store",
+  "value" : "D:/RORO/WorkspaceHomeServerV2/home-server-ng/src/main/resources/cameras.json",
+  "description" : "Emplacement de sauvegarde pour la liste des cameras.",
+  "readOnly" : false,
+  "moduleId" : "watch"
+}, {
+  "id" : "homeserver.watch.remoteagents.urls",
+  "value" : "http://localhost:8180",
+  "description" : "Listing des différents agents distants pour les webcams",
+  "readOnly" : false,
+  "moduleId" : "watch"
+} ]
