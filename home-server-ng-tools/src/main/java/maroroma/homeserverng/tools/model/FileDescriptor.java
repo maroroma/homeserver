@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.util.Assert;
 import org.springframework.util.Base64Utils;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

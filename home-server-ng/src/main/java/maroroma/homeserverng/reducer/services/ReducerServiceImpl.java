@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.config.MailConfigHolder;
-import maroroma.homeserverng.photo.model.PhotoResolution;
 import maroroma.homeserverng.reducer.model.ReducedImageInput;
 import maroroma.homeserverng.reducer.model.SendMailRequest;
 import maroroma.homeserverng.tools.annotations.InjectNanoRepository;

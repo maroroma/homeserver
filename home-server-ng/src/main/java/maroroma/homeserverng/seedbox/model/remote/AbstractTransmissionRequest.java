@@ -3,7 +3,6 @@ package maroroma.homeserverng.seedbox.model.remote;
 import org.springframework.util.Assert;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import maroroma.homeserverng.tools.helpers.FluentMap;
 
 @Data

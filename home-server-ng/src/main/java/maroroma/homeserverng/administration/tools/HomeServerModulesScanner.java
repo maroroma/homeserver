@@ -24,7 +24,6 @@ import maroroma.homeserverng.tools.config.HomeServerModuleActivationStatus;
 import maroroma.homeserverng.tools.config.HomeServerModuleHandler;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.helpers.BeanDefinitionsHelper;
-import maroroma.homeserverng.tools.helpers.Tuple;
 
 /**
  * Classe utilitaire pour le chargement et la sauvegarde de la configuration des modules.
