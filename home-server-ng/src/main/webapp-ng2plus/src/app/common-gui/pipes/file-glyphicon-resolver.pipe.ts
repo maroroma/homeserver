@@ -27,6 +27,9 @@ export class FileGlyphiconResolverPipe implements PipeTransform {
             if (FileDescriptor.isSubtitleFile(value)) {
                 return returnValue + 'text-background';
             }
+            if (FileDescriptor.isImageFile(value)) {
+                return returnValue + 'picture';
+            }
 
 
             return returnValue + 'question-sign';

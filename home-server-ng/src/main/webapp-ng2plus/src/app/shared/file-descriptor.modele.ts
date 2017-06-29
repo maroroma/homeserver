@@ -6,6 +6,7 @@ export class FileDescriptor {
     private static readonly FILE_EXTENSIONS = ['txt', 'nfo'];
     private static readonly SUBTITLE_EXTENSIONS = ['srt'];
     private static readonly MUSIC_EXTENSIONS = ['mp3', 'wav'];
+    private static readonly IMAGE_EXTENSIONS = ['jpeg', 'png', 'jpg'];
 
     public name: string;
     public fullName: string;
@@ -50,4 +51,8 @@ export class FileDescriptor {
     public static isSubtitleFile(file: FileDescriptor): boolean {
         return FilterTools.contains(FileDescriptor.SUBTITLE_EXTENSIONS, file.extension);
     }
+    public static isImageFile(file: FileDescriptor): boolean {
+        return FilterTools.contains(FileDescriptor.IMAGE_EXTENSIONS, file.extension);
+    }
+    
 }

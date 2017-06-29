@@ -4,12 +4,7 @@
 <div class="file-browser-currentdirectory">
     <ul class="list-group directories">
         <li class="list-group-item justify-content-between" *ngIf="options.displayToolBar">
-            <homeserver-file-browser-toolbar [options]="options"></homeserver-file-browser-toolbar>
-            <!--<div>
-                <button class="btn btn-sm btn-secondary" (click)="refreshCurrentDirectory()" *ngIf="allowRefresh"><span class="glyphicon glyphicon-refresh"></span></button>
-                <button class="btn btn-sm btn-secondary" (click)="displayDirectoryCreation()" *ngIf="allowDirectoryCreation" [disabled]="!allowDirectoryCreationOnStarter && pathStack?.length==1"><span class="glyphicon glyphicon-plus"></span></button>
-                <button class="btn btn-sm btn-danger" (click)="displayDirectoryDeleteConfirmation()" *ngIf="allowDeletion" [disabled]="pathStack?.length==1 || !someFileSelected"><span class="glyphicon glyphicon-trash"></span></button>
-            </div>-->
+            <homeserver-file-browser-toolbar [options]="options" [isFilesSelected]="someFileSelected" [isCurrentDirectoryRoot]="pathStack?.length==1" (refreshCurrentDirectory)="refreshCurrentDirectory()" (displayDirectoryCreation)="displayDirectoryCreation()" (displayDirectoryDeletionConfirmation)="displayDirectoryDeleteConfirmation()"></homeserver-file-browser-toolbar>
         </li>
         <li class="list-group-item justify-content-between" *ngIf="pathStack?.length>1" (click)="selectParentDirectory()">..</li>
         <li class="list-group-item justify-content-between" [ngClass]="{'selected': options.allowItemSelection && oneDirectory.selected}" *ngFor="let oneDirectory of directoryList.displayList" (click)="selectSubDirectoryFromList(oneDirectory.item)">

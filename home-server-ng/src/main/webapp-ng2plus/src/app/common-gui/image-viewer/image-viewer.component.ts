@@ -8,6 +8,12 @@ import {
     transition, keyframes
 } from '@angular/animations';
 
+/**
+ * PErmet d'afficher une gallerie d'images
+ * @export
+ * @class ImageViewerComponent
+ * @implements {OnInit}
+ */
 @Component({
     moduleId: module.id,
     selector: 'homeserver-image-viewer',
