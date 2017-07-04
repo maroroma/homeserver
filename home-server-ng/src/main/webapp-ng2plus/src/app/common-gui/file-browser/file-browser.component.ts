@@ -1,3 +1,5 @@
+import { RenameFileDescriptor } from './rename-file-descriptor.modele';
+import { FileBrowserRenameComponent } from './file-browser-rename.component';
 import { FileBrowserOptions } from './file-browser-options.modele';
 import { NotifyerService } from './../notifyer/notifyer.service';
 import { Subject } from 'rxjs/Subject';
@@ -46,6 +48,11 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
      * @memberOf FileBrowserComponent
      */
     fileList = new VisualItemDataSource<FileDescriptor>();
+
+    /**
+     * Liste (générée à la volée) de l'ensemble des fichiers sélectionnés.
+     */
+    mergeSelectedFiles: Array<FileDescriptor>;
 
     /**
      * Détermine si un répertoire ou un fichier est sélectionné.
@@ -98,6 +105,13 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
      */
     @ViewChild('popupDeleteFile')
     popupDeleteFile: PopupComponent;
+    /**
+     * Popup pour le renommage des fichiers.
+     * @type {PopupComponent}
+     * @memberOf FileBrowserComponent
+     */
+    @ViewChild('popupRenameFiles')
+    popupRenameFiles: FileBrowserRenameComponent;
 
     constructor(private browserService: FileBrowserService, private searchService: PageHeaderSearchService,
         private notifyer: NotifyerService) { }
@@ -146,7 +160,7 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
      */
     public selectSubDirectory(subDirectory: DirectoryDescriptor): Observable<DirectoryDescriptor> {
         const returnValue = new Subject<DirectoryDescriptor>();
-        this.reinitSelection();
+        this.reinitGlobalSelectionStatus();
         if (subDirectory.id === this.starterDirectory.id) {
             this.ngOnChanges();
         } else {
@@ -200,7 +214,6 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * MIse à jour du dernier element de la stack.
      * @param {DirectoryDescriptor} updated
-     * 
      * @memberOf FileBrowserComponent
      */
     public updateLastPathStack(updated: DirectoryDescriptor): void {
@@ -222,7 +235,7 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
      * @memberOf FileBrowserComponent
      */
     private regeneratePathStack(): void {
-        this.reinitSelection();
+        this.reinitGlobalSelectionStatus();
         this.pathStack = this.tempPathStack.filter(item => true);
         this.directoryList.updateSourceList(FilterTools.last(this.pathStack).directories);
         this.fileList.updateSourceList(FilterTools.last(this.pathStack).files);
@@ -258,13 +271,28 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
         // on stop l'event pour empecher l'affichage du contenu du répertoire.
         event.stopImmediatePropagation();
         list.toggleItemSelection(fileD);
+        this.refreshGlobalSelectionStatus();
+    }
+
+    public refreshGlobalSelectionStatus(): void {
         this.someFileSelected = this.directoryList.hasItemSelected || this.fileList.hasItemSelected;
         this.nbFilesSelected = this.directoryList.nbItemSelected + this.fileList.nbItemSelected;
     }
 
-    public reinitSelection(): void {
+    public reinitGlobalSelectionStatus(): void {
         this.someFileSelected = false;
         this.nbFilesSelected = 0;
+    }
+
+    public unselectAll(): void {
+        this.directoryList.unselectAll();
+        this.fileList.unselectAll();
+        this.reinitGlobalSelectionStatus();
+    }
+    public selectAll(): void {
+        this.directoryList.selectAllDisplayedItems();
+        this.fileList.selectAllDisplayedItems();
+        this.refreshGlobalSelectionStatus();
     }
 
     /**
@@ -279,18 +307,43 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
      * @memberOf FileBrowserComponent
      */
     public confirmDeletion(): void {
-
-        // construction de la liste finale de fichiers à supprimer
-        // par concaténation de la liste de répertoires sélectionné
-        const finalList = this.directoryList.getSelectedItem().map(vi => vi.item)
-            // et de la liste de fichiers sélectionnés.
-            .concat(this.fileList.getSelectedItem().map(vi => vi.item));
-
         this.browserService.deleteFiles(this.getLastPathStack(),
-            finalList,
+            this.getAllSelectedFiles(),
             this.options.resolver
         ).subscribe(res => {
             this.refreshCurrentDirectory();
         });
+    }
+
+    /**
+     * Retourne l'ensemble des fichiers sélectionnés dans les deux listes.
+     * @private
+     * @returns {Array<FileDescriptor>} -
+     * @memberof FileBrowserComponent
+     */
+    private getAllSelectedFiles(): Array<FileDescriptor> {
+        return this.directoryList.getRawSelectedItems()
+            // et de la liste de fichiers sélectionnés.
+            .concat(this.fileList.getRawSelectedItems());
+    }
+
+    /**
+     * Affichage de la popup de renommage des fichiers.
+     * @memberof FileBrowserComponent
+     */
+    public displayRenamePopup(): void {
+        this.popupRenameFiles.display(this.getAllSelectedFiles());
+    }
+
+    /**
+     * Confirmation du renommage, lancement de l'opération
+     * @param {Array<RenameFileDescriptor>} files
+     * @memberof FileBrowserComponent
+     */
+    public confirmRename(files: Array<RenameFileDescriptor>): void {
+        this.browserService.renameFiles(this.getLastPathStack(), files, this.options.resolver)
+            .subscribe(res => {
+                this.refreshCurrentDirectory();
+            });
     }
 }

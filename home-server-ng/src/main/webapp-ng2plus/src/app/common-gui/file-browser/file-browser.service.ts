@@ -1,5 +1,6 @@
+import { RenameFileDescriptor } from './rename-file-descriptor.modele';
+import { FileOperationResult } from './file-operation-result.modele';
 import { ApiConstants } from './../../shared/api-constants.modele';
-import { FileDeletionResult } from './file-deletion-result.modele';
 import { FileDescriptor } from './../../shared/file-descriptor.modele';
 import { NotifyerService } from './../notifyer/notifyer.service';
 import { DirectoryCreationRequest } from './directory-creation-request.modele';
@@ -25,7 +26,6 @@ export class FileBrowserService {
      * @param {DirectoryDescriptor} directory
      * @param {FileBrowserResolver} resolver
      * @returns {Observable<DirectoryDescriptor>}
-     * 
      * @memberOf FileBrowserService
      */
     public getDirectoryDetail(directory: DirectoryDescriptor, resolver: FileBrowserResolver): Observable<DirectoryDescriptor> {
@@ -65,12 +65,12 @@ export class FileBrowserService {
         return Observable.forkJoin(responses)
             .map(res => {
                 // conversion de l'ensemble des résultats
-                return JsonTools.map(res.map(oneRes => oneRes.json()), FileDeletionResult.fromRaw);
+                return JsonTools.map(res.map(oneRes => oneRes.json()), FileOperationResult.fromRaw);
             })
             .flatMap(res => {
 
                 // contage des suppression effectives.
-                const nbDeleted = res.filter(oneResult => oneResult.deleted).length;
+                const nbDeleted = res.filter(oneResult => oneResult.completed).length;
 
                 if (nbDeleted === 0) {
                     this.notifyer.showError('Toutes les suppressions sont ko');
@@ -86,5 +86,54 @@ export class FileBrowserService {
                 return this.getDirectoryDetail(parentDirectory, resolver);
             });
 
+    }
+
+    /*
+     * Permet de renommer un ensemble de fichier.
+     * @param {DirectoryDescriptor} parentDirectory
+     * @param {Array<RenameFileDescriptor>} filesToRename
+     * @param {FileBrowserResolver} resolver
+     * @returns {Observable<DirectoryDescriptor>}
+     * @memberof FileBrowserService
+    */
+    public renameFiles(parentDirectory: DirectoryDescriptor,
+        filesToRename: Array<RenameFileDescriptor>,
+        resolver: FileBrowserResolver): Observable<DirectoryDescriptor> {
+
+        const responses = new Array<Observable<Response>>();
+
+        // préparation des x appels de renomage
+        filesToRename.forEach(oneFileToRename => {
+            responses.push(this.http.patch(resolver.fileRenameUri(), oneFileToRename));
+        });
+
+
+        // lancement des x appels en paralleles, avec attente de synchro pour la récupération finale des résultats.
+        return Observable.forkJoin(responses)
+            .map(res => {
+                // conversion de l'ensemble des résultats
+                return JsonTools.map(res.map(oneRes => oneRes.json()), FileOperationResult.fromRaw);
+            })
+            .flatMap(res => {
+
+                // contage des renommage effectives.
+                const nbRenamed = res.filter(oneResult => oneResult.completed).length;
+
+                if (nbRenamed === 0) {
+                    this.notifyer.showError('Toutes les renommages sont ko');
+                }
+
+                if (nbRenamed === filesToRename.length) {
+                    this.notifyer.showSuccess('Toutes les renommages sont ok');
+                } else if (nbRenamed > 0) {
+                    this.notifyer.showInfo('Certaines renommages sont ko');
+                }
+
+
+                return this.getDirectoryDetail(parentDirectory, resolver);
+            }).catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors du renommage des fichiers');
+                return Observable.of(new DirectoryDescriptor());
+            });
     }
 }

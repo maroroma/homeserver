@@ -38,6 +38,11 @@ export class FileBrowserOptionsBuilder {
         return this;
     }
 
+    public renaming(): FileBrowserOptionsBuilder {
+        this.target.allowRenaming = true;
+        return this;
+    }
+
     public withResolver(resolver: FileBrowserResolver): FileBrowserOptionsBuilder {
         this.target.resolver = resolver;
         return this;

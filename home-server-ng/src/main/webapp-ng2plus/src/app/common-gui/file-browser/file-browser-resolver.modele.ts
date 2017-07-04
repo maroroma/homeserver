@@ -11,4 +11,5 @@ export interface FileBrowserResolver {
     directoryDetailsUri(directory: DirectoryDescriptor): string;
     directoryCreationUri(): string;
     fileDeletionUri(file: FileDescriptor): string;
+    fileRenameUri(): string;
 }

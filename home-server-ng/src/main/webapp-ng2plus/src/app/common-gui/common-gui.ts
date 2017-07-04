@@ -1,3 +1,4 @@
+import { FileBrowserRenameComponent } from './file-browser/file-browser-rename.component';
 import { FileBrowserToolBarComponent } from './file-browser/file-browser-toolbar.component';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
 import { ImageViewerComponent } from './image-viewer/image-viewer.component';
@@ -38,7 +39,8 @@ import { NgModule } from '@angular/core';
         SimpleDatagridComponent, SDInputValueDirective, NotifyerComponent,
         PopupComponent, AnchorExportDirective, ToggleButtonDirective,
         ImportFileButtonComponent, StepsBarComponent, FileGlyphiconResolverPipe, FileBrowserComponent,
-        CancelableInputTextComponent, EditCollapsablePanelComponent, ImageViewerComponent, AutoFocusDirective, FileBrowserToolBarComponent],
+        CancelableInputTextComponent, EditCollapsablePanelComponent, ImageViewerComponent, AutoFocusDirective,
+        FileBrowserToolBarComponent, FileBrowserRenameComponent],
     providers: [NavigationHelperService, NotifyerService, FileBrowserService, PageHeaderSearchService],
 })
 export class CommonGUIModule { }

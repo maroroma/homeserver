@@ -71,6 +71,18 @@ public class FileDescriptor {
 	}
 
 	/**
+	 * Permet de renommer le fichier donné.
+	 * @param newName nouveau nom
+	 * @return true si le renommage est ok.
+	 */
+	public boolean renameFile(final String newName) {
+		File toRename = this.createFile();
+		Assert.isTrue(toRename.exists(), "Le fichier " + toRename.getAbsolutePath() + " n'existe pas");
+		File renameTo = new File(toRename.getParentFile(), newName);
+		return toRename.renameTo(renameTo);
+	}
+
+	/**
 	 * Constructeur.
 	 * @param file -
 	 */

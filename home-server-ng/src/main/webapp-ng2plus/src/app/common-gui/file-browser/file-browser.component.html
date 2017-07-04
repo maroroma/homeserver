@@ -4,13 +4,14 @@
 <div class="file-browser-currentdirectory">
     <ul class="list-group directories">
         <li class="list-group-item justify-content-between" *ngIf="options.displayToolBar">
-            <homeserver-file-browser-toolbar [options]="options" [isFilesSelected]="someFileSelected" [isCurrentDirectoryRoot]="pathStack?.length==1" (refreshCurrentDirectory)="refreshCurrentDirectory()" (displayDirectoryCreation)="displayDirectoryCreation()" (displayDirectoryDeletionConfirmation)="displayDirectoryDeleteConfirmation()"></homeserver-file-browser-toolbar>
+            <homeserver-file-browser-toolbar [options]="options" [isFilesSelected]="someFileSelected" [isCurrentDirectoryRoot]="pathStack?.length==1" (refreshCurrentDirectory)="refreshCurrentDirectory()" (displayDirectoryCreation)="displayDirectoryCreation()" (displayDirectoryDeletionConfirmation)="displayDirectoryDeleteConfirmation()"
+                (selectAll)="selectAll()" (unSelectAll)="unselectAll()" (rename)="displayRenamePopup()"></homeserver-file-browser-toolbar>
         </li>
         <li class="list-group-item justify-content-between" *ngIf="pathStack?.length>1" (click)="selectParentDirectory()">..</li>
         <li class="list-group-item justify-content-between" [ngClass]="{'selected': options.allowItemSelection && oneDirectory.selected}" *ngFor="let oneDirectory of directoryList.displayList" (click)="selectSubDirectoryFromList(oneDirectory.item)">
             <div class="d-flex">
                 <div class="align-self-center file-selection" *ngIf="options.allowItemSelection">
-                    <input type="checkbox" (click)="selectItem($event, directoryList, oneDirectory)" />
+                    <input type="checkbox" (click)="selectItem($event, directoryList, oneDirectory)" [checked]="oneDirectory.selected" />
                 </div>
                 <div class="align-self-center file-infos">
                     <div>
@@ -25,7 +26,7 @@
         <li class="list-group-item justify-content-between" [ngClass]="{'selected': options.allowItemSelection && oneFile.selected}" *ngFor="let oneFile of fileList.displayList">
             <div class="d-flex">
                 <div class="align-self-center file-selection" *ngIf="options.allowItemSelection">
-                    <input type="checkbox" (click)="selectItem($event, fileList, oneFile)" />
+                    <input type="checkbox" (click)="selectItem($event, fileList, oneFile)" [checked]="oneFile.selected" />
                 </div>
                 <div class="align-self-center file-infos">
                     <div>
@@ -53,3 +54,5 @@
         <p class="card-text" *ngIf="nbFilesSelected>1">Êtes-vous sur de vouloir supprimer ces {{nbFilesSelected}} fichiers ?</p>
     </div>
 </homeserver-popup>
+
+<homeserver-file-browser-rename #popupRenameFiles (confirmRename)="confirmRename($event)"></homeserver-file-browser-rename>

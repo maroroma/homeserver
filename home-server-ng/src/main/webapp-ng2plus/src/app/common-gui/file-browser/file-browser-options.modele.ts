@@ -46,6 +46,11 @@ export class FileBrowserOptions {
     public allowDeletion = false;
 
     /**
+     * PErmet de renommer un fichier
+     */
+    public allowRenaming = false;
+
+    /**
      * Resolver utilisé pour les opérations distantes.
      * 
      * @type {FileBrowserResolver}@memberof FileBrowserOptions

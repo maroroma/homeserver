@@ -6,13 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import maroroma.homeserverng.filemanager.FileManagerModuleDescriptor;
 import maroroma.homeserverng.filemanager.model.DirectoryCreationRequest;
-import maroroma.homeserverng.filemanager.model.FileDeletionResult;
+import maroroma.homeserverng.filemanager.model.FileOperationResult;
+import maroroma.homeserverng.filemanager.model.RenameFileDescriptor;
 import maroroma.homeserverng.filemanager.services.FileManagerService;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
@@ -73,9 +75,20 @@ public class FileManagerController {
 	 * @throws HomeServerException -
 	 */
 	@DeleteMapping("/filemanager/files/{id}")
-	public ResponseEntity<FileDeletionResult> deleteFile(final @PathVariable("id") String id) throws HomeServerException {
+	public ResponseEntity<FileOperationResult> deleteFile(final @PathVariable("id") String id) throws HomeServerException {
 		return ResponseEntity.ok(this.fileService.deleteFile(id));
 	}
+	
+	/**
+	 * Demande de renommage de fichier.
+	 * @param rfd -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
+	@PatchMapping("/filemanager/files")
+	public ResponseEntity<FileOperationResult> renameFile(final @RequestBody RenameFileDescriptor rfd) throws HomeServerException {
+		return ResponseEntity.ok(this.fileService.renameFile(rfd));
+	} 
 	
 	
 }

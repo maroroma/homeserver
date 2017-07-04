@@ -20,6 +20,7 @@ export class FileManagerComponent implements OnInit {
         .directoryCreation()
         .refresh()
         .selection()
+        .renaming()
         .withResolver(new FileManagerResolver()).toolbar().build();
 
 

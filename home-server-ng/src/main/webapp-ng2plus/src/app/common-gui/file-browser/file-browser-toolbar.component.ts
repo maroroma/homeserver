@@ -27,20 +27,38 @@ export class FileBrowserToolBarComponent implements OnInit {
     public displayDirectoryCreation = new EventEmitter<any>();
     @Output()
     public displayDirectoryDeletionConfirmation = new EventEmitter<any>();
+    @Output()
+    public selectAll = new EventEmitter<any>();
+    @Output()
+    public unSelectAll = new EventEmitter<any>();
+    @Output()
+    public rename = new EventEmitter<any>();
+
 
     constructor() { }
     ngOnInit() { }
 
-    public innerRefreshCurrentDirectory():void {
+    public innerRefreshCurrentDirectory(): void {
         this.refreshCurrentDirectory.emit();
     }
 
-    public innerDisplayDirectoryCreation():void {
+    public innerDisplayDirectoryCreation(): void {
         this.displayDirectoryCreation.emit();
-
     }
 
-    public innerDisplayDirectoryDeleteConfirmation() :void {
+    public innerDisplayDirectoryDeleteConfirmation(): void {
         this.displayDirectoryDeletionConfirmation.emit();
     }
+    public innerSelectAll(): void {
+        this.selectAll.emit();
+    }
+    public innerUnselectAll(): void {
+        this.unSelectAll.emit();
+    }
+
+    public innerRename(): void {
+        this.rename.emit();
+    }
+
+
 }
