@@ -13,7 +13,7 @@ import maroroma.homeserverng.tools.model.FileDescriptor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FileDeletionResult {
+public class FileOperationResult {
 	
 	/**
 	 * Fichier dont on a demandé la suppression.
@@ -21,7 +21,7 @@ public class FileDeletionResult {
 	private FileDescriptor initialFile;
 	
 	/**
-	 * Détermine si le fichier est supprimé.
+	 * Détermine si l'opération sur le fichier est complétée.
 	 */
-	private boolean deleted;
+	private boolean completed;
 }

@@ -22,4 +22,8 @@ export class FileManagerResolver implements FileBrowserResolver {
         return ApiConstants.FILEMANAGER_FILES_API + '/' + file.id;
     }
 
+    public fileRenameUri(): string {
+        return ApiConstants.FILEMANAGER_FILES_API;
+    }
+
 }

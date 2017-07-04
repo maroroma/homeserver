@@ -77,6 +77,47 @@ export class VisualItemDataSource<T> {
     }
 
     /**
+     * Retourne la liste d'item sélectionné en tant que nouvelle datasource.
+     */
+    public getSelectedItemsAsVisualDataSource(): VisualItemDataSource<T> {
+        const returnValue = new VisualItemDataSource<T>();
+        returnValue.updateSourceList(this.getSelectedItem().map(item => item.item));
+        return returnValue;
+    }
+
+    /**
+     * Concatene cette datasource avec la datasource en entrée.
+     * @param {VisualItemDataSource<T>} otherDataSource
+     * @returns {VisualItemDataSource<T>}
+     * @memberof VisualItemDataSource
+     */
+    public concat(otherDataSource: VisualItemDataSource<T>): VisualItemDataSource<T> {
+        const returnValue = new VisualItemDataSource<T>();
+
+        returnValue.updateSourceList(this.getRawItemsFromSource().concat(otherDataSource.getRawItemsFromSource()));
+
+        return returnValue;
+    }
+
+    /**
+     * Retourne la liste des items bruts de la liste.
+     * @returns {Array<T>} 
+     * @memberof VisualItemDataSource
+     */
+    public getRawItemsFromSource(): Array<T> {
+        return this.sourceList.map(vi => vi.item);
+    }
+
+    /**
+     * Retourne la liste des items sélectionnés en tant que liste simple.
+     * @returns {Array<T>}  -
+     * @memberof VisualItemDataSource
+     */
+    public getRawSelectedItems(): Array<T> {
+        return this.sourceList.filter(vi => vi.selected).map(vi => vi.item);
+    }
+
+    /**
      * Déselectionne tous les items.
      * @memberOf VisualItemDataSource
      */
@@ -85,6 +126,9 @@ export class VisualItemDataSource<T> {
         this.updateSelectionStatus();
     }
 
+    /**
+     * Sélectionne l'ensemble des items affichés.
+     */
     public selectAllDisplayedItems() {
         this.displayList.forEach(item => item.selected = true);
         this.updateSelectionStatus();

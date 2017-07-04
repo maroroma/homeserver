@@ -1,0 +1,18 @@
+<homeserver-popup #popupRenameFiles title="Fichiers à renommer" (ok)="innerConfirmRename()">
+    <ul class="list-group completed-files ">
+        <li class="list-group-item justify-content-between completed-file" *ngFor="let fileToRename of filesToRename">
+            <div class="d-flex xl">
+                <div class="align-self-center completed-file-infos">
+                    <div>
+                        <span class="{{fileToRename.item | fileGlyphiconResolver}}"></span>
+                    </div>
+                </div>
+                <div class="align-self-center completed-file-name xl">
+                    <!--<input type="text" [(ngModel)]="fileToMove.item.name" />-->
+                    <!--{{fileToMove.item.name}}-->
+                    <homeserver-cancelable-input-text [(text)]="fileToRename.newName"></homeserver-cancelable-input-text>
+                </div>
+            </div>
+        </li>
+    </ul>
+</homeserver-popup>

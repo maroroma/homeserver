@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.filemanager.model.DirectoryCreationRequest;
-import maroroma.homeserverng.filemanager.model.FileDeletionResult;
+import maroroma.homeserverng.filemanager.model.FileOperationResult;
+import maroroma.homeserverng.filemanager.model.RenameFileDescriptor;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
@@ -70,18 +71,37 @@ public class FileManagerServiceImpl implements FileManagerService {
 	}
 
 	@Override
-	public FileDeletionResult deleteFile(final String id) {
+	public FileOperationResult deleteFile(final String id) {
 		Assert.hasLength(id, "id can't be null or empty");
 		final FileDescriptor fileToDelete = FileAndDirectoryHLP.decodeFileDescriptor(id);
 		Assert.isValidFileOrDirectory(fileToDelete);
 		
+		this.validateAuthorizedPath(fileToDelete);
+		
+		return new FileOperationResult(fileToDelete, fileToDelete.deleteFile());
+	}
+
+	@Override
+	public FileOperationResult renameFile(final RenameFileDescriptor rfd) {
+		Assert.notNull(rfd, "rfd can't be null or empty");
+		Assert.hasLength(rfd.getNewName(), "rfd.newName can't be null or emtpy");
+		Assert.notNull(rfd.getOriginalFile(), "rfd.originalFile can't be null or empty");
+		
+		Assert.isValidFileOrDirectory(rfd.getOriginalFile());
+		
+		this.validateAuthorizedPath(rfd.getOriginalFile());
+		return new FileOperationResult(rfd.getOriginalFile(), rfd.getOriginalFile().renameFile(rfd.getNewName()));
+	}
+	
+	/**
+	 * Permet de controller la position du fichier par rapport à l'arborescence autorisée.
+	 * Controlle beaucoup trop simple.
+	 * @param fd -
+	 */
+	private void validateAuthorizedPath(final FileDescriptor fd) {
 		Assert.isTrue(this.rootDirectoriesList.asStringList().stream()
-				.anyMatch(rootPath -> FileAndDirectoryHLP.isParentOf(rootPath, fileToDelete.createFile())),
+				.anyMatch(rootPath -> FileAndDirectoryHLP.isParentOf(rootPath, fd.createFile())),
 				"Le fichier à supprimer ne fait pas partie des répertoires gérables");
-		
-		return new FileDeletionResult(fileToDelete, fileToDelete.deleteFile());
-		
-		
 	}
 
 }
