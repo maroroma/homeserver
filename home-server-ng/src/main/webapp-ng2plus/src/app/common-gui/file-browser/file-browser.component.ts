@@ -214,7 +214,6 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * MIse à jour du dernier element de la stack.
      * @param {DirectoryDescriptor} updated
-     * 
      * @memberOf FileBrowserComponent
      */
     public updateLastPathStack(updated: DirectoryDescriptor): void {
@@ -319,7 +318,7 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Retourne l'ensemble des fichiers sélectionnés dans les deux listes.
      * @private
-     * @returns {Array<FileDescriptor>} 
+     * @returns {Array<FileDescriptor>} -
      * @memberof FileBrowserComponent
      */
     private getAllSelectedFiles(): Array<FileDescriptor> {
@@ -330,7 +329,6 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Affichage de la popup de renommage des fichiers.
-     * 
      * @memberof FileBrowserComponent
      */
     public displayRenamePopup(): void {
@@ -339,7 +337,7 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Confirmation du renommage, lancement de l'opération
-     * @param {Array<RenameFileDescriptor>} files 
+     * @param {Array<RenameFileDescriptor>} files
      * @memberof FileBrowserComponent
      */
     public confirmRename(files: Array<RenameFileDescriptor>): void {

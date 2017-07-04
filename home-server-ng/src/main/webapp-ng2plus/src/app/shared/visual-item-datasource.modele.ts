@@ -101,7 +101,7 @@ export class VisualItemDataSource<T> {
 
     /**
      * Retourne la liste des items bruts de la liste.
-     * @returns {Array<T>} 
+     * @returns {Array<T>} -
      * @memberof VisualItemDataSource
      */
     public getRawItemsFromSource(): Array<T> {

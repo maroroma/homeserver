@@ -26,7 +26,6 @@ export class FileBrowserService {
      * @param {DirectoryDescriptor} directory
      * @param {FileBrowserResolver} resolver
      * @returns {Observable<DirectoryDescriptor>}
-     * 
      * @memberOf FileBrowserService
      */
     public getDirectoryDetail(directory: DirectoryDescriptor, resolver: FileBrowserResolver): Observable<DirectoryDescriptor> {
@@ -90,11 +89,11 @@ export class FileBrowserService {
     }
 
     /*
-     * Permet de renommer un ensemble de fichier. 
-     * @param {DirectoryDescriptor} parentDirectory 
-     * @param {Array<RenameFileDescriptor>} filesToRename 
-     * @param {FileBrowserResolver} resolver 
-     * @returns {Observable<DirectoryDescriptor>} 
+     * Permet de renommer un ensemble de fichier.
+     * @param {DirectoryDescriptor} parentDirectory
+     * @param {Array<RenameFileDescriptor>} filesToRename
+     * @param {FileBrowserResolver} resolver
+     * @returns {Observable<DirectoryDescriptor>}
      * @memberof FileBrowserService
     */
     public renameFiles(parentDirectory: DirectoryDescriptor,

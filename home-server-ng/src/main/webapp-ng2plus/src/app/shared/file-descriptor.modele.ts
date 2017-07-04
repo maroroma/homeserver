@@ -54,5 +54,4 @@ export class FileDescriptor {
     public static isImageFile(file: FileDescriptor): boolean {
         return FilterTools.contains(FileDescriptor.IMAGE_EXTENSIONS, file.extension);
     }
-    
 }
