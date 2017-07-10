@@ -1,5 +1,7 @@
 package maroroma.homeserverng.seedbox.model.remote.gettorrent;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 /**
@@ -8,6 +10,7 @@ import lombok.Data;
  *
  */
 @Data
+@JsonIgnoreProperties("result")
 public class GetTorrentResponse {
 	/**
 	 * .

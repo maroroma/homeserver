@@ -14,6 +14,7 @@ export class ApiConstants {
 
     public static readonly SEEDBOX_API = ApiConstants.ROOT_API + 'seedbox/';
     public static readonly SEEDBOX_TODO_API = ApiConstants.SEEDBOX_API + 'todo/';
+    public static readonly SEEDBOX_TORRENTS_API = ApiConstants.SEEDBOX_API + 'torrents';
     public static readonly SEEDBOX_TODO_COMPLETED_FILES_API = ApiConstants.SEEDBOX_API + 'todo/completedtorrents';
     public static readonly SEEDBOX_TARGETS_API = ApiConstants.SEEDBOX_API + 'todo/targets';
     public static readonly SEEDBOX_SORT_API = ApiConstants.SEEDBOX_API + 'todo/sortedfile';

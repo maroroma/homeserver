@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import maroroma.homeserverng.seedbox.SeedboxModuleDescriptor;
+import maroroma.homeserverng.seedbox.model.RunningTorrent;
 import maroroma.homeserverng.seedbox.model.TargetDirectory;
 import maroroma.homeserverng.seedbox.model.TodoFile;
 import maroroma.homeserverng.seedbox.services.SeedBoxTodoService;
@@ -166,6 +168,16 @@ public class SeedBoxController {
 	@RequestMapping(path = "/seedbox/torrent/{id}", method = {RequestMethod.DELETE})
 	public void deleteTorrent(@PathVariable final String id) throws HomeServerException {
 		this.seedBoxRemoteService.removeTorrent(id);
+	}
+	
+	/**
+	 * Retourne l'ensemble des torrents en cours.
+	 * @return -
+	 * @throws HomeServerException -
+	 */
+	@GetMapping("/seedbox/torrents")
+	public ResponseEntity<List<RunningTorrent>> getRunningTorrents() throws HomeServerException {
+		return ResponseEntity.ok(this.seedBoxRemoteService.getTorrents());
 	}
 	
 	

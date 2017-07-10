@@ -7,6 +7,11 @@ import maroroma.homeserverng.seedbox.model.RunningTorrent;
 import maroroma.homeserverng.seedbox.model.remote.gettorrent.GetTorrentResponse;
 import maroroma.homeserverng.seedbox.model.remote.gettorrent.Torrent;
 
+/**
+ * Classe utilitaire pour la conversion des retours transmission vers le client web.
+ * @author rlevexie
+ *
+ */
 public abstract class TransmissionConverter {
 	
 	/** */
@@ -38,6 +43,7 @@ public abstract class TransmissionConverter {
 	 * @return -
 	 */
 	public static List<RunningTorrent> convert(final GetTorrentResponse response) {
+		
 		return response.getArguments().getTorrents().stream()
 			.map(torrent -> TransmissionConverter.convert(torrent))
 			.collect(Collectors.toList());

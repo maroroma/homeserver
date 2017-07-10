@@ -1,8 +1,11 @@
 package maroroma.homeserverng.seedbox.services;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import maroroma.homeserverng.seedbox.model.RunningTorrent;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 
 /**
@@ -39,4 +42,11 @@ public interface SeedboxRemoteControlService {
 	 * @throws HomeServerException -
 	 */
 	void removeTorrent(String torrentId) throws HomeServerException;
+	
+	/**
+	 * Retourne la liste des torrents en cours.
+	 * @return -
+	 * @throws HomeServerException -
+	 */
+	List<RunningTorrent> getTorrents() throws HomeServerException;
 }

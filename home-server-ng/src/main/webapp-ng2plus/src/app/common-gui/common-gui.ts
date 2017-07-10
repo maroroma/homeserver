@@ -1,3 +1,4 @@
+import { ByteFormatPipe } from './pipes/byte-format.pipe';
 import { FileBrowserRenameComponent } from './file-browser/file-browser-rename.component';
 import { FileBrowserToolBarComponent } from './file-browser/file-browser-toolbar.component';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
@@ -34,13 +35,13 @@ import { NgModule } from '@angular/core';
         SimpleDatagridComponent, SDInputValueDirective, NotifyerComponent,
         PopupComponent, AnchorExportDirective, ToggleButtonDirective,
         ImportFileButtonComponent, StepsBarComponent, FileGlyphiconResolverPipe, FileBrowserComponent,
-        CancelableInputTextComponent, EditCollapsablePanelComponent, ImageViewerComponent, AutoFocusDirective],
+        CancelableInputTextComponent, EditCollapsablePanelComponent, ImageViewerComponent, AutoFocusDirective, ByteFormatPipe],
     declarations: [MenuComponent, HomeComponent, PageHeaderComponent, PrettyCheckboxComponent,
         SimpleDatagridComponent, SDInputValueDirective, NotifyerComponent,
         PopupComponent, AnchorExportDirective, ToggleButtonDirective,
         ImportFileButtonComponent, StepsBarComponent, FileGlyphiconResolverPipe, FileBrowserComponent,
         CancelableInputTextComponent, EditCollapsablePanelComponent, ImageViewerComponent, AutoFocusDirective,
-        FileBrowserToolBarComponent, FileBrowserRenameComponent],
+        FileBrowserToolBarComponent, FileBrowserRenameComponent, ByteFormatPipe],
     providers: [NavigationHelperService, NotifyerService, FileBrowserService, PageHeaderSearchService],
 })
 export class CommonGUIModule { }

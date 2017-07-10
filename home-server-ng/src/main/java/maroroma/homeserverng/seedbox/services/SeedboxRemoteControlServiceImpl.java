@@ -1,10 +1,13 @@
 package maroroma.homeserverng.seedbox.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import maroroma.homeserverng.seedbox.model.RunningTorrent;
 import maroroma.homeserverng.tools.annotations.Streamed;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.sse.ServiceStreamer;
@@ -55,6 +58,11 @@ public class SeedboxRemoteControlServiceImpl implements SeedboxRemoteControlServ
 	@Override
 	public void unsubscribeToTorrentStream(final String id) {
 		this.transmissionStreamer.unsuscribe(id);
+	}
+
+	@Override
+	public List<RunningTorrent> getTorrents() throws HomeServerException {
+		return this.transmissionStreamer.getStreamableService().getRunningTorrents();
 	}
 
 }
