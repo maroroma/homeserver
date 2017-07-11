@@ -1,0 +1,9 @@
+@import '../../common-gui/styles/variables.scss';
+@import '../../common-gui/styles/shared.scss';
+homeserver-running-torrent {
+    width: 100%;
+}
+
+.torrent-selected {
+    background-color: $default-selected-background;
+}

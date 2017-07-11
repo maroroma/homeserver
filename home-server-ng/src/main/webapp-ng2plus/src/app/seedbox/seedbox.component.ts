@@ -1,3 +1,5 @@
+import { SubMenuBuilder } from './../common-gui/page-header/sub-menu-builder.modele';
+import { SubMenuItem } from './../common-gui/page-header/sub-menu-item.modele';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: 'seedbox.component.html'
 })
 export class SeedboxComponent implements OnInit {
+
+    public subMenuItems: Array<SubMenuItem>;
+
     constructor() { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.subMenuItems = SubMenuBuilder
+            .item('TODO').selected()
+            .item('Downloads')
+            .buildSubMenu();
+    }
 }

@@ -1,5 +1,7 @@
 package maroroma.homeserverng.seedbox.services;
 
+import java.util.List;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -9,6 +11,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import maroroma.homeserverng.seedbox.model.RunningTorrent;
 import maroroma.homeserverng.seedbox.model.remote.gettorrent.GetTorrentRequest;
 import maroroma.homeserverng.seedbox.model.remote.gettorrent.GetTorrentResponse;
 import maroroma.homeserverng.seedbox.model.remote.removetorrent.RemoveTorrentRequest;
@@ -189,6 +192,16 @@ public class TransmissionClientImpl implements TransmissionClient {
 					.thenRetry(1)
 					.apply(createRemoveTorrentRequest(torrentId))
 					.getBody();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<RunningTorrent> getRunningTorrents() throws HomeServerException {
+		try {
+			return (List<RunningTorrent>) this.process();
+		} catch (SSEStreamableException e) {
+			throw new HomeServerException("Erreur survenue lors de la récupération des torrents", e);
+		}
 	}
 
 }
