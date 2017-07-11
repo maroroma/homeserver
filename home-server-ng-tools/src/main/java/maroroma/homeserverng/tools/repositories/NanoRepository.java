@@ -24,7 +24,7 @@ import maroroma.homeserverng.tools.model.FileDescriptor;
  * de sauvegarde au plus simple. On est pas sur du hibernate.
  * <br /> On gère toutefois un verrou pour les accès concurrentiel sur le fichier json de persistance.
  * @author rlevexie
- *
+ * TEST
  */
 @Log4j2
 public class NanoRepository {
