@@ -24,6 +24,7 @@ export class RepositoryListComponent implements OnInit, OnDestroy {
         .forField('item.id').display('id').hideForSD().sortable()
         .forField('item.shortId').display('id').hideForHD().sortable()
         .forField('item.filename').display('fichier').hideForSD().sortable()
+        .forField('item.nbItems').display('nombre d\'éléments').hideForSD().sortable()
         .forAction().exportButton().importButton()
         .buildAll();
 
