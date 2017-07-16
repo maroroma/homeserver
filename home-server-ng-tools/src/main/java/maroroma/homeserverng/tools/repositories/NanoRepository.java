@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.util.ReflectionUtils;
 
@@ -15,7 +19,6 @@ import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.helpers.Predicate;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 
 /**
@@ -24,7 +27,6 @@ import maroroma.homeserverng.tools.model.FileDescriptor;
  * de sauvegarde au plus simple. On est pas sur du hibernate.
  * <br /> On gère toutefois un verrou pour les accès concurrentiel sur le fichier json de persistance.
  * @author rlevexie
- *
  */
 @Log4j2
 public class NanoRepository {
@@ -153,6 +155,16 @@ public class NanoRepository {
 	public <T> List<T> getAll() throws HomeServerException {
 		return this.getFromFile();
 	}
+	
+	/**
+	 * Retourne la liste d'élément du repo en tant que stream.
+	 * @return -
+	 * @param <T> type attendu
+	 * @throws HomeServerException -
+	 */
+	private <T> Stream<T> getAllAsStream() throws HomeServerException {
+		return this.<T>getAll().stream();
+	}
 
 	/**
 	 * Sauvegarde d'un item dans la liste.
@@ -228,13 +240,12 @@ public class NanoRepository {
 	 */
 	public <T> T find(final Predicate<T> predicate) throws HomeServerException {
 		Assert.notNull(predicate, "predicate can't be null");
-		List<T> toScan = this.getAll();
-		for (T t : toScan) {
-			if (predicate.accept(t)) {
-				return t;
-			}
+		Optional<T> first = this.<T>getAllAsStream().filter(predicate).findFirst();
+		if (first.isPresent()) {
+			return first.get();
+		} else {
+			throw new HomeServerException("item can't be found");	
 		}
-		throw new HomeServerException("item can't be found");
 
 	}
 	
@@ -247,16 +258,7 @@ public class NanoRepository {
 	 */
 	public <T> List<T> findAll(final Predicate<T> predicate) throws HomeServerException {
 		Assert.notNull(predicate, "predicate can't be null");
-		List<T> returnValue = new ArrayList<>();
-		List<T> toScan = this.getAll();
-		for (T t : toScan) {
-			if (predicate.accept(t)) {
-				returnValue.add(t);
-			}
-		}
-		
-		return returnValue;
-
+		return this.<T>getAllAsStream().filter(predicate).collect(Collectors.toList());
 	}
 
 	/**
@@ -312,17 +314,9 @@ public class NanoRepository {
 	public <T> List<T> delete(final Predicate<T> predicate) throws HomeServerException {
 		Assert.notNull(predicate, "predicate can't be null");
 
-
-		List<T> toDecrease = this.getAll();
-		List<T> toSave = new ArrayList<>();
-
-		for (T itemToTest : toDecrease) {
-			if (!predicate.accept(itemToTest)) {
-				toSave.add(itemToTest);
-			}
-		}
-
-		this.saveToFile(toSave);
+		this.saveToFile(this.<T>getAllAsStream()
+				.filter(predicate.negate())
+				.collect(Collectors.toList()));
 		return this.getAll();
 
 
@@ -333,10 +327,18 @@ public class NanoRepository {
 	 * @return -
 	 */
 	public NanoRepositoryDescriptor generateDescriptor()  {
+		int nbItems = 0;
+		try {
+			nbItems = this.getAll().size();
+		} catch (HomeServerException e) {
+			log.warn("Impossible de récupérer le nombre d'éléménts du repo", e);
+		}
+		
 		return 
 				NanoRepositoryDescriptor.builder()
 				.file(new FileDescriptor(this.path.asFile()))
 				.exists(this.path.asFile().exists())
+				.nbItems(nbItems)
 				.propertyKey(this.path.getId()).build();
 	}
 	

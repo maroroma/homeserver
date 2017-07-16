@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -283,11 +284,8 @@ public class AdministrationServiceImpl implements AdministrationService {
 	@Override
 	public List<NanoRepositoryDescriptor> getNanoRepositoriesDescriptor() throws HomeServerException {
 		
-		List<NanoRepositoryDescriptor> returnValue = new ArrayList<>();
-		
-		this.repoManager.getRepositories().forEach(repo -> returnValue.add(repo.generateDescriptor()));
-		
-		return returnValue;
+		return this.repoManager.getRepositories().stream()
+				.map(oneRepo -> oneRepo.generateDescriptor()).collect(Collectors.toList());
 	}
 
 	/**

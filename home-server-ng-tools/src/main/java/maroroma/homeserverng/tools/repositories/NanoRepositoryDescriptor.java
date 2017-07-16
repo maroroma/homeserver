@@ -28,4 +28,8 @@ public class NanoRepositoryDescriptor {
 	 * Détermine si le fichier sous jacent existe.
 	 */
 	private boolean exists;
+	/**
+	 * Nombre d'items dans le repository.
+	 */
+	private int nbItems;
 }
