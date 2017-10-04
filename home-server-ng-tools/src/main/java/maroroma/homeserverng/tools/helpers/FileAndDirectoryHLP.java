@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.util.Base64Utils;
 import org.springframework.util.FileCopyUtils;
@@ -29,9 +31,9 @@ public abstract class FileAndDirectoryHLP {
 	 * @param genericFilesToDelete -
 	 */
 	public static void deleteGenericFile(final File... genericFilesToDelete) {
-		
+
 		List<File> files = Arrays.asList(genericFilesToDelete);
-		
+
 		// tentative d'accélaration via du // stream
 		files.parallelStream().forEach(fileToDelete -> {
 			if (fileToDelete.isDirectory()) {
@@ -44,9 +46,40 @@ public abstract class FileAndDirectoryHLP {
 				fileToDelete.delete();
 			}
 		});
-		
+
 	}
-	
+
+	/**
+	 * Permet de supprimer un ensemble de fichier de manières récursives.
+	 * @param genericFilesToDelete liste des fichiers à supprimer
+	 * @return mapping nom de fichier / status de suppression
+	 */
+	public static Map<File, Boolean> deleteGenericFileWithStatus(final File... genericFilesToDelete) {
+
+		List<File> files = Arrays.asList(genericFilesToDelete);
+		
+		// liste des status à retourner.
+		Map<File, Boolean> returnValue = new ConcurrentHashMap<File, Boolean>();
+
+		// tentative d'accélaration via du // stream
+		files.parallelStream().forEach(fileToDelete -> {
+			if (fileToDelete.isDirectory()) {
+				File[] subFiles = fileToDelete.listFiles();
+				if (subFiles != null && subFiles.length > 0) {
+					// rajout de la sous liste dans la liste globale
+					returnValue.putAll(deleteGenericFileWithStatus(subFiles));
+				}
+			}
+			
+			// rajout du fichier, que ce soit un répertoire ou un fichier simple.
+			returnValue.put(fileToDelete, fileToDelete.delete());
+
+		});
+		
+		return returnValue;
+
+	}
+
 	/**
 	 * Convertit le fichier donné en tableau de byte.
 	 * @param toConvert -
@@ -57,7 +90,7 @@ public abstract class FileAndDirectoryHLP {
 		Assert.isValidFile(toConvert);
 		InputStream is = null;
 		byte[] returnValue = null;
-		
+
 		try {
 			is = Files.newInputStream(toConvert.toPath());
 			returnValue = StreamUtils.copyToByteArray(is);
@@ -69,12 +102,12 @@ public abstract class FileAndDirectoryHLP {
 		} finally {
 			StreamHLP.safeClose(is);
 		}
-		
+
 		return returnValue;
-		
+
 	}
-	
-	
+
+
 	/**
 	 * Permet de recopier un {@link MultipartFile} dans un fichier local.
 	 * @param input -
@@ -82,10 +115,10 @@ public abstract class FileAndDirectoryHLP {
 	 * @throws HomeServerException -
 	 */
 	public static void convertByteArrayToFile(final MultipartFile input, final File output) throws HomeServerException {
-		
+
 		Assert.notNull(input, "bytes can't be null");
 		Assert.notNull(output, "output can't be null");
-		
+
 		try {
 			FileAndDirectoryHLP.convertByteArrayToFile(input.getBytes(), output);
 		} catch (IOException e) {
@@ -94,8 +127,8 @@ public abstract class FileAndDirectoryHLP {
 			throw new HomeServerException(msg, e);
 		}
 	}
-	
-	
+
+
 	/**
 	 * Permet de convertir un tableau de byte en fichier.
 	 * @param bytes -
@@ -103,10 +136,10 @@ public abstract class FileAndDirectoryHLP {
 	 * @throws HomeServerException -
 	 */
 	public static void convertByteArrayToFile(final byte[] bytes, final File output) throws HomeServerException {
-		
+
 		Assert.notNull(bytes, "bytes can't be null");
 		Assert.notNull(output, "output can't be null");
-		
+
 		try {
 			FileCopyUtils.copy(bytes, output);
 		} catch (IOException e) {
@@ -115,7 +148,7 @@ public abstract class FileAndDirectoryHLP {
 			throw new HomeServerException(msg, e);
 		}
 	}
-	
+
 	/**
 	 * Retourne le chemin complet d'un fichier en fonction de son hash.
 	 * @param fileId -
@@ -125,7 +158,7 @@ public abstract class FileAndDirectoryHLP {
 		Assert.hasLength(fileId, "fileId can't be null or empty");
 		return new String(Base64Utils.decodeFromString(fileId));
 	}
-	
+
 	/**
 	 * Retourne le {@link File} correspondant au hash de fichier.
 	 * @param fileId -
@@ -134,7 +167,7 @@ public abstract class FileAndDirectoryHLP {
 	public static File decodeFile(final String fileId) {
 		return new File(decodeFileName(fileId));
 	}
-	
+
 	/**
 	 * Retourne le {@link FileDescriptor} correspondant au hash de fichier.
 	 * @param fileId -
@@ -143,7 +176,7 @@ public abstract class FileAndDirectoryHLP {
 	public static FileDescriptor decodeFileDescriptor(final String fileId) {
 		return new FileDescriptor(decodeFile(fileId));
 	}
-	
+
 	/**
 	 * Détermine si child est un répertoire fils de parent.
 	 * @param parent -
@@ -155,7 +188,7 @@ public abstract class FileAndDirectoryHLP {
 		Assert.notNull(child, "parent can't be null or empty");
 		return child.getAbsolutePath().startsWith(parent.getAbsolutePath());
 	}
-	
+
 	/**
 	 * Détermine si child est un répertoire fils de parent.
 	 * @param parent -
@@ -167,7 +200,7 @@ public abstract class FileAndDirectoryHLP {
 		Assert.notNull(child, "parent can't be null or empty");
 		return FileAndDirectoryHLP.isParentOf(new File(parent), child);
 	}
-	
+
 	/**
 	 * Détermine si child est un répertoire fils de parent.
 	 * @param parent -
@@ -179,7 +212,7 @@ public abstract class FileAndDirectoryHLP {
 		Assert.hasLength(child, "parent can't be null or empty");
 		return FileAndDirectoryHLP.isParentOf(new File(parent), new File(child));
 	}
-	
+
 	/**
 	 * Détermine si child est un répertoire fils de parent.
 	 * @param parent -
@@ -191,7 +224,7 @@ public abstract class FileAndDirectoryHLP {
 		Assert.hasLength(child, "parent can't be null or empty");
 		return FileAndDirectoryHLP.isParentOf(parent, new File(child));
 	}
-	
+
 	/**
 	 * Détermine si child est un répertoire fils de parent.
 	 * @param parent -

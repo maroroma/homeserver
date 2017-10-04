@@ -78,7 +78,11 @@ public class FileManagerServiceImpl implements FileManagerService {
 		
 		this.validateAuthorizedPath(fileToDelete);
 		
-		return new FileOperationResult(fileToDelete, fileToDelete.deleteFile());
+		return new FileOperationResult(fileToDelete, 
+				FileAndDirectoryHLP.deleteGenericFileWithStatus(fileToDelete.createFile())
+				.values().stream()
+				// la suppression est ok que si l'ensemble des fichiers a bien été supprimé.
+				.allMatch(value -> value));
 	}
 
 	@Override
