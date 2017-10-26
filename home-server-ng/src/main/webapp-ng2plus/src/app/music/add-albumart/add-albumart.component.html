@@ -1,0 +1,14 @@
+<div class="card edit-zone-target">
+    <h3 class="card-header default-color white-text">Sélectionner l'albumart</h3>
+    <div class="card-block">
+        <homeserver-album-renderer [albumDescriptor]="albumDescriptor"></homeserver-album-renderer>
+        <div class="upload-zone">
+            <homeserver-import-file-button (fileChanged)="startUploadFile($event)" [isMultiple]="false"></homeserver-import-file-button>
+        </div>
+    </div>
+</div>
+
+
+<div class="edit-zone">
+    <button class="btn btn-primary btn-lg main-action circle" (click)="gotoUploadTracks()" [disabled]="!albumDescriptor?.albumart" [ngClass]="{'animated flip': albumDescriptor?.albumart}"><span class="glyphicon glyphicon-share-alt"></span></button>
+</div>

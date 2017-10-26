@@ -5,6 +5,8 @@ import java.io.FileFilter;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
+
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 
 /**
@@ -87,6 +89,18 @@ public final class CommonFileFilter {
 				return pathname.getName().toLowerCase().startsWith(prefix.toLowerCase());
 			}
 		};
+	}
+	
+	/**
+	 * Retourne un filtre pour valider le nom de fichier.
+	 * @param fileName - 
+	 * @return -
+	 */
+	public static FileFilter fileNameWithoutExtensionIs(final String fileName) {
+		// on vire l'extension avant de valider le nom du fichier (insensible à la casse
+		return (file) -> file.getName()
+				.replace("." + FilenameUtils.getExtension(file.getName()), "")
+				.toLowerCase().equals(fileName.toLowerCase());
 	}
 	
 	/**

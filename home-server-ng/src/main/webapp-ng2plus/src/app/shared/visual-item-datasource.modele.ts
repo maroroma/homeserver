@@ -109,12 +109,30 @@ export class VisualItemDataSource<T> {
     }
 
     /**
+     * Retourne la liste des items bruts de la liste.
+     * @returns {Array<T>} -
+     * @memberof VisualItemDataSource
+     */
+    public getRawItemsFromDisplay(): Array<T> {
+        return this.displayList.map(vi => vi.item);
+    }
+
+    /**
      * Retourne la liste des items sélectionnés en tant que liste simple.
      * @returns {Array<T>}  -
      * @memberof VisualItemDataSource
      */
     public getRawSelectedItems(): Array<T> {
         return this.sourceList.filter(vi => vi.selected).map(vi => vi.item);
+    }
+
+    /**
+     * Retourne la liste des items non sélectionnés en tant que liste simple.
+     * @returns {Array<T>}  -
+     * @memberof VisualItemDataSource
+     */
+    public getRawUnselectedItems(): Array<T> {
+        return this.sourceList.filter(vi => !vi.selected).map(vi => vi.item);
     }
 
     /**

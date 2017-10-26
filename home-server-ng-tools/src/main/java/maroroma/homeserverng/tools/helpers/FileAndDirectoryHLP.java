@@ -1,6 +1,10 @@
 package maroroma.homeserverng.tools.helpers;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -9,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.kamranzafar.jtar.TarEntry;
+import org.kamranzafar.jtar.TarOutputStream;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StreamUtils;
@@ -16,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 
 /**
@@ -25,6 +32,16 @@ import maroroma.homeserverng.tools.model.FileDescriptor;
  */
 @Log4j2
 public abstract class FileAndDirectoryHLP {
+
+	/**
+	 * Taille du buffer utilisé pour la lecture des fichiers à tarer.
+	 */
+	private static final int TAR_DEFAULT_BUFFER_SIZE = 2048;
+	
+	/**
+	 * Extension pour un fichier tar.
+	 */
+	private static final String TAR_EXTENSION = ".tar";
 
 	/**
 	 * Suppression recursive d'un ensemble de {@link File}. Si le {@link File} est un répertoire, le nettoye de manière récursive.
@@ -57,7 +74,7 @@ public abstract class FileAndDirectoryHLP {
 	public static Map<File, Boolean> deleteGenericFileWithStatus(final File... genericFilesToDelete) {
 
 		List<File> files = Arrays.asList(genericFilesToDelete);
-		
+
 		// liste des status à retourner.
 		Map<File, Boolean> returnValue = new ConcurrentHashMap<File, Boolean>();
 
@@ -70,12 +87,12 @@ public abstract class FileAndDirectoryHLP {
 					returnValue.putAll(deleteGenericFileWithStatus(subFiles));
 				}
 			}
-			
+
 			// rajout du fichier, que ce soit un répertoire ou un fichier simple.
 			returnValue.put(fileToDelete, fileToDelete.delete());
 
 		});
-		
+
 		return returnValue;
 
 	}
@@ -235,6 +252,65 @@ public abstract class FileAndDirectoryHLP {
 		Assert.notNull(parent, "parent can't be null or empty");
 		Assert.notNull(child, "parent can't be null or empty");
 		return FileAndDirectoryHLP.isParentOf(parent.createFile(), child.createFile());
+	}
+
+	/**
+	 * Convertit en fichier tar le répertoire en entrée.
+	 * @param srcDirectory  répertoire à tarer
+	 * @return descriptor du fichier final.
+	 * @throws HomeServerException -
+	 */
+	public static File tarDirectory(final File srcDirectory) throws HomeServerException {
+		return FileAndDirectoryHLP.tarDirectory(srcDirectory, null);
+	}
+
+	/**
+	 * Convertit en fichier tar le répertoire en entrée.
+	 * @param srcDirectory répertoire à tarer
+	 * @param targetFile fichier final
+	 * @return descriptor du fichier final.
+	 * @throws HomeServerException -
+	 */
+	public static File tarDirectory(final File srcDirectory, final File targetFile) throws HomeServerException {
+
+		// validation du répertoire
+		Assert.isValidDirectory(srcDirectory);
+
+		File tarFile = targetFile;
+
+		// fichier de sortie
+		if (tarFile == null) {
+			tarFile = new File(srcDirectory.getParentFile(), srcDirectory.getName() + TAR_EXTENSION);
+		}
+
+		try (
+				// fichier de sortie
+				FileOutputStream dest = new FileOutputStream(tarFile); 
+				// tar de sortie
+				TarOutputStream out = new TarOutputStream(new BufferedOutputStream(dest));) {
+
+			Arrays.stream(srcDirectory.listFiles())
+			.forEach(oneFile -> {
+				// pour chaque fichier, lecture du contenu pour recopie dans le tar
+				try (BufferedInputStream origin = new BufferedInputStream(new FileInputStream(oneFile));) {
+					out.putNextEntry(new TarEntry(oneFile, oneFile.getName()));
+					int count;
+					byte[] data = new byte[TAR_DEFAULT_BUFFER_SIZE];
+
+					while ((count = origin.read(data)) != -1) {
+						out.write(data, 0, count);
+					}
+
+					out.flush();
+				} catch (IOException e) {
+					throw new RuntimeHomeServerException(e);
+				}
+			});
+		} catch (RuntimeHomeServerException | IOException e) {
+			throw new HomeServerException("Une erreur est survenue lors de la création du fichier [" + tarFile.getAbsolutePath() + "]", e);
+		}
+
+		return tarFile;
 	}
 
 }

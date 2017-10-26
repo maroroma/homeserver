@@ -30,6 +30,9 @@ export class FileGlyphiconResolverPipe implements PipeTransform {
             if (FileDescriptor.isImageFile(value)) {
                 return returnValue + 'picture';
             }
+            if (FileDescriptor.isArchiveFile(value)) {
+                return returnValue + 'compressed';
+            }
 
 
             return returnValue + 'question-sign';

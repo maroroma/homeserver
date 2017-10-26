@@ -1,3 +1,4 @@
+import { MusicModule } from './music/music';
 import { FileBrowserModule } from './filemanager/filemanager';
 import { ReducerModule } from './reducer/reducer';
 import { SeedboxModule } from './seedbox/seedbox';
@@ -25,6 +26,7 @@ import { AppComponent } from './app.component';
     CommonGUIModule,
     SeedboxModule,
     ReducerModule,
+    MusicModule,
     FileBrowserModule,
     routing,
     BrowserAnimationsModule

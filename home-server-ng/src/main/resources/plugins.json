@@ -1,6 +1,6 @@
 [ {
   "id" : "music",
-  "enabled" : false
+  "enabled" : true
 }, {
   "id" : "watch",
   "enabled" : false

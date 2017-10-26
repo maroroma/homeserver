@@ -1,5 +1,7 @@
 package maroroma.homeserverng.tools.exceptions;
 
+import java.util.Optional;
+
 /**
  * Permet de transporter une {@link HomeServerException} en tant que {@link RuntimeException}.
  * <br /> mise en place pour pouvoir gérer les consumers des nouvelles opérations lambda de java 8.
@@ -13,6 +15,8 @@ public class RuntimeHomeServerException extends RuntimeException {
 	 * 
 	 */
 	private static final long serialVersionUID = 4308673215355546038L;
+	
+	private Optional<HomeServerException> innerException;
 
 	/**
 	 * Constructeur.
@@ -20,6 +24,16 @@ public class RuntimeHomeServerException extends RuntimeException {
 	 */
 	public RuntimeHomeServerException(final HomeServerException exception) {
 		super(exception);
+		this.innerException = Optional.of(exception);
+	}
+	
+	/**
+	 * Constructeur.
+	 * @param exception -
+	 */
+	public RuntimeHomeServerException(final Exception exception) {
+		super(exception);
+		this.innerException = Optional.empty();
 	}
 	
 	/**
@@ -27,7 +41,7 @@ public class RuntimeHomeServerException extends RuntimeException {
 	 * @return -
 	 */
 	public HomeServerException getInnerHomeServerException() {
-		return (HomeServerException) this.getCause();
+		return this.innerException.orElse(new HomeServerException("Erreur inconnue", this.getCause()));
 	}
 	
 }

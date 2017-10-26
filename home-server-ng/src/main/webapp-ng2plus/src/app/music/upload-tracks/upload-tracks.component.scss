@@ -1,0 +1,23 @@
+@import '../../common-gui/styles/variables.scss';
+.upload-zone {
+    text-align: center;
+}
+
+.mp3-file {
+    &-selected {
+        background-color: $default-selected-background;
+        &:hover {
+            background-color: $default-selected-background;
+        }
+    }
+    &:hover {
+        background-color: $default-hover-background;
+    }
+    &-infos {
+        text-align: center;
+    }
+    &-name {
+        padding-left: 3vw;
+        word-break: break-all;
+    }
+}

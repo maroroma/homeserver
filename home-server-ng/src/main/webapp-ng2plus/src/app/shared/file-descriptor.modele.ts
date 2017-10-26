@@ -7,6 +7,7 @@ export class FileDescriptor {
     private static readonly SUBTITLE_EXTENSIONS = ['srt'];
     private static readonly MUSIC_EXTENSIONS = ['mp3', 'wav'];
     private static readonly IMAGE_EXTENSIONS = ['jpeg', 'png', 'jpg'];
+    private static readonly ARCHIVE_EXTENSIONS = ['tar', 'zip', 'rar', '7z'];
 
     public name: string;
     public fullName: string;
@@ -51,7 +52,12 @@ export class FileDescriptor {
     public static isSubtitleFile(file: FileDescriptor): boolean {
         return FilterTools.contains(FileDescriptor.SUBTITLE_EXTENSIONS, file.extension);
     }
+
     public static isImageFile(file: FileDescriptor): boolean {
         return FilterTools.contains(FileDescriptor.IMAGE_EXTENSIONS, file.extension);
+    }
+
+    public static isArchiveFile(file: FileDescriptor): boolean {
+        return FilterTools.contains(FileDescriptor.ARCHIVE_EXTENSIONS, file.extension);
     }
 }

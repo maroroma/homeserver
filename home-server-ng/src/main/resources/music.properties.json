@@ -1,6 +1,7 @@
 [ {
   "id" : "homeserver.music.directory",
-  "value" : "D:/tmp/TEST/reducer/reduced/",
+  "value" : "D:/temp/TEST/music/workingdir",
   "description" : "Emplacement pour les fichiers musicaux",
-  "readOnly" : false
-}]
+  "readOnly" : false,
+  "moduleId" : "music"
+} ]
