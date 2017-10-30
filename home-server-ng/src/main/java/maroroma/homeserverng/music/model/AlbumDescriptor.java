@@ -1,5 +1,7 @@
 package maroroma.homeserverng.music.model;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,6 +38,11 @@ public class AlbumDescriptor {
 	 * Album art associé.
 	 */
 	private FileDescriptor albumart;
+	
+	/**
+	 * Temps de la dernier rafraichissement pour l'album descriptor.
+	 */
+	private LocalDateTime lastRefresh;
 	
 	
 }

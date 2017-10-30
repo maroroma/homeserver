@@ -5,7 +5,7 @@ import { TrackDescriptor } from './../models/track-descriptor.modele';
 import { MusicService } from './../music.service';
 import { VisualItemDataSource } from './../../shared/visual-item-datasource.modele';
 import { AlbumDescriptor } from './../models/album-descriptor.modele';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'homeserver-download-tracks',
@@ -18,6 +18,9 @@ export class DownloadTracksComponent implements OnInit {
     public albumDescriptor: AlbumDescriptor;
 
     public trackList: VisualItemDataSource<TrackDescriptor>;
+
+    @Output()
+    public goToNextStep = new EventEmitter<any>();
 
     /**
        * Construction de la datagrid
@@ -47,5 +50,10 @@ export class DownloadTracksComponent implements OnInit {
         this.musicService.getTracks().subscribe(res => {
             this.trackList.updateSourceList(res);
         });
+    }
+
+    finish(): void {
+        this.musicService.finish();
+        this.goToNextStep.emit();
     }
 }

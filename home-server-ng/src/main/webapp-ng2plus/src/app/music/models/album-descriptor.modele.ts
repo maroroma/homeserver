@@ -6,12 +6,14 @@ export class AlbumDescriptor {
     public artistName: string;
     public directoryDescriptor: DirectoryDescriptor;
     public albumart: FileDescriptor;
+    public lastRefresh: string;
 
     public static dfFromRaw(rawFile: any): AlbumDescriptor {
         const returnVAlue = new AlbumDescriptor();
         returnVAlue.albumName = rawFile.albumName;
         returnVAlue.artistName = rawFile.artistName;
         returnVAlue.directoryDescriptor = DirectoryDescriptor.dfFromRaw(rawFile.directoryDescriptor);
+        returnVAlue.lastRefresh = rawFile.lastRefresh;
         if (rawFile.albumart !== null) {
             returnVAlue.albumart = FileDescriptor.fromRaw(rawFile.albumart);
         }

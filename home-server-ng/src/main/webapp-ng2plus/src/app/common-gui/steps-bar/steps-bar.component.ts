@@ -39,7 +39,7 @@ export class StepsBarComponent implements OnInit {
         StepsBuilder.setCurrentStep(newCurrentStepIndex, this.steps);
     }
 
-    private firstStep(): void {
+    public firstStep(): void {
         this.setCurrentStep(0);
     }
 }

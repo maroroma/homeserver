@@ -15,6 +15,6 @@
         <homeserver-track-list (goToNextStep)="stepsBar.nextStep()"></homeserver-track-list>
     </div>
     <div *ngIf="steps[4].isCurrent">
-        <homeserver-download-tracks (goToNextStep)="stepsBar.nextStep()"></homeserver-download-tracks>
+        <homeserver-download-tracks (goToNextStep)="stepsBar.firstStep()"></homeserver-download-tracks>
     </div>
 </div>

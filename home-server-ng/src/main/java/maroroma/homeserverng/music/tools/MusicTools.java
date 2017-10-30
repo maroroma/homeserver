@@ -1,6 +1,8 @@
 package maroroma.homeserverng.music.tools;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.util.MimeTypeUtils;
@@ -40,6 +42,11 @@ public abstract class MusicTools {
 	public static final String ALBUM_ART_NAME_FILE_NAME = "albumart";
 	
 	/**
+	 * Nom sans extension d'un fichier folder.
+	 */
+	public static final String FOLDER_FILE_NAME = "folder";
+	
+	/**
 	 * Permet de formatter le nom d'un albumart.
 	 */
 	public static final String ALBUM_ART_NAME_FORMAT =  ALBUM_ART_NAME_FILE_NAME + ".%s";
@@ -47,7 +54,22 @@ public abstract class MusicTools {
 	/**
 	 * Permet de formatter le nom d'un albumart pour le fichier folder.
 	 */
-	public static final String FOLDER_NAME_FORMAT = "folder.%s";
+	public static final String FOLDER_NAME_FORMAT = FOLDER_FILE_NAME + ".%s";
+	
+	/**
+	 * Supprime les fichiers d'albumart si déjà présents.
+	 * @param rawDirectory -
+	 */
+	public static void removeExistingAlbumArt(final File rawDirectory) {
+		Assert.notNull(rawDirectory, "rawDirectory can't be null or empty");
+		Assert.isValidDirectory(rawDirectory);
+		
+		Arrays.stream(rawDirectory.listFiles(CommonFileFilter.fileNameWithoutExtensionIs(ALBUM_ART_NAME_FILE_NAME)))
+		.forEach(oneFile -> oneFile.delete());
+		
+		Arrays.stream(rawDirectory.listFiles(CommonFileFilter.fileNameWithoutExtensionIs(FOLDER_FILE_NAME)))
+		.forEach(oneFile -> oneFile.delete());
+	}
 	
 	/**
 	 * PErmet de générer un {@link AlbumDescriptor} à partir d'un répertoire de travail.
@@ -63,6 +85,7 @@ public abstract class MusicTools {
 		
 		// création du builder
 		AlbumDescriptor.AlbumDescriptorBuilder builder = AlbumDescriptor.builder()
+				.lastRefresh(LocalDateTime.now())
 		.albumName(splitted[1])
 		.artistName(splitted[0])
 		.directoryDescriptor(FileDirectoryDescriptor.createSimple(rawDirectory));

@@ -15,6 +15,7 @@ export class NotifyerService {
     currentState = 'hide';
     defaultTimeOut = 1500;
     message: string;
+    detail: string;
     forInfo = false;
     forSuccess = false;
     forError = false;
@@ -28,9 +29,10 @@ export class NotifyerService {
         this.currentState = 'hide';
     }
 
-    public display(message: string, timeout?: number): void {
+    public display(message: string, detail?: string, timeout?: number): void {
         this.message = message;
         this.currentState = 'display';
+        this.detail = detail;
         const displayTime = timeout ? timeout : this.defaultTimeOut;
         const subscription = TimerObservable.create(displayTime, displayTime).subscribe(t => {
             this.hide();
@@ -43,22 +45,22 @@ export class NotifyerService {
         this.forInfo = true;
         this.forError = false;
         this.blocking = false;
-        this.display(message, timeout);
+        this.display(message, null, timeout);
     }
     public showSuccess(message: string, timeout?: number): void {
         this.forSuccess = true;
         this.forInfo = false;
         this.forError = false;
         this.blocking = false;
-        this.display(message, timeout);
+        this.display(message, null, timeout);
     }
 
-    public showError(message: string, timeout?: number): void {
+    public showError(message: string, detail?: string, timeout?: number): void {
         this.forSuccess = false;
         this.forInfo = false;
         this.forError = true;
         this.blocking = false;
-        this.display(message, timeout);
+        this.display(message, detail, timeout);
     }
 
     public successfullSave(): void {
@@ -75,10 +77,10 @@ export class NotifyerService {
             msg = msg + file.name;
         }
         msg = msg + ' terminé';
-        this.showSuccess(msg)
+        this.showSuccess(msg);
     }
 
-    public waitingInfo(message: string) {
+    public waitingInfo(message: string, detail?: string) {
         // this.forInfo = true;
         // this.forError = false;
         // this.forSuccess = false;
@@ -86,6 +88,7 @@ export class NotifyerService {
         this.reinitStatusExcept('forInfo', 'blocking');
         this.currentState = 'display';
         this.message = message;
+        this.detail = detail;
     }
 
     private reinitStatus(): void {

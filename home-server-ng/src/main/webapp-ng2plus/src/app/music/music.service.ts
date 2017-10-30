@@ -30,10 +30,17 @@ export class MusicService {
                 return this.currentAlbumDescriptor;
             })
             .catch((err, data) => {
-                this.notifyer.showError('Une erreur est survenue lors de la création du répertoire de travail');
-                return Observable.of(null);
+                this.notifyer.showError('Une erreur est survenue lors de la création du répertoire de travail', err.json().message);
+                throw new Error(err.json().message);
             });
 
+    }
+
+    /**
+     * Fin de traitement, on réinitialise l'album descriptor.
+     */
+    public finish(): void {
+        this.currentAlbumDescriptor = null;
     }
 
     /**
@@ -56,8 +63,8 @@ export class MusicService {
                 return this.currentAlbumDescriptor;
             })
             .catch((err, data) => {
-                this.notifyer.showError('Une erreur est survenue lors l\'ajout de l\'albumart');
-                return Observable.of(null);
+                this.notifyer.showError('Une erreur est survenue lors l\'ajout de l\'albumart', err.json().message);
+                throw new Error(err.json().message);
             });
 
 
@@ -98,8 +105,8 @@ export class MusicService {
             this.notifyer.showSuccess('Tous les fichiers ont bien été uploadés');
             return this.getTracks();
         }).catch((err, data) => {
-            this.notifyer.showError('Une erreur est survenue lors de l\'upload des fichiers');
-            return Observable.of(new Array<TrackDescriptor>());
+            this.notifyer.showError('Une erreur est survenue lors de l\'upload des fichiers', err.json().message);
+            throw new Error(err.json().message);
         });
     }
 

@@ -23,6 +23,7 @@ import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.CommonFileFilter;
 import maroroma.homeserverng.tools.helpers.FileAndDirectoryHLP;
+import maroroma.homeserverng.tools.helpers.FileExtensionHelper;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 
 /**
@@ -69,20 +70,27 @@ public class MusicServiceImpl implements MusicService {
 
 	@Override
 	public AlbumDescriptor addAlbumArt(final String toUpdatePath, final MultipartFile albumart) throws HomeServerException {
+		
+		// validation de l'album directory
 		File albumDirectory = this.validateAndReturnAlbumDirectory(toUpdatePath);
 
+		// validation du type de fichier
+		Assert.hasValidExtension(albumart, FileExtensionHelper.JPEG, FileExtensionHelper.JPG, FileExtensionHelper.PNG);
+		
 		Assert.notNull(albumart, "albumart can't be null");
 
-		// enregistrement de l'image initiale
+		// suppression si déjà présent
+		MusicTools.removeExistingAlbumArt(albumDirectory);
 
 		// fichier final (album art)
 		File albumArtFile = new File(albumDirectory, 
 				String.format(MusicTools.ALBUM_ART_NAME_FORMAT, FilenameUtils.getExtension(albumart.getOriginalFilename())));
+		
 		// folder
 		File folderArtFile = new File(albumDirectory, 
 				String.format(MusicTools.FOLDER_NAME_FORMAT, FilenameUtils.getExtension(albumart.getOriginalFilename())));
 
-		// copie de l'image
+		// création de l'album art.
 		FileAndDirectoryHLP.convertByteArrayToFile(albumart, albumArtFile);
 
 		// duplication pour le folder
@@ -116,8 +124,10 @@ public class MusicServiceImpl implements MusicService {
 		AlbumDescriptor albumDescriptor = MusicTools.createFromDirectory(albumDirectory);
 		Assert.notNull(oneTrack, "oneTrack can't be null");
 
+		// validation du type de fichier
+		Assert.hasValidExtension(oneTrack, FileExtensionHelper.MP3);
 
-		// fichier final
+		// fichier final	
 		File oneTrackFile = new File(albumDirectory, 
 				oneTrack.getOriginalFilename());
 
