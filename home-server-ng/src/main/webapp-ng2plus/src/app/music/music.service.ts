@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs/Subject';
+import { ChainedHttpCalls } from './../shared/chained-http-calls.service';
 import { TrackDescriptor } from './models/track-descriptor.modele';
 import { Observable } from 'rxjs/Observable';
 import { JsonTools } from './../shared/json-tools.service';
@@ -17,9 +19,9 @@ export class MusicService {
 
     /**
      * Création du répertoire de travail
-     * @param albumDescriptor 
+     * @param albumDescriptor
      */
-    public prepareWorkingDirectory(albumDescriptor: AlbumDescriptor): Observable<AlbumDescriptor> {
+    public prepareWorkingDirectory(albumDescriptor: AlbumDescriptor): Observable<AlbumDescriptor | any> {
         this.currentAlbumDescriptor = null;
 
         return this.http.post(ApiConstants.MUSIC_WORKING_DIR_API, albumDescriptor)
@@ -27,6 +29,7 @@ export class MusicService {
                 this.notifyer.showSuccess('Répertoire de travail créé');
 
                 this.currentAlbumDescriptor = AlbumDescriptor.dfFromRaw(res.json());
+
                 return this.currentAlbumDescriptor;
             })
             .catch((err, data) => {
@@ -45,18 +48,19 @@ export class MusicService {
 
     /**
      * Ajout d'un album art
-     * @param {FileList} fileList 
-     * @returns {Observable<AlbumDescriptor>} 
+     * @param {FileList} fileList
+     * @returns {Observable<AlbumDescriptor>}
      * @memberof MusicService
      */
-    public addAlbumArt(fileList: FileList): Observable<AlbumDescriptor> {
+    public addAlbumArt(fileList: FileList): Observable<AlbumDescriptor | {}> {
         // génération des x appels
 
         const fd = new FormData();
         fd.append('albumart', fileList[0]);
         return this.http.patch(ApiConstants.MUSIC_WORKING_DIR_API + '/'
             + this.currentAlbumDescriptor.directoryDescriptor.id
-            + '/albumart/', fd).map(res => {
+            + '/albumart/', fd)
+            .map(res => {
                 this.notifyer.showSuccess('albumart rajouté');
 
                 this.currentAlbumDescriptor = AlbumDescriptor.dfFromRaw(res.json());
@@ -90,24 +94,28 @@ export class MusicService {
      * @returns {Observable<Array<TrackDescriptor>>} -
      * @memberof MusicService
      */
-    public sendTracks(fileList: Array<File>): Observable<Array<TrackDescriptor>> {
-        // génération des x appels
+    public sendTracks(fileList: Array<File>): ChainedHttpCalls<TrackDescriptor, File> {
+        // public sendTracks(fileList: Array<File>): Subject<Array<TrackDescriptor>> {
 
-        const responsesPromises = fileList.map(oneFile => {
+        const chaineCall = new ChainedHttpCalls<TrackDescriptor, File>(fileList);
+
+        // const returnValue =
+        chaineCall.submit(oneFile => {
             const fd = new FormData();
             fd.append('track', oneFile);
             return this.http.post(ApiConstants.MUSIC_WORKING_DIR_API + '/'
                 + this.currentAlbumDescriptor.directoryDescriptor.id
                 + '/tracks', fd);
-        });
+        }, response => TrackDescriptor.dfFromRaw(response.json()));
 
-        return Observable.forkJoin(responsesPromises).flatMap(res => {
-            this.notifyer.showSuccess('Tous les fichiers ont bien été uploadés');
-            return this.getTracks();
-        }).catch((err, data) => {
-            this.notifyer.showError('Une erreur est survenue lors de l\'upload des fichiers', err.json().message);
-            throw new Error(err.json().message);
-        });
+
+        return chaineCall;
+
+        // returnValue.subscribe(res => this.notifyer.showSuccess('Tous les fichiers ont bien été uploadés'));
+
+        // return returnValue;
+
+
     }
 
     /**

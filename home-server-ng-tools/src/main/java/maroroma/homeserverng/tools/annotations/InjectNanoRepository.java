@@ -5,6 +5,9 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.function.Consumer;
+
+import maroroma.homeserverng.tools.repositories.DefaultPreProcessor;
 
 /**
  * Annotation permettant d'injecter automatiquement un NanoRepository sur une classe.
@@ -36,6 +39,12 @@ public @interface InjectNanoRepository {
 	 * @return -
 	 */
 	Property file();
+	
+	/**
+	 * Préprocessor utilisé avant les opérations de sauvegarde.
+	 * @return -
+	 */
+	Class<? extends Consumer<?>> preProcessor() default DefaultPreProcessor.class;
 	
 	
 }

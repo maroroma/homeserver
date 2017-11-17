@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import maroroma.homeserverng.administration.AdministrationModuleDescriptor;
-import maroroma.homeserverng.administration.model.HomeServerRunningStatus;
+import maroroma.homeserverng.administration.model.HomeServerStatus;
 import maroroma.homeserverng.administration.model.UploadPropertiesResponse;
 import maroroma.homeserverng.administration.services.AdministrationService;
 import maroroma.homeserverng.administration.services.ServerStatusHolder;
@@ -67,7 +67,7 @@ public class AdministrationController {
 	 */
 	@RequestMapping("/administration/version")
 	public ResponseEntity<String> getVersion() {
-		return ResponseEntity.ok(this.serviceAdministration.getHomeServerVersion());
+		return ResponseEntity.ok(this.statusHolder.getStatus().getVersion());
 	}
 	
 	/**
@@ -125,19 +125,19 @@ public class AdministrationController {
 	 * @throws HomeServerException -
 	 */
 	@RequestMapping(value = "/administration/server/stop", method = { RequestMethod.PATCH })
-	public ResponseEntity<HomeServerRunningStatus> stop() 
+	public ResponseEntity<HomeServerStatus> stop() 
 			throws HomeServerException {
 		return ResponseEntity.ok(
 		this.serviceAdministration.stop());
 	}
 	
 	/**
-	 * Permet de lancer une demande d'arrêt au server.
+	 * Permet de récupérer une mini stat sur le status du serveur.
 	 * @throws HomeServerException -
 	 * @return -
 	 */
 	@RequestMapping("/administration/server/status")
-	public ResponseEntity<HomeServerRunningStatus> serverSTatus() throws HomeServerException {
+	public ResponseEntity<HomeServerStatus> serverSTatus() throws HomeServerException {
 		return ResponseEntity.ok(
 		this.statusHolder.getStatus());
 	}

@@ -239,8 +239,6 @@ public class MailBuilder {
 			//			returnValue.setText(this.simpleContent, SUBJECT_AND_TEXT_ENCODING);
 
 
-
-
 			for (String clientAddress : this.sendToList) {
 				returnValue.addRecipient(Message.RecipientType.TO, new InternetAddress(clientAddress));
 			}

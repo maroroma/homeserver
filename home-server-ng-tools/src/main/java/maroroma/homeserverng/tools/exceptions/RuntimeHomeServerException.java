@@ -16,6 +16,9 @@ public class RuntimeHomeServerException extends RuntimeException {
 	 */
 	private static final long serialVersionUID = 4308673215355546038L;
 	
+	/**
+	 * Exception interne.
+	 */
 	private Optional<HomeServerException> innerException;
 
 	/**

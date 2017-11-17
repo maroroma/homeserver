@@ -1,0 +1,7 @@
+[ {
+  "id" : "homeserver.administrations.drives",
+  "value" : "D:/temp/TEST/music/musicworkingdir",
+  "description" : "Chemin vers les montages unix",
+  "readOnly" : false,
+  "moduleId" : "administration"
+}]

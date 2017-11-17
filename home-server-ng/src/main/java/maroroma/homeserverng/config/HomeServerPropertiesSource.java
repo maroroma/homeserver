@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.config.PropertySetterListener;
+import maroroma.homeserverng.tools.config.PropertyValueResolver;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.helpers.Assert;
 
@@ -147,6 +148,15 @@ public class HomeServerPropertiesSource implements PropertySetterListener {
 	public void onSetProperty(final HomeServerPropertyHolder homeServerPropertyHolder) {
 		// sur une modification de la propriété, enregistrement du fichier
 		this.save();
+	}
+	
+	/**
+	 * Application d'un {@link PropertyValueResolver} à l'ensemble des property holder.
+	 * @param resolver -
+	 */
+	public void applyResolver(final PropertyValueResolver resolver) {
+		Assert.notNull(resolver, "resolver can't be null");
+		this.propertiesMap.values().forEach(oneProp -> oneProp.setResolver(resolver));
 	}
 	
 }

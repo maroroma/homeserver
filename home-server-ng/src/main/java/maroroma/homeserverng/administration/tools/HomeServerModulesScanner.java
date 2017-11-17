@@ -79,6 +79,11 @@ public class HomeServerModulesScanner {
 
 	}
 
+	/**
+	 * Met à jour la liste en entrée en fonction des status qui ont été persistés.
+	 * @param returnValue -
+	 * @throws HomeServerException -
+	 */
 	public void loadEnableStatuses(final Map<String, HomeServerModuleHandler> returnValue) throws HomeServerException {
 		// récupération de la configuration d'activation des plugins
 		File pluginConfiguration = new File(this.mainConfigDir, FILE_PLUGINS_JSON);

@@ -21,7 +21,7 @@ import maroroma.homeserverng.tools.helpers.Tuple;
  */
 @Data
 @AllArgsConstructor
-@JsonIgnoreProperties({"listeners"})
+@JsonIgnoreProperties({"listeners", "resolvedValue", "resolver"})
 public class HomeServerPropertyHolder {
 
 	/**
@@ -68,9 +68,13 @@ public class HomeServerPropertyHolder {
 	/**
 	 * Liste des {@link PropertySetterListener} à notifier en cas de modification des propriétés.
 	 */
-	
 	private List<PropertySetterListener> listeners = new ArrayList<>();
 	
+	/**
+	 * Permet de résoudre une valeur si elle dépend d'autres propriétés.
+	 */
+	private PropertyValueResolver resolver;
+		
 	/**
 	 * Constructeur.
 	 */
@@ -122,7 +126,7 @@ public class HomeServerPropertyHolder {
 	 * @return -
 	 */
 	public File asFile() {
-		return new File(this.getValue());
+		return new File(this.getResolvedValue());
 	}
 	
 	/**
@@ -143,7 +147,7 @@ public class HomeServerPropertyHolder {
 	 * @return  -
 	 */
 	public String asClassPathPath() {
-		return "file:" + this.getValue();
+		return "file:" + this.getResolvedValue();
 	}
 	
 	/**
@@ -151,7 +155,7 @@ public class HomeServerPropertyHolder {
 	 * @return -
 	 */
 	public int asInt() {
-		return Integer.parseInt(this.getValue());
+		return Integer.parseInt(this.getResolvedValue());
 	}
 	
 	/**
@@ -160,7 +164,7 @@ public class HomeServerPropertyHolder {
 	 * @return -
 	 */
 	public String[] asStringArray(final String splitChar) {
-		return this.getValue().split(splitChar);
+		return this.getResolvedValue().split(splitChar);
 	}
 	
 	/**
@@ -198,6 +202,18 @@ public class HomeServerPropertyHolder {
 		Assert.isTrue(sizes.size() == DIMENSION_EXPECTED_SIZE,
 				"La liste pour la conversion dans une dimension doit avoir strictement 2 éléments");
 		return Tuple.from(Integer.parseInt(sizes.get(0)), Integer.parseInt(sizes.get(1)));
+	}
+	
+	/**
+	 * Retourne la valeur interprée par rapport à un resolver.
+	 * @return -
+	 */
+	public String getResolvedValue() {
+		if (this.resolver != null) {
+			return this.resolver.resolve(this.value);
+		} else {
+			return this.getValue();
+		}
 	}
 	
 }

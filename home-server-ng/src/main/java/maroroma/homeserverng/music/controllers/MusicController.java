@@ -37,9 +37,10 @@ public class MusicController {
 	 * Création du répertoire de travail?
 	 * @param request -
 	 * @return -
+	 * @throws HomeServerException - 
 	 */
 	@PostMapping("/music/workingdirectories")
-	public ResponseEntity<AlbumDescriptor> prepareWorkingDirectory(@RequestBody final AlbumDescriptor request) {
+	public ResponseEntity<AlbumDescriptor> prepareWorkingDirectory(@RequestBody final AlbumDescriptor request) throws HomeServerException {
 		return ResponseEntity.ok(this.service.prepareWorkingDirectory(request));
 	}
 

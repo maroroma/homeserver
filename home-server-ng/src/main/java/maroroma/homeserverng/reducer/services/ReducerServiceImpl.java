@@ -92,7 +92,7 @@ public class ReducerServiceImpl implements ReducerService {
 		Assert.hasLength(imageInput.getData(), "imageInput.data can't be null or empty");
 		Assert.isTrue(Arrays.asList(this.extensions.asStringArray())
 				.stream().anyMatch(extension -> imageInput.getOriginalName().toLowerCase().endsWith(extension.toLowerCase())),
-				"Le fichier ne possède pas une extension supportée (" + this.extensions.getValue());
+				"Le fichier ne possède pas une extension supportée (" + this.extensions.getResolvedValue());
 
 		File uploadConcreteDir = uploadDir.asFile();
 

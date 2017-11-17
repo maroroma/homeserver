@@ -87,8 +87,8 @@ public class TransmissionClientImpl implements TransmissionClient {
 					tryWithRestTemplate(
 					request -> {
 						// récupération de la liste
-						return rt.postForEntity(this.transmissionUrl.getValue()
-								+ this.transmissionGetUri.getValue(), 
+						return rt.postForEntity(this.transmissionUrl.getResolvedValue()
+								+ this.transmissionGetUri.getResolvedValue(), 
 								request, GetTorrentResponse.class);
 					})
 					// sur erreur, on récupère le token transmission, et on change l'input pour le prochain essai
@@ -179,8 +179,8 @@ public class TransmissionClientImpl implements TransmissionClient {
 
 		Retryer.<RemoveTorrentRequest, String>tryWithRestTemplate(request -> {
 			// récupération de la liste
-			return rt.postForEntity(this.transmissionUrl.getValue()
-					+ this.transmissionRemoveUri.getValue(), 
+			return rt.postForEntity(this.transmissionUrl.getResolvedValue()
+					+ this.transmissionRemoveUri.getResolvedValue(), 
 					request, String.class); 
 		})
 		.onExceptionTransformInput(HttpClientErrorException.class, (request, exception)

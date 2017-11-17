@@ -1,0 +1,12 @@
+@import 'variables.scss';
+.progress-bar {
+    &-success {
+        background-color: $classic-green;
+    }
+    &-warning {
+        background-color: $classic-warning;
+    }
+    &-danger {
+        background-color: $classic-danger;
+    }
+}

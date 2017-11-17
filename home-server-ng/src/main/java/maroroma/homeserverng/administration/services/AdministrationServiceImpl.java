@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.administration.model.FullConfigurationHolder;
 import maroroma.homeserverng.administration.model.HomeServerRunningStatus;
+import maroroma.homeserverng.administration.model.HomeServerStatus;
 import maroroma.homeserverng.administration.model.UploadPropertiesResponse;
 import maroroma.homeserverng.administration.tools.HomeServerModulesScanner;
 import maroroma.homeserverng.tools.annotations.HomeServerModuleDescriptor;
@@ -82,11 +82,7 @@ public class AdministrationServiceImpl implements AdministrationService {
 	@Autowired
 	private CacheService cacheService;
 
-	/**
-	 * Version courante de l'application.
-	 */
-	@Value("${homeserver.version}")
-	private String homeServerVersion;
+	
 
 	/**
 	 * Liste des plugins du server.
@@ -138,15 +134,10 @@ public class AdministrationServiceImpl implements AdministrationService {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	private HomeServerRunningStatus stopServer() throws HomeServerException {
+	private HomeServerStatus stopServer() throws HomeServerException {
 		this.statusHolder.setStatus(HomeServerRunningStatus.STOPPING);
 		this.restarter.scheduleStop();
-		return this.getServerStatus();
-	}
-	
-	@Override
-	public  HomeServerRunningStatus getServerStatus() {
-		return this.statusHolder.getStatus(); 
+		return this.statusHolder.getStatus();
 	}
 
 	/**
@@ -220,7 +211,7 @@ public class AdministrationServiceImpl implements AdministrationService {
 	 * @throws HomeServerException 
 	 */
 	@Override
-	public HomeServerRunningStatus stop() throws HomeServerException {
+	public HomeServerStatus stop() throws HomeServerException {
 		return this.stopServer();
 	}
 
@@ -231,14 +222,6 @@ public class AdministrationServiceImpl implements AdministrationService {
 	public HomeServerModuleHandler getHomeServerModule(final HomeServerModuleDescriptor descriptor)
 			throws HomeServerException {
 		return this.pluginList.get(descriptor.moduleId());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getHomeServerVersion() {
-		return this.homeServerVersion;
 	}
 
 	/**

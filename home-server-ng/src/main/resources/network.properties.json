@@ -6,7 +6,7 @@
   "moduleId" : "network"
 }, {
   "id" : "homeserver.network.servers.store",
-  "value" : "D:/RORO/WorkspaceHomeServerV2/home-server-ng/src/main/resources/servers.json",
+  "value" : "${homeserver.config.dir}/servers.json",
   "description" : "Emplacement de sauvegarde pour la liste des serveurs.",
   "readOnly" : false,
   "moduleId" : "network"

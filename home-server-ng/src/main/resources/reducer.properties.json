@@ -1,21 +1,25 @@
 [ {
-  "id" : "homeserver.reducer.reducedimages.directory",
-  "value" : "D:/tmp/TEST/reducer/reduced/",
-  "description" : "Emplacement pour les fichiers réduits",
-  "readOnly" : false
-}, {
   "id" : "homeserver.reducer.reducedimages.supportedextensions",
   "value" : "PNG,JPG,JPEG",
   "description" : "extensions gérées pour le reducer",
-  "readOnly" : false
+  "readOnly" : false,
+  "moduleId" : "reducer"
+}, {
+  "id" : "homeserver.reducer.reducedimages.directory",
+  "value" : "D:/tmp/TEST/reducer/reduced/",
+  "description" : "Emplacement pour les fichiers réduits",
+  "readOnly" : false,
+  "moduleId" : "reducer"
 }, {
   "id" : "homeserver.reducer.mails.store",
-  "value" : "D:/RORO/WorkspaceHomeServerV2/home-server-ng/src/main/resources/reducermails.json",
+  "value" : "${homeserver.config.dir}/reducermails.json",
   "description" : "Emplacement de sauvegarde pour les mails utilisés lors de réduction.",
-  "readOnly" : false
+  "readOnly" : false,
+  "moduleId" : "reducer"
 }, {
   "id" : "homeserver.reducer.reducedimages.maxsize",
   "value" : "1024",
   "description" : "Taille max de l'image pour la réduction",
-  "readOnly" : false
-}]
+  "readOnly" : false,
+  "moduleId" : "reducer"
+} ]

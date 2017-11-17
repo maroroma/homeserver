@@ -15,7 +15,8 @@ import maroroma.homeserverng.tools.annotations.HomeServerModuleDescriptor;
 		cssMenu = "glyphicon glyphicon-cog",
 		hasServerSide = true,
 		hasClientSide = true,
-		isReadOnly = true
+		isReadOnly = true,
+		propertiesFile = "administration.properties.json"
 		)
 public class AdministrationModuleDescriptor {
 

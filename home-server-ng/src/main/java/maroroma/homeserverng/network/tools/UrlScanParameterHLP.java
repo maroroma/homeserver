@@ -79,7 +79,7 @@ public class UrlScanParameterHLP {
 	 * @return -
 	 */
 	private String[] splitIp(final HomeServerPropertyHolder property) {
-		return property.getValue().split("\\.");
+		return property.getResolvedValue().split("\\.");
 	}
 	
 	/**

@@ -1,7 +1,5 @@
 package maroroma.homeserverng.music.model;
 
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +17,12 @@ import maroroma.homeserverng.tools.model.FileDirectoryDescriptor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlbumDescriptor {
+	
+	/**
+	 * Identifiant de l'album. Correspond à l'identifiant base 64 du répertoire correspondant à l'album.
+	 */
+	private String id;
+	
 	/**
 	 * Nom de l'album.
 	 */
@@ -42,7 +46,7 @@ public class AlbumDescriptor {
 	/**
 	 * Temps de la dernier rafraichissement pour l'album descriptor.
 	 */
-	private LocalDateTime lastRefresh;
+	private long lastRefresh;
 	
 	
 }

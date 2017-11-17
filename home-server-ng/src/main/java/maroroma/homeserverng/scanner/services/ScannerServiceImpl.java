@@ -93,12 +93,12 @@ public class ScannerServiceImpl implements ScannerService {
 	public void deleteScan(final String fileName) {
 		log.info("Demande de suppression du fichier [" 
 				+ fileName + "] dans le répertoire [" 
-				+ this.doneScansDirectory.getValue() + "]");
+				+ this.doneScansDirectory.getResolvedValue() + "]");
 
 		File[] candidateFiles = this.doneScansDirectory.asFile().listFiles(CommonFileFilter.fileNameFilter(fileName));
 		Assert.isTrue(candidateFiles.length == 1 && candidateFiles[0].exists(), "Fichier [" 
 				+ fileName + "] dans le répertoire [" 
-				+ this.doneScansDirectory.getValue() + "] non trouvé");
+				+ this.doneScansDirectory.getResolvedValue() + "] non trouvé");
 
 		candidateFiles[0].delete();
 		log.info("Suppression ok du fichier [" + candidateFiles[0].getAbsolutePath() + "] ok");
@@ -153,8 +153,8 @@ public class ScannerServiceImpl implements ScannerService {
 			//			String cmdScanFormat = "sudo scanimage -d %s --mode %s > %s";
 			String cmdScanFormat = "scanimage -d %s --mode %s > %s";
 			// fichier de sortie pnm
-			File pnmFile = new File(this.doneScansDirectory.getValue(), request.getFileName() + ".pnm");
-			String cmdScan = String.format(cmdScanFormat, this.deviceID.getValue(), request.getColorMode().getCode(), pnmFile.getAbsolutePath());
+			File pnmFile = new File(this.doneScansDirectory.getResolvedValue(), request.getFileName() + ".pnm");
+			String cmdScan = String.format(cmdScanFormat, this.deviceID.getResolvedValue(), request.getColorMode().getCode(), pnmFile.getAbsolutePath());
 			log.info("Commande de scan à exécuter : [" + cmdScan + "]");
 			
 			this.scannerEventEmitter.emitScanRunning();
@@ -164,7 +164,7 @@ public class ScannerServiceImpl implements ScannerService {
 
 			// commande de conversion au format jpeg
 			String cmdConvertFormat = "pnmtojpeg %s > %s";
-			File jpgFile = new File(this.doneScansDirectory.getValue(), request.getFileName() + ".jpeg");
+			File jpgFile = new File(this.doneScansDirectory.getResolvedValue(), request.getFileName() + ".jpeg");
 			String cmdConvert = String.format(cmdConvertFormat, pnmFile.getAbsolutePath(), jpgFile.getAbsolutePath());
 			log.info("Commande de conversion à exécuter : [" + cmdConvert + "]");
 			this.scannerEventEmitter.emitConversionRunning();

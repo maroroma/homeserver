@@ -3,6 +3,7 @@ package maroroma.homeserverng.config;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.InvalidPropertyException;
@@ -16,6 +17,7 @@ import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.config.HomeServerPluginPropertiesManager;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.helpers.Assert;
+import maroroma.homeserverng.tools.repositories.DefaultPreProcessor;
 import maroroma.homeserverng.tools.repositories.NanoRepositoriesManager;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
 
@@ -89,6 +91,13 @@ public class NanoRepositoriesPostProcessor implements BeanPostProcessor {
 				// récupération de la propriété fournissant le fichier au repository que l'on va créé
 				HomeServerPropertyHolder persistentFileProperty = this.propertiesManager.getPropertyHolder(repositoryDescriptor.file().value());
 
+				// gestion du préprocessor
+				Consumer<?> preProcessor = null;
+				
+				// si preprocessor présent, instantiation
+				if (!repositoryDescriptor.preProcessor().equals(DefaultPreProcessor.class)) {
+					preProcessor = repositoryDescriptor.preProcessor().newInstance();
+				}
 				
 				
 				// on controle que la prop est bien récupérée. Sans Elle on ne peut pas créer le repository.
@@ -109,7 +118,7 @@ public class NanoRepositoriesPostProcessor implements BeanPostProcessor {
 				} else {
 					// sinon création et ajout
 					repositoryToSet = new NanoRepository(repositoryDescriptor.persistedType(),
-							persistentFileProperty, repositoryDescriptor.idField());
+							persistentFileProperty, repositoryDescriptor.idField(), preProcessor);
 					this.repoManager.add(repositoryToSet);
 				}
 				
@@ -119,7 +128,7 @@ public class NanoRepositoriesPostProcessor implements BeanPostProcessor {
 				
 				// affectation du repository
 				field.set(beanToPostProcess, repositoryToSet);
-			} catch (IllegalArgumentException | IllegalAccessException e) {
+			} catch (IllegalArgumentException | IllegalAccessException | InstantiationException e) {
 				throw new InvalidPropertyException(beanToPostProcess.getClass(), field.getName(),
 						"Probleme lors de la génération du repository", e);
 			}

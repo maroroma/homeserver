@@ -11,6 +11,7 @@ export class ApiConstants {
     public static readonly ADMIN_REPO_API = ApiConstants.ADMIN_API + 'repo';
     public static readonly ADMIN_CACHES_API = ApiConstants.ADMIN_API + 'caches';
     public static readonly ADMIN_SHUT_API = ApiConstants.ADMIN_API + 'server/stop';
+    public static readonly ADMIN_STATUS_API = ApiConstants.ADMIN_API + 'server/status';
 
     public static readonly SEEDBOX_API = ApiConstants.ROOT_API + 'seedbox/';
     public static readonly SEEDBOX_TODO_API = ApiConstants.SEEDBOX_API + 'todo/';

@@ -41,6 +41,12 @@ public abstract class JsonHelper {
 		return returnValue;
 	}
 
+	/**
+	 * Permet d'exporter un fichier json en tableay de byte.
+	 * @param toSerialize -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
 	public static byte[] serializeJsonToByteArray(final Object toSerialize) throws HomeServerException {
 
 		try {

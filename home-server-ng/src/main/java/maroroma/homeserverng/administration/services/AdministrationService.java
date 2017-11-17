@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import maroroma.homeserverng.administration.model.HomeServerRunningStatus;
+import maroroma.homeserverng.administration.model.HomeServerStatus;
 import maroroma.homeserverng.administration.model.UploadPropertiesResponse;
 import maroroma.homeserverng.tools.annotations.HomeServerModuleDescriptor;
 import maroroma.homeserverng.tools.cache.CacheDescriptor;
@@ -78,17 +78,11 @@ public interface AdministrationService extends HomeServerModuleManager {
 	void reloadModules() throws HomeServerException;
 
 	/**
-	 * Retourne le status courant du server.
-	 * @return -
-	 */
-	HomeServerRunningStatus getServerStatus();
-
-	/**
 	 * Permet d'arrêter l'application.
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	HomeServerRunningStatus stop() throws HomeServerException;
+	HomeServerStatus stop() throws HomeServerException;
 
 	/**
 	 * Retourne le module pour le descriptor donné.
@@ -97,12 +91,6 @@ public interface AdministrationService extends HomeServerModuleManager {
 	 * @throws HomeServerException -
 	 */
 	HomeServerModuleHandler getHomeServerModule(HomeServerModuleDescriptor descriptor) throws HomeServerException;
-	
-	/**
-	 * Retourne la version courante de l'application.
-	 * @return -
-	 */
-	String getHomeServerVersion();
 
 	/**
 	 * Retourne la liste des {@link NanoRepositoryDescriptor} du serveur.

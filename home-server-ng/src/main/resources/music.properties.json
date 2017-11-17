@@ -1,7 +1,13 @@
 [ {
   "id" : "homeserver.music.directory",
-  "value" : "D:/temp/TEST/music/workingdir",
+  "value" : "D:/temp/TEST/music/musicworkingdir",
   "description" : "Emplacement pour les fichiers musicaux",
+  "readOnly" : false,
+  "moduleId" : "music"
+}, {
+  "id" : "homeserver.music.albums.store",
+  "value" : "${homeserver.config.dir}/albums.json",
+  "description" : "Emplacement du store pour les albums",
   "readOnly" : false,
   "moduleId" : "music"
 } ]

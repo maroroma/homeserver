@@ -50,11 +50,25 @@ export class UploadTracksComponent implements OnInit {
     }
 
     public uploadTracks(): void {
-        this.notifyer.waitingInfo('upload en cours');
-        this.musicService.sendTracks(this.filesToUpload.getRawItemsFromSource().map(candidate => candidate.basicFile))
-            .subscribe(res => {
-                console.log('upload terminé', res);
-                this.goToNextStep.emit();
-            });
+
+        const nbFileToUpload = this.filesToUpload.getRawItemsFromSource().length;
+
+        this.notifyer.waitingInfo('upload du fichier 1/' + nbFileToUpload);
+        const chainCall =
+            this.musicService.sendTracks(this.filesToUpload.getRawItemsFromSource().map(candidate => candidate.basicFile));
+
+        chainCall.allItemCompleted.subscribe(res => {
+            this.notifyer.showSuccess('Tous les fichiers ont bien été uploadés');
+            this.goToNextStep.emit();
+        });
+
+        chainCall.oneItemCompleted.subscribe(res => {
+            this.notifyer.waitingInfo('upload du fichier ' + res.item2 + '/' + nbFileToUpload);
+        });
+
+        // this.musicService.sendTracks(this.filesToUpload.getRawItemsFromSource().map(candidate => candidate.basicFile))
+        //     .subscribe(res => {
+        //         this.goToNextStep.emit();
+        //     });
     }
 }

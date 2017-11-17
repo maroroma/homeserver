@@ -19,7 +19,7 @@ export class AdministrationComponent implements OnInit {
             .item('repositories').search()
             .item('caches').search()
             .item('network').search()
-            .item('power')
+            .item('manage')
             .buildSubMenu();
     }
 

@@ -1,3 +1,4 @@
+import { DriveUsageColorPipe } from './power/drive-usage-color.pipe';
 import { CreateServerComponent } from './network/create-server.component';
 import { ServerDetailComponent } from './network/server-detail.component';
 import { NetworkService } from './network/network.service';
@@ -20,7 +21,7 @@ import { NgModule } from '@angular/core';
     // exports: [AdministrationComponent, PluginListComponent, RepositoryListComponent, CacheListComponent],
     declarations: [AdministrationComponent, PluginListComponent, PropertyListComponent,
         RepositoryListComponent, CacheListComponent, PowerManagementComponent, NetworkComponent,
-        ServerDetailComponent, CreateServerComponent],
+        ServerDetailComponent, CreateServerComponent, DriveUsageColorPipe],
     providers: [AdministrationService, NetworkService]
 })
 export class AdministrationModule { }

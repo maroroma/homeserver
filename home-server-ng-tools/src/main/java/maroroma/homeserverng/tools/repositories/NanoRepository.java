@@ -2,9 +2,12 @@ package maroroma.homeserverng.tools.repositories;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,6 +21,7 @@ import lombok.Synchronized;
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 
@@ -40,7 +44,7 @@ public class NanoRepository {
 	 * Gestion d'un verrou pour l'accès multiple au fichier.
 	 */
 	private final Object nanoLock = new Object();
-	
+
 	/**
 	 * Type cible.
 	 */
@@ -55,6 +59,11 @@ public class NanoRepository {
 	 * Champ correspondant à l'identifiant de l'objet traité par ce repository.
 	 */
 	private Field idField;
+	
+	/**
+	 * Utilisé pour réaliser des opérations sur un objet avant insertion.
+	 */
+	private Consumer<?> preProcessor;
 
 	/**
 	 * Identifiant du repository. Correspond à la clef de la propriété qui permet de le chargerr.
@@ -63,29 +72,20 @@ public class NanoRepository {
 	public String getId() {
 		return this.path.getId();
 	}
-	
-	/**
-	 * Constructeur.
-	 * @param targetType type cible du repo
-	 * @param path chemin pour le fichier de persistance
-	 * @param idName nom du champ correspondant de l'id pour le type donné.
-	 */
-	public NanoRepository(final Class<?> targetType, final String path, final String idName) {
-		this(targetType, new HomeServerPropertyHolder("idMock", path), idName);
-	}
-	
+
 	/**
 	 * Constructeur.
 	 * @param targetType type cible du repo.
 	 * @param path Propriété correspondant au chemin.
 	 * @param idName nom du champ correspondant de l'id pour le type donné.
+	 * @param preProcessor preprocessor utilisé avant les opérations d'enregistrement
 	 */
-	public NanoRepository(final Class<?> targetType, final HomeServerPropertyHolder path, final String idName) {
+	public NanoRepository(final Class<?> targetType, final HomeServerPropertyHolder path, final String idName, final Consumer<?> preProcessor) {
 		super();
 		Assert.notNull(targetType, "targetType can't be null");
 		Assert.notNull(path, "path can't be null");
 		Assert.hasLength(idName, "idName can't be null or empty");
-		
+
 		// récupération par réflexion du champ id du type que l'on doit gérer via ce Repo
 		try {
 			this.idField = targetType.getDeclaredField(idName);
@@ -97,6 +97,7 @@ public class NanoRepository {
 
 		this.targetType = targetType;
 		this.path = path;
+		this.preProcessor = preProcessor;
 	}
 
 	/**
@@ -155,7 +156,7 @@ public class NanoRepository {
 	public <T> List<T> getAll() throws HomeServerException {
 		return this.getFromFile();
 	}
-	
+
 	/**
 	 * Retourne la liste d'élément du repo en tant que stream.
 	 * @return -
@@ -175,22 +176,66 @@ public class NanoRepository {
 	 */
 	public <T> List<T> save(final T item) throws HomeServerException {
 		Assert.notNull(item, "item can't be null");
-		
+
 		Object itemId = this.getIdValue(item);
-		
+
 		Assert.notNull(itemId, "item id (" + this.idField.getName() + ") can't be null");
-		
-		
+
+
 		List<T> toComplete = this.getAll();
 
 		toComplete.forEach(itemToTest -> {
 			Assert.isTrue(!getIdValue(itemToTest).equals(itemId), itemId + " already present");
 		});
-		
-		
+
+		// application du préprocessor si présent avant toute sauvegarde.
+		applyPreProcessor(item);
+
 		toComplete.add(item);
 		this.saveToFile(toComplete);
 		return this.getAll();
+	}
+
+	/**
+	 * Permet d'appliquer le préprocessor sur l'item en entrée.
+	 * @param item -
+	 * @throws HomeServerException -
+	 * @param <T> type à manipuler
+	 */
+	private <T> void applyPreProcessor(final T item) throws HomeServerException {
+		if (this.preProcessor != null) {
+			try {
+			Arrays.stream(Consumer.class.getMethods())
+			.filter(m -> "accept".equals(m.getName()))
+			.findFirst()
+			.ifPresent(m -> {
+				try {
+					m.invoke(this.preProcessor, item);
+				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+					throw new RuntimeHomeServerException(e);
+				}
+			});
+			} catch (RuntimeHomeServerException e) {
+				throw new HomeServerException("un erreur est survenue lors de l'application des preprocessor", e);
+			}
+		}
+	}
+
+	/**
+	 * Enregistre et retourn l'objet enregistré.
+	 * @param item -
+	 * @return -
+	 * @param <T> type attendu
+	 * @throws HomeServerException -
+	 */
+	public <T> T saveAndReturn(final T item) throws HomeServerException {
+		Assert.notNull(item, "item can't be null");
+
+		Object itemId = this.getIdValue(item);
+		
+		this.save(item);
+		
+		return this.find(itemId);
 	}
 
 	/**
@@ -248,7 +293,7 @@ public class NanoRepository {
 		}
 
 	}
-	
+
 	/**
 	 * Permet de trouver des items selon le prédicat donné.
 	 * @param predicate -
@@ -321,7 +366,7 @@ public class NanoRepository {
 
 
 	}
-	
+
 	/**
 	 * Retourne un {@link NanoRepositoryDescriptor} associé à ce repository.
 	 * @return -
@@ -333,7 +378,7 @@ public class NanoRepository {
 		} catch (HomeServerException e) {
 			log.warn("Impossible de récupérer le nombre d'éléménts du repo", e);
 		}
-		
+
 		return 
 				NanoRepositoryDescriptor.builder()
 				.file(new FileDescriptor(this.path.asFile()))
@@ -341,7 +386,7 @@ public class NanoRepository {
 				.nbItems(nbItems)
 				.propertyKey(this.path.getId()).build();
 	}
-	
+
 	/**
 	 * Retourne le contenu du repo au format json.
 	 * @return -
@@ -354,5 +399,5 @@ public class NanoRepository {
 			throw new HomeServerException("Erreur de la lecture au format json");
 		}
 	}
-	
+
 }

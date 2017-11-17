@@ -30,6 +30,10 @@ public abstract class CustomCollectors {
                 	});
     }
 	
+	/**
+	 * Collecte l'ensemble des données sous la forme d'un {@link String} concaténé.
+	 * @return -
+	 */
 	public static 
     Collector<String, ?, StringBuilder> toConcatenatedString() {
 		return Collector.of(
@@ -44,6 +48,11 @@ public abstract class CustomCollectors {
                 	});
     }
 	
+	/**
+	 * Retourne l'ensemble des données sous la forme d'une chaine concaténée avec un séparateur donné.
+	 * @param separator -
+	 * @return -
+	 */
 	public static 
     Collector<String, ?, StringBuilder> toConcatenatedString(final String separator) {
 		return Collector.of(

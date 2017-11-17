@@ -16,7 +16,9 @@ import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.music.model.AlbumDescriptor;
 import maroroma.homeserverng.music.model.TrackDescriptor;
 import maroroma.homeserverng.music.tools.CustomMp3File;
+import maroroma.homeserverng.music.tools.LastRefreshPreProcessor;
 import maroroma.homeserverng.music.tools.MusicTools;
+import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
@@ -25,6 +27,8 @@ import maroroma.homeserverng.tools.helpers.CommonFileFilter;
 import maroroma.homeserverng.tools.helpers.FileAndDirectoryHLP;
 import maroroma.homeserverng.tools.helpers.FileExtensionHelper;
 import maroroma.homeserverng.tools.model.FileDescriptor;
+import maroroma.homeserverng.tools.model.FileDirectoryDescriptor;
+import maroroma.homeserverng.tools.repositories.NanoRepository;
 
 /**
  * Service de gestion des tags mp3 d'un album.
@@ -34,21 +38,35 @@ import maroroma.homeserverng.tools.model.FileDescriptor;
 @Service
 @Log4j2
 public class MusicServiceImpl implements MusicService {
-	
+
 	/**
 	 * Répertoire de travail principal.
 	 */
 	@Property("homeserver.music.directory")
 	private HomeServerPropertyHolder workingDir;
 
+	/**
+	 * Repository pour la gestion des différents.
+	 */
+	@InjectNanoRepository(
+			file = @Property("homeserver.music.albums.store"),
+			persistedType = AlbumDescriptor.class,
+			idField = "id",
+			preProcessor = LastRefreshPreProcessor.class)
+	private NanoRepository albumRepo;
+
 	@Override
-	public AlbumDescriptor prepareWorkingDirectory(final AlbumDescriptor request) {
+	public AlbumDescriptor prepareWorkingDirectory(final AlbumDescriptor request) throws HomeServerException {
 
 		// controle des entrées
 		Assert.notNull(request, "request can't be null");
 		Assert.hasLength(request.getAlbumName(), "albumName can't be null or empty");
 		Assert.hasLength(request.getArtistName(), "artistName can't be null or empty");
 
+		
+		// nettoyage auto
+		this.autoCleanUpRepository();
+		
 		// création du répertoire de travail
 		File workingDirFile = this.workingDir.asFile();
 		if (!workingDirFile.exists()) {
@@ -57,37 +75,46 @@ public class MusicServiceImpl implements MusicService {
 
 		// création du répertoire spécifique à l'artiste
 		File artistDir = new File(workingDirFile, request.getArtistName());
-		
+
 		// création du répertoire spécifique à l'album
 		File albumDir = new File(artistDir, 
 				String.format(MusicTools.ALBUM_DIR_NAME_FORMAT, request.getArtistName(), request.getAlbumName()));
 
 		Assert.isTrue(albumDir.mkdirs(), "can't create album working dir [" + albumDir.getAbsolutePath() + "]");
 
-		// retour du nouveau FileDirectoryDescriptor
-		return MusicTools.createFromDirectory(albumDir);
+		FileDirectoryDescriptor fdd = FileDirectoryDescriptor.createSimple(albumDir);
+
+		// recréation du descriptor pour insertion en repo
+		// et retourn direct
+		return this.albumRepo.saveAndReturn(AlbumDescriptor.builder()
+				.albumName(request.getAlbumName())
+				.artistName(request.getArtistName())
+				.directoryDescriptor(fdd)
+				.id(fdd.getBase64FullName())
+				.build());
+
 	}
 
 	@Override
 	public AlbumDescriptor addAlbumArt(final String toUpdatePath, final MultipartFile albumart) throws HomeServerException {
-		
+
 		// validation de l'album directory
-		File albumDirectory = this.validateAndReturnAlbumDirectory(toUpdatePath);
+		AlbumDescriptor albumDescriptor = this.validateAndReturnAlbumDescriptor(toUpdatePath);
 
 		// validation du type de fichier
 		Assert.hasValidExtension(albumart, FileExtensionHelper.JPEG, FileExtensionHelper.JPG, FileExtensionHelper.PNG);
-		
+
 		Assert.notNull(albumart, "albumart can't be null");
 
 		// suppression si déjà présent
-		MusicTools.removeExistingAlbumArt(albumDirectory);
+		MusicTools.removeExistingAlbumArt(albumDescriptor.getDirectoryDescriptor().createFile());
 
 		// fichier final (album art)
-		File albumArtFile = new File(albumDirectory, 
+		File albumArtFile = new File(albumDescriptor.getDirectoryDescriptor().createFile(), 
 				String.format(MusicTools.ALBUM_ART_NAME_FORMAT, FilenameUtils.getExtension(albumart.getOriginalFilename())));
-		
+
 		// folder
-		File folderArtFile = new File(albumDirectory, 
+		File folderArtFile = new File(albumDescriptor.getDirectoryDescriptor().createFile(), 
 				String.format(MusicTools.FOLDER_NAME_FORMAT, FilenameUtils.getExtension(albumart.getOriginalFilename())));
 
 		// création de l'album art.
@@ -100,15 +127,18 @@ public class MusicServiceImpl implements MusicService {
 			throw new HomeServerException("Erreur lors de la création du fichier folder [" + folderArtFile.getAbsolutePath() + "]", e);
 		}
 
-		return MusicTools.createFromDirectory(albumDirectory);
+		albumDescriptor.setAlbumart(MusicTools.extractAlbumArt(albumDescriptor));
 
+		this.albumRepo.update(albumDescriptor);
+
+		return this.albumRepo.find(albumDescriptor.getId());
 
 	}
 
 	@Override
 	public byte[] getAlbumArt(final String albumPath, final String albumArtPath) throws HomeServerException {
 		Assert.hasLength(albumArtPath, "albumPath can't be null or empty");
-		this.validateAndReturnAlbumDirectory(albumPath);
+		this.validateAndReturnAlbumDescriptor(albumPath);
 		File albumArtFile = FileAndDirectoryHLP.decodeFile(albumArtPath);
 		Assert.isValidFile(albumArtFile);
 
@@ -119,16 +149,16 @@ public class MusicServiceImpl implements MusicService {
 
 	@Override
 	public TrackDescriptor addTrack(final String toUpdatePath, final MultipartFile oneTrack) throws HomeServerException {
-		File albumDirectory = validateAndReturnAlbumDirectory(toUpdatePath);
+
 		// récup de l'album
-		AlbumDescriptor albumDescriptor = MusicTools.createFromDirectory(albumDirectory);
+		AlbumDescriptor albumDescriptor = validateAndReturnAlbumDescriptor(toUpdatePath);
 		Assert.notNull(oneTrack, "oneTrack can't be null");
 
 		// validation du type de fichier
 		Assert.hasValidExtension(oneTrack, FileExtensionHelper.MP3);
 
 		// fichier final	
-		File oneTrackFile = new File(albumDirectory, 
+		File oneTrackFile = new File(albumDescriptor.getDirectoryDescriptor().createFile(), 
 				oneTrack.getOriginalFilename());
 
 		// copie dans le fichier temporaire, le fichier final sera géré par le gestionnaire de tag mp3
@@ -142,13 +172,12 @@ public class MusicServiceImpl implements MusicService {
 	}
 
 	@Override
-	public List<TrackDescriptor> getAllTracks(final String toUpdatePath) {
+	public List<TrackDescriptor> getAllTracks(final String toUpdatePath) throws HomeServerException {
 		// récup du répertoire de travail.
-		File albumDirectory = validateAndReturnAlbumDirectory(toUpdatePath);
-		AlbumDescriptor albumDescriptor = MusicTools.createFromDirectory(albumDirectory);
+		AlbumDescriptor albumDescriptor = validateAndReturnAlbumDescriptor(toUpdatePath);
 
 		// on ne récupère que le fichiers mp3
-		return Arrays.stream(albumDirectory.listFiles(CommonFileFilter.fileExtensionFilter(".mp3")))
+		return Arrays.stream(albumDescriptor.getDirectoryDescriptor().createFile().listFiles(CommonFileFilter.fileExtensionFilter(".mp3")))
 				.parallel()
 				// on les transforme en TrackDescriptor
 				.map(oneFile -> { 
@@ -169,15 +198,14 @@ public class MusicServiceImpl implements MusicService {
 	}
 
 	/**
-	 * Valide l'entrée en base 64 et retourne le fichier correspondant.
+	 * Valide l'entrée en base 64 et retourne le descriptor correspondant.
 	 * @param base64dir -
 	 * @return -
+	 * @throws HomeServerException -
 	 */
-	private File validateAndReturnAlbumDirectory(final String base64dir) {
+	private AlbumDescriptor validateAndReturnAlbumDescriptor(final String base64dir) throws HomeServerException {
 		Assert.hasLength(base64dir, "toUpdate can't be null or empty");
-		File albumDirectory = FileAndDirectoryHLP.decodeFile(base64dir);
-		Assert.isValidDirectory(albumDirectory);
-		return albumDirectory;
+		return this.albumRepo.find(base64dir);
 	}
 
 	@Override
@@ -186,21 +214,21 @@ public class MusicServiceImpl implements MusicService {
 		File oneTrack = td.getFile().createFile();
 		Assert.isValidFile(oneTrack);
 		try {
-			
+
 			// si le fichier est renommé, on le déplace
 			if (!oneTrack.getName().equals(td.getNewFileName())) {
 				File newFile = new File(oneTrack.getParentFile(), td.getNewFileName());
 				Files.move(oneTrack.toPath(), newFile.toPath());
 				oneTrack = newFile;
 			}
-			
+
 			// modification des tags
 			return CustomMp3File
 					.rw(oneTrack)
 					.updateTags(td)
 					.save()
 					.createTrackDescriptor();
-			
+
 		} catch (IOException e) {
 			throw new HomeServerException("Une erreur est survenue lors de la modification du fichier", e);
 		}
@@ -212,16 +240,27 @@ public class MusicServiceImpl implements MusicService {
 		Assert.isValidFile(toDownload);
 		return FileAndDirectoryHLP.convertFileToByteArray(toDownload);
 	}
-	
+
 	@Override
 	public byte[] downloadAllFiles(final String albumPath) throws HomeServerException {
-		
-		
+
+
 		File albumDirectory = FileAndDirectoryHLP.decodeFile(albumPath);
 		Assert.isValidDirectory(albumDirectory);
-		
+
 		return FileAndDirectoryHLP.convertFileToByteArray(FileAndDirectoryHLP.tarDirectory(albumDirectory));
-		
+
+	}
+
+	/**
+	 * Permet de nettoyer le repo en fonction des répertoires qui ont pu être supprimés en dehors du gestionnaire
+	 * de musique.
+	 * @throws HomeServerException 
+	 */
+	private void autoCleanUpRepository() throws HomeServerException {
+		this.albumRepo.<AlbumDescriptor>delete(ad -> {
+			return !ad.getDirectoryDescriptor().createFile().exists();
+		});
 	}
 
 

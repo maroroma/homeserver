@@ -19,8 +19,9 @@ public interface MusicService {
 	 * Préparation du répertoire de travail pour cet album.
 	 * @param request -
 	 * @return -
+	 * @throws HomeServerException -
 	 */
-	AlbumDescriptor prepareWorkingDirectory(AlbumDescriptor request);
+	AlbumDescriptor prepareWorkingDirectory(AlbumDescriptor request) throws HomeServerException;
 	
 	/**
 	 * Rajout d'une jaquette dans le répertoire.
@@ -53,8 +54,9 @@ public interface MusicService {
 	 * Retourne les tracks descriptors correspondants au mp3 correspondant l'album.
 	 * @param toUpdatePath -
 	 * @return -
+	 * @throws HomeServerException -
 	 */
-	List<TrackDescriptor> getAllTracks(String toUpdatePath);
+	List<TrackDescriptor> getAllTracks(String toUpdatePath) throws HomeServerException;
 
 	/**
 	 * Mise à jour des tags mp3 de l'album.

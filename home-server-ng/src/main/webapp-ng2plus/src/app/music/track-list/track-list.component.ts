@@ -78,6 +78,7 @@ export class TrackListComponent implements OnInit {
     }
 
     public updateAllTracks(): void {
+        this.notifyer.waitingInfo('mise à jour des fichiers en cours');
         this.musicService.updateTracks(this.trackList.getRawItemsFromSource()).subscribe(res => {
             console.log('mise à jour terminée', res);
             this.goToNextStep.emit();

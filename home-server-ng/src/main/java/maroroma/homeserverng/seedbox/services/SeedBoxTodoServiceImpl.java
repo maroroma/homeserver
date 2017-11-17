@@ -67,7 +67,7 @@ public class SeedBoxTodoServiceImpl implements SeedBoxTodoService {
 		List<String> newLastCompletedFileList = new ArrayList<>();
 		
 		// répertoire à scanner
-		File file = new File(this.todoDirectory.getValue());
+		File file = this.todoDirectory.asFile();
 		
 		// liste complete des fichiers du répertoire à scanner
 		List<FileDescriptor> rawTodoListToPopulate = new ArrayList<>();

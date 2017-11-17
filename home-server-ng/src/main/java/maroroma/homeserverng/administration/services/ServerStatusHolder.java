@@ -1,6 +1,7 @@
 package maroroma.homeserverng.administration.services;
 
 import maroroma.homeserverng.administration.model.HomeServerRunningStatus;
+import maroroma.homeserverng.administration.model.HomeServerStatus;
 
 /**
  * Interface de définition du status du server.
@@ -13,7 +14,7 @@ public interface ServerStatusHolder {
 	 * Retourne le status actuel du server.
 	 * @return -
 	 */
-	HomeServerRunningStatus getStatus();
+	HomeServerStatus getStatus();
 	
 	/**
 	 * Met à jour le status actuel du server.

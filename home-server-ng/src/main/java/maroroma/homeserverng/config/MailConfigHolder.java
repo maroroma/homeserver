@@ -44,7 +44,7 @@ public class MailConfigHolder {
 	 */
 	public MailBuilder createMailBuilder() {
 		return new MailBuilder()
-				.from(this.smtpLogin.getValue()).connectionBuilder()
+				.from(this.smtpLogin.getResolvedValue()).connectionBuilder()
 		.authenticated(true)
 		.startTLS(true)
 		.host(this.smtpHost.getValue())

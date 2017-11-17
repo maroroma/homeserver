@@ -1,3 +1,5 @@
+import { HomeServerStatus } from './power/homeserver-status.modele';
+import { Observable } from 'rxjs/Observable';
 import { Cache } from './caches/cache.modele';
 import { ImportedFiles } from './../common-gui/import-file-button/imported-files.modele';
 import { Repository } from './repositories/repository.modele';
@@ -10,7 +12,6 @@ import { ModuleHandler } from './plugins/module-handler.modele';
 import { ApiConstants } from './../shared/api-constants.modele';
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class AdministrationService {
@@ -37,7 +38,6 @@ export class AdministrationService {
     /**
      * Récupération simple de la liste de modules.
      * @returns {Observable<Array<ModuleHandler>>}
-     * 
      * @memberOf AdministrationService
      */
     public getAllModules(): Observable<Array<ModuleHandler>> {
@@ -60,7 +60,6 @@ export class AdministrationService {
      * @param {ModuleHandler} module
      * @param {boolean} newStatus
      * @returns {Observable<Array<ModuleHandler>>}
-     * 
      * @memberOf AdministrationService
      */
     public updateModuleStatus(module: ModuleHandler, newStatus: boolean): Observable<Array<ModuleHandler>> {
@@ -265,5 +264,18 @@ export class AdministrationService {
      */
     public findModuleById(moduleId: string): ModuleHandler {
         return this.allModules.find(handler => handler.moduleId === moduleId);
+    }
+
+    /**
+     * Retourne le status du server.
+     */
+    public getServerStatus(): Observable<HomeServerStatus> {
+
+        return this.http.get(ApiConstants.ADMIN_STATUS_API).map(res => {
+            return HomeServerStatus.mapFromJson(res.json());
+        }).catch((err, data) => {
+            this.notifyer.showError('Une erreur est survenue lors de la récupération du status du server');
+            return Observable.of(new HomeServerStatus());
+        });
     }
 }

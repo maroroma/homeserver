@@ -1,6 +1,6 @@
 [ {
   "id" : "homeserver.watch.cameras.store",
-  "value" : "D:/RORO/WorkspaceHomeServerV2/home-server-ng/src/main/resources/cameras.json",
+  "value" : "${homeserver.config.dir}/cameras.json",
   "description" : "Emplacement de sauvegarde pour la liste des cameras.",
   "readOnly" : false,
   "moduleId" : "watch"
