@@ -96,6 +96,16 @@ public abstract class FileAndDirectoryHLP {
 		return returnValue;
 
 	}
+	
+	/**
+	 * Retourne le fichier de chemin base64 donné en tableau de byte.
+	 * @param base64Path -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
+	public static byte[] convertFileToByteArray(final String base64Path) throws HomeServerException {
+		return FileAndDirectoryHLP.convertFileToByteArray(FileAndDirectoryHLP.decodeFile(base64Path));
+	}
 
 	/**
 	 * Convertit le fichier donné en tableau de byte.

@@ -1,5 +1,8 @@
 package maroroma.homeserverng.network.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -36,5 +39,19 @@ public class UrlScanParameter {
 	 */
 	public int getMaxAwaitTime() {
 		return this.timeout * (this.maxValue - this.minValue);
+	}
+	
+	/**
+	 * Construit la liste d'adresses à tester en fonction du fragment d'ip et des valeus min et max retenue.
+	 * @return -
+	 */
+	public List<String> getAddressesToTest() {
+		
+		List<String> returnValue = new ArrayList<>();
+		for (int i = this.getMinValue(); i < this.getMaxValue(); i++) {
+			returnValue.add(this.getIpFragment() + i);
+		}
+		
+		return returnValue;
 	}
 }

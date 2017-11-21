@@ -111,8 +111,8 @@ public class ReducerController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/reducer/reducedImage/{filename}/", produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})
-	public ResponseEntity<byte[]> getReducedImage(@PathVariable("filename") final String fileName) throws HomeServerException {
+	@RequestMapping(value = "/reducer/reducedImages/{base64FileName}", produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})
+	public ResponseEntity<byte[]> getReducedImage(@PathVariable("base64FileName") final String fileName) throws HomeServerException {
 		return ResponseEntity.ok(this.service.getReducedImage(fileName));
 	}
 	

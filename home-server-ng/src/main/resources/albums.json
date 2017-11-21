@@ -1,77 +1,20 @@
 [ {
-  "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxqbGtqbGtqXGpsa2psa2ogLSBsa2psa2psaw==",
-  "albumName" : "lkjlkjlk",
-  "artistName" : "jlkjlkj",
+  "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxhemRhemRcYXpkYXpkIC0gc2R6ZGF6ZA==",
+  "albumName" : "sdzdazd",
+  "artistName" : "azdazd",
   "directoryDescriptor" : {
-    "name" : "jlkjlkj - lkjlkjlk",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\jlkjlkj\\jlkjlkj - lkjlkjlk",
+    "name" : "azdazd - sdzdazd",
+    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\azdazd\\azdazd - sdzdazd",
     "httpRessource" : null,
-    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxqbGtqbGtqXGpsa2psa2ogLSBsa2psa2psaw==",
+    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxhemRhemRcYXpkYXpkIC0gc2R6ZGF6ZA==",
     "files" : null,
     "directories" : null
   },
   "albumart" : {
     "name" : "albumart.png",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\jlkjlkj\\jlkjlkj - lkjlkjlk\\albumart.png",
+    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\azdazd\\azdazd - sdzdazd\\albumart.png",
     "httpRessource" : null,
-    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxqbGtqbGtqXGpsa2psa2ogLSBsa2psa2psa1xhbGJ1bWFydC5wbmc="
+    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxhemRhemRcYXpkYXpkIC0gc2R6ZGF6ZFxhbGJ1bWFydC5wbmc="
   },
-  "lastRefresh" : 1510906508751
-}, {
-  "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxtbGttbGttbGtcbWxrbWxrbWxrIC0gbGttbGs=",
-  "albumName" : "lkmlk",
-  "artistName" : "mlkmlkmlk",
-  "directoryDescriptor" : {
-    "name" : "mlkmlkmlk - lkmlk",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\mlkmlkmlk\\mlkmlkmlk - lkmlk",
-    "httpRessource" : null,
-    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxtbGttbGttbGtcbWxrbWxrbWxrIC0gbGttbGs=",
-    "files" : null,
-    "directories" : null
-  },
-  "albumart" : {
-    "name" : "albumart.jpg",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\mlkmlkmlk\\mlkmlkmlk - lkmlk\\albumart.jpg",
-    "httpRessource" : null,
-    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxtbGttbGttbGtcbWxrbWxrbWxrIC0gbGttbGtcYWxidW1hcnQuanBn"
-  },
-  "lastRefresh" : 1510907160817
-}, {
-  "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxtbGttbGttbGtcbWxrbWxrbWxrIC0gbWxrbWxrbWxrbWxr",
-  "albumName" : "mlkmlkmlkmlk",
-  "artistName" : "mlkmlkmlk",
-  "directoryDescriptor" : {
-    "name" : "mlkmlkmlk - mlkmlkmlkmlk",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\mlkmlkmlk\\mlkmlkmlk - mlkmlkmlkmlk",
-    "httpRessource" : null,
-    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxtbGttbGttbGtcbWxrbWxrbWxrIC0gbWxrbWxrbWxrbWxr",
-    "files" : null,
-    "directories" : null
-  },
-  "albumart" : {
-    "name" : "albumart.png",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\mlkmlkmlk\\mlkmlkmlk - mlkmlkmlkmlk\\albumart.png",
-    "httpRessource" : null,
-    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxtbGttbGttbGtcbWxrbWxrbWxrIC0gbWxrbWxrbWxrbWxrXGFsYnVtYXJ0LnBuZw=="
-  },
-  "lastRefresh" : 1510907281785
-}, {
-  "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxtbGtsbWtsbWtcbWxrbG1rbG1rIC0gbWxrbWxrbWxr",
-  "albumName" : "mlkmlkmlk",
-  "artistName" : "mlklmklmk",
-  "directoryDescriptor" : {
-    "name" : "mlklmklmk - mlkmlkmlk",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\mlklmklmk\\mlklmklmk - mlkmlkmlk",
-    "httpRessource" : null,
-    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxtbGtsbWtsbWtcbWxrbG1rbG1rIC0gbWxrbWxrbWxr",
-    "files" : null,
-    "directories" : null
-  },
-  "albumart" : {
-    "name" : "albumart.png",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\mlklmklmk\\mlklmklmk - mlkmlkmlk\\albumart.png",
-    "httpRessource" : null,
-    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxtbGtsbWtsbWtcbWxrbG1rbG1rIC0gbWxrbWxrbWxrXGFsYnVtYXJ0LnBuZw=="
-  },
-  "lastRefresh" : 1510907527113
+  "lastRefresh" : 1510943254663
 } ]

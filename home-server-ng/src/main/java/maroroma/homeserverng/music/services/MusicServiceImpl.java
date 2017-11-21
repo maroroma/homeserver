@@ -139,12 +139,8 @@ public class MusicServiceImpl implements MusicService {
 	public byte[] getAlbumArt(final String albumPath, final String albumArtPath) throws HomeServerException {
 		Assert.hasLength(albumArtPath, "albumPath can't be null or empty");
 		this.validateAndReturnAlbumDescriptor(albumPath);
-		File albumArtFile = FileAndDirectoryHLP.decodeFile(albumArtPath);
-		Assert.isValidFile(albumArtFile);
-
-
-		return FileAndDirectoryHLP.convertFileToByteArray(albumArtFile);
-
+		
+		return FileAndDirectoryHLP.convertFileToByteArray(albumArtPath);
 	}
 
 	@Override
@@ -177,24 +173,25 @@ public class MusicServiceImpl implements MusicService {
 		AlbumDescriptor albumDescriptor = validateAndReturnAlbumDescriptor(toUpdatePath);
 
 		// on ne récupère que le fichiers mp3
-		return Arrays.stream(albumDescriptor.getDirectoryDescriptor().createFile().listFiles(CommonFileFilter.fileExtensionFilter(".mp3")))
-				.parallel()
-				// on les transforme en TrackDescriptor
-				.map(oneFile -> { 
-					try {
-						return CustomMp3File.readOnly(oneFile).createTrackDescriptor();
-					} catch (HomeServerException e) {
-						log.warn("Erreur lors de la lecture des tags");
-						return TrackDescriptor.builder()
-								.file(new FileDescriptor(oneFile))
-								.newFileName(oneFile.getName())
-								.albumName(albumDescriptor.getAlbumName())
-								.artistName(albumDescriptor.getArtistName())
-								.build();
-					}
-				})
-				// on les retourns en tant que liste
-				.collect(Collectors.toList());
+		return Arrays.stream(albumDescriptor.getDirectoryDescriptor().createFile()
+				.listFiles(CommonFileFilter.fileExtensionFilter(FileExtensionHelper.MP3)))
+					.parallel()
+					// on les transforme en TrackDescriptor
+					.map(oneFile -> { 
+						try {
+							return CustomMp3File.readOnly(oneFile).createTrackDescriptor();
+						} catch (HomeServerException e) {
+							log.warn("Erreur lors de la lecture des tags");
+							return TrackDescriptor.builder()
+									.file(new FileDescriptor(oneFile))
+									.newFileName(oneFile.getName())
+									.albumName(albumDescriptor.getAlbumName())
+									.artistName(albumDescriptor.getArtistName())
+									.build();
+						}
+					})
+					// on les retourns en tant que liste
+					.collect(Collectors.toList());
 	}
 
 	/**
@@ -236,9 +233,7 @@ public class MusicServiceImpl implements MusicService {
 
 	@Override
 	public byte[] getTrack(final String trackPath) throws HomeServerException {
-		File toDownload = FileAndDirectoryHLP.decodeFile(trackPath);
-		Assert.isValidFile(toDownload);
-		return FileAndDirectoryHLP.convertFileToByteArray(toDownload);
+		return FileAndDirectoryHLP.convertFileToByteArray(trackPath);
 	}
 
 	@Override

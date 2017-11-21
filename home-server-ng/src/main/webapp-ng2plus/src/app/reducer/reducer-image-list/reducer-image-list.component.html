@@ -3,7 +3,7 @@
     <div class="card-block image-container-list">
         <div class="image-container-inline" *ngFor="let reducedImage of reducedImages.displayList" (click)="toggleImage(reducedImage)">
             <div class="image-container">
-                <img src="api/reducer/reducedImage/{{reducedImage.item.name}}/" [ngClass]="{'fadein': reducedImage.selected, 'semi-fadeout':!reducedImage.selected}" />
+                <img src="api/reducer/reducedImages/{{reducedImage.item.id}}" [ngClass]="{'fadein': reducedImage.selected, 'semi-fadeout':!reducedImage.selected}" />
                 <div class="image-container-action">
                     <button class="btn btn-primary circle" *ngIf="reducedImage.selected">
                         <span class="glyphicon glyphicon-check"></span>

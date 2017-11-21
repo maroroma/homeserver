@@ -55,7 +55,7 @@ export class ReducerImageListComponent implements OnInit {
 
     displayImageGallery(): void {
         this.imageViewer.display(this.reducedImages.sourceList
-            .map(wrapped => wrapped.item), fd => 'api/reducer/reducedImage/' + fd.name + '/');
+            .map(wrapped => wrapped.item), fd => 'api/reducer/reducedImages/' + fd.id);
     }
 
     public updateImageList(imageList: Array<ReducedImage>): void {

@@ -140,6 +140,11 @@ public class ReducerServiceImpl implements ReducerService {
 					.listFiles(CommonFileFilter.fileExtensionFilter(this.extensions.asStringArray())))
 			.parallelStream()
 			.forEach(oneFile -> returnValue.add(new FileDescriptor(oneFile)));
+			
+//			Arrays.asList(uploadFileDir
+//					.listFiles(CommonFileFilter.fileExtensionFilter(this.extensions.asStringArray())))
+//			.parallelStream()
+//			.forEach(oneFile -> returnValue.add(new FileDescriptor(oneFile)));
 		}
 
 		return returnValue;
@@ -152,13 +157,7 @@ public class ReducerServiceImpl implements ReducerService {
 	 */
 	@Override
 	public byte[] getReducedImage(final String fileName) throws HomeServerException {
-
-		Assert.hasLength(fileName, "fileName can't be null or empty");
-		File toDownload = new File(this.uploadDir.asFile().getAbsolutePath(), fileName);
-		Assert.isValidFile(toDownload);
-
-		return FileAndDirectoryHLP.convertFileToByteArray(toDownload);
-
+		return FileAndDirectoryHLP.convertFileToByteArray(fileName);
 	}
 
 	/**

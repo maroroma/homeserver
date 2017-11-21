@@ -40,6 +40,11 @@ public class ServerDescriptor {
 	 * Liste des urls accessibles pour ce serveur.
 	 */
 	private List<UrlDescriptor> urls = new ArrayList<>();
+	
+	/**
+	 * Détermine si le serveur est atteignable.
+	 */
+	private boolean reachable;
 
 	/**
 	 * Test l'accès au serveur sur la première url trouvée.
@@ -48,6 +53,23 @@ public class ServerDescriptor {
 		Assert.notEmpty(urls, "Aucune url à tester pour le serveur " + this.nom);
 		RestTemplate template = new RestTemplate();
 		template.getForEntity(this.urls.get(0).getUrl(), String.class);
+	}
+	
+	/**
+	 * Retourne un {@link ServerDescriptor} par défaut injoinable.
+	 * @return -
+	 */
+	public static ServerDescriptor unreachable() {
+		return ServerDescriptor.builder().reachable(false).build();
+	}
+	
+	/**
+	 * Retourne un serveur joignable d'adresse ip donnée.
+	 * @param ipAddress -
+	 * @return -
+	 */
+	public static ServerDescriptor reachable(final String ipAddress) {
+		return ServerDescriptor.builder().reachable(true).ip(ipAddress).build();
 	}
 	
 }
