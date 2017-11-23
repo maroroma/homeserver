@@ -2,6 +2,8 @@ package maroroma.homeserverng.filemanager.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -66,6 +68,17 @@ public class FileManagerController {
 	@GetMapping("/filemanager/directories/{id}")
 	public ResponseEntity<FileDirectoryDescriptor> getDirectoryDetails(final @PathVariable("id") String id) throws HomeServerException {
 		return ResponseEntity.ok(this.fileService.getDirectoryDetail(id));
+	}
+	
+	/**
+	 * Permet de télécharger un fichier selon son encodage Bas64.
+	 * @param base64FileName nom du fichier
+	 * @param response -
+	 * @throws HomeServerException -
+	 */
+	@GetMapping("/filemanager/files/{id}")
+	public void downloadFile(@PathVariable("id") final String base64FileName, final HttpServletResponse response) throws HomeServerException {
+		this.fileService.getFile(base64FileName, response);
 	}
 	
 	/**

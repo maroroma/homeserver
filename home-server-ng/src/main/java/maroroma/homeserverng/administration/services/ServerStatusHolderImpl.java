@@ -3,9 +3,11 @@ package maroroma.homeserverng.administration.services;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,11 @@ import maroroma.homeserverng.administration.model.HomeServerRunningStatus;
 import maroroma.homeserverng.administration.model.HomeServerStatus;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.helpers.DriveUtils;
+import maroroma.homeserverng.tools.notifications.NotificationEvent;
+import maroroma.homeserverng.tools.notifications.Notifyer;
+import maroroma.homeserverng.tools.notifications.NotifyerContainer;
 
 /**
  * Implémentation du holder du status du server.
@@ -46,6 +52,12 @@ public class ServerStatusHolderImpl implements ServerStatusHolder {
 	 */
 	@Property("homeserver.administrations.drives")
 	private HomeServerPropertyHolder unixDrives;
+	
+	/**
+	 * {@link Notifyer} général.
+	 */
+	@Autowired
+	private NotifyerContainer notificationContainer;
 	
 	/**
 	 * {@inheritDoc}
@@ -91,5 +103,16 @@ public class ServerStatusHolderImpl implements ServerStatusHolder {
 		log.info("init du contexte spring");
 		this.setStatus(HomeServerRunningStatus.RUNNING);
 		this.startupTime = LocalDateTime.now();
+		
+		// émission de notification
+		try {
+			this.notificationContainer.notify(NotificationEvent.builder()
+					.creationDate(new Date())
+					.title("Démarrage du serveur")
+					.message("Le serveur homeserver vient de démarrer")
+					.build());
+		} catch (HomeServerException e) {
+			log.warn("L'émission des notifications de démarrage a échoué");
+		}
 	}
 }

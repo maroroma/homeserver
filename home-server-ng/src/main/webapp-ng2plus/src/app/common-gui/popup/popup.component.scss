@@ -23,4 +23,16 @@
             text-align: right;
         }
     }
+    // la popup est scrollable par défaut, pour tous, selon le positionnement de l'écran
+    &-scrollable-content {
+        scroll-behavior: auto;
+        overflow-y: auto;
+        @media(orientation: portrait) {
+            max-height: 80vw;
+        }
+        // masque un composant sur un device standard
+        @media(orientation:landscape) {
+            max-height: 35vw;
+        }
+    }
 }

@@ -1,7 +1,7 @@
-import { PopupComponent } from './../popup/popup.component';
-import { RenameFileDescriptor } from './rename-file-descriptor.modele';
-import { FileDescriptor } from './../../shared/file-descriptor.modele';
+import { FileDescriptor } from './../../../shared/file-descriptor.modele';
+import { PopupComponent } from 'app/common-gui/popup/popup.component';
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
+import { RenameFileDescriptor } from 'app/common-gui/file-browser/rename-file-descriptor.modele';
 
 @Component({
     selector: 'homeserver-file-browser-rename',

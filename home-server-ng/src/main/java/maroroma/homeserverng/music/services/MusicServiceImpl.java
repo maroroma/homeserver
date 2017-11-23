@@ -239,7 +239,7 @@ public class MusicServiceImpl implements MusicService {
 	@Override
 	public byte[] downloadAllFiles(final String albumPath) throws HomeServerException {
 
-
+		// TODO : à améliorer pour optimiser l'écriture directement dans le flux http.
 		File albumDirectory = FileAndDirectoryHLP.decodeFile(albumPath);
 		Assert.isValidDirectory(albumDirectory);
 

@@ -25,4 +25,8 @@ export class TargetDirectoryResolver implements FileBrowserResolver {
     public fileRenameUri(): string {
         throw new Error('not implemented');
     }
+
+    public fileDownloadUri(file: FileDescriptor): string {
+        throw new Error('not implemented');
+    }
 }

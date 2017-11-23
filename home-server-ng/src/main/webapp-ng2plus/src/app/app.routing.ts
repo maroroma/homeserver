@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'seedbox', component: SeedboxComponent },
   { path: 'reducer', component: ReducerComponent },
   { path: 'filemanager', component: FileManagerComponent },
-  { path: 'music', component: MusicComponent },
+  { path: 'music', component: MusicComponent }
 ];
 
 export const routing = RouterModule.forRoot(routes);

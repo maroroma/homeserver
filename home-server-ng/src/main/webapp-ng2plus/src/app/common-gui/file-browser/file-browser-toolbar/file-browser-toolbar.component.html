@@ -4,5 +4,6 @@
     <button class="btn btn-sm btn-primary" (click)="innerUnselectAll()" *ngIf="options.allowItemSelection" [disabled]="!isFilesSelected || isCurrentDirectoryRoot"><span class="glyphicon glyphicon-unchecked"></span></button>
     <button class="btn btn-sm btn-secondary" (click)="innerRename()" *ngIf="options.allowRenaming" [disabled]="!isFilesSelected || isCurrentDirectoryRoot"><span class="glyphicon glyphicon-edit"></span></button>
     <button class="btn btn-sm btn-secondary" (click)="innerDisplayDirectoryCreation()" *ngIf="options.allowDirectoryCreation" [disabled]="!options.allowDirectoryCreationOnStarter && isCurrentDirectoryRoot"><span class="glyphicon glyphicon-plus"></span></button>
+    <button class="btn btn-sm btn-secondary" (click)="innerDownload()" *ngIf="options.allowDownload" [disabled]="!isFilesSelected || isCurrentDirectoryRoot"><span class="glyphicon glyphicon-floppy-disk"></span></button>
     <button class="btn btn-sm btn-danger" (click)="innerDisplayDirectoryDeleteConfirmation()" *ngIf="options.allowDeletion" [disabled]="!isFilesSelected || isCurrentDirectoryRoot"><span class="glyphicon glyphicon-trash"></span></button>
 </div>

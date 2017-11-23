@@ -7,11 +7,14 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.kamranzafar.jtar.TarEntry;
 import org.kamranzafar.jtar.TarOutputStream;
@@ -34,10 +37,15 @@ import maroroma.homeserverng.tools.model.FileDescriptor;
 public abstract class FileAndDirectoryHLP {
 
 	/**
+	 * Taille du buffer par défaut.
+	 */
+	private static final int DEFAULT_BUFFER_SIZE = 1024;
+
+	/**
 	 * Taille du buffer utilisé pour la lecture des fichiers à tarer.
 	 */
 	private static final int TAR_DEFAULT_BUFFER_SIZE = 2048;
-	
+
 	/**
 	 * Extension pour un fichier tar.
 	 */
@@ -96,7 +104,7 @@ public abstract class FileAndDirectoryHLP {
 		return returnValue;
 
 	}
-	
+
 	/**
 	 * Retourne le fichier de chemin base64 donné en tableau de byte.
 	 * @param base64Path -
@@ -321,6 +329,52 @@ public abstract class FileAndDirectoryHLP {
 		}
 
 		return tarFile;
+	}
+
+	/**
+	 * Recopie d'un fichier dans un ouputstream, sans passage temporaire en mémoire.
+	 * @param toDownload -
+	 * @param output -
+	 * @throws HomeServerException -
+	 */
+	public static void copyFileToOuputStream(final File toDownload, final OutputStream output) throws HomeServerException {
+
+		Assert.notNull(output, "output can't be null");
+		Assert.isValidFile(toDownload);
+		
+		try (InputStream is = new FileInputStream(toDownload)) {
+			// le flux de sortie est celui de la réponse HTTP.
+			int read = 0;
+
+			byte[] bytes = new byte[DEFAULT_BUFFER_SIZE];
+
+			// ecriture au fil de l'eau
+			while ((read = is.read(bytes)) != -1) {
+				output.write(bytes, 0, read);
+			}
+
+		} catch (IOException e) {
+			throw new HomeServerException("Une erreur est survenue lors de l'écriture de [" 
+					+ toDownload.getAbsolutePath() + "] dans le stream de sortie", e);
+		} finally {
+			StreamHLP.safeFlush(output);
+			StreamHLP.safeClose(output);
+		}
+	}
+	
+	/**
+	 * Recopie d'un fichier dans un ouputstream, sans passage temporaire en mémoire.
+	 * @param toDownload -
+	 * @param response -
+	 * @throws HomeServerException -
+	 */
+	public static void copyFileToOuputStream(final File toDownload, final HttpServletResponse response) throws HomeServerException {
+		Assert.notNull(response, "response can't be null");
+		try {
+			copyFileToOuputStream(toDownload, response.getOutputStream());
+		} catch (IOException e) {
+			throw new HomeServerException("Erreur rencontrée lors de la récupération du flux de sortie", e);
+		}
 	}
 
 }

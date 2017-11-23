@@ -43,6 +43,11 @@ export class FileBrowserOptionsBuilder {
         return this;
     }
 
+    public downloading(): FileBrowserOptionsBuilder {
+        this.target.allowDownload = true;
+        return this;
+    }
+
     public withResolver(resolver: FileBrowserResolver): FileBrowserOptionsBuilder {
         this.target.resolver = resolver;
         return this;

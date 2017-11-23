@@ -1,0 +1,12 @@
+<li class="list-group-item justify-content-between" *ngFor="let oneFile of fileList">
+    <div class="d-flex">
+        <div class="align-self-center file-infos">
+            <div>
+                <span class="{{oneFile | fileGlyphiconResolver}}"></span>
+            </div>
+        </div>
+        <div class="align-self-center file-name">
+            <a href="{{resolver.fileDownloadUri(oneFile)}}" download="{{oneFile.name}}">{{oneFile.name}}</a>
+        </div>
+    </div>
+</li>

@@ -26,4 +26,8 @@ export class FileManagerResolver implements FileBrowserResolver {
         return ApiConstants.FILEMANAGER_FILES_API;
     }
 
+    public fileDownloadUri(file: FileDescriptor): string {
+        return ApiConstants.FILEMANAGER_FILES_API + '/' + file.id;
+    }
+
 }

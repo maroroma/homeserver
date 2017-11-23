@@ -1,6 +1,7 @@
+import { FileBrowserToolBarComponent } from './file-browser/file-browser-toolbar/file-browser-toolbar.component';
+import { FileBrowserRenameComponent } from './file-browser/file-browser-rename/file-browser-rename.component';
+import { FileBrowserDownloadComponent } from './file-browser/file-browser-download/file-browser-download.component';
 import { ByteFormatPipe } from './pipes/byte-format.pipe';
-import { FileBrowserRenameComponent } from './file-browser/file-browser-rename.component';
-import { FileBrowserToolBarComponent } from './file-browser/file-browser-toolbar.component';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
 import { ImageViewerComponent } from './image-viewer/image-viewer.component';
 import { EditCollapsablePanelComponent } from './edit-collapsable-panel/edit-collapsable-panel.component';
@@ -27,6 +28,7 @@ import { HomeComponent } from './home/home.component';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu/menu.component';
 import { NgModule } from '@angular/core';
+import { DownloadFileListComponent } from 'app/common-gui/file-browser/file-browser-download/download-file-list.component';
 
 
 @NgModule({
@@ -41,7 +43,7 @@ import { NgModule } from '@angular/core';
         PopupComponent, AnchorExportDirective, ToggleButtonDirective,
         ImportFileButtonComponent, StepsBarComponent, FileGlyphiconResolverPipe, FileBrowserComponent,
         CancelableInputTextComponent, EditCollapsablePanelComponent, ImageViewerComponent, AutoFocusDirective,
-        FileBrowserToolBarComponent, FileBrowserRenameComponent, ByteFormatPipe],
+        FileBrowserToolBarComponent, FileBrowserRenameComponent, ByteFormatPipe, FileBrowserDownloadComponent, DownloadFileListComponent],
     providers: [NavigationHelperService, NotifyerService, FileBrowserService, PageHeaderSearchService],
 })
 export class CommonGUIModule { }

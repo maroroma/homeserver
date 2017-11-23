@@ -2,6 +2,8 @@ package maroroma.homeserverng.filemanager.services;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import maroroma.homeserverng.filemanager.model.DirectoryCreationRequest;
 import maroroma.homeserverng.filemanager.model.FileOperationResult;
 import maroroma.homeserverng.filemanager.model.RenameFileDescriptor;
@@ -52,5 +54,13 @@ public interface FileManagerService {
 	 * @return -
 	 */
 	FileOperationResult renameFile(RenameFileDescriptor rfd);
+
+	/**
+	 * Permet de télécharger un fichier en écrivant directement dans le flux de retour.
+	 * @param base64FileName -
+	 * @param response port le flux à modifier.
+	 * @throws HomeServerException -
+	 */
+	void getFile(String base64FileName, HttpServletResponse response) throws HomeServerException;
 	
 }

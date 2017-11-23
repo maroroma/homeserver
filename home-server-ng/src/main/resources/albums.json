@@ -1,20 +1,20 @@
 [ {
-  "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxhemRhemRcYXpkYXpkIC0gc2R6ZGF6ZA==",
-  "albumName" : "sdzdazd",
-  "artistName" : "azdazd",
+  "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxrbGtqbGtqXGtsa2psa2ogLSBsa2xramxrag==",
+  "albumName" : "lklkjlkj",
+  "artistName" : "klkjlkj",
   "directoryDescriptor" : {
-    "name" : "azdazd - sdzdazd",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\azdazd\\azdazd - sdzdazd",
+    "name" : "klkjlkj - lklkjlkj",
+    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\klkjlkj\\klkjlkj - lklkjlkj",
     "httpRessource" : null,
-    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxhemRhemRcYXpkYXpkIC0gc2R6ZGF6ZA==",
+    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxrbGtqbGtqXGtsa2psa2ogLSBsa2xramxrag==",
     "files" : null,
     "directories" : null
   },
   "albumart" : {
     "name" : "albumart.png",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\azdazd\\azdazd - sdzdazd\\albumart.png",
+    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\klkjlkj\\klkjlkj - lklkjlkj\\albumart.png",
     "httpRessource" : null,
-    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxhemRhemRcYXpkYXpkIC0gc2R6ZGF6ZFxhbGJ1bWFydC5wbmc="
+    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxrbGtqbGtqXGtsa2psa2ogLSBsa2xramxralxhbGJ1bWFydC5wbmc="
   },
-  "lastRefresh" : 1510943254663
+  "lastRefresh" : 1511424874054
 } ]

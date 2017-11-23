@@ -1,5 +1,5 @@
-import { FileBrowserOptions } from './file-browser-options.modele';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { FileBrowserOptions } from 'app/common-gui/file-browser/file-browser-options.modele';
 
 @Component({
     selector: 'homeserver-file-browser-toolbar',
@@ -33,6 +33,8 @@ export class FileBrowserToolBarComponent implements OnInit {
     public unSelectAll = new EventEmitter<any>();
     @Output()
     public rename = new EventEmitter<any>();
+    @Output()
+    public download = new EventEmitter<any>();
 
 
     constructor() { }
@@ -58,6 +60,10 @@ export class FileBrowserToolBarComponent implements OnInit {
 
     public innerRename(): void {
         this.rename.emit();
+    }
+
+    public innerDownload(): void {
+        this.download.emit();
     }
 
 

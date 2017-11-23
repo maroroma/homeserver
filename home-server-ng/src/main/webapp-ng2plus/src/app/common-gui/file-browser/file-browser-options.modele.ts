@@ -20,10 +20,14 @@ export class FileBrowserOptions {
 
     /**
      * Détermine si le rafraichissement est possible
-     * 
      * @memberof FileBrowserOptions
      */
     public allowRefresh = false;
+
+    /**
+     * Détermine si un téléchargement est possible.
+     */
+    public allowDownload = false;
 
     /**
      * 

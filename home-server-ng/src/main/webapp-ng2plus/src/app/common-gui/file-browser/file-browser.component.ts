@@ -1,5 +1,5 @@
+import { FileBrowserRenameComponent } from './file-browser-rename/file-browser-rename.component';
 import { RenameFileDescriptor } from './rename-file-descriptor.modele';
-import { FileBrowserRenameComponent } from './file-browser-rename.component';
 import { FileBrowserOptions } from './file-browser-options.modele';
 import { NotifyerService } from './../notifyer/notifyer.service';
 import { Subject } from 'rxjs/Subject';
@@ -15,6 +15,7 @@ import { DirectoryDescriptor } from './../../shared/directory-descriptor.modele'
 import { FileDescriptor } from './../../shared/file-descriptor.modele';
 import { VisualItemDataSource } from './../../shared/visual-item-datasource.modele';
 import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy, EventEmitter, Output, ViewChild } from '@angular/core';
+import { FileBrowserDownloadComponent } from 'app/common-gui/file-browser/file-browser-download/file-browser-download.component';
 
 @Component({
     selector: 'homeserver-file-browser',
@@ -113,6 +114,12 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('popupRenameFiles')
     popupRenameFiles: FileBrowserRenameComponent;
 
+    /**
+     * Affichage des fichiers à télécharger.
+     */
+    @ViewChild('popupDownloadFiles')
+    popupDownloadFiles: FileBrowserDownloadComponent;
+
     constructor(private browserService: FileBrowserService, private searchService: PageHeaderSearchService,
         private notifyer: NotifyerService) { }
 
@@ -158,7 +165,7 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
      * @param {DirectoryDescriptor} subDirectory
      * @memberOf FileBrowserComponent
      */
-    public selectSubDirectory(subDirectory: DirectoryDescriptor): Observable<DirectoryDescriptor> {
+    public selectSubDirectory(subDirectory: DirectoryDescriptor): Subject<DirectoryDescriptor> {
         const returnValue = new Subject<DirectoryDescriptor>();
         this.reinitGlobalSelectionStatus();
         if (subDirectory.id === this.starterDirectory.id) {
@@ -345,5 +352,13 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe(res => {
                 this.refreshCurrentDirectory();
             });
+    }
+
+    /**
+     * Affichage de la popup de download.
+     */
+    public displayDownloadPopup(): void {
+        this.popupDownloadFiles.display(this.options.resolver,
+            this.directoryList.getRawSelectedItems(), this.fileList.getRawSelectedItems());
     }
 }

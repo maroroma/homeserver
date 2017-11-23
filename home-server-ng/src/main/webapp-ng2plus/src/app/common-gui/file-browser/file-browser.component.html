@@ -5,7 +5,7 @@
     <ul class="list-group directories">
         <li class="list-group-item justify-content-between" *ngIf="options.displayToolBar">
             <homeserver-file-browser-toolbar [options]="options" [isFilesSelected]="someFileSelected" [isCurrentDirectoryRoot]="pathStack?.length==1" (refreshCurrentDirectory)="refreshCurrentDirectory()" (displayDirectoryCreation)="displayDirectoryCreation()" (displayDirectoryDeletionConfirmation)="displayDirectoryDeleteConfirmation()"
-                (selectAll)="selectAll()" (unSelectAll)="unselectAll()" (rename)="displayRenamePopup()"></homeserver-file-browser-toolbar>
+                (selectAll)="selectAll()" (unSelectAll)="unselectAll()" (rename)="displayRenamePopup()" (download)="displayDownloadPopup()"></homeserver-file-browser-toolbar>
         </li>
         <li class="list-group-item justify-content-between" *ngIf="pathStack?.length>1" (click)="selectParentDirectory()">..</li>
         <li class="list-group-item justify-content-between" [ngClass]="{'selected': options.allowItemSelection && oneDirectory.selected}" *ngFor="let oneDirectory of directoryList.displayList" (click)="selectSubDirectoryFromList(oneDirectory.item)">
@@ -56,3 +56,5 @@
 </homeserver-popup>
 
 <homeserver-file-browser-rename #popupRenameFiles (confirmRename)="confirmRename($event)"></homeserver-file-browser-rename>
+
+<homeserver-file-browser-download #popupDownloadFiles></homeserver-file-browser-download>
