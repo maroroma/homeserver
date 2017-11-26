@@ -193,6 +193,14 @@ public class HomeServerPropertyHolder {
 	}
 	
 	/**
+	 * Retourne la valeur en tant que booleen.
+	 * @return -
+	 */
+	public boolean asBoolean() {
+		return Boolean.parseBoolean(this.getResolvedValue());
+	}
+	
+	/**
 	 * Convertit la propriété en tuple d'entiers.
 	 * @return -
 	 */

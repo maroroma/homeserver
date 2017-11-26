@@ -23,6 +23,9 @@
   "id" : "filemanager",
   "enabled" : true
 }, {
+  "id" : "kiosk",
+  "enabled" : true
+}, {
   "id" : "seedbox",
   "enabled" : true
 }, {

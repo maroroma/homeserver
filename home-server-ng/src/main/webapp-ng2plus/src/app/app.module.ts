@@ -1,3 +1,4 @@
+import { HomeComponentModule } from './home/home';
 import { MusicModule } from './music/music';
 import { FileBrowserModule } from './filemanager/filemanager';
 import { ReducerModule } from './reducer/reducer';
@@ -13,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { AppComponent } from './app.component';
+import { KioskModule } from 'app/kiosk/kiosk';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { AppComponent } from './app.component';
     MusicModule,
     FileBrowserModule,
     routing,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    KioskModule,
+    HomeComponentModule
   ],
   providers: [],
   bootstrap: [AppComponent]

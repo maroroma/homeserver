@@ -1,10 +1,11 @@
+import { HomeComponent } from './home/home.component';
 import { MusicComponent } from './music/music.component';
 import { FileManagerComponent } from './filemanager/filemanager.component';
 import { ReducerComponent } from './reducer/reducer.component';
 import { SeedboxComponent } from './seedbox/seedbox.component';
 import { AdministrationComponent } from './administration/administration.component';
-import { HomeComponent } from './common-gui/home/home.component';
 import { RouterModule, Routes } from '@angular/router';
+import { KioskMainScreenComponent } from 'app/kiosk/kiosk-main-screen.component';
 
 const routes: Routes = [
   //   { path: 'administration', component: StarterComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'seedbox', component: SeedboxComponent },
   { path: 'reducer', component: ReducerComponent },
   { path: 'filemanager', component: FileManagerComponent },
-  { path: 'music', component: MusicComponent }
+  { path: 'music', component: MusicComponent },
+  { path: 'kiosk', component: KioskMainScreenComponent }
 ];
 
 export const routing = RouterModule.forRoot(routes);

@@ -1,0 +1,25 @@
+[ {
+  "id" : "homeserver.kiosk.displayCurrentReading",
+  "value" : "false",
+  "description" : "Détermine si on doit afficher les lectures en cours (media center)",
+  "readOnly" : false,
+  "moduleId" : "kiosk"
+}, {
+  "id" : "homeserver.kiosk.displayCurrentDownload",
+  "value" : "true",
+  "description" : "Détermine si on doit afficher le nombre de téléchargements en cours",
+  "readOnly" : false,
+  "moduleId" : "kiosk"
+}, {
+  "id" : "homeserver.kiosk.displayHour",
+  "value" : "true",
+  "description" : "Détermine si on doit afficher l'heure",
+  "readOnly" : false,
+  "moduleId" : "kiosk"
+}, {
+  "id" : "homeserver.kiosk.displayWeather",
+  "value" : "false",
+  "description" : "Détermine si on doit afficher la météo",
+  "readOnly" : false,
+  "moduleId" : "kiosk"
+} ]

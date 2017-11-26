@@ -24,7 +24,6 @@ import { PrettyCheckboxComponent } from './pretty-checkbox/pretty-checkbox.compo
 import { NavigationHelperService } from './navigation-helper.service';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu/menu.component';
 import { NgModule } from '@angular/core';
@@ -33,12 +32,12 @@ import { DownloadFileListComponent } from 'app/common-gui/file-browser/file-brow
 
 @NgModule({
     imports: [CommonModule, RouterModule, FormsModule],
-    exports: [MenuComponent, HomeComponent, PageHeaderComponent, PrettyCheckboxComponent,
+    exports: [MenuComponent, PageHeaderComponent, PrettyCheckboxComponent,
         SimpleDatagridComponent, SDInputValueDirective, NotifyerComponent,
         PopupComponent, AnchorExportDirective, ToggleButtonDirective,
         ImportFileButtonComponent, StepsBarComponent, FileGlyphiconResolverPipe, FileBrowserComponent,
         CancelableInputTextComponent, EditCollapsablePanelComponent, ImageViewerComponent, AutoFocusDirective, ByteFormatPipe],
-    declarations: [MenuComponent, HomeComponent, PageHeaderComponent, PrettyCheckboxComponent,
+    declarations: [MenuComponent, PageHeaderComponent, PrettyCheckboxComponent,
         SimpleDatagridComponent, SDInputValueDirective, NotifyerComponent,
         PopupComponent, AnchorExportDirective, ToggleButtonDirective,
         ImportFileButtonComponent, StepsBarComponent, FileGlyphiconResolverPipe, FileBrowserComponent,

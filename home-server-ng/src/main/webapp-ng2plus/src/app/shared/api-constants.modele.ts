@@ -42,4 +42,7 @@ export class ApiConstants {
     public static readonly REDUCER_REDUCED_FULL_SIZE_IMAGE_API = ApiConstants.REDUCER_API + 'fullSizeImage';
     public static readonly REDUCER_REDUCED_FIND_CONTACTS_API = ApiConstants.REDUCER_API + '/mail/contacts';
     public static readonly REDUCER_REDUCED_SEND_MAIL_API = ApiConstants.REDUCER_API + '/mail';
+
+    public static readonly KIOSK_API = ApiConstants.ROOT_API + 'kiosk/';
+    public static readonly KIOSK_DISPLAY_OPTIONS_API = ApiConstants.KIOSK_API + 'options';
 }
