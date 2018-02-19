@@ -2,6 +2,7 @@ package maroroma.homeserverng.filemanager.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,19 @@ public class FileManagerController {
 	@GetMapping("/filemanager/files/{id}")
 	public void downloadFile(@PathVariable("id") final String base64FileName, final HttpServletResponse response) throws HomeServerException {
 		this.fileService.getFile(base64FileName, response);
+	}
+	
+	/**
+	 * Permet de streamer un fichier multimédia.
+	 * @param base64FileName identifiant du fichier.
+	 * @param request -
+	 * @param response -
+	 * @throws HomeServerException -
+	 */
+	@GetMapping("/filemanager/files/{id}/streaming")
+	public void streamFile(@PathVariable("id") final String base64FileName, 
+			HttpServletRequest request, HttpServletResponse response) throws HomeServerException {
+		this.fileService.streamFile(base64FileName, request, response);
 	}
 	
 	/**

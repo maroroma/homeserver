@@ -3,6 +3,7 @@ package maroroma.homeserverng.config;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
@@ -107,7 +108,7 @@ public class CacheConfiguration extends CachingConfigurerSupport {
 				.collect(CustomCollectors.toAgregatedList());
 
 
-		log.info("[homeserver - caches] - Caches demandés : {}", cacheNames.stream().collect(CustomCollectors.toConcatenatedString(";")));
+		log.info("[homeserver - caches] - Caches demandés : {}", cacheNames.stream().collect(Collectors.joining(";")));
 
 		return new ConcurrentMapCacheManager(cacheNames.toArray(new String[cacheNames.size()]));
 
@@ -151,7 +152,7 @@ public class CacheConfiguration extends CachingConfigurerSupport {
 		log.info(logMsg,
 				fileCacheConfigurations.stream()
 				.map(tuple -> tuple.getItem1())
-				.collect(CustomCollectors.toConcatenatedString(";")));
+				.collect(Collectors.joining(";")));
 
 		return new FileCacheManager<>(fileCacheConfigurations, 
 				cacheCreator);

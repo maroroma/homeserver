@@ -145,7 +145,7 @@ public class PhotoScanServiceImpl implements PhotoScanService {
 		File photoTargeted = photoFileHLP.generateFileForPhoto(year, month, day, id);
 		Assert.isValidFile(photoTargeted);
 
-		return new PhotoDescriptor(photoTargeted, "");
+		return new PhotoDescriptor(photoTargeted);
 	}
 
 	/**

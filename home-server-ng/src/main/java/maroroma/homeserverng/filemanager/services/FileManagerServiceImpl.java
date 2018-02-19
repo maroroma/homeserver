@@ -1,9 +1,11 @@
 package maroroma.homeserverng.filemanager.services;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.FileAndDirectoryHLP;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 import maroroma.homeserverng.tools.model.FileDirectoryDescriptor;
+import maroroma.homeserverng.tools.streaming.StreamingFileSenderException;
+import maroroma.homeserverng.tools.streaming.StreamingFileSender;
 
 /**
  * Implémentation du service pour la gestion des fichiers.
@@ -130,8 +134,30 @@ public class FileManagerServiceImpl implements FileManagerService {
 
 		// validation de son accès
 		this.validateAuthorizedPath(toDownload);
-		
+
 		FileAndDirectoryHLP.copyFileToOuputStream(toDownload, response);
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void streamFile(final String base64FileName, final HttpServletRequest request,
+			final HttpServletResponse response) throws HomeServerException {
+
+		// décodage pour récupération du fichier
+		File toStream = FileAndDirectoryHLP.decodeFile(base64FileName);
+
+		log.debug("Récupération en local du fichier {}", toStream.getAbsolutePath());
+			try {
+				StreamingFileSender.fromPath(toStream.toPath())
+				.with(request)
+				.with(response)
+				.serveResource();
+			} catch (IOException e) {
+				throw new StreamingFileSenderException("vautré", e);
+			}
 
 	}
 

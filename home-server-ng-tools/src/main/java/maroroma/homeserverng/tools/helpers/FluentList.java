@@ -23,7 +23,7 @@ public class FluentList<T> extends ArrayList<T> {
 	public FluentList() {
 		super();
 	}
-	
+
 	/**
 	 * Création d'une {@link FluentList}.
 	 * @param <T> -
@@ -42,7 +42,7 @@ public class FluentList<T> extends ArrayList<T> {
 		this.add(item);
 		return this;
 	}
-	
+
 	/**
 	 * Ajoute une liste d'item et retourne la liste mise à jour.
 	 * @param item -
@@ -50,6 +50,20 @@ public class FluentList<T> extends ArrayList<T> {
 	 */
 	public FluentList<T> addAllAnd(final Collection<? extends T> item) {
 		this.addAll(item);
+		return this;
+	}
+
+	/**
+	 * Ajoute un tableau d'item et retourne la liste mise à jour.
+	 * @param array -
+	 * @return -
+	 */
+	public FluentList<T> addAllAnd(final T[] array) {
+		if (array != null && array.length > 0) {
+			for (T item : array) {
+				this.add(item);
+			}
+		}
 		return this;
 	}
 

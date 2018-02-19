@@ -1,0 +1,10 @@
+<div class="d-flex" *ngIf="fileToPlay">
+    <div class="align-self-center file-infos">
+        <div>
+            <span class="{{fileToPlay | fileGlyphiconResolver}}"></span>
+        </div>
+    </div>
+    <div class="align-self-center file-name">
+        {{fileToPlay.name}}
+    </div>
+</div>

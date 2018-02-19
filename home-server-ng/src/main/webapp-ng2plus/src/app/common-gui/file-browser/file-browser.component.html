@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="align-self-center file-name">
-                    {{oneFile.item.name}}
+                    <a (click)="displayFileFromExtension(oneFile.item)" [homeserverTooltip]="oneFile.item.size | byteFormat">{{oneFile.item.name}}</a>
                 </div>
             </div>
         </li>
@@ -58,3 +58,7 @@
 <homeserver-file-browser-rename #popupRenameFiles (confirmRename)="confirmRename($event)"></homeserver-file-browser-rename>
 
 <homeserver-file-browser-download #popupDownloadFiles></homeserver-file-browser-download>
+
+<homeserver-image-viewer #imageViewer></homeserver-image-viewer>
+
+<homeserver-popup-player #popupPlayer></homeserver-popup-player>

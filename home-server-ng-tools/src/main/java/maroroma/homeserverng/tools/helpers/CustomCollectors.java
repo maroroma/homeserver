@@ -2,6 +2,7 @@ package maroroma.homeserverng.tools.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collector;
 
 /**
@@ -30,41 +31,59 @@ public abstract class CustomCollectors {
                 	});
     }
 	
-	/**
-	 * Collecte l'ensemble des données sous la forme d'un {@link String} concaténé.
-	 * @return -
-	 */
-	public static 
-    Collector<String, ?, StringBuilder> toConcatenatedString() {
+	public static <T> Collector<T, ?, Tuple<List<T>, List<T>>> toSplittedList(Function<T, Boolean> selector) {
 		return Collector.of(
-				// création du type de retour (supplier de type StringBuilder)
-				() -> new StringBuilder(),
-				// méthode utilisée pour ajouter des éléments dans le type de retour (agregator , BiConsumer<List<T>, List<T>>)
-				(container, elementToAdd) -> container.append(elementToAdd),
-				// méthode utilisée pour cumuler deux container. (binary operator, BinaryOperator<List<T>, List<T>>)
-                (left, right) -> { 
-                	left.append(right.toString()); 
-                	return left; 
-                	});
-    }
+				() -> Tuple.from(new ArrayList<>(), new ArrayList<>()),
+				(container, elementToAdd) -> {
+					if (selector.apply(elementToAdd)) {
+						container.getItem1().add(elementToAdd);
+					} else {
+						container.getItem2().add(elementToAdd);
+					}
+				},
+				(left, right) -> {
+					left.getItem1().addAll(right.getItem1());
+					left.getItem2().addAll(right.getItem2());
+					return left;
+				});
+	}
 	
-	/**
-	 * Retourne l'ensemble des données sous la forme d'une chaine concaténée avec un séparateur donné.
-	 * @param separator -
-	 * @return -
-	 */
-	public static 
-    Collector<String, ?, StringBuilder> toConcatenatedString(final String separator) {
-		return Collector.of(
-				// création du type de retour (supplier de type StringBuilder)
-				() -> new StringBuilder(),
-				// méthode utilisée pour ajouter des éléments dans le type de retour (agregator , BiConsumer<List<T>, List<T>>)
-				(container, elementToAdd) -> container.append(elementToAdd).append(separator),
-				// méthode utilisée pour cumuler deux container. (binary operator, BinaryOperator<List<T>, List<T>>)
-                (left, right) -> { 
-                	left.append(right.toString()); 
-                	return left; 
-                	});
-    }
+	
+//	/**
+//	 * Collecte l'ensemble des données sous la forme d'un {@link String} concaténé.
+//	 * @return -
+//	 */
+//	public static 
+//    Collector<String, ?, StringBuilder> toConcatenatedString() {
+//		return Collector.of(
+//				// création du type de retour (supplier de type StringBuilder)
+//				() -> new StringBuilder(),
+//				// méthode utilisée pour ajouter des éléments dans le type de retour (agregator , BiConsumer<List<T>, List<T>>)
+//				(container, elementToAdd) -> container.append(elementToAdd),
+//				// méthode utilisée pour cumuler deux container. (binary operator, BinaryOperator<List<T>, List<T>>)
+//                (left, right) -> { 
+//                	left.append(right.toString()); 
+//                	return left; 
+//                	});
+//    }
+//	
+//	/**
+//	 * Retourne l'ensemble des données sous la forme d'une chaine concaténée avec un séparateur donné.
+//	 * @param separator -
+//	 * @return -
+//	 */
+//	public static 
+//    Collector<String, ?, StringBuilder> toConcatenatedString(final String separator) {
+//		return Collector.of(
+//				// création du type de retour (supplier de type StringBuilder)
+//				() -> new StringBuilder(),
+//				// méthode utilisée pour ajouter des éléments dans le type de retour (agregator , BiConsumer<List<T>, List<T>>)
+//				(container, elementToAdd) -> container.append(elementToAdd).append(separator),
+//				// méthode utilisée pour cumuler deux container. (binary operator, BinaryOperator<List<T>, List<T>>)
+//                (left, right) -> { 
+//                	left.append(right.toString()); 
+//                	return left; 
+//                	});
+//    }
 	
 }

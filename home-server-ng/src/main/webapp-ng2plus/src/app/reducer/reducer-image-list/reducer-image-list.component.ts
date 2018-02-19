@@ -5,6 +5,7 @@ import { ReducedImage } from './../models/reduced-image.modele';
 import { VisualItemDataSource } from './../../shared/visual-item-datasource.modele';
 import { ReducerService } from './../reducer.service';
 import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
+import { ApiConstants } from 'app/shared/api-constants.modele';
 
 @Component({
     selector: 'homeserver-reducer-image-list',
@@ -55,7 +56,7 @@ export class ReducerImageListComponent implements OnInit {
 
     displayImageGallery(): void {
         this.imageViewer.display(this.reducedImages.sourceList
-            .map(wrapped => wrapped.item), fd => 'api/reducer/reducedImages/' + fd.id);
+            .map(wrapped => wrapped.item), fd => ApiConstants.REDUCER_REDUCED_IMAGES_API + '/' + fd.id);
     }
 
     public updateImageList(imageList: Array<ReducedImage>): void {

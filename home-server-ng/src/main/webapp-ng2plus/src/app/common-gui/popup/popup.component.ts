@@ -6,6 +6,8 @@ import {
     animate,
     transition, keyframes
 } from '@angular/animations';
+import { HostListener } from '@angular/core';
+
 
 @Component({
     selector: 'homeserver-popup',
@@ -60,6 +62,17 @@ export class PopupComponent implements OnInit {
     public hide() {
         this.isVisible = false;
         this.currentState = 'hide';
+    }
+
+    /**
+     * Gestion du clavier pour la fermeture de la popup.
+     * @param event - 
+     */
+    @HostListener('window:keydown', ['$event'])
+    public handleKeyBoard(event?: KeyboardEvent) {
+        if (event.key === 'Escape') {
+            this.hide();
+        }
     }
 
 

@@ -1,5 +1,9 @@
 package maroroma.homeserverng.exceptions;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import maroroma.homeserverng.tools.exceptions.DisableModuleException;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.streaming.StreamingFileSenderException;
 
 /**
  * Gestion des exceptions connues.
@@ -27,7 +32,7 @@ public class RestExceptionHandler {
 	@ResponseBody ErrorInfo handleIllegalArgumentException(final IllegalArgumentException iae) {
 		return new ErrorInfo(HttpStatus.BAD_REQUEST, iae);
 	}
-	
+
 	/**
 	 * Gestion des erreurs internes.
 	 * @param hse -
@@ -38,8 +43,8 @@ public class RestExceptionHandler {
 	@ResponseBody ErrorInfo handleHomeServerException(final HomeServerException hse) {
 		return new ErrorInfo(HttpStatus.INTERNAL_SERVER_ERROR, hse);
 	}
-	
-	
+
+
 	/**
 	 * Gestion des erreurs pour les appels sur les modules désactivés.
 	 * @param dme -
@@ -50,5 +55,20 @@ public class RestExceptionHandler {
 	@ResponseBody ErrorInfo handleDisabledModuleException(final DisableModuleException dme) {
 		return new ErrorInfo(HttpStatus.SERVICE_UNAVAILABLE, dme);
 	}
-	
+
+	/**
+	 * Gestion des erreurs pour le streaming.
+	 * @param response -
+	 * @param ex -
+	 * @throws IOException -
+	 */
+	@ExceptionHandler(value = StreamingFileSenderException.class)
+	void handleIllegalArgumentException(final HttpServletResponse response, final StreamingFileSenderException ex) throws IOException {
+		//		System.out.println("YOLO");
+		response.sendError(ex.getHttpStatus().value());
+		if (ex.getSpecificHeader() != null) {
+			response.addHeader(ex.getSpecificHeader().getItem1(), ex.getSpecificHeader().getItem2());
+		}
+	}
+
 }

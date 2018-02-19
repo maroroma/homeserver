@@ -1,6 +1,6 @@
 [ {
   "id" : "homeserver.filemanager.rootdirectories",
-  "value" : "D:/tmp/TEST/reducer/reduced/,D:/temp/TEST/COMPLETED,D:/temp/TEST/Videos/Series,D:/temp/TEST/music/musicworkingdir",
+  "value" : "D:/tmp/TEST/reducer/reduced/,D:/temp/TEST/COMPLETED,D:/temp/TEST/Videos/Series,D:/temp/TEST/music/musicworkingdir,D:/temp/Test/Videos/Films",
   "description" : "Les différents répertoires racines gérables par le filemanager",
   "readOnly" : false,
   "moduleId" : "filemanager"

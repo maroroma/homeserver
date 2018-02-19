@@ -1,6 +1,8 @@
 package maroroma.homeserverng.tools.model;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import org.springframework.util.Base64Utils;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * DTO pour la description des fichiers présents
@@ -18,12 +21,14 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Log4j2
 public class FileDescriptor {
 
 	/**
 	 * Nom du fichier.
 	 */
 	private String name;
+	
 	/**
 	 * Chemin complet du fichier.
 	 */
@@ -38,18 +43,46 @@ public class FileDescriptor {
 	 * Encodage du nom de fichier pour facilité les échange http.
 	 */
 	private String base64FullName;
+	
+	/**
+	 * Taille estimée du fichier.
+	 */
+	private long size;
 
 	/**
 	 * Constructeur.
 	 * @param fileName -
 	 * @param fullFileName -
-	 * @param httpRez -
 	 */
-	public FileDescriptor(final String fileName, final String fullFileName, final String httpRez) {
+	public FileDescriptor(final String fileName, final String fullFileName) {
 		this.name = fileName;
 		this.fullName = fullFileName;
-		this.httpRessource = httpRez;
 		this.base64FullName = Base64Utils.encodeToString(this.fullName.getBytes());
+	}
+	
+	/**
+	 * Constructeur.
+	 * @param file -
+	 */
+	public FileDescriptor(final File file) {
+		this(file.getName(), file.getAbsolutePath());
+		try {
+			this.size = Files.size(file.toPath());
+		} catch (IOException e) {
+			log.warn("Problème rencontré lors de la récupération de la taille du fichier {}", file.getAbsolutePath());
+		}
+	}
+
+	/**
+	 * Constructeur de type clonage.
+	 * @param source -
+	 */
+	protected FileDescriptor(final FileDescriptor source) {
+		this.fullName = source.getFullName();
+		this.httpRessource = source.getHttpRessource();
+		this.base64FullName = source.getBase64FullName();
+		this.name = source.getName();
+		this.size = source.getSize();
 	}
 
 	/**
@@ -82,42 +115,7 @@ public class FileDescriptor {
 		return toRename.renameTo(renameTo);
 	}
 
-	/**
-	 * Constructeur.
-	 * @param file -
-	 */
-	public FileDescriptor(final File file) {
-		this(file.getName(), file.getAbsolutePath());
-	}
-
-	/**
-	 * Constructeur.
-	 * @param file -
-	 * @param parentUri -
-	 */
-	public FileDescriptor(final File file, final String parentUri) {
-		this(file.getName(), file.getAbsolutePath(), (parentUri.endsWith("/") ? parentUri : (parentUri + "/")) + file.getName());
-	}
-
-	/**
-	 * Constructeur.
-	 * @param fileName -
-	 * @param absoluteFileName -
-	 */
-	public FileDescriptor(final String fileName, final String absoluteFileName) {
-		this(fileName, absoluteFileName, null);
-	}
-
-	/**
-	 * Constructeur de type clonage.
-	 * @param source -
-	 */
-	protected FileDescriptor(final FileDescriptor source) {
-		this.fullName = source.getFullName();
-		this.httpRessource = source.getHttpRessource();
-		this.base64FullName = source.getBase64FullName();
-		this.name = source.getName();
-	}
+	
 
 	/**
 	 * Retourne une liste de {@link FileDescriptor} à partir d'une lise de {@link File}.
@@ -137,17 +135,6 @@ public class FileDescriptor {
 	public static List<FileDescriptor> toList(final List<File> array) {
 		List<FileDescriptor> returnValue = new ArrayList<>();
 		return addToList(returnValue, array);
-	}
-
-	/**
-	 * Retourne une liste de {@link FileDescriptor} à partir d'une lise de {@link File}.
-	 * @param array -
-	 * @param httpRootRes racine de la ressource http pour le fichier.
-	 * @return -
-	 */
-	public static List<FileDescriptor> toList(final File[] array, final String httpRootRes) {
-		List<FileDescriptor> returnValue = new ArrayList<>();
-		return addToList(returnValue, array, httpRootRes);
 	}
 
 	/**
@@ -182,27 +169,5 @@ public class FileDescriptor {
 
 		return listToPopulate;
 	}
-
-	/**
-	 * Ajoute le tableau de {@link File} dans la liste de {@link FileDescriptor} donnée.
-	 * @param listToPopulate -
-	 * @param files -
-	 * @param httpRootRes racine de la ressource http pour le fichier.
-	 * @return -
-	 */
-	public static List<FileDescriptor> addToList(final List<FileDescriptor> listToPopulate, final File[] files, final String httpRootRes) {
-
-		if (files != null) {
-			for (File pureFile : files) {
-				listToPopulate.add(new FileDescriptor(pureFile, httpRootRes));
-			}
-		}
-
-		return listToPopulate;
-	}
-
-
-
-
 
 }

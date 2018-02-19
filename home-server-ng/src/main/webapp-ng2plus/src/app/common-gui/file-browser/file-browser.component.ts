@@ -1,3 +1,4 @@
+import { FileDescriptor } from 'app/shared/file-descriptor.modele';
 import { FileBrowserRenameComponent } from './file-browser-rename/file-browser-rename.component';
 import { RenameFileDescriptor } from './rename-file-descriptor.modele';
 import { FileBrowserOptions } from './file-browser-options.modele';
@@ -12,15 +13,19 @@ import { FilterTools } from './../../shared/filter-tools.service';
 import { FileBrowserResolver } from './file-browser-resolver.modele';
 import { FileBrowserService } from './file-browser.service';
 import { DirectoryDescriptor } from './../../shared/directory-descriptor.modele';
-import { FileDescriptor } from './../../shared/file-descriptor.modele';
 import { VisualItemDataSource } from './../../shared/visual-item-datasource.modele';
 import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FileBrowserDownloadComponent } from 'app/common-gui/file-browser/file-browser-download/file-browser-download.component';
+import { ImageViewerComponent } from 'app/common-gui/image-viewer/image-viewer.component';
+import { ApiConstants } from 'app/shared/api-constants.modele';
+import { MusicPlayerComponent } from 'app/common-gui/players/music-player/music-player.component';
+import { VideoPlayerComponent } from 'app/common-gui/players/video-player/video-player.component';
+import { PopupPlayerComponent } from 'app/common-gui/players/popup-player/popup-player.component';
 
 @Component({
     selector: 'homeserver-file-browser',
     templateUrl: 'file-browser.component.html',
-    styleUrls: ['file-browser.component.scss']
+    styleUrls: ['file-browser.component.scss', '../styles/shared.scss']
 })
 export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
 
@@ -73,10 +78,19 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     public selectedDirectoryChange = new EventEmitter<DirectoryDescriptor>();
 
+    /**
+     * Gestion des options pour l'affichage.
+     */
     @Input()
     public options: FileBrowserOptions;
 
     public dirCreationRequest = new DirectoryCreationRequest();
+
+    /**
+     * Utilisé pour afficher les images d'un répertoire.
+     */
+    @ViewChild('imageViewer')
+    imageViewer: ImageViewerComponent;
 
     /**
      * Répertoire de démarrage.
@@ -98,6 +112,12 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
      */
     @ViewChild('popupCreateDirectory')
     popupCreateDirectory: PopupComponent;
+
+    /**
+     * Popup pour l'affichage du player.
+     */
+    @ViewChild('popupPlayer')
+    popupPlayer: PopupPlayerComponent;
 
     /**
      * Popup pour la confirmation de suppression d'un fichier.
@@ -361,4 +381,29 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
         this.popupDownloadFiles.display(this.options.resolver,
             this.directoryList.getRawSelectedItems(), this.fileList.getRawSelectedItems());
     }
+
+    /**
+     * Affichage de la gallerie à partir des images présentes dans le répertoire
+     */
+    public displayFileFromExtension(file: FileDescriptor): void {
+
+        // gestion des images
+        if (FileDescriptor.isImageFile(file)) {
+            // liste sur la base des fichiers qui sont des images.
+            this.imageViewer.display(this.fileList.getRawItemsFromDisplay().filter(fd => FileDescriptor.isImageFile(fd)),
+                fd => ApiConstants.FILEMANAGER_FILES_API + '/' + fd.id);
+        }
+
+        // gestion d'une musique
+        if (FileDescriptor.isMusicFile(file)) {
+            this.popupPlayer.displayForAudio(file);
+        }
+
+        // gestion d'une video
+        if (FileDescriptor.isVideoFile(file)) {
+            this.popupPlayer.displayForVideo(file);
+        }
+
+    }
+
 }

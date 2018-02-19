@@ -64,6 +64,8 @@ export class CompletedFileListComponent implements OnInit, OnChanges, OnDestroy 
         this.sortService.loadCompletedFiles().subscribe(res => {
             this.completedFiles = res.completedFiles;
             this.updateAvailableFileTypes();
+            // sinon on maintient le filtre même en quittant l'écran
+            this.applyComplexFilter();
         });
 
         this.searchSubscription = this.searchService.searchChanged.subscribe(search => this.applyComplexFilter());
@@ -119,6 +121,9 @@ export class CompletedFileListComponent implements OnInit, OnChanges, OnDestroy 
         }
         if (this.completedFiles.sourceList.filter(item => FileDescriptor.isCommonFile(item.item)).length > 0) {
             fileTypes.push(new Tuple('file', FileDescriptor.isCommonFile));
+        }
+        if (this.completedFiles.sourceList.filter(item => FileDescriptor.isImageFile(item.item)).length > 0) {
+            fileTypes.push(new Tuple('picture', FileDescriptor.isImageFile));
         }
 
         this.availableFileTypes.updateSourceList(fileTypes);

@@ -1,3 +1,7 @@
+import { TooltipDirective } from './directives/tooltip.directive';
+import { PopupPlayerComponent } from './players/popup-player/popup-player.component';
+import { PlayedItemComponent } from './players/played-item/played-item.component';
+import { VideoPlayerComponent } from './players/video-player/video-player.component';
 import { FileBrowserToolBarComponent } from './file-browser/file-browser-toolbar/file-browser-toolbar.component';
 import { FileBrowserRenameComponent } from './file-browser/file-browser-rename/file-browser-rename.component';
 import { FileBrowserDownloadComponent } from './file-browser/file-browser-download/file-browser-download.component';
@@ -27,22 +31,25 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu/menu.component';
 import { NgModule } from '@angular/core';
-import { DownloadFileListComponent } from 'app/common-gui/file-browser/file-browser-download/download-file-list.component';
+import { DownloadFileListComponent } from './file-browser/file-browser-download/download-file-list.component';
+import { MusicPlayerComponent } from './players/music-player/music-player.component';
 
 
 @NgModule({
     imports: [CommonModule, RouterModule, FormsModule],
     exports: [MenuComponent, PageHeaderComponent, PrettyCheckboxComponent,
         SimpleDatagridComponent, SDInputValueDirective, NotifyerComponent,
-        PopupComponent, AnchorExportDirective, ToggleButtonDirective,
-        ImportFileButtonComponent, StepsBarComponent, FileGlyphiconResolverPipe, FileBrowserComponent,
-        CancelableInputTextComponent, EditCollapsablePanelComponent, ImageViewerComponent, AutoFocusDirective, ByteFormatPipe],
-    declarations: [MenuComponent, PageHeaderComponent, PrettyCheckboxComponent,
-        SimpleDatagridComponent, SDInputValueDirective, NotifyerComponent,
-        PopupComponent, AnchorExportDirective, ToggleButtonDirective,
+        PopupComponent, AnchorExportDirective, ToggleButtonDirective, TooltipDirective,
         ImportFileButtonComponent, StepsBarComponent, FileGlyphiconResolverPipe, FileBrowserComponent,
         CancelableInputTextComponent, EditCollapsablePanelComponent, ImageViewerComponent, AutoFocusDirective,
-        FileBrowserToolBarComponent, FileBrowserRenameComponent, ByteFormatPipe, FileBrowserDownloadComponent, DownloadFileListComponent],
+        ByteFormatPipe, MusicPlayerComponent, VideoPlayerComponent, PlayedItemComponent, PopupPlayerComponent],
+    declarations: [MenuComponent, PageHeaderComponent, PrettyCheckboxComponent,
+        SimpleDatagridComponent, SDInputValueDirective, NotifyerComponent,
+        PopupComponent, AnchorExportDirective, ToggleButtonDirective, TooltipDirective,
+        ImportFileButtonComponent, StepsBarComponent, FileGlyphiconResolverPipe, FileBrowserComponent,
+        CancelableInputTextComponent, EditCollapsablePanelComponent, ImageViewerComponent, AutoFocusDirective,
+        FileBrowserToolBarComponent, FileBrowserRenameComponent, ByteFormatPipe, FileBrowserDownloadComponent,
+        DownloadFileListComponent, MusicPlayerComponent, VideoPlayerComponent, PlayedItemComponent, PopupPlayerComponent],
     providers: [NavigationHelperService, NotifyerService, FileBrowserService, PageHeaderSearchService],
 })
 export class CommonGUIModule { }

@@ -82,7 +82,7 @@ public class ScannerServiceImpl implements ScannerService {
 		// récupération des fichiers
 		File[] listeFilesTodo = this.doneScansDirectory.asFile().listFiles(CommonFileFilter.pureFileFilter());
 
-		return FileDescriptor.toList(listeFilesTodo, ScannerStaticsNeeder.SCANNER_DONESCANS_RESOURCE_HANDLER.replace("**", ""));
+		return FileDescriptor.toList(listeFilesTodo);
 		
 	}
 

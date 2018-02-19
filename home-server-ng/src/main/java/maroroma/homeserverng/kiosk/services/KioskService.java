@@ -1,5 +1,8 @@
 package maroroma.homeserverng.kiosk.services;
 
+import java.util.List;
+
+import maroroma.homeserverng.kiosk.model.CurrentReading;
 import maroroma.homeserverng.kiosk.model.KioskDisplayOption;
 
 
@@ -16,4 +19,6 @@ public interface KioskService {
 	 */
 	KioskDisplayOption getOptions();
 	
+	
+	List<CurrentReading> getCurrentReadings();
 }

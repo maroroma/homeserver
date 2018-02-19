@@ -15,7 +15,7 @@
   "enabled" : false
 }, {
   "id" : "photo",
-  "enabled" : false
+  "enabled" : true
 }, {
   "id" : "reducer",
   "enabled" : true

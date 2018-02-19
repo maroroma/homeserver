@@ -2,6 +2,7 @@ package maroroma.homeserverng.filemanager.services;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import maroroma.homeserverng.filemanager.model.DirectoryCreationRequest;
@@ -62,5 +63,14 @@ public interface FileManagerService {
 	 * @throws HomeServerException -
 	 */
 	void getFile(String base64FileName, HttpServletResponse response) throws HomeServerException;
+
+	/**
+	 * Permet de gérer le streaming d'un fichier multimédia (mp3 ou video).
+	 * @param base64FileName -
+	 * @param request -
+	 * @param response -
+	 * @throws HomeServerException -
+	 */
+	void streamFile(String base64FileName, HttpServletRequest request, HttpServletResponse response) throws HomeServerException;
 	
 }

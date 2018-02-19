@@ -13,13 +13,15 @@ export class FileDescriptor {
     public fullName: string;
     public extension: string;
     public id: string;
+    public size: number;
 
-    protected static genericFromRaw<T extends FileDescriptor>(rawFile: any, type: { new (): T; }): T {
+    protected static genericFromRaw<T extends FileDescriptor>(rawFile: any, type: { new(): T; }): T {
         const returnValue = new type();
         returnValue.name = rawFile.name;
         returnValue.fullName = rawFile.fullName;
         returnValue.id = rawFile.base64FullName;
         returnValue.extension = FileDescriptor.getFileExtension(returnValue.name);
+        returnValue.size = rawFile.size;
 
         return returnValue;
     }

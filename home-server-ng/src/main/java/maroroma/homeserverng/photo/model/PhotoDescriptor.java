@@ -17,10 +17,9 @@ public class PhotoDescriptor extends FileDescriptor {
 	/**
 	 * constructeur.
 	 * @param source -
-	 * @param parentUri -
 	 */
-	public PhotoDescriptor(final File source, final String parentUri) {
-		super(source, parentUri);
+	public PhotoDescriptor(final File source) {
+		super(source);
 	}
 
 	

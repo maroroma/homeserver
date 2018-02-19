@@ -11,7 +11,6 @@ import org.springframework.util.Assert;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import maroroma.homeserverng.photo.tools.PhotoNamesDateHLP;
-import maroroma.homeserverng.photo.tools.PhotoUriHLP;
 import maroroma.homeserverng.tools.helpers.CommonFileFilter;
 
 /**
@@ -56,8 +55,8 @@ public class DayDirectoryDescriptor extends AbstractPhotoDirectoryDescriptor<Pho
 	 */
 	@Override
 	public void populate(final List<File> asList) {
-		this.populate(asList, rawFile -> new PhotoDescriptor(rawFile, 
-				PhotoUriHLP.resolvePath(this.createFile())));		
+		this.populate(asList, rawFile -> new PhotoDescriptor(rawFile));//, 
+//				PhotoUriHLP.resolvePath(this.createFile())));		
 	}
 	
 	/**

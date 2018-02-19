@@ -7,6 +7,7 @@ import {
     animate,
     transition, keyframes
 } from '@angular/animations';
+import { HostListener } from '@angular/core';
 
 /**
  * PErmet d'afficher une gallerie d'images
@@ -54,9 +55,29 @@ export class ImageViewerComponent implements OnInit {
         this.currentState = 'display';
     }
 
+    /**
+     * ON peut masquer le composant si la touche ESC est levée
+     */
     public hide(): void {
         this.isVisible = false;
         this.currentState = 'hide';
+    }
+
+    @HostListener('window:keydown', ['$event'])
+    public handleKeyBoard(event?: KeyboardEvent): void {
+        console.log(event);
+        if (event.key === 'Escape') {
+            this.hide();
+        }
+
+        if (event.key === 'ArrowRight') {
+            this.next();
+        }
+
+        if (event.key === 'ArrowLeft') {
+            this.previous();
+        }
+
     }
 
     public next(): void {

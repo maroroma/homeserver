@@ -2,6 +2,7 @@ package maroroma.homeserverng.tools.helpers;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -104,7 +105,7 @@ public abstract class Assert extends org.springframework.util.Assert {
 				"Le fichier  [" 
 						+ fileName 
 						+ "] ne correspond pas l'une des extensions suivantes :" 
-						+ Arrays.stream(extensions).collect(CustomCollectors.toConcatenatedString(";")));
+						+ Arrays.stream(extensions).collect(Collectors.joining(";")));
 	}
 
 	/**

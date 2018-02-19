@@ -1,0 +1,11 @@
+@media(orientation:landscape) {
+    .player {
+        width: 50%;
+    }
+}
+
+@media(orientation:portrait) {
+    .player {
+        width: 100%;
+    }
+}
