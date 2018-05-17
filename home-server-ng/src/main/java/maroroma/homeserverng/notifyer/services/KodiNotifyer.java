@@ -1,5 +1,8 @@
 package maroroma.homeserverng.notifyer.services;
 
+import maroroma.homeserverng.tools.kodi.methods.KodiClient;
+import maroroma.homeserverng.tools.kodi.methods.KodiMethod;
+import maroroma.homeserverng.tools.kodi.methods.ShowNotification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -39,30 +42,15 @@ public class KodiNotifyer extends AbstractDisableableNotifyer implements Notifye
 	@Override
 	protected void doNotify(final NotificationEvent notification) throws HomeServerException {
 
-		// on valide que la liste d'url est bien présente
+		KodiMethod<?, ?> method = ShowNotification.create()
+				.displayTime(this.displayTime.asInt())
+				.message(notification.getMessage())
+				.title(notification.getTitle())
+				.build();
 
-		// construction de la méthode json rpc.
-//		KodiJsonRPCMethod method = KodiJsonRPCMethod.builder()
-//				.id(1)
-//				.jsonrpc(KodiJsonRPCMethod.JSON_RPC_V_2_0)
-//				.method(KODI_METHOD_NAME_GUI_SHOW_NOTIFICATION)
-//				.id(1)
-//				.params(
-//						FluentMap.<String, Object>create()
-//						.add("title", notification.getTitle())
-//						.add("message", notification.getMessage())
-//						.add("displaytime", this.displayTime.asInt()))
-//				.build();
-		
-		AbstractKodiJsonRPCMethod method = KodiMethods.guiShowNotification(notification.getTitle(),
-				notification.getMessage(), this.displayTime.asInt());
-
-		// pour chacun des urls, émission asynchrone sur l'url donnée
-		this.kodiUrls.asStringList().parallelStream().forEach(oneUrl -> {
-			log.warn("notification vers " + oneUrl);
-			RestTemplate rt = new RestTemplate();
-			rt.postForObject(oneUrl, method, String.class);
-		});
+		this.kodiUrls.asStringList().parallelStream()
+				.map(KodiClient::new)
+				.forEach(method::execute);
 
 	}
 

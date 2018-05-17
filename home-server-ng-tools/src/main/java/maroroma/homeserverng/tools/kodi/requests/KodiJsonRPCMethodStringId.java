@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Deprecated
 public class KodiJsonRPCMethodStringId extends AbstractKodiJsonRPCMethod {
 
 	private String id;

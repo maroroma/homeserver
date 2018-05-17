@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,9 +66,6 @@ public class SeedBoxTodoServiceImpl implements SeedBoxTodoService {
 		// retour de la fonction
 		List<TodoFile> returnValue = new ArrayList<>();
 		
-		// préparation de la liste des derniers fichiers scannés
-		List<String> newLastCompletedFileList = new ArrayList<>();
-		
 		// répertoire à scanner
 		File file = this.todoDirectory.asFile();
 		
@@ -75,27 +75,18 @@ public class SeedBoxTodoServiceImpl implements SeedBoxTodoService {
 		// lancement du listing des fichiers.
 		this.listFiles(rawTodoListToPopulate, file, CommonFileFilter.pureFileFilter());
 
-		// création de la sortie avec l'indicateur isNew
-		for (FileDescriptor fileDescriptor : rawTodoListToPopulate) {
-			// détermine si le fichier était déjà présent sur le dernier appel
-			boolean isNew = !this.lastCompletedFileList.contains(fileDescriptor.getFullName());
-			
-			// préparation de la mise à jour de la liste
-			newLastCompletedFileList.add(fileDescriptor.getFullName());
-			
-			// création du retour finalement utilisé par l'ihm
-			returnValue.add(new TodoFile(fileDescriptor, isNew));
-		}
+		returnValue = rawTodoListToPopulate
+				.stream()
+				// on convertit en todofile, en checkant si le fichier semble nouveau
+				.map(oneFile -> new TodoFile(oneFile, !this.lastCompletedFileList.contains(oneFile.getFullName())))
+				.collect(Collectors.toList());
 
 		// mise à jour de la liste de noms de fichier pour le prochain appel
-		this.lastCompletedFileList.clear();
-		this.lastCompletedFileList.addAll(newLastCompletedFileList);
-		
-		
+		this.lastCompletedFileList = returnValue.stream()
+				.map(oneTodoFile -> oneTodoFile.getFullName())
+				.collect(Collectors.toList());
+
 		return returnValue;
-
-
-
 	}
 
 	/**
@@ -124,50 +115,48 @@ public class SeedBoxTodoServiceImpl implements SeedBoxTodoService {
 	 * {@inheritDoc}
 	 */
 	@Override
-//	@Cacheable(SeedboxModuleConstants.SEEDBOX_TARGET_LIST_CACHE_NAME)
 	public List<TargetDirectory> getTargetList() {
-		
-		List<TargetDirectory> returnValue = new ArrayList<>();
-		
-		for (TargetDirectoryLoader loader : this.targetLoaders) {
-			returnValue.add(loader.loadTargetDirectory());
-		}
-		
-		return returnValue;
+		return this.targetLoaders.stream()
+				.map(loader -> loader.loadTargetDirectory())
+				.collect(Collectors.toList());
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<MovedFile> moveFiles(final MoveRequest request) {
+	public List<MovedFile> moveFiles(final MoveRequest request) throws HomeServerException {
 
 		log.info("déplacement d'un fichier : " + request.toString());
-		
-		List<MovedFile> returnValue = new ArrayList<>();
 
 
-		for (FileToMoveDescriptor fd : request.getFilesToMove()) {
+		// récupération du loader et controle de la bonne hierarchie
+		TargetDirectoryLoader loader = this.targetLoaders.stream()
+				.filter(tl -> tl.includes(request.getTarget()))
+				.findFirst()
+				.orElseThrow(() -> new HomeServerException("Le répertoire cible ne fait pas partie des cibles proposées"));
 
-			try {
 
-				
-				// recopie du fichier par renommage avec le nouveau nom
-				boolean moveResult = fd.createFile().renameTo(new File(request.getTarget().getFullName() + File.separator + fd.getNewName()));
-				
-				returnValue.add(new MovedFile(fd, request.getTarget().getFullName(), moveResult));
-				
-			} catch (Exception e) {
 
-			}
-		}
+		// déplacement du fichier
+		List<MovedFile> returnValue = request.getFilesToMove()
+				.stream()
+				.map(oneFileToMove -> {
+					boolean moveResult = oneFileToMove
+							.createFile()
+							.renameTo(new File(request.getTarget().getFullName() + File.separator + oneFileToMove.getNewName()));
+					return new MovedFile(oneFileToMove, request.getTarget().getFullName(), moveResult);
+				})
+				.collect(Collectors.toList());
+
+		// lancement du scan vers kodi sur la target
+		loader.executeScanOnKodiInstances();
+
 
 		return returnValue;
-
 	}
 
 	/**
-	 * {@inheritDoc}
 	 */
 	@Override
 	public List<FileDescriptor> getDirectoryDetails(final FileDescriptor directoryToParse) {
@@ -183,11 +172,9 @@ public class SeedBoxTodoServiceImpl implements SeedBoxTodoService {
 	 */
 	@Override
 	public FileDirectoryDescriptor getDirectoryDetails(final String fileId) {
-		
 		File toScan = FileAndDirectoryHLP.decodeFile(fileId);
 		Assert.isValidDirectory(toScan);
 		return FileDirectoryDescriptor.createWithSubDirectories(toScan);
-		
 	}
 
 	/**
@@ -205,6 +192,5 @@ public class SeedBoxTodoServiceImpl implements SeedBoxTodoService {
 		Assert.hasLength(fileId, "fileId can't be null");
 		return this.deleteTodoFile(FileAndDirectoryHLP.decodeFileDescriptor(fileId));
 	}
-	
-	
+
 }

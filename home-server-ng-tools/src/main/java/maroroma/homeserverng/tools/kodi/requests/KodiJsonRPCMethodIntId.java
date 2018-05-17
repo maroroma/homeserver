@@ -13,6 +13,7 @@ import lombok.Data;
  *
  */
 @Data
+@Deprecated
 public class KodiJsonRPCMethodIntId extends AbstractKodiJsonRPCMethod {
 
 	/**

@@ -167,7 +167,8 @@ public class DirectoryMonitor {
 
 		try {
 			this.watchService = FileSystems.getDefault().newWatchService();
-			dir.register(this.watchService, new ArrayList<>(this.eventsMonitored.keySet()).toArray(new Kind<?>[0]));
+			dir.register(this.watchService,
+					this.eventsMonitored.keySet().stream().toArray(Kind<?>[]::new));
 		} catch (IOException e) {
 			String msg = "Erreur rencontrée lors de la mise en place du monitorin du répertoire " + this.directoryToWatch.getAbsolutePath();
 			log.error(msg, e);

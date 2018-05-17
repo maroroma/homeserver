@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Deprecated
 public abstract class AbstractKodiJsonRPCMethod {
 	/**
 	 * Version du jsonrpc utilisée.

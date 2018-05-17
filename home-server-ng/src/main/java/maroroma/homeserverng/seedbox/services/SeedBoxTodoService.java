@@ -4,6 +4,7 @@ import java.util.List;
 
 import maroroma.homeserverng.seedbox.model.TargetDirectory;
 import maroroma.homeserverng.seedbox.model.TodoFile;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 import maroroma.homeserverng.tools.model.FileDirectoryDescriptor;
 import maroroma.homeserverng.tools.model.MoveRequest;
@@ -33,7 +34,7 @@ public interface SeedBoxTodoService {
 	 * @param request -
 	 * @return -
 	 */
-	List<MovedFile> moveFiles(MoveRequest request);
+	List<MovedFile> moveFiles(MoveRequest request) throws HomeServerException;
 
 	/**
 	 * Retourne le détail d'un répertoire contenu dans l'arborescence des cibles.

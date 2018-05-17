@@ -12,6 +12,7 @@ import maroroma.homeserverng.tools.kodi.responses.Result;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class GetItemResponse {
 //
 //	 "id": "VideoGetItem",

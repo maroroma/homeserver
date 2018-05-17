@@ -1,18 +1,17 @@
 package maroroma.homeserverng.tools.config;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.Tuple;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Holder pour une propriété applicative modifiable.
@@ -191,7 +190,7 @@ public class HomeServerPropertyHolder {
 	public List<String> asStringList() {
 		return asStringList(DEFAULT_SPLIT_CHAR);
 	}
-	
+
 	/**
 	 * Retourne la valeur en tant que booleen.
 	 * @return -

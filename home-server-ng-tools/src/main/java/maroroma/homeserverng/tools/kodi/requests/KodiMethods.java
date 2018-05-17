@@ -8,6 +8,7 @@ import maroroma.homeserverng.tools.helpers.FluentMap;
  * @author rlevexie
  *
  */
+@Deprecated
 public abstract class KodiMethods {
 
 	/**
@@ -51,6 +52,10 @@ public abstract class KodiMethods {
 						.add("displaytime", displayTime))
 				.build();
 	}
+
+//	public static AbstractKodiJsonRPCMethod updateVideoLibrary() {
+//
+//	}
 	
 
 	/**

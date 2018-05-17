@@ -16,13 +16,16 @@ import maroroma.homeserverng.tools.model.FileDescriptor;
  *
  */
 @Component
-public class TargetDirectoryTvShowLoader implements TargetDirectoryLoader {
+public class TargetDirectoryTvShowLoader extends AbstractTargetDirectoryLoader {
 
 	/**
 	 * Répertoire contenant les répertoires cibles.
 	 */
 	@Property("homeserver.seedbox.target.directory.tvshows")
 	private HomeServerPropertyHolder targetDirectory;
+
+	@Property("homeserver.seedbox.target.directory.tvshows.kodialias")
+	private HomeServerPropertyHolder kodiAlias;
 	
 	
 	/**
@@ -38,6 +41,11 @@ public class TargetDirectoryTvShowLoader implements TargetDirectoryLoader {
 		FileDescriptor.addToList(returnValue.getSubDirectories(), targetDirectory.asFile().listFiles(CommonFileFilter.pureDirectoryFilter()));
 		
 		return returnValue;
+	}
+
+	@Override
+	public String getKodiAlias() {
+		return this.kodiAlias.getResolvedValue();
 	}
 
 }

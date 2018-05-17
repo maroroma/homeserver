@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties({"videoPlayer", "audioPlayer"})
+@Deprecated
 public class ActivePlayer {
 //	"playerid": 0,
 //    "type": "audio

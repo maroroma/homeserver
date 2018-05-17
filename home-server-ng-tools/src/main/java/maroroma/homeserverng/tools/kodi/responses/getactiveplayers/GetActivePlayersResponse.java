@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Deprecated
 public class GetActivePlayersResponse {
 //	"id": 1,
 //    "jsonrpc": "2.0",
