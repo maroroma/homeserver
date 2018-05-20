@@ -1,6 +1,6 @@
 [ {
   "id" : "music",
-  "enabled" : true
+  "enabled" : false
 }, {
   "id" : "watch",
   "enabled" : false
@@ -15,7 +15,7 @@
   "enabled" : false
 }, {
   "id" : "photo",
-  "enabled" : true
+  "enabled" : false
 }, {
   "id" : "reducer",
   "enabled" : true

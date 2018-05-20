@@ -152,6 +152,18 @@ export class AdministrationService {
     }
 
     /**
+     * Récupération d'une propriété unique.
+     */
+    public getProperty(propertyId:string) : Observable<Property> {
+        return this.http.get(ApiConstants.ADMIN_CONFIGS_API + '/' + propertyId)
+            .map(response => Property.fromRaw(response.json()))
+            .catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de la récupération de la propriété :' + propertyId);
+                return Observable.of(new Property());
+            });
+    }
+
+    /**
      * Sauvegarde d'une propriété
      * @param {Property} propertyToSave
      * @returns {Observable<Array<Property>>}

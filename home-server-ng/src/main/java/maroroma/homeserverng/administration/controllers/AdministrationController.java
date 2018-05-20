@@ -1,23 +1,9 @@
 package maroroma.homeserverng.administration.controllers;
 
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import maroroma.homeserverng.administration.AdministrationModuleDescriptor;
 import maroroma.homeserverng.administration.model.HomeServerStatus;
 import maroroma.homeserverng.administration.model.UploadPropertiesResponse;
@@ -31,6 +17,15 @@ import maroroma.homeserverng.tools.config.HomeServerModuleHandler;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.repositories.NanoRepositoryDescriptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Controller pour la gestion de l'administration.
@@ -150,6 +145,17 @@ public class AdministrationController {
 	@RequestMapping("/administration/configs")
 	public ResponseEntity<List<HomeServerPropertyHolder>> listProperties() throws HomeServerException {
 		return ResponseEntity.ok(this.serviceAdministration.getProperties());
+	}
+
+	/**
+	 * Retourne la propriété demandée.
+	 * @param id -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
+	@GetMapping("/administration/configs/{id:.+}")
+	public ResponseEntity<HomeServerPropertyHolder> getProperty(@PathVariable("id") String id) throws HomeServerException {
+		return ResponseEntity.ok(this.serviceAdministration.getProperty(id));
 	}
 	
 	/**

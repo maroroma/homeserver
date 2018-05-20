@@ -25,7 +25,7 @@ import { PopupPlayerComponent } from 'app/common-gui/players/popup-player/popup-
 @Component({
     selector: 'homeserver-file-browser',
     templateUrl: 'file-browser.component.html',
-    styleUrls: ['file-browser.component.scss', '../styles/shared.scss']
+    styleUrls: ['file-browser.component.scss', '../styles/shared.scss', '../styles/edit-zone.scss']
 })
 export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
 
@@ -144,6 +144,10 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
         private notifyer: NotifyerService) { }
 
     ngOnInit() {
+
+        this.directoryList.sortByField('item.name');
+        this.fileList.sortByField('item.name');
+
         // mise en place de la recherche active à partir du service dédié
         this.searchSubscription = this.searchService.searchChanged.subscribe(res => {
             this.directoryList.filterByStringField(res, 'name');
@@ -404,6 +408,10 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
             this.popupPlayer.displayForVideo(file);
         }
 
+    }
+
+    public goToTop() : void {
+        window.scrollTo(0,0);
     }
 
 }

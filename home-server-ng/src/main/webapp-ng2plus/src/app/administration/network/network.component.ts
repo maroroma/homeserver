@@ -45,6 +45,10 @@ export class NetworkComponent implements OnInit, OnDestroy {
     constructor(private networkService: NetworkService, private searchService: PageHeaderSearchService) { }
 
     ngOnInit() {
+
+        this.urlDescriptors.sortByField('item.name');
+        this.serverDescriptors.sortByField('item.nom');
+        
         this.networkService.loadServers().subscribe(res => this.regenerateAllLists(res));
         this.searchSubscription = this.searchService.searchChanged.subscribe(res => this.serverDescriptors.filterByStringField(res, 'nom'));
     }

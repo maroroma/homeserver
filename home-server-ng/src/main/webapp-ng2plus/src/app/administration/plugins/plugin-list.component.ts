@@ -54,7 +54,7 @@ export class PluginListComponent implements OnInit, OnDestroy {
             visualItem.changeResolver = ((module1, module2) => {
                 return module1.enabled !== module2.enabled;
             });
-        });
+        }).sortByField('item.displayName');
     }
 
     /**

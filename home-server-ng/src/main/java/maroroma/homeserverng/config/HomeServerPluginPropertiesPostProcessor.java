@@ -1,14 +1,15 @@
 package maroroma.homeserverng.config;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
-
+import lombok.extern.log4j.Log4j2;
+import maroroma.homeserverng.tools.annotations.Property;
+import maroroma.homeserverng.tools.annotations.PropertyRefreshHandlers;
+import maroroma.homeserverng.tools.config.HomeServerPluginPropertiesManager;
+import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.config.PropertySetterListener;
+import maroroma.homeserverng.tools.config.PropertyValueResolver;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.helpers.Assert;
+import maroroma.homeserverng.tools.helpers.Tuple;
 import org.springframework.aop.framework.Advised;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.InvalidPropertyException;
@@ -20,16 +21,13 @@ import org.springframework.util.ReflectionUtils.FieldCallback;
 import org.springframework.util.ReflectionUtils.MethodCallback;
 import org.springframework.util.StringUtils;
 
-import lombok.extern.log4j.Log4j2;
-import maroroma.homeserverng.tools.annotations.Property;
-import maroroma.homeserverng.tools.annotations.PropertyRefreshHandlers;
-import maroroma.homeserverng.tools.config.HomeServerPluginPropertiesManager;
-import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
-import maroroma.homeserverng.tools.config.PropertySetterListener;
-import maroroma.homeserverng.tools.config.PropertyValueResolver;
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.helpers.Tuple;
+import javax.annotation.PostConstruct;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * {@link BeanPostProcessor} et {@link HomeServerPluginPropertiesManager} permettant de gérer les {@link HomeServerPropertyHolder} :
@@ -212,13 +210,11 @@ public class HomeServerPluginPropertiesPostProcessor implements BeanPostProcesso
 	 */
 	@Override
 	public List<HomeServerPropertyHolder> getProperties() throws HomeServerException {
-		List<HomeServerPropertyHolder> returnValue = new ArrayList<>();
-
-		for (HomeServerPropertiesSource propertySource : this.getPropertiesSource()) {
-			returnValue.addAll(propertySource.getProperties());
-		}
-
-		return returnValue;
+		return this.getPropertiesSource()
+				.stream()
+				.map(oneSource -> oneSource.getProperties())
+				.flatMap(properties -> properties.stream())
+				.collect(Collectors.toList());
 	}
 
 
@@ -244,17 +240,12 @@ public class HomeServerPluginPropertiesPostProcessor implements BeanPostProcesso
 	@Override
 	public HomeServerPropertyHolder getPropertyHolder(final String propertyName) {
 
-		HomeServerPropertyHolder returnValue = null;
-
-		if (this.propertiesSource != null) {
-			for (HomeServerPropertiesSource abstractHomeServerPropertiesSource : propertiesSource) {
-				if (abstractHomeServerPropertiesSource.containsProperty(propertyName)) {
-					returnValue = abstractHomeServerPropertiesSource.getProperty(propertyName);
-				}
-			}
-		}
-
-		return returnValue;
+		return this.propertiesSource
+				.stream()
+				.filter(onePropertySource -> onePropertySource.containsProperty(propertyName))
+				.findAny()
+				.map(source -> source.getProperty(propertyName))
+				.orElse(null);
 	}
 
 	/**

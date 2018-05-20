@@ -1,22 +1,7 @@
 package maroroma.homeserverng.tools.repositories;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.springframework.util.ReflectionUtils;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.Synchronized;
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
@@ -24,6 +9,18 @@ import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.model.FileDescriptor;
+import org.springframework.util.ReflectionUtils;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Repository simplifié pour la sauvegarde de liste dans un fichier au format JSON.
@@ -285,13 +282,13 @@ public class NanoRepository {
 	 */
 	public <T> T find(final Predicate<T> predicate) throws HomeServerException {
 		Assert.notNull(predicate, "predicate can't be null");
-		Optional<T> first = this.<T>getAllAsStream().filter(predicate).findFirst();
-		if (first.isPresent()) {
-			return first.get();
-		} else {
-			throw new HomeServerException("item can't be found");	
-		}
 
+		return this.<T>getAllAsStream()
+				.filter(predicate)
+				.findFirst()
+				.orElseThrow(
+						() -> new HomeServerException("item can't be found")
+				);
 	}
 
 	/**

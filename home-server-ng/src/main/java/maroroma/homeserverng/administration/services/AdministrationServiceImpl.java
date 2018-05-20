@@ -1,21 +1,6 @@
 package maroroma.homeserverng.administration.services;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.Base64Utils;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.administration.model.FullConfigurationHolder;
 import maroroma.homeserverng.administration.model.HomeServerRunningStatus;
@@ -36,6 +21,18 @@ import maroroma.homeserverng.tools.helpers.Tuple;
 import maroroma.homeserverng.tools.repositories.NanoRepositoriesManager;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
 import maroroma.homeserverng.tools.repositories.NanoRepositoryDescriptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Implémentation du service d'administration.
@@ -146,6 +143,11 @@ public class AdministrationServiceImpl implements AdministrationService {
 	@Override
 	public List<HomeServerPropertyHolder> getProperties() throws HomeServerException {
 		return this.propertiesManager.getProperties();
+	}
+
+	@Override
+	public HomeServerPropertyHolder getProperty(String id) throws HomeServerException {
+		return this.propertiesManager.getPropertyHolder(id);
 	}
 
 	/**

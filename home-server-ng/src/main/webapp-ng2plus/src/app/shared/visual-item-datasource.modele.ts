@@ -169,9 +169,10 @@ export class VisualItemDataSource<T> {
         this.updateSelectionStatus();
     }
 
-    public filterBy(predicate: (item: T) => boolean): void {
+    public filterBy(predicate: (item: T) => boolean): VisualItemDataSource<T> {
         this.filterPredicate = predicate;
         this.updateDisplayList();
+        return this;
     }
 
     public clearFilter(): void {
@@ -185,8 +186,8 @@ export class VisualItemDataSource<T> {
      * @param {string} fieldName
      * @memberOf VisualItemDataSource
      */
-    public filterByStringField(searchField: string, fieldName: string): void {
-        this.filterBy(FilterTools.simpleFilter(searchField, fieldName));
+    public filterByStringField(searchField: string, fieldName: string) : VisualItemDataSource<T> {
+        return this.filterBy(FilterTools.simpleFilter(searchField, fieldName));
     }
 
 
@@ -195,7 +196,7 @@ export class VisualItemDataSource<T> {
      * @param {string} fieldName
      * @memberOf VisualItemDataSource
      */
-    public sortByField(fieldName: string): void {
+    public sortByField(fieldName: string): VisualItemDataSource<T> {
         if (this.sortField === fieldName) {
             this.isReverseSort = !this.isReverseSort;
         } else {
@@ -203,6 +204,7 @@ export class VisualItemDataSource<T> {
         }
         this.sortField = fieldName;
         this.updateDisplayList();
+        return this;
     }
 
 

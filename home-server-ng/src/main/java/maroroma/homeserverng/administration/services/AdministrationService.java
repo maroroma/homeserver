@@ -1,9 +1,5 @@
 package maroroma.homeserverng.administration.services;
 
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
-
 import maroroma.homeserverng.administration.model.HomeServerStatus;
 import maroroma.homeserverng.administration.model.UploadPropertiesResponse;
 import maroroma.homeserverng.tools.annotations.HomeServerModuleDescriptor;
@@ -15,6 +11,9 @@ import maroroma.homeserverng.tools.config.HomeServerModuleManager;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.repositories.NanoRepositoryDescriptor;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * Définition du service d'administration.
@@ -36,6 +35,14 @@ public interface AdministrationService extends HomeServerModuleManager {
 	 * @throws HomeServerException -
 	 */
 	List<HomeServerPropertyHolder> getProperties() throws HomeServerException;
+
+	/**
+	 * Retourne la propriété demandée.
+	 * @param id identifiant de la propriété.
+	 * @return -
+	 * @throws HomeServerException -
+	 */
+	HomeServerPropertyHolder getProperty(String id) throws HomeServerException;
 
 	/**
 	 * Permet de mettre à jour une propriété d'identifiant donné.

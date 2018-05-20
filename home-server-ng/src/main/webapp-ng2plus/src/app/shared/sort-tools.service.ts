@@ -18,9 +18,20 @@ export class SortTools {
      */
     public static sorter<T>(fieldName: string, reverse: boolean): (item1: T, item2: T) => number {
         return ((item1: T, item2: T) => {
-            const item1Field = ReflectionTools.resolveData(item1, fieldName);
-            const item2Field = ReflectionTools.resolveData(item2, fieldName);
 
+            // récupération des deux valeurs à comparer sur l'objet pour le champ pointé
+            let item1Field = ReflectionTools.resolveData(item1, fieldName);
+            let item2Field = ReflectionTools.resolveData(item2, fieldName);
+
+            // cas particulier des strings, qui doivent être normalisées en minuscules pour assurer une 
+            // comparaison qui ressemble à qqc ....
+            if (ReflectionTools.isString(item1Field)) {
+                item1Field = (item1Field as string).toLocaleLowerCase();
+                item2Field = (item2Field as string).toLocaleLowerCase();
+            }
+
+
+            // on détermine si le tri doit être inversé
             const reverseFactor = reverse ? -1 : 1;
 
             if (item1Field > item2Field) {

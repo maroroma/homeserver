@@ -1,7 +1,7 @@
 <div class="file-browser-currentpath">
     <a *ngFor="let item of pathStack" (click)="selectSubDirectoryFromStack(item)"><span class="glyphicon glyphicon-triangle-right" ></span>{{item.name}}</a>
 </div>
-<div class="file-browser-currentdirectory">
+<div class="file-browser-currentdirectory edit-zone-target">
     <ul class="list-group directories">
         <li class="list-group-item justify-content-between" *ngIf="options.displayToolBar">
             <homeserver-file-browser-toolbar [options]="options" [isFilesSelected]="someFileSelected" [isCurrentDirectoryRoot]="pathStack?.length==1" (refreshCurrentDirectory)="refreshCurrentDirectory()" (displayDirectoryCreation)="displayDirectoryCreation()" (displayDirectoryDeletionConfirmation)="displayDirectoryDeleteConfirmation()"
@@ -39,6 +39,10 @@
             </div>
         </li>
     </ul>
+</div>
+
+<div class="edit-zone">
+     <button class="btn btn-primary btn-lg secondary-action circle" (click)="goToTop()"><span class="glyphicon glyphicon-arrow-up"></span></button>
 </div>
 
 <homeserver-popup #popupCreateDirectory title="Création d'un nouveau répertoire" (ok)="confirmCreation()">

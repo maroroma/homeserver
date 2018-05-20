@@ -7,6 +7,7 @@ import { RunningTorrent } from './models/running-torrent.modele';
 import { VisualItemDataSource } from './../../shared/visual-item-datasource.modele';
 import { RemoteSeedBoxService } from './remote-seedbox.service';
 import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { AdministrationService } from '../../administration/administration.service';
 
 @Component({
     selector: 'homeserver-remote-seedbox',
@@ -24,14 +25,33 @@ export class RemoteSeedBoxComponent implements OnInit, OnDestroy {
     @Output()
     public gotoCompletedFiles = new EventEmitter<any>();
 
-    constructor(private remoteService: RemoteSeedBoxService, private searchService: PageHeaderSearchService) { }
+    constructor(private remoteService: RemoteSeedBoxService, private searchService: PageHeaderSearchService,
+        private administrationService:AdministrationService) { }
 
     ngOnInit() {
 
-        // les appels se font toutes les secondes, ça évite de se coltiner l'interface sse pour le TS.
-        this.timerSubscription = TimerObservable.create(0, 1000).subscribe(tres => {
-            this.remoteService.getRunningTorrents().subscribe(res => this.runningTorrents.updateSourceList(res));
+        // TODO : voir pourquoi le chainage ne fonctionne pas....
+        // this.timerSubscription = this.administrationService
+        //     .getProperty('homeserver.seedbox.client.stream.fixedDelay')
+        //     .map(property => {
+        //      return   TimerObservable.create(0, Number(property.value))
+        //     })
+        //     .subscribe(tres => this.remoteService.getRunningTorrents()
+        //         .subscribe(res => this.runningTorrents.updateSourceList(res))
+        //     );
+            
+        // les appels se font sur la base de la fréquence paramétrée sur le serveur
+        this.administrationService.getProperty('homeserver.seedbox.client.stream.fixedDelay')
+        .subscribe(property => {
+                this.timerSubscription = TimerObservable.create(0, Number(property.value)).subscribe(tres => {
+                this.remoteService.getRunningTorrents().subscribe(res => this.runningTorrents.updateSourceList(res));
+            });
         });
+
+        // // les appels se font toutes les secondes, ça évite de se coltiner l'interface sse pour le TS.
+        // this.timerSubscription = TimerObservable.create(0, 1000).subscribe(tres => {
+        //     this.remoteService.getRunningTorrents().subscribe(res => this.runningTorrents.updateSourceList(res));
+        // });
 
 
         this.searchSubscription = this.searchService.searchChanged
