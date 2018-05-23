@@ -1,0 +1,23 @@
+{
+  "method": "torrent-add",
+  "arguments": {
+    "paused": false,
+    "download-dir": "/media/disk01/SHARE/ATrier",
+    "filename": "magnet:?xt=urn:btih:CF3E77D8B6D0036E413C4B06CD977E96A4845574&tr=udp://eddie4.nl:6969/announce&tr=udp://shadowshq.yi.org:6969/announce&tr=udp://tracker.leechers-paradise.org:6969/announce&tr=udp://tracker.pirateparty.gr:6969/announce&tr=udp://tracker.coppersurfer.tk:6969/announce&tr=udp://tracker.coppersurfer.tk:80/announce&tr=udp://9.rarbg.com:2800/announce&tr=udp://9.rarbg.me:2780/announce&tr=udp://9.rarbg.to:2710/announce&tr=udp://p4p.arenabg.com:1337/announce&tr=udp://public.popcorn-tracker.org:6969/announce&tr=udp://tracker.vanitycore.co:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.zer0day.to:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.internetwarriors.net:1337/announce&tr=udp://ipv4.tracker.harry.lu:80/announce&tr=udp://explodie.org:6969/announce&tr=http://inferno.demonoid.ph:3389/announce"
+  }
+}
+
+
+
+
+{
+  "arguments": {
+    "torrent-added": {
+      "hashString": "9a8dae7cf2af086a04ca2ca916a31429bad5db71",
+      "id": 57,
+      "name": "9a8dae7cf2af086a04ca2ca916a31429bad5db71"
+    }
+  },
+  "result": "success"
+}
+
