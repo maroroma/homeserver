@@ -1,4 +1,4 @@
-package maroroma.homeserverng.seedbox.model.remote.gettorrent;
+package maroroma.homeserverng.tools.transmission.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

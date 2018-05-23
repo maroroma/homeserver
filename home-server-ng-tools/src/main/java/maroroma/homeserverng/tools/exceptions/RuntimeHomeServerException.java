@@ -29,6 +29,11 @@ public class RuntimeHomeServerException extends RuntimeException {
 		super(exception);
 		this.innerException = Optional.of(exception);
 	}
+
+	public RuntimeHomeServerException(final String message) {
+		super(message);
+		this.innerException = Optional.empty();
+	}
 	
 	/**
 	 * Constructeur.

@@ -1,68 +1,104 @@
 package maroroma.homeserverng.seedbox.services;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-
+import maroroma.homeserverng.seedbox.model.NewTorrents;
 import maroroma.homeserverng.seedbox.model.RunningTorrent;
-import maroroma.homeserverng.tools.annotations.Streamed;
+import maroroma.homeserverng.seedbox.tools.SeedboxModuleConstants;
+import maroroma.homeserverng.seedbox.tools.TransmissionConverter;
+import maroroma.homeserverng.tools.annotations.Property;
+import maroroma.homeserverng.tools.annotations.PropertyRefreshHandlers;
+import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.sse.ServiceStreamer;
+import maroroma.homeserverng.tools.transmission.methods.AddTorrent;
+import maroroma.homeserverng.tools.transmission.methods.GetTorrent;
+import maroroma.homeserverng.tools.transmission.methods.TransmissionClient;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
- * Impléméntation du {@link SeedboxRemoteControlService}.
  * Permet de piloter un client transmission dont les api web json ont été exposées.
  * @author RLEVEXIE
  *
  */
 @Service
-public class SeedboxRemoteControlServiceImpl implements SeedboxRemoteControlService {
+public class SeedboxRemoteControlServiceImpl {
 
 	/**
-	 * Utilisation du {@link TransmissionClientDevImpl} en mode {@link Streamed}.
+	 * Url d'accès au api web transmission.
 	 */
-	@Autowired
-	private ServiceStreamer<TransmissionClient> transmissionStreamer;
-	
-	/**
-	 * {@inheritDoc}
-	 * @throws HomeServerException 
-	 */
-	@Override
-	public SseEmitter subscribeToTorrentStream(final String id) throws HomeServerException {
-		return this.transmissionStreamer.subscribe(id);
-	}
+	@Property("homeserver.seedbox.transmission.url")
+	private HomeServerPropertyHolder transmissionUrl;
 
 	/**
-	 * {@inheritDoc}
+	 * Emplacement todo
 	 */
-	@Override
-	public void addTorrent(final MultipartFile torrentFile) throws HomeServerException {
-		this.transmissionStreamer.getStreamableService().uploadTorrent(torrentFile);
-	}
+	@Property(SeedboxModuleConstants.HOMESERVER_SEEDBOX_TODO_DIRECTORY_PROP_KEY)
+	private HomeServerPropertyHolder todoDirectory;
 
 	/**
-	 * {@inheritDoc}
+	 * Client transmission (il est de la portée du bean)
 	 */
-	@Override
-	public void removeTorrent(final String torrentId) throws HomeServerException {
-		this.transmissionStreamer.getStreamableService().deleteTorrent(torrentId);
-	}
+	private Optional<TransmissionClient> transmissionClient = Optional.empty();
 
 	/**
-	 * {@inheritDoc}
+	 * Retourne la liste des torrents en cours.
+	 * @return -
+	 * @throws HomeServerException -
 	 */
-	@Override
-	public void unsubscribeToTorrentStream(final String id) {
-		this.transmissionStreamer.unsuscribe(id);
-	}
-
-	@Override
 	public List<RunningTorrent> getTorrents() throws HomeServerException {
-		return this.transmissionStreamer.getStreamableService().getRunningTorrents();
+		return GetTorrent
+				.create()
+				.build()
+				// exec
+				.execute(this.getClient())
+				// récup réponse
+				.getArguments()
+				.getTorrents()
+				.stream()
+				// conversion et renvoi
+				.map(TransmissionConverter::convert)
+				.collect(Collectors.toList());
 	}
+
+	/**
+	 * Rajout d'un nouveau torrent sur le serveur transmission
+	 * @param newTorrent
+	 * @throws HomeServerException
+	 */
+	public void addTorrent(final NewTorrents newTorrent) {
+		// préparation des requêtes pour chacun des liens remontés
+		newTorrent.getMagnetLinks()
+				.stream()
+				.map(oneMag -> AddTorrent
+						.create()
+						.magnetLink(oneMag)
+						.downloadDir(this.todoDirectory.getResolvedValue())
+						.build())
+				// execution des requêtes
+				.forEach(request -> request.execute(this.getClient()));
+	}
+
+	/**
+	 * Récupère le client.
+	 * @return -
+	 */
+	private TransmissionClient getClient() {
+		if(!this.transmissionClient.isPresent()) {
+			this.initTransmissionClient();
+		}
+		return this.transmissionClient.get();
+	}
+
+	/**
+	 * Init du client transmission. Sert aussi en cas d'update de la propriété.
+	 */
+	@PropertyRefreshHandlers("homeserver.seedbox.transmission.url")
+	private void initTransmissionClient() {
+		this.transmissionClient = Optional
+				.of(new TransmissionClient(this.transmissionUrl.getResolvedValue()));
+	}
+
 
 }

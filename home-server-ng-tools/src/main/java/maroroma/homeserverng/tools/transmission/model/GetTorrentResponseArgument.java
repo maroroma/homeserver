@@ -1,8 +1,8 @@
-package maroroma.homeserverng.seedbox.model.remote.gettorrent;
-
-import java.util.List;
+package maroroma.homeserverng.tools.transmission.model;
 
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * Réponse de transmission pour le listing des torrents.
@@ -10,7 +10,7 @@ import lombok.Data;
  *
  */
 @Data
-public class ResponseArgument {
+public class GetTorrentResponseArgument {
 	/**
 	 * Liste des torrents en cours.
 	 */

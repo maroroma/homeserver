@@ -7,3 +7,9 @@ homeserver-running-torrent {
 .torrent-selected {
     background-color: $default-selected-background;
 }
+
+.magnetlink {
+    &-content {
+        width:85%;
+    }
+}

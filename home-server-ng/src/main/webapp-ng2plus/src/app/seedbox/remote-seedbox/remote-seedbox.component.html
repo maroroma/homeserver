@@ -1,5 +1,29 @@
-<ul class="list-group">
+<ul class="list-group edit-zone-target">
     <li class="list-group-item" *ngFor="let oneTorrent of runningTorrents.displayList" [ngClass]="{'torrent-selected': oneTorrent.selected}">
         <homeserver-running-torrent [torrent]="oneTorrent" (click)="toggleSelection(oneTorrent)"></homeserver-running-torrent>
     </li>
 </ul>
+
+<div class="edit-zone">
+    <button class="btn btn-primary btn-lg main-action circle" (click)="displayAddTorrent()">
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
+</div>
+
+<homeserver-popup #popupAddTorrent title="Ajout de nouveaux torrents" (ok)="confirmAdd()">
+    <div class="md-form">
+        <div>
+            <input type="text" disabled *ngFor="let oneMagLink of addTorrentRequest.magnetLinks" [ngModel]="oneMagLink">
+            <div class="form-inline magnetlink">
+                <div class="form-group magnetlink-content">
+                    <input type="text" placeholder="Coller un magnetLink" [(ngModel)]="currentMagLink">
+                </div>
+                <div class="form-group magnetlink-action">
+                    <button class="btn btn-primary" (click)="addMagnetLink()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</homeserver-popup>

@@ -5,6 +5,7 @@ import { NotifyerService } from './../../common-gui/notifyer/notifyer.service';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { NewTorrent } from './models/new-torrent.modele';
 
 
 @Injectable()
@@ -18,6 +19,15 @@ export class RemoteSeedBoxService {
             this.notifyer.showError('Une erreur est survenue lors de la récupération des torrents en cours');
             return Observable.of(new Array<RunningTorrent>());
         });
+    }
+
+    public addNewTorrents(newTorrent: NewTorrent): Observable<boolean> {
+        return this.http.post(ApiConstants.SEEDBOX_TORRENTS_API, newTorrent)
+            .map(res => true)
+            .catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de l\'ajout de nouveau torrent');
+                return Observable.of(false);
+            });
     }
 
 }

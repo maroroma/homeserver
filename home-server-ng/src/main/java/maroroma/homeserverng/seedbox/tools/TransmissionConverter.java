@@ -1,11 +1,11 @@
 package maroroma.homeserverng.seedbox.tools;
 
+import maroroma.homeserverng.seedbox.model.RunningTorrent;
+import maroroma.homeserverng.tools.transmission.model.GetTorrentResponse;
+import maroroma.homeserverng.tools.transmission.model.Torrent;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
-import maroroma.homeserverng.seedbox.model.RunningTorrent;
-import maroroma.homeserverng.seedbox.model.remote.gettorrent.GetTorrentResponse;
-import maroroma.homeserverng.seedbox.model.remote.gettorrent.Torrent;
 
 /**
  * Classe utilitaire pour la conversion des retours transmission vers le client web.

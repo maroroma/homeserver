@@ -1,33 +1,26 @@
 package maroroma.homeserverng.seedbox.controllers;
 
-import java.io.IOException;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-
 import maroroma.homeserverng.seedbox.SeedboxModuleDescriptor;
+import maroroma.homeserverng.seedbox.model.NewTorrents;
 import maroroma.homeserverng.seedbox.model.RunningTorrent;
 import maroroma.homeserverng.seedbox.model.TargetDirectory;
 import maroroma.homeserverng.seedbox.model.TodoFile;
 import maroroma.homeserverng.seedbox.services.SeedBoxTodoService;
-import maroroma.homeserverng.seedbox.services.SeedboxRemoteControlService;
+import maroroma.homeserverng.seedbox.services.SeedboxRemoteControlServiceImpl;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 import maroroma.homeserverng.tools.model.FileDirectoryDescriptor;
 import maroroma.homeserverng.tools.model.MoveRequest;
 import maroroma.homeserverng.tools.model.MovedFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Controller pour la gestion de la seedbox.
@@ -47,7 +40,7 @@ public class SeedBoxController {
 	 * Service pour la gestion des torrents.
 	 */
 	@Autowired
-	private SeedboxRemoteControlService seedBoxRemoteService;
+	private SeedboxRemoteControlServiceImpl seedBoxRemoteService;
 
 	/**
 	 * retourne la liste des fichiers à trier.
@@ -128,48 +121,7 @@ public class SeedBoxController {
 		
 		return ResponseEntity.ok(todoService.moveFiles(moveRequest));
 	}
-	
-	/**
-	 * Souscription à la mise à jour de l'état des torrents.
-	 * @param idSubscriber -
-	 * @return -
-	 * @throws HomeServerException -
-	 */
-	@RequestMapping("/seedbox/torrents/subscribe/{idSubscriber}")
-	public SseEmitter subscribeToTorrentsUpdate(final @PathVariable("idSubscriber") String idSubscriber) throws HomeServerException {
-		return this.seedBoxRemoteService.subscribeToTorrentStream(idSubscriber);
-	}
-	
-	/**
-	 * Désabonnement à la mise à jour de l'état des torrents.
-	 * @param idSubscriber -
-	 * @throws HomeServerException -
-	 */
-	@RequestMapping(path = "/seedbox/torrents/subscribe/{idSubscriber}", method = {RequestMethod.DELETE})
-	public void unsubscribeToTorrentsUpdate(final @PathVariable("idSubscriber") String idSubscriber) throws HomeServerException {
-		this.seedBoxRemoteService.unsubscribeToTorrentStream(idSubscriber);
-	}
-	
-	/**
-	 * Upload de torrents à lancer.
-	 * @param file -
-	 * @throws HomeServerException -
-	 */
-	@RequestMapping(path = "/seedbox/torrent", method = {RequestMethod.POST})
-	public void uploadTorrent(@RequestBody final MultipartFile file) throws HomeServerException {
-		this.seedBoxRemoteService.addTorrent(file);
-	}
-	
-	/**
-	 * Suppression d'un torrent.
-	 * @param id -
-	 * @throws HomeServerException -
-	 */
-	@RequestMapping(path = "/seedbox/torrent/{id}", method = {RequestMethod.DELETE})
-	public void deleteTorrent(@PathVariable final String id) throws HomeServerException {
-		this.seedBoxRemoteService.removeTorrent(id);
-	}
-	
+
 	/**
 	 * Retourne l'ensemble des torrents en cours.
 	 * @return -
@@ -178,6 +130,18 @@ public class SeedBoxController {
 	@GetMapping("/seedbox/torrents")
 	public ResponseEntity<List<RunningTorrent>> getRunningTorrents() throws HomeServerException {
 		return ResponseEntity.ok(this.seedBoxRemoteService.getTorrents());
+	}
+
+	/**
+	 * Rajout d'un nouveau torrent.
+	 * @param newTorrent -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
+	@PostMapping("/seedbox/torrents")
+	public ResponseEntity addTorrent(@RequestBody NewTorrents newTorrent) throws HomeServerException {
+		this.seedBoxRemoteService.addTorrent(newTorrent);
+		return ResponseEntity.ok().build();
 	}
 	
 	

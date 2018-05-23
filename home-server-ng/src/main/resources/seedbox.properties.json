@@ -42,7 +42,7 @@
   "moduleId" : "seedbox"
 }, {
   "id" : "homeserver.seedbox.todo.directory",
-  "value" : "C:/tmp/homeserver/TODO",
+  "value" : "/media/disk01/SHARE/ATrier",
   "description" : "Emplacement des fichiers à trier",
   "readOnly" : false,
   "moduleId" : "seedbox"
