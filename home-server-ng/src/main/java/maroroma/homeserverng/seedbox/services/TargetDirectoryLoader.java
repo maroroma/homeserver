@@ -28,7 +28,10 @@ public interface TargetDirectoryLoader {
 	 * @return
 	 */
 	default boolean includes(FileDescriptor fileDescriptor) {
-		return fileDescriptor.createFile().getParentFile().getAbsolutePath().startsWith(this.loadTargetDirectory().getFullName());
+		return fileDescriptor.createFile()
+				.getParentFile()
+				.getAbsolutePath()
+				.startsWith(this.loadTargetDirectory().getFullName());
 	}
 
 	/**
