@@ -37,6 +37,10 @@ public abstract class AbstractTransmissionMethodBuilder<R extends BasicResponse,
         this.transmissionUri = transmissionUri;
     }
 
+    protected AbstractTransmissionMethodBuilder(final String method, final Class<R> clazz) {
+        this(method, "/rpc", clazz);
+    }
+
     /**
      * Ajout d'un paramètre pour la méthode
      * @param id identifiant du paramètre

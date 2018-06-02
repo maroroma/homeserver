@@ -44,9 +44,8 @@ public class GetTorrent extends AbstractTransmissionMethodBuilder<GetTorrentResp
      * @return -
      */
     public GetTorrent addField(String fieldName) {
-        this.params.putIfAbsent("fields", this.fields);
         this.fields.add(fieldName);
-        return returnThis();
+        return this.paramIfAbsent("fields", this.fields);
     }
 
 

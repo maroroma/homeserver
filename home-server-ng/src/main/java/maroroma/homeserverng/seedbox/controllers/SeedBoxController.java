@@ -3,11 +3,8 @@ package maroroma.homeserverng.seedbox.controllers;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import maroroma.homeserverng.seedbox.SeedboxModuleDescriptor;
-import maroroma.homeserverng.seedbox.model.NewTorrents;
-import maroroma.homeserverng.seedbox.model.RunningTorrent;
-import maroroma.homeserverng.seedbox.model.TargetDirectory;
-import maroroma.homeserverng.seedbox.model.TodoFile;
-import maroroma.homeserverng.seedbox.services.SeedBoxTodoService;
+import maroroma.homeserverng.seedbox.model.*;
+import maroroma.homeserverng.seedbox.services.SeedBoxTodoServiceImpl;
 import maroroma.homeserverng.seedbox.services.SeedboxRemoteControlServiceImpl;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
@@ -34,7 +31,7 @@ public class SeedBoxController {
 	 * SErvice pour la gestion des TODO.
 	 */
 	@Autowired
-	private SeedBoxTodoService todoService;
+	private SeedBoxTodoServiceImpl todoService;
 	
 	/**
 	 * Service pour la gestion des torrents.
@@ -136,11 +133,16 @@ public class SeedBoxController {
 	 * Rajout d'un nouveau torrent.
 	 * @param newTorrent -
 	 * @return -
-	 * @throws HomeServerException -
 	 */
 	@PostMapping("/seedbox/torrents")
-	public ResponseEntity addTorrent(@RequestBody NewTorrents newTorrent) throws HomeServerException {
+	public ResponseEntity addTorrent(@RequestBody NewTorrents newTorrent) {
 		this.seedBoxRemoteService.addTorrent(newTorrent);
+		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping("/seedbox/torrents")
+	public ResponseEntity removeTorrents(@RequestBody TorrentsToDelete torrentsToDelete) {
+		this.seedBoxRemoteService.removeTorrents(torrentsToDelete);
 		return ResponseEntity.ok().build();
 	}
 	

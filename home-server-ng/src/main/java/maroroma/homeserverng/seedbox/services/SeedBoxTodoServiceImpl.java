@@ -1,30 +1,27 @@
 package maroroma.homeserverng.seedbox.services;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.seedbox.model.TargetDirectory;
 import maroroma.homeserverng.seedbox.model.TodoFile;
 import maroroma.homeserverng.seedbox.tools.SeedboxModuleConstants;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.CommonFileFilter;
 import maroroma.homeserverng.tools.helpers.FileAndDirectoryHLP;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 import maroroma.homeserverng.tools.model.FileDirectoryDescriptor;
-import maroroma.homeserverng.tools.model.FileToMoveDescriptor;
 import maroroma.homeserverng.tools.model.MoveRequest;
 import maroroma.homeserverng.tools.model.MovedFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Implémentation du service de manipulation des fichiers à trier au niveau de la seedbox.
@@ -33,7 +30,7 @@ import maroroma.homeserverng.tools.model.MovedFile;
  */
 @Service
 @Log4j2
-public class SeedBoxTodoServiceImpl implements SeedBoxTodoService {
+public class SeedBoxTodoServiceImpl {
 
 	/**
 	 * Répertoire pour les fichiers à trier.
@@ -53,13 +50,13 @@ public class SeedBoxTodoServiceImpl implements SeedBoxTodoService {
 	 * depuis le dernier appel.
 	 */
 	private List<String> lastCompletedFileList = new ArrayList<>();
-	
-	
+
+
 
 	/**
-	 * {@inheritDoc}
+	 * Retourne la liste des fichiers à trier.
+	 * @return -
 	 */
-	@Override
 	public List<TodoFile> getTodoList() {
 		Assert.isValidDirectory(this.todoDirectory);
 
@@ -112,9 +109,9 @@ public class SeedBoxTodoServiceImpl implements SeedBoxTodoService {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Retourne la liste des dossier cibles pour le déplacement.
+	 * @return -
 	 */
-	@Override
 	public List<TargetDirectory> getTargetList() {
 		return this.targetLoaders.stream()
 				.map(loader -> loader.loadTargetDirectory())
@@ -122,9 +119,10 @@ public class SeedBoxTodoServiceImpl implements SeedBoxTodoService {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Déplacement d'une liste de fichier dans un répertoire cible.
+	 * @param request -
+	 * @return -
 	 */
-	@Override
 	public List<MovedFile> moveFiles(final MoveRequest request) throws HomeServerException {
 
 		log.info("déplacement d'un fichier : " + request.toString());
@@ -157,8 +155,10 @@ public class SeedBoxTodoServiceImpl implements SeedBoxTodoService {
 	}
 
 	/**
+	 * Retourne le détail d'un répertoire contenu dans l'arborescence des cibles.
+	 * @param directoryToParse -
+	 * @return -
 	 */
-	@Override
 	public List<FileDescriptor> getDirectoryDetails(final FileDescriptor directoryToParse) {
 		
 		File toScan = directoryToParse.createFile();
@@ -166,11 +166,12 @@ public class SeedBoxTodoServiceImpl implements SeedBoxTodoService {
 		return FileDescriptor.toList(toScan.listFiles(CommonFileFilter.pureDirectoryFilter()));
 		
 	}
-	
+
 	/**
-	 * {@inheritDoc}
+	 * Retourne le détail d'un répertoire contenu dans l'arborescence des cibles.
+	 * @param fileId -
+	 * @return -
 	 */
-	@Override
 	public FileDirectoryDescriptor getDirectoryDetails(final String fileId) {
 		File toScan = FileAndDirectoryHLP.decodeFile(fileId);
 		Assert.isValidDirectory(toScan);
@@ -178,16 +179,21 @@ public class SeedBoxTodoServiceImpl implements SeedBoxTodoService {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Permet de supprimer un fichier de la todolist.
+	 * @param toDelete -
+	 * @return -
 	 */
-	@Override
 	public List<TodoFile> deleteTodoFile(final FileDescriptor toDelete) {
 		Assert.notNull(toDelete, "toDelete can't be null");
 		Assert.isTrue(toDelete.deleteFile(), "Le fichier n'a pu être supprimé");
 		return this.getTodoList();
 	}
 
-	@Override
+	/**
+	 * Permet de supprimer un fichier de la todolist.
+	 * @param fileId -
+	 * @return -
+	 */
 	public List<TodoFile> deleteTodoFile(final String fileId) {
 		Assert.hasLength(fileId, "fileId can't be null");
 		return this.deleteTodoFile(FileAndDirectoryHLP.decodeFileDescriptor(fileId));

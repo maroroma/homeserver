@@ -19,7 +19,9 @@ import { NewTorrent } from './models/new-torrent.modele';
 
 export class RemoteSeedBoxComponent implements OnInit, OnDestroy {
 
-    public runningTorrents = new VisualItemDataSource<RunningTorrent>();
+    public runningTorrents = new VisualItemDataSource<RunningTorrent>(visualItem => {
+        visualItem.id = visualItem.item.id;
+    });
 
     searchSubscription: Subscription;
     timerSubscription: Subscription;
@@ -38,29 +40,16 @@ export class RemoteSeedBoxComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
 
-        // TODO : voir pourquoi le chainage ne fonctionne pas....
-        // this.timerSubscription = this.administrationService
-        //     .getProperty('homeserver.seedbox.client.stream.fixedDelay')
-        //     .map(property => {
-        //      return   TimerObservable.create(0, Number(property.value))
-        //     })
-        //     .subscribe(tres => this.remoteService.getRunningTorrents()
-        //         .subscribe(res => this.runningTorrents.updateSourceList(res))
-        //     );
-
         // les appels se font sur la base de la fréquence paramétrée sur le serveur
         this.administrationService.getProperty('homeserver.seedbox.client.stream.fixedDelay')
             .subscribe(property => {
                 this.timerSubscription = TimerObservable.create(0, Number(property.value)).subscribe(tres => {
-                    this.remoteService.getRunningTorrents().subscribe(res => this.runningTorrents.updateSourceList(res));
+                    this.remoteService.getRunningTorrents()
+                        .subscribe(res => {
+                            this.runningTorrents.updateSourceList(res, true);
+                        });
                 });
             });
-
-        // // les appels se font toutes les secondes, ça évite de se coltiner l'interface sse pour le TS.
-        // this.timerSubscription = TimerObservable.create(0, 1000).subscribe(tres => {
-        //     this.remoteService.getRunningTorrents().subscribe(res => this.runningTorrents.updateSourceList(res));
-        // });
-
 
         this.searchSubscription = this.searchService.searchChanged
             .subscribe(search => this.runningTorrents.filterByStringField(search, 'name'));
@@ -73,7 +62,7 @@ export class RemoteSeedBoxComponent implements OnInit, OnDestroy {
 
     public toggleSelection(item: VisualItem<RunningTorrent>): void {
         // désactiver pour le moment, sinon la sélection saute sur le rechargement des données.
-        // this.runningTorrents.toggleItemSelection(item);
+        this.runningTorrents.toggleItemSelection(item);
     }
 
     public displayAddTorrent(): void {
@@ -88,5 +77,9 @@ export class RemoteSeedBoxComponent implements OnInit, OnDestroy {
 
     public confirmAdd(): void {
         this.remoteService.addNewTorrents(this.addTorrentRequest).subscribe();
+    }
+
+    public removeSelectedTorrents(): void {
+        this.remoteService.removeTorrents(this.runningTorrents.getRawSelectedItems()).subscribe();
     }
 }

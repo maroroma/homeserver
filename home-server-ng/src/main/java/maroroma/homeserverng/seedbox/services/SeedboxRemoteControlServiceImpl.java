@@ -2,6 +2,7 @@ package maroroma.homeserverng.seedbox.services;
 
 import maroroma.homeserverng.seedbox.model.NewTorrents;
 import maroroma.homeserverng.seedbox.model.RunningTorrent;
+import maroroma.homeserverng.seedbox.model.TorrentsToDelete;
 import maroroma.homeserverng.seedbox.tools.SeedboxModuleConstants;
 import maroroma.homeserverng.seedbox.tools.TransmissionConverter;
 import maroroma.homeserverng.tools.annotations.Property;
@@ -10,6 +11,7 @@ import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.transmission.methods.AddTorrent;
 import maroroma.homeserverng.tools.transmission.methods.GetTorrent;
+import maroroma.homeserverng.tools.transmission.methods.RemoveTorrent;
 import maroroma.homeserverng.tools.transmission.methods.TransmissionClient;
 import org.springframework.stereotype.Service;
 
@@ -78,6 +80,18 @@ public class SeedboxRemoteControlServiceImpl {
 						.build())
 				// execution des requêtes
 				.forEach(request -> request.execute(this.getClient()));
+	}
+
+
+	/**
+	 * Conversion de la liste d'identifiants en requete transmission de suppression.
+	 * @param torrentsToDelete -
+	 */
+	public void removeTorrents(TorrentsToDelete torrentsToDelete) {
+		RemoveTorrent.create()
+				.remove(torrentsToDelete.getIdsToDelete())
+				.build()
+				.execute(this.getClient());
 	}
 
 	/**

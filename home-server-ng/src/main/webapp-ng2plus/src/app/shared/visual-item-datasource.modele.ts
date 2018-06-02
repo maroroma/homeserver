@@ -163,9 +163,19 @@ export class VisualItemDataSource<T> {
         this.hasItemSelected = this.nbItemSelected > 0;
     }
 
-    public updateSourceList(rawItems: Array<T>): void {
+    public updateSourceList(rawItems: Array<T>, restoreSelection = false): void {
+
+        const currentSelectionIds = this.sourceList ? this.getSelectedItem().map(visualItem => visualItem.id) : new Array<VisualItem<T>>();
+
         this.sourceList = VisualItem.of(rawItems, this.propertiesMapper);
         this.updateDisplayList();
+
+        if (restoreSelection) {
+            this.sourceList
+                .filter(oneItem => currentSelectionIds.includes(oneItem.id))
+                .forEach(oneItem => oneItem.selected = true);
+        }
+
         this.updateSelectionStatus();
     }
 
@@ -186,7 +196,7 @@ export class VisualItemDataSource<T> {
      * @param {string} fieldName
      * @memberOf VisualItemDataSource
      */
-    public filterByStringField(searchField: string, fieldName: string) : VisualItemDataSource<T> {
+    public filterByStringField(searchField: string, fieldName: string): VisualItemDataSource<T> {
         return this.filterBy(FilterTools.simpleFilter(searchField, fieldName));
     }
 

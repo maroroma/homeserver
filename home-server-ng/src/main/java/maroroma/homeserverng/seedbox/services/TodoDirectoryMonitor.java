@@ -1,27 +1,23 @@
 package maroroma.homeserverng.seedbox.services;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
-import maroroma.homeserverng.seedbox.model.EpisodeParseResult;
-import maroroma.homeserverng.tools.directorymonitoring.DirectoryEvent;
-import maroroma.homeserverng.tools.model.MoveRequest;
-import maroroma.homeserverng.tools.model.MovedFile;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import lombok.extern.log4j.Log4j2;
+import maroroma.homeserverng.seedbox.model.EpisodeParseResult;
 import maroroma.homeserverng.seedbox.tools.SeedboxModuleConstants;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.annotations.PropertyRefreshHandlers;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.directorymonitoring.DirectoryEvent;
 import maroroma.homeserverng.tools.directorymonitoring.DirectoryMonitor;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.model.MovedFile;
 import maroroma.homeserverng.tools.notifications.NotificationEvent;
 import maroroma.homeserverng.tools.notifications.NotifyerContainer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import java.util.Date;
 
 /**
  * Bean dédié à la surveillance en live du répertoire de téléchargements complétés.
@@ -57,7 +53,7 @@ public class TodoDirectoryMonitor {
      * Permet de réaliser le déplacement automatique si possible
      */
     @Autowired
-    private SeedBoxTodoService seedBoxTodoService;
+    private SeedBoxTodoServiceImpl seedBoxTodoService;
 
     /**
      * Répertoire pour les fichiers à trier.

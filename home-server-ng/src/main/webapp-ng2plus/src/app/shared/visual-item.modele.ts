@@ -8,6 +8,7 @@ export class VisualItem<T> {
     public exportFileName: string;
     public item: T;
     public changeOccured = false;
+    public id: any;
 
 
     /**
@@ -66,6 +67,7 @@ export class VisualItem<T> {
         this.exportable = backup.exportable;
         this.exportUrl = backup.exportUrl;
         this.exportFileName = backup.exportFileName;
+        this.id = backup.id;
     }
 
 }
