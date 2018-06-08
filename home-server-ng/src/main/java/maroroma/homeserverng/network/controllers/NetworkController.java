@@ -1,7 +1,10 @@
 package maroroma.homeserverng.network.controllers;
 
-import java.util.List;
-
+import maroroma.homeserverng.network.NetworkModuleDescriptor;
+import maroroma.homeserverng.network.model.ServerDescriptor;
+import maroroma.homeserverng.network.services.NetworkServiceImpl;
+import maroroma.homeserverng.tools.annotations.HomeServerRestController;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,11 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import maroroma.homeserverng.network.NetworkModuleDescriptor;
-import maroroma.homeserverng.network.model.ServerDescriptor;
-import maroroma.homeserverng.network.services.NetworkService;
-import maroroma.homeserverng.tools.annotations.HomeServerRestController;
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import java.util.List;
 
 /**
  * Controler rest pour la gestion des serveurs du réseau local.
@@ -27,7 +26,7 @@ public class NetworkController {
 	 * Repo pour l'accès.
 	 */
 	@Autowired
-	private NetworkService networkRepository;
+	private NetworkServiceImpl networkRepository;
 	
 	
 	/**

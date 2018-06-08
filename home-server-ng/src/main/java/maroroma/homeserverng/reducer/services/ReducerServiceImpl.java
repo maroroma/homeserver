@@ -1,28 +1,5 @@
 package maroroma.homeserverng.reducer.services;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-import javax.imageio.ImageIO;
-import javax.mail.MessagingException;
-import javax.mail.Transport;
-
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.MimeTypeUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.config.MailConfigHolder;
 import maroroma.homeserverng.reducer.model.ReducedImageInput;
@@ -31,16 +8,30 @@ import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.helpers.CommonFileFilter;
-import maroroma.homeserverng.tools.helpers.FileAndDirectoryHLP;
-import maroroma.homeserverng.tools.helpers.StreamHLP;
-import maroroma.homeserverng.tools.helpers.Tuple;
+import maroroma.homeserverng.tools.helpers.*;
 import maroroma.homeserverng.tools.mail.ContactDescriptor;
 import maroroma.homeserverng.tools.mail.MailBuilder;
 import maroroma.homeserverng.tools.mail.RawFileAttachment;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.MimeTypeUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.imageio.ImageIO;
+import javax.mail.MessagingException;
+import javax.mail.Transport;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.util.*;
+import java.util.List;
 
 /**
  * Implémentation du service de sauvegarde des images réduites sur le serveur.
@@ -49,7 +40,7 @@ import maroroma.homeserverng.tools.repositories.NanoRepository;
  */
 @Service
 @Log4j2
-public class ReducerServiceImpl implements ReducerService {
+public class ReducerServiceImpl {
 
 	/**
 	 * Emplacement par défaut de la sauvegarde.
@@ -83,9 +74,10 @@ public class ReducerServiceImpl implements ReducerService {
 	private MailConfigHolder mailConfigHolder;
 
 	/**
-	 * {@inheritDoc}
+	 * Upload d'une image réduite sur le serveur.
+	 * @param imageInput -
+	 * @throws HomeServerException -
 	 */
-	@Override
 	public void uploadReducedImage(final ReducedImageInput imageInput) throws HomeServerException {
 		Assert.notNull(imageInput, "imageInput can't be null");
 		Assert.hasLength(imageInput.getOriginalName(), "imageInput.originalName can't be null or empty");
@@ -125,9 +117,10 @@ public class ReducerServiceImpl implements ReducerService {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Listing des images présentes sur le serveur.
+	 * @return -
+	 * @throws HomeServerException -
 	 */
-	@Override
 	public List<FileDescriptor> getReducedImages() throws HomeServerException {
 
 		List<FileDescriptor> returnValue = Collections.synchronizedList(new ArrayList<>());
@@ -153,17 +146,20 @@ public class ReducerServiceImpl implements ReducerService {
 
 
 	/**
-	 * {@inheritDoc}
+	 * Récupération du contenu d'une image du serveur.
+	 * @param fileName -
+	 * @return -
+	 * @throws HomeServerException -
 	 */
-	@Override
 	public byte[] getReducedImage(final String fileName) throws HomeServerException {
 		return FileAndDirectoryHLP.convertFileToByteArray(fileName);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Suppression d'une image sur le serveur.
+	 * @param base64ReducedImage -
+	 * @throws HomeServerException -
 	 */
-	@Override
 	public void deleteReducedImage(final FileDescriptor base64ReducedImage) throws HomeServerException {
 		Assert.notNull(base64ReducedImage);
 		Assert.hasLength(base64ReducedImage.getName(), "name must be provided");
@@ -178,9 +174,10 @@ public class ReducerServiceImpl implements ReducerService {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Permet d'émettre un email avec le listing des images donné.
+	 * @param mailRequest -
+	 * @throws HomeServerException -
 	 */
-	@Override
 	public void sendMail(final SendMailRequest mailRequest) throws HomeServerException {
 
 		// validation des entrées
@@ -250,22 +247,31 @@ public class ReducerServiceImpl implements ReducerService {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Permet de rechercher un contact par son email.
+	 * @param pattern chaine à rechercher.
+	 * @return -
+	 * @throws HomeServerException -
 	 */
-	@Override
 	public List<ContactDescriptor> findContacts(final String pattern) throws HomeServerException {
 		// la recherche se fait sur le mail, le tout insensible à la casse
 		return this.mailRepository.findAll(contact -> contact.getEmail().toLowerCase().contains(pattern.toLowerCase()));
 	}
 
-	@Override
+	/**
+	 * Suppression d'une image sur le serveur.
+	 * @param fileID -
+	 * @throws HomeServerException -
+	 */
 	public void deleteReducedImage(final String fileID) throws HomeServerException {
 		Assert.hasLength(fileID, "fileID can't be null or empty");
 		this.deleteReducedImage(FileAndDirectoryHLP.decodeFileDescriptor(fileID));
 	}
 
-
-	@Override
+	/**
+	 * Permet de réduire une image envoyée par un client et de la rajouter dans la liste des images réduites sur le serveur.
+	 * @param imageToReduce image à réduire
+	 * @throws HomeServerException -
+	 */
 	public void reduceImage(final MultipartFile imageToReduce) throws HomeServerException {
 		Assert.notNull(imageToReduce, "imageToReduce can't be null");
 		BufferedImage originalImage = null;

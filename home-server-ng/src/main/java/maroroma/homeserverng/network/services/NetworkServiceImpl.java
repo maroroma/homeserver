@@ -1,14 +1,5 @@
 package maroroma.homeserverng.network.services;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.client.ResourceAccessException;
-
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.network.model.ServerDescriptor;
 import maroroma.homeserverng.network.model.UrlScanParameter;
@@ -17,15 +8,23 @@ import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.client.ResourceAccessException;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * Implémentation du {@link NetworkService}.
+ * Implémentation de gestion du réseau
  * @author rlevexie
  *
  */
 @Repository
 @Log4j2
-public class NetworkServiceImpl implements NetworkService {
+public class NetworkServiceImpl {
 
 	/**
 	 * Repository json pour la liste des serveurs.
@@ -41,34 +40,43 @@ public class NetworkServiceImpl implements NetworkService {
 	 */
 	@Autowired
 	private UrlScanParameterHLP urlScanHLP;
-	
+
 	/**
-	 * {@inheritDoc}
+	 * Retourne la liste des serveurs déclarés.
+	 * @return -
+	 * @throws HomeServerException  -
 	 */
-	@Override
 	public List<ServerDescriptor> getServerDescriptors() throws HomeServerException {
 
 		return this.repository.getAll();
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Enregistre la description d'un nouveau serveur.
+	 * @param serverDescriptor -
+	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@Override
 	public List<ServerDescriptor> saveServerDescriptor(final ServerDescriptor serverDescriptor) throws HomeServerException {
 		return this.repository.save(serverDescriptor);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Supprime un serveur.
+	 * @param id -
+	 * @return -
+	 * @throws HomeServerException
 	 */
-	@Override
 	public List<ServerDescriptor> deleteServerDescriptor(final String id) throws HomeServerException {
 		return this.repository.delete(id);
 	}
 
-	@Override
+	/**
+	 * Retourne si le serveur est joignable.
+	 * @param id -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
 	public boolean getServerStatus(final String id) throws HomeServerException {
 		ServerDescriptor sd = this.repository.find(id);
 		boolean returnValue = true;
@@ -83,16 +91,22 @@ public class NetworkServiceImpl implements NetworkService {
 	}
 
 	/**
-	 * {@inheritDoc}.
+	 * Permet de mettre à jour un serveur.
+	 * @param newServer nouvelle valeur pour le serveur.
+	 * @return -
+	 * @throws HomeServerException -
 	 */
-	@Override
 	public List<ServerDescriptor> updateServer(final ServerDescriptor newServer) throws HomeServerException {
 		return this.repository.update(newServer);
 	}
 
-	
 
-	@Override
+	/**
+	 * Permet de récupérer la liste des serveurs disponibles sur le réseau, pour faciliter
+	 * l'ajout de serveur.
+	 * @return -
+	 * @throws HomeServerException -
+	 */
 	public List<ServerDescriptor> getAvailableServer() throws HomeServerException {
 
 		UrlScanParameter scanParam = this.urlScanHLP.buildParameter();

@@ -1,7 +1,13 @@
 package maroroma.homeserverng.reducer.controllers;
 
-import java.util.List;
-
+import maroroma.homeserverng.reducer.ReducerModuleDescriptor;
+import maroroma.homeserverng.reducer.model.ReducedImageInput;
+import maroroma.homeserverng.reducer.model.SendMailRequest;
+import maroroma.homeserverng.reducer.services.ReducerServiceImpl;
+import maroroma.homeserverng.tools.annotations.HomeServerRestController;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.mail.ContactDescriptor;
+import maroroma.homeserverng.tools.model.FileDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,14 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
-import maroroma.homeserverng.reducer.ReducerModuleDescriptor;
-import maroroma.homeserverng.reducer.model.ReducedImageInput;
-import maroroma.homeserverng.reducer.model.SendMailRequest;
-import maroroma.homeserverng.reducer.services.ReducerService;
-import maroroma.homeserverng.tools.annotations.HomeServerRestController;
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.mail.ContactDescriptor;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import java.util.List;
 
 /**
  * Rest controller pour la sauvegard des miniatures sur le serveur.
@@ -32,7 +31,7 @@ public class ReducerController {
 	 * Service sous jacent.
 	 */
 	@Autowired
-	private ReducerService service;
+	private ReducerServiceImpl service;
 	
 	/**
 	 * Sauvegarde d'une image réduite.

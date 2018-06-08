@@ -1,17 +1,5 @@
 package maroroma.homeserverng.music.services;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.music.model.AlbumDescriptor;
 import maroroma.homeserverng.music.model.TrackDescriptor;
@@ -29,6 +17,17 @@ import maroroma.homeserverng.tools.helpers.FileExtensionHelper;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 import maroroma.homeserverng.tools.model.FileDirectoryDescriptor;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service de gestion des tags mp3 d'un album.
@@ -37,7 +36,7 @@ import maroroma.homeserverng.tools.repositories.NanoRepository;
  */
 @Service
 @Log4j2
-public class MusicServiceImpl implements MusicService {
+public class MusicServiceImpl {
 
 	/**
 	 * Répertoire de travail principal.
@@ -55,7 +54,12 @@ public class MusicServiceImpl implements MusicService {
 			preProcessor = LastRefreshPreProcessor.class)
 	private NanoRepository albumRepo;
 
-	@Override
+	/**
+	 * Préparation du répertoire de travail pour cet album.
+	 * @param request -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
 	public AlbumDescriptor prepareWorkingDirectory(final AlbumDescriptor request) throws HomeServerException {
 
 		// controle des entrées
@@ -95,7 +99,13 @@ public class MusicServiceImpl implements MusicService {
 
 	}
 
-	@Override
+	/**
+	 * Rajout d'une jaquette dans le répertoire.
+	 * @param toUpdatePath -
+	 * @param albumart -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
 	public AlbumDescriptor addAlbumArt(final String toUpdatePath, final MultipartFile albumart) throws HomeServerException {
 
 		// validation de l'album directory
@@ -135,7 +145,13 @@ public class MusicServiceImpl implements MusicService {
 
 	}
 
-	@Override
+	/**
+	 * Retourne l'album art.
+	 * @param albumPath -
+	 * @param albumArtPath -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
 	public byte[] getAlbumArt(final String albumPath, final String albumArtPath) throws HomeServerException {
 		Assert.hasLength(albumArtPath, "albumPath can't be null or empty");
 		this.validateAndReturnAlbumDescriptor(albumPath);
@@ -143,7 +159,13 @@ public class MusicServiceImpl implements MusicService {
 		return FileAndDirectoryHLP.convertFileToByteArray(albumArtPath);
 	}
 
-	@Override
+	/**
+	 * Ajoute un fichier mp3 dans le répertoire de travail.
+	 * @param toUpdatePath -
+	 * @param oneTrack -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
 	public TrackDescriptor addTrack(final String toUpdatePath, final MultipartFile oneTrack) throws HomeServerException {
 
 		// récup de l'album
@@ -167,7 +189,12 @@ public class MusicServiceImpl implements MusicService {
 
 	}
 
-	@Override
+	/**
+	 * Retourne les tracks descriptors correspondants au mp3 correspondant l'album.
+	 * @param toUpdatePath -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
 	public List<TrackDescriptor> getAllTracks(final String toUpdatePath) throws HomeServerException {
 		// récup du répertoire de travail.
 		AlbumDescriptor albumDescriptor = validateAndReturnAlbumDescriptor(toUpdatePath);
@@ -205,7 +232,12 @@ public class MusicServiceImpl implements MusicService {
 		return this.albumRepo.find(base64dir);
 	}
 
-	@Override
+	/**
+	 * Mise à jour des tags mp3 de l'album.
+	 * @param td -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
 	public TrackDescriptor updateTrack(final TrackDescriptor td) throws HomeServerException {
 		// récup et validation du fichier pour le morceau
 		File oneTrack = td.getFile().createFile();
@@ -231,12 +263,22 @@ public class MusicServiceImpl implements MusicService {
 		}
 	}
 
-	@Override
+	/**
+	 * Retourne un fichier mp3 de l'album.
+	 * @param trackPath -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
 	public byte[] getTrack(final String trackPath) throws HomeServerException {
 		return FileAndDirectoryHLP.convertFileToByteArray(trackPath);
 	}
 
-	@Override
+	/**
+	 * Retourne l'album complet au format .tar .
+	 * @param albumPath -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
 	public byte[] downloadAllFiles(final String albumPath) throws HomeServerException {
 
 		// TODO : à améliorer pour optimiser l'écriture directement dans le flux http.
@@ -253,9 +295,7 @@ public class MusicServiceImpl implements MusicService {
 	 * @throws HomeServerException 
 	 */
 	private void autoCleanUpRepository() throws HomeServerException {
-		this.albumRepo.<AlbumDescriptor>delete(ad -> {
-			return !ad.getDirectoryDescriptor().createFile().exists();
-		});
+		this.albumRepo.<AlbumDescriptor>delete(ad -> !ad.getDirectoryDescriptor().createFile().exists());
 	}
 
 

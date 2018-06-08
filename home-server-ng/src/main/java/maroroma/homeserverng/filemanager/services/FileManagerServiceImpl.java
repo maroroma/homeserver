@@ -1,15 +1,5 @@
 package maroroma.homeserverng.filemanager.services;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.stereotype.Service;
-
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.filemanager.model.DirectoryCreationRequest;
 import maroroma.homeserverng.filemanager.model.FileOperationResult;
@@ -21,8 +11,16 @@ import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.FileAndDirectoryHLP;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 import maroroma.homeserverng.tools.model.FileDirectoryDescriptor;
-import maroroma.homeserverng.tools.streaming.StreamingFileSenderException;
 import maroroma.homeserverng.tools.streaming.StreamingFileSender;
+import maroroma.homeserverng.tools.streaming.StreamingFileSenderException;
+import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Implémentation du service pour la gestion des fichiers.
@@ -31,7 +29,7 @@ import maroroma.homeserverng.tools.streaming.StreamingFileSender;
  */
 @Service
 @Log4j2
-public class FileManagerServiceImpl implements FileManagerService {
+public class FileManagerServiceImpl {
 
 	/**
 	 * Liste des répertoires racines gérables par le filemanager.
@@ -40,9 +38,11 @@ public class FileManagerServiceImpl implements FileManagerService {
 	private HomeServerPropertyHolder rootDirectoriesList;
 
 	/**
-	 * {@inheritDoc}
+	 * Création d'un répertoir.
+	 * @param creationRequest -
+	 * @return -
+	 * @throws HomeServerException -
 	 */
-	@Override
 	public FileDescriptor createDirectory(final DirectoryCreationRequest creationRequest) throws HomeServerException {
 
 		// validation des entrées
@@ -63,20 +63,35 @@ public class FileManagerServiceImpl implements FileManagerService {
 		return new FileDescriptor(target);
 	}
 
-	@Override
+	/**
+	 * Retourne la liste des répertoires gérables directement par le filemanager.
+	 * @return -
+	 * @throws HomeServerException -
+	 */
 	public List<FileDirectoryDescriptor> getRootDirectories() throws HomeServerException {
 		return this.rootDirectoriesList.asFileList().stream()
 				.map(oneFile -> FileDirectoryDescriptor.createSimple(oneFile)).collect(Collectors.toList());
 	}
 
-	@Override
+
+	/**
+	 * Retourne le détail d'un répertoire.
+	 * @param id -
+	 * @return -
+	 * @throws HomeServerException -
+	 */
 	public FileDirectoryDescriptor getDirectoryDetail(final String id) throws HomeServerException {
 		File toScan = FileAndDirectoryHLP.decodeFile(id);
 		Assert.isValidDirectory(toScan);
 		return FileDirectoryDescriptor.create(toScan);
 	}
 
-	@Override
+
+	/**
+	 * Supprime un fichier.
+	 * @param id -
+	 * @return -
+	 */
 	public FileOperationResult deleteFile(final String id) {
 		Assert.hasLength(id, "id can't be null or empty");
 		final FileDescriptor fileToDelete = FileAndDirectoryHLP.decodeFileDescriptor(id);
@@ -91,7 +106,12 @@ public class FileManagerServiceImpl implements FileManagerService {
 				.allMatch(value -> value));
 	}
 
-	@Override
+
+	/**
+	 * Renomme un fichier.
+	 * @param rfd -
+	 * @return -
+	 */
 	public FileOperationResult renameFile(final RenameFileDescriptor rfd) {
 		Assert.notNull(rfd, "rfd can't be null or empty");
 		Assert.hasLength(rfd.getNewName(), "rfd.newName can't be null or emtpy");
@@ -123,7 +143,13 @@ public class FileManagerServiceImpl implements FileManagerService {
 				"Le fichier à supprimer ne fait pas partie des répertoires gérables");
 	}
 
-	@Override
+
+	/**
+	 * Permet de télécharger un fichier en écrivant directement dans le flux de retour.
+	 * @param base64FileName -
+	 * @param response port le flux à modifier.
+	 * @throws HomeServerException -
+	 */
 	public void getFile(final String base64FileName, final HttpServletResponse response) throws HomeServerException {
 
 		// récupération du fichier
@@ -140,9 +166,12 @@ public class FileManagerServiceImpl implements FileManagerService {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Permet de gérer le streaming d'un fichier multimédia (mp3 ou video).
+	 * @param base64FileName -
+	 * @param request -
+	 * @param response -
+	 * @throws HomeServerException -
 	 */
-	@Override
 	public void streamFile(final String base64FileName, final HttpServletRequest request,
 			final HttpServletResponse response) throws HomeServerException {
 

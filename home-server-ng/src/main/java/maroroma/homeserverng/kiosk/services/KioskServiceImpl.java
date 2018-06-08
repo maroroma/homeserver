@@ -1,11 +1,5 @@
 package maroroma.homeserverng.kiosk.services;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
 import maroroma.homeserverng.kiosk.model.CurrentReading;
 import maroroma.homeserverng.kiosk.model.CurrentReadingType;
 import maroroma.homeserverng.kiosk.model.KioskDisplayOption;
@@ -17,14 +11,19 @@ import maroroma.homeserverng.tools.kodi.requests.KodiMethods;
 import maroroma.homeserverng.tools.kodi.responses.getactiveplayers.ActivePlayer;
 import maroroma.homeserverng.tools.kodi.responses.getactiveplayers.GetActivePlayersResponse;
 import maroroma.homeserverng.tools.kodi.responses.getitem.GetItemResponse;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * Implémentation du {@link KioskService}.
+ * Implémentation du KioskService
  * @author rlevexie
  *
  */
 @Service
-public class KioskServiceImpl implements KioskService {
+public class KioskServiceImpl {
 
 	/**
 	 * displayWeather.
@@ -56,8 +55,10 @@ public class KioskServiceImpl implements KioskService {
 	@Property("homeserver.kiosk.kodi.urls")
 	private HomeServerPropertyHolder kodiUrls;
 
-
-	@Override
+	/**
+	 * Retourne les options d'affichage du kiosk.
+	 * @return -
+	 */
 	public KioskDisplayOption getOptions() {
 
 		// on retourne les options d'affichage à partir de l'ensemble des propriétés mappées sur le service.
@@ -70,7 +71,6 @@ public class KioskServiceImpl implements KioskService {
 	}
 
 
-	@Override
 	public List<CurrentReading> getCurrentReadings() {
 
 		return null;
