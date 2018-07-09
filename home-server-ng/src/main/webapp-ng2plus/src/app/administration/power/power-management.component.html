@@ -2,23 +2,39 @@
     <h3 class="card-header default-color white-text">Informations sur le serveur</h3>
     <div class="common-borders">
         <div class="row">
-            <div class="col-md-2"><strong>Nom de la machine</strong></div>
+            <div class="col-md-2">
+                <strong>Nom de la machine</strong>
+            </div>
             <div class="col-md-4">{{serverStatus?.hostName}}</div>
         </div>
         <div class="row">
-            <div class="col-md-2"><strong>Version homeserverNG</strong></div>
+            <div class="col-md-2">
+                <strong>IP de la machine</strong>
+            </div>
+            <div class="col-md-4">{{serverStatus?.ipAddress}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <strong>Version homeserverNG</strong>
+            </div>
             <div class="col-md-4">{{serverStatus?.version}}</div>
         </div>
         <div class="row">
-            <div class="col-md-2"><strong>Heure de démarrage homeserverNG</strong></div>
+            <div class="col-md-2">
+                <strong>Heure de démarrage homeserverNG</strong>
+            </div>
             <div class="col-md-4">{{serverStatus?.startUpTime}}</div>
         </div>
         <div class="row">
-            <div class="col-md-2"><strong>Système d'exploitation</strong></div>
+            <div class="col-md-2">
+                <strong>Système d'exploitation</strong>
+            </div>
             <div class="col-md-4">{{serverStatus?.operatingSystem}}</div>
         </div>
         <div class="row">
-            <div class="col-md-2"><strong>Lecteurs logiques</strong></div>
+            <div class="col-md-2">
+                <strong>Lecteurs logiques</strong>
+            </div>
             <div class="col-md-4">
                 <div *ngFor="let oneDrive of serverStatus?.drives">
                     {{oneDrive.name}}
@@ -37,8 +53,9 @@
 
 <div class="xl">
     <button class="btn btn-danger btn-xl" (click)="shutdown()">
-                <span><span class="glyphicon glyphicon-off text-align"></span> Eteindre le serveur</span>
-            </button>
+        <span>
+            <span class="glyphicon glyphicon-off text-align"></span> Eteindre le serveur</span>
+    </button>
 </div>
 
 

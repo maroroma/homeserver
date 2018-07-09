@@ -57,8 +57,8 @@ public abstract class StringUtils extends org.springframework.util.StringUtils {
 	 * @return -
 	 */
 	public static List<Integer> findAllOccurencesIndex(final String toScan, final String toFind) {
-		Assert.hasLength(toScan);
-		Assert.hasLength(toFind);
+		Assert.hasLength(toScan, "toScan can't be null or empty");
+		Assert.hasLength(toFind, "toFind can't be null or empty");
 		List<Integer> returnValue = new ArrayList<>();
 		
 		int startIndex = toScan.indexOf(toFind);

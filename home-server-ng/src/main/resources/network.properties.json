@@ -22,4 +22,10 @@
   "description" : "Adresse (préfixe) IP du réseau local pour le scan des serveurs existants",
   "readOnly" : false,
   "moduleId" : "network"
+}, {
+  "id" : "homeserver.network.ip",
+  "value" : "192.168.0.53",
+  "description" : "Adresse IP du serveur local",
+  "readOnly" : false,
+  "moduleId" : "network"
 } ]

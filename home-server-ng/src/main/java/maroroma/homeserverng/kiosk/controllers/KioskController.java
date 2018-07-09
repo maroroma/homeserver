@@ -28,7 +28,7 @@ public class KioskController {
 	 * Retourne les options d'affichage du kiosk.
 	 * @return -
 	 */
-	@GetMapping("/kiosk/options")
+	@GetMapping("${homeserver.api.path:}/kiosk/options")
 	public ResponseEntity<KioskDisplayOption> getOptions() {
 		return ResponseEntity.ok(this.service.getOptions());
 	}

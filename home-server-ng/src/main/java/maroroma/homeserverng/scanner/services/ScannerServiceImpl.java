@@ -1,17 +1,8 @@
 package maroroma.homeserverng.scanner.services;
 
-import java.io.File;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.scanner.model.ScanRequest;
 import maroroma.homeserverng.scanner.model.ScannerColorMode;
-import maroroma.homeserverng.scanner.needers.ScannerStaticsNeeder;
 import maroroma.homeserverng.scanner.repositories.ScannerRepository;
 import maroroma.homeserverng.tools.annotations.ProductionProfile;
 import maroroma.homeserverng.tools.annotations.Property;
@@ -20,6 +11,13 @@ import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.helpers.BashCmdExecutorHLP;
 import maroroma.homeserverng.tools.helpers.CommonFileFilter;
 import maroroma.homeserverng.tools.model.FileDescriptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * Implémentation du {@link ScannerService}.

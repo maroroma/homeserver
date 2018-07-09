@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.3.RELEASE</version>
+		<version>2.0.3.RELEASE</version>
 	</parent>
 
 	<modules>
@@ -22,7 +22,7 @@
 
 	<groupId>maro.roma</groupId>
 	<artifactId>home-server-ng-parent</artifactId>
-	<version>0.0.23-SNAPSHOT</version>
+	<version>0.0.24-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<dependencyManagement>

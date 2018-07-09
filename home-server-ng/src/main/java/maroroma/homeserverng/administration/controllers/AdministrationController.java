@@ -51,7 +51,7 @@ public class AdministrationController {
 	 * Retourne les modules applicatifs activés.
 	 * @return -
 	 */
-	@RequestMapping("/administration/enabledmodules")
+	@GetMapping("${homeserver.api.path:}/administration/enabledmodules")
 	public ResponseEntity<List<HomeServerModuleHandler>> getEnabledModules() {
 		return ResponseEntity.ok(this.serviceAdministration.getEnabledHomeServerModules());
 	}
@@ -60,7 +60,7 @@ public class AdministrationController {
 	 * Retourne la version courante de l'application.
 	 * @return -
 	 */
-	@RequestMapping("/administration/version")
+	@GetMapping("${homeserver.api.path:}/administration/version")
 	public ResponseEntity<String> getVersion() {
 		return ResponseEntity.ok(this.statusHolder.getStatus().getVersion());
 	}
@@ -70,7 +70,7 @@ public class AdministrationController {
 	 * @return -
 	 * @throws HomeServerException 
 	 */
-	@RequestMapping("/administration/modules")
+	@GetMapping("${homeserver.api.path:}/administration/modules")
 	public ResponseEntity<List<HomeServerModuleHandler>> getModules() throws HomeServerException {
 		return ResponseEntity.ok(this.serviceAdministration.getAllHomeServerModules());
 	}
@@ -80,7 +80,7 @@ public class AdministrationController {
 	 * @return la nouvelle liste des modules.
 	 * @throws HomeServerException 
 	 */
-	@RequestMapping(value = "/administration/modules", method = {RequestMethod.DELETE})
+	@DeleteMapping(value = "${homeserver.api.path:}/administration/modules")
 	public ResponseEntity<List<HomeServerModuleHandler>> refreshModules() throws HomeServerException {
 		this.serviceAdministration.reloadModules();
 		return ResponseEntity.ok(this.serviceAdministration.getAllHomeServerModules());
@@ -93,7 +93,7 @@ public class AdministrationController {
 	 * @return le module mise à jour
 	 * @throws HomeServerException 
 	 */
-	@RequestMapping(value = "/administration/module/{id}", method = {RequestMethod.PATCH})
+	@RequestMapping(value = "${homeserver.api.path:}/administration/module/{id}", method = {RequestMethod.PATCH})
 	public ResponseEntity<HomeServerModuleHandler> updateModuleStatus(@PathVariable("id") final String id,
 			@RequestBody final HomeServerModuleHandler newVersion) throws HomeServerException {
 		return ResponseEntity.ok(
@@ -107,7 +107,7 @@ public class AdministrationController {
 	 * @return le module mise à jour
 	 * @throws HomeServerException 
 	 */
-	@RequestMapping(value = "/administration/modules", method = {RequestMethod.PATCH})
+	@RequestMapping(value = "${homeserver.api.path:}/administration/modules", method = {RequestMethod.PATCH})
 	public ResponseEntity<List<HomeServerModuleHandler>> updateModuleStatuses(@RequestBody final List<HomeServerModuleActivationStatus> statuses)
 			throws HomeServerException {
 		return ResponseEntity.ok(
@@ -119,7 +119,7 @@ public class AdministrationController {
 	 * @return nouveau status.
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/administration/server/stop", method = { RequestMethod.PATCH })
+	@RequestMapping(value = "${homeserver.api.path:}/administration/server/stop", method = { RequestMethod.PATCH })
 	public ResponseEntity<HomeServerStatus> stop() 
 			throws HomeServerException {
 		return ResponseEntity.ok(
@@ -131,7 +131,7 @@ public class AdministrationController {
 	 * @throws HomeServerException -
 	 * @return -
 	 */
-	@RequestMapping("/administration/server/status")
+	@GetMapping("${homeserver.api.path:}/administration/server/status")
 	public ResponseEntity<HomeServerStatus> serverSTatus() throws HomeServerException {
 		return ResponseEntity.ok(
 		this.statusHolder.getStatus());
@@ -142,7 +142,7 @@ public class AdministrationController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping("/administration/configs")
+	@GetMapping("${homeserver.api.path:}/administration/configs")
 	public ResponseEntity<List<HomeServerPropertyHolder>> listProperties() throws HomeServerException {
 		return ResponseEntity.ok(this.serviceAdministration.getProperties());
 	}
@@ -153,7 +153,7 @@ public class AdministrationController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@GetMapping("/administration/configs/{id:.+}")
+	@GetMapping("${homeserver.api.path:}/administration/configs/{id:.+}")
 	public ResponseEntity<HomeServerPropertyHolder> getProperty(@PathVariable("id") String id) throws HomeServerException {
 		return ResponseEntity.ok(this.serviceAdministration.getProperty(id));
 	}
@@ -166,7 +166,7 @@ public class AdministrationController {
 	 * @throws JsonMappingException 
 	 * @throws JsonGenerationException 
 	 */
-	@RequestMapping(path = "/administration/configs/export", method = {RequestMethod.GET}, produces = { MediaType.TEXT_PLAIN_VALUE})
+	@RequestMapping(path = "${homeserver.api.path:}/administration/configs/export", method = {RequestMethod.GET}, produces = { MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<byte[]> exportProperties() throws HomeServerException, JsonGenerationException, JsonMappingException, IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ObjectMapper mapper = new ObjectMapper();
@@ -180,7 +180,7 @@ public class AdministrationController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/administration/configs/import", method = { RequestMethod.POST })
+	@RequestMapping(value = "${homeserver.api.path:}/administration/configs/import", method = { RequestMethod.POST })
 	ResponseEntity<UploadPropertiesResponse> uploadProperties(@RequestBody final MultipartFile file) throws HomeServerException {
 		return ResponseEntity.ok(this.serviceAdministration.uploadProperties(file));
 	}
@@ -192,7 +192,7 @@ public class AdministrationController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/administration/config/{id:.+}", method = {RequestMethod.PATCH})
+	@RequestMapping(value = "${homeserver.api.path:}/administration/config/{id:.+}", method = {RequestMethod.PATCH})
 	public ResponseEntity<HomeServerPropertyHolder> updateProperty(@PathVariable("id") final String id,
 			@RequestBody final HomeServerPropertyHolder newValue) throws HomeServerException {
 		return ResponseEntity.ok(
@@ -204,7 +204,7 @@ public class AdministrationController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping("/administration/repos")
+	@RequestMapping("${homeserver.api.path:}/administration/repos")
 	public ResponseEntity<List<NanoRepositoryDescriptor>> getNanoRepositoriesDescriptor() throws HomeServerException {
 		return ResponseEntity.ok(this.serviceAdministration.getNanoRepositoriesDescriptor());
 	}
@@ -215,7 +215,7 @@ public class AdministrationController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(path = "/administration/repo/{id}/export", method = {RequestMethod.GET}, produces = { MediaType.TEXT_PLAIN_VALUE})
+	@RequestMapping(path = "${homeserver.api.path:}/administration/repo/{id}/export", method = {RequestMethod.GET}, produces = { MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<byte[]> exportRepository(@PathVariable("id") final String id) throws HomeServerException {
 		return ResponseEntity.ok(this.serviceAdministration.exportRepository(id));
 	}
@@ -226,7 +226,7 @@ public class AdministrationController {
 	 * @param file -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(path = "/administration/repo/{id}/import", method = {RequestMethod.POST})
+	@RequestMapping(path = "${homeserver.api.path:}/administration/repo/{id}/import", method = {RequestMethod.POST})
 	public void importRepository(@PathVariable("id") final String id,
 			@RequestBody final MultipartFile file) throws HomeServerException {
 		this.serviceAdministration.importRepository(id, file);
@@ -237,7 +237,7 @@ public class AdministrationController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(path = "/administration/export/all", method = {RequestMethod.GET}, produces = { MediaType.TEXT_PLAIN_VALUE})
+	@RequestMapping(path = "${homeserver.api.path:}/administration/export/all", method = {RequestMethod.GET}, produces = { MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<byte[]> exportAllConfiguration() throws HomeServerException {
 		return ResponseEntity.ok(this.serviceAdministration.exportAllConfiguration());
 	}
@@ -247,7 +247,7 @@ public class AdministrationController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(path = "/administration/caches")
+	@RequestMapping(path = "${homeserver.api.path:}/administration/caches")
 	public ResponseEntity<List<CacheDescriptor>> getAllCaches() throws HomeServerException {
 		return ResponseEntity.ok(this.serviceAdministration.getCaches());
 	}
@@ -258,7 +258,7 @@ public class AdministrationController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(path = "/administration/caches/{cacheName}/keys")
+	@RequestMapping(path = "${homeserver.api.path:}/administration/caches/{cacheName}/keys")
 	public ResponseEntity<List<CacheKeyDescriptor>> getCacheKeys(final @PathVariable("cacheName") String cacheName) throws HomeServerException {
 		return ResponseEntity.ok(this.serviceAdministration.getCacheKeys(cacheName));
 	}
@@ -269,7 +269,7 @@ public class AdministrationController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(path = "/administration/caches/{cacheName}/keys", method = {RequestMethod.DELETE})
+	@RequestMapping(path = "${homeserver.api.path:}/administration/caches/{cacheName}/keys", method = {RequestMethod.DELETE})
 	public ResponseEntity<List<CacheKeyDescriptor>> clearCache(final @PathVariable("cacheName") String cacheName) throws HomeServerException {
 		return ResponseEntity.ok(this.serviceAdministration.clearCache(cacheName));
 	}

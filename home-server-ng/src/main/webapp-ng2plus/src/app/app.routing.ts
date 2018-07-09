@@ -20,4 +20,4 @@ const routes: Routes = [
   { path: 'kiosk', component: KioskMainScreenComponent }
 ];
 
-export const routing = RouterModule.forRoot(routes);
+export const routing = RouterModule.forRoot(routes, { useHash: true });

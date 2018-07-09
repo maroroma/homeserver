@@ -103,7 +103,7 @@ public class MailBuilder {
 	 * @return -
 	 */
 	public MailBuilder addAttachment(final RawFileAttachment file) {
-		Assert.notNull(file);
+		Assert.notNull(file, "file can't be null");
 		this.rawAttachmentFiles.add(file);
 		return this;
 	}
@@ -115,7 +115,7 @@ public class MailBuilder {
 	 * @return -
 	 */
 	public MailBuilder addAttachments(final List<File> files) {
-		Assert.notNull(files);
+		Assert.notNull(files, "files can't be null");
 		files.forEach(oneFile -> addAttachment(oneFile));
 		return this;
 	}
@@ -135,7 +135,7 @@ public class MailBuilder {
 	 * @return -
 	 */
 	public MailBuilder from(final String emailAddress) {
-		Assert.hasLength(emailAddress);
+		Assert.hasLength(emailAddress, "emailAdress can't be null or empty");
 		this.senderEmailAddress = emailAddress;
 		return this;
 	}
@@ -146,7 +146,7 @@ public class MailBuilder {
 	 * @return -
 	 */
 	public MailBuilder subject(final String subject) {
-		Assert.hasLength(subject);
+		Assert.hasLength(subject, "subject can't be null or empty");
 		this.emailSubject = subject;
 		return this;
 	}
@@ -157,7 +157,7 @@ public class MailBuilder {
 	 * @return -
 	 */
 	public MailBuilder date(final Date date) {
-		Assert.notNull(date);
+		Assert.notNull(date, "date can't be null");
 		this.sentDate = date;
 		return this;
 	}
@@ -168,7 +168,7 @@ public class MailBuilder {
 	 * @return -
 	 */
 	public MailBuilder sendTo(final String address) {
-		Assert.hasLength(address);
+		Assert.hasLength(address, "address can't be null or empty");
 		this.sendToList.add(address);
 		return this;
 	}
@@ -179,7 +179,7 @@ public class MailBuilder {
 	 * @return -
 	 */
 	public MailBuilder sendTo(final List<String> addresses) {
-		Assert.notEmpty(addresses);
+		Assert.notEmpty(addresses, "addresses can't be null or empty");
 		this.sendToList.addAll(addresses);
 		return this;
 	}
@@ -190,7 +190,7 @@ public class MailBuilder {
 	 * @return -
 	 */
 	public MailBuilder content(final String content) {
-		Assert.hasLength(content);
+		Assert.hasLength(content, "content can't be null or empty");
 		this.messageContent.option1(content);
 		return this;
 	}
@@ -201,7 +201,7 @@ public class MailBuilder {
 	 * @return
 	 */
 	public MailBuilder htmlContent(final String htmlContent) {
-		Assert.hasLength(htmlContent);
+		Assert.hasLength(htmlContent, "html can't be null or empty");
 		this.messageContent.option2(htmlContent);
 		return this;
 	}
@@ -393,7 +393,7 @@ public class MailBuilder {
 		 * @return -
 		 */
 		public SessionBuilder host(final String host) {
-			Assert.hasLength(host);
+			Assert.hasLength(host, "host can't be null or empty");
 			this.smtpHost = host;
 			return this;
 		}
@@ -404,7 +404,7 @@ public class MailBuilder {
 		 * @return -
 		 */
 		public SessionBuilder port(final String port) {
-			Assert.hasLength(port);
+			Assert.hasLength(port, "port can't be null or empty");
 			this.smtpPort = port;
 			return this;
 		}
@@ -425,7 +425,7 @@ public class MailBuilder {
 		 * @return -
 		 */
 		public SessionBuilder login(final String login) {
-			Assert.hasLength(login);
+			Assert.hasLength(login, "login can't be null or empty");
 			this.smtpLogin = login;
 			return this;
 		}
@@ -436,7 +436,7 @@ public class MailBuilder {
 		 * @return -
 		 */
 		public SessionBuilder password(final String password) {
-			Assert.hasLength(password);
+			Assert.hasLength(password, "password can't be null or empty");
 
 			this.smtpPassword = password;
 			return this;

@@ -1,11 +1,11 @@
 package maroroma.homeserverng.administration.model;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import lombok.Builder;
 import lombok.Data;
 import maroroma.homeserverng.tools.model.Drive;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Vue pour connaitre l'état du serveur.
@@ -27,7 +27,12 @@ public class HomeServerStatus {
 	 * Nom de la machine.
 	 */
 	private String hostName;
-	
+
+	/**
+	 * Adresse IP de la machine.
+	 */
+	private String ipAddress;
+
 	/**
 	 * Type d'os.
 	 */

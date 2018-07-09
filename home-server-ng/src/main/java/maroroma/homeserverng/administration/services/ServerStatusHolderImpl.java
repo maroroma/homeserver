@@ -1,19 +1,9 @@
 package maroroma.homeserverng.administration.services;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.time.LocalDateTime;
-import java.util.Date;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.administration.model.HomeServerRunningStatus;
 import maroroma.homeserverng.administration.model.HomeServerStatus;
+import maroroma.homeserverng.network.services.NetworkServiceImpl;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
@@ -21,6 +11,13 @@ import maroroma.homeserverng.tools.helpers.DriveUtils;
 import maroroma.homeserverng.tools.notifications.NotificationEvent;
 import maroroma.homeserverng.tools.notifications.Notifyer;
 import maroroma.homeserverng.tools.notifications.NotifyerContainer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Implémentation du holder du status du server.
@@ -58,23 +55,23 @@ public class ServerStatusHolderImpl implements ServerStatusHolder {
 	 */
 	@Autowired
 	private NotifyerContainer notificationContainer;
+
+	/**
+	 * Pour les informations réseau.
+	 */
+	@Autowired
+	private NetworkServiceImpl networkService;
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public HomeServerStatus getStatus() {
-		
-		String hostName = "NC";
-		try {
-			hostName = InetAddress.getLocalHost().getHostName();
-		} catch (UnknownHostException e) {
-			log.warn("Impossible de déterminer le nom de l'host");
-		}
-		
+
 		return HomeServerStatus.builder()
 				.startUpTime(this.startupTime)
-				.hostName(hostName)
+				.ipAddress(this.networkService.getMyIPAddress())
+				.hostName(this.networkService.getHostName())
 				.operatingSystem(System.getProperty("os.name"))
 				.drives(DriveUtils.getDrives(this.unixDrives.asFileList()))
 				.version(this.homeServerVersion).build();

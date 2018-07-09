@@ -34,7 +34,7 @@ public class MusicController {
 	 * @return -
 	 * @throws HomeServerException - 
 	 */
-	@PostMapping("/music/workingdirectories")
+	@PostMapping("${homeserver.api.path:}/music/workingdirectories")
 	public ResponseEntity<AlbumDescriptor> prepareWorkingDirectory(@RequestBody final AlbumDescriptor request) throws HomeServerException {
 		return ResponseEntity.ok(this.service.prepareWorkingDirectory(request));
 	}
@@ -46,7 +46,7 @@ public class MusicController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@PatchMapping("/music/workingdirectories/{id}/albumart")
+	@PatchMapping("${homeserver.api.path:}/music/workingdirectories/{id}/albumart")
 	public ResponseEntity<AlbumDescriptor> addAlbumArt(@PathVariable("id") final String toUpdatePath,
 			@RequestBody final MultipartFile albumart) throws HomeServerException {
 		return ResponseEntity.ok(this.service.addAlbumArt(toUpdatePath, albumart));
@@ -60,7 +60,7 @@ public class MusicController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@GetMapping(value = "/music/workingdirectories/{albumpath}/albumart/{albumArtPath}", 
+	@GetMapping(value = "${homeserver.api.path:}/music/workingdirectories/{albumpath}/albumart/{albumArtPath}",
 			produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})
 	public ResponseEntity<byte[]> getAlbumArt(@PathVariable("albumpath") final String albumPath,
 			@PathVariable("albumArtPath") final String albumArtPath) throws HomeServerException {
@@ -74,7 +74,7 @@ public class MusicController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@PostMapping("/music/workingdirectories/{id}/tracks")
+	@PostMapping("${homeserver.api.path:}/music/workingdirectories/{id}/tracks")
 	public ResponseEntity<TrackDescriptor> addTrack(@PathVariable("id") final String toUpdatePath,
 			@RequestBody final MultipartFile track) throws HomeServerException {
 		return ResponseEntity.ok(this.service.addTrack(toUpdatePath, track));
@@ -87,7 +87,7 @@ public class MusicController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@PatchMapping("/music/workingdirectories/{id}/tracks")
+	@PatchMapping("${homeserver.api.path:}/music/workingdirectories/{id}/tracks")
 	public ResponseEntity<TrackDescriptor> updateTracks(@PathVariable("id") final String toUpdatePath, 
 			@RequestBody final TrackDescriptor td) throws HomeServerException {
 		return ResponseEntity.ok(this.service.updateTrack(td));
@@ -99,7 +99,7 @@ public class MusicController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@GetMapping("/music/workingdirectories/{id}/tracks")
+	@GetMapping("${homeserver.api.path:}/music/workingdirectories/{id}/tracks")
 	public ResponseEntity<List<TrackDescriptor>> getAllTracks(@PathVariable("id") final String toUpdatePath) throws HomeServerException {
 		return ResponseEntity.ok(this.service.getAllTracks(toUpdatePath));
 	}
@@ -111,7 +111,7 @@ public class MusicController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@GetMapping(path = "/music/workingdirectories/{id}/tracks/{idtrack}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
+	@GetMapping(path = "${homeserver.api.path:}/music/workingdirectories/{id}/tracks/{idtrack}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
 	public ResponseEntity<byte[]> getOneTrack(@PathVariable("id") final String toUpdatePath, 
 			@PathVariable("idtrack") final String trackPath) throws HomeServerException {
 		return ResponseEntity.ok(this.service.getTrack(trackPath));
@@ -123,7 +123,7 @@ public class MusicController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@GetMapping(path = "/music/workingdirectories/{id}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
+	@GetMapping(path = "${homeserver.api.path:}/music/workingdirectories/{id}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
 	public ResponseEntity<byte[]> getWorkingDir(@PathVariable("id") final String albumToDownload) throws HomeServerException {
 		return ResponseEntity.ok(this.service.downloadAllFiles(albumToDownload));
 	}

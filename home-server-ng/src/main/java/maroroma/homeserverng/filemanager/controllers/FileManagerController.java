@@ -38,7 +38,7 @@ public class FileManagerController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@PostMapping("/filemanager/directory")
+	@PostMapping("${homeserver.api.path:}/filemanager/directory")
 	public ResponseEntity<FileDescriptor> createNewDirectory(final @RequestBody DirectoryCreationRequest creationRequest) throws HomeServerException {
 		return ResponseEntity.ok(this.fileService.createDirectory(creationRequest));
 	}
@@ -48,7 +48,7 @@ public class FileManagerController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@GetMapping("/filemanager/rootdirectories")
+	@GetMapping("${homeserver.api.path:}/filemanager/rootdirectories")
 	public ResponseEntity<List<FileDirectoryDescriptor>> getRootDirectories() throws HomeServerException {
 		return ResponseEntity.ok(this.fileService.getRootDirectories());
 	}
@@ -59,7 +59,7 @@ public class FileManagerController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@GetMapping("/filemanager/directories/{id}")
+	@GetMapping("${homeserver.api.path:}/filemanager/directories/{id}")
 	public ResponseEntity<FileDirectoryDescriptor> getDirectoryDetails(final @PathVariable("id") String id) throws HomeServerException {
 		return ResponseEntity.ok(this.fileService.getDirectoryDetail(id));
 	}
@@ -70,7 +70,7 @@ public class FileManagerController {
 	 * @param response -
 	 * @throws HomeServerException -
 	 */
-	@GetMapping("/filemanager/files/{id}")
+	@GetMapping("${homeserver.api.path:}/filemanager/files/{id}")
 	public void downloadFile(@PathVariable("id") final String base64FileName, final HttpServletResponse response) throws HomeServerException {
 		this.fileService.getFile(base64FileName, response);
 	}
@@ -80,7 +80,7 @@ public class FileManagerController {
 	 * @param base64FileName -
 	 * @return -
 	 */
-	@GetMapping("/filemanager/filedescriptors/{id}")
+	@GetMapping("${homeserver.api.path:}/filemanager/filedescriptors/{id}")
 	public ResponseEntity<FileDescriptor> getFileDescriptor(@PathVariable("id") final String base64FileName) {
 		return ResponseEntity.ok(this.fileService.getFileDescriptor(base64FileName));
 	}
@@ -92,7 +92,7 @@ public class FileManagerController {
 	 * @param response -
 	 * @throws HomeServerException -
 	 */
-	@GetMapping("/filemanager/files/{id}/streaming")
+	@GetMapping("${homeserver.api.path:}/filemanager/files/{id}/streaming")
 	public void streamFile(@PathVariable("id") final String base64FileName, 
 			HttpServletRequest request, HttpServletResponse response) throws HomeServerException {
 		this.fileService.streamFile(base64FileName, request, response);
@@ -104,7 +104,7 @@ public class FileManagerController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@DeleteMapping("/filemanager/files/{id}")
+	@DeleteMapping("${homeserver.api.path:}/filemanager/files/{id}")
 	public ResponseEntity<FileOperationResult> deleteFile(final @PathVariable("id") String id) throws HomeServerException {
 		return ResponseEntity.ok(this.fileService.deleteFile(id));
 	}
@@ -115,7 +115,7 @@ public class FileManagerController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@PatchMapping("/filemanager/files")
+	@PatchMapping("${homeserver.api.path:}/filemanager/files")
 	public ResponseEntity<FileOperationResult> renameFile(final @RequestBody RenameFileDescriptor rfd) throws HomeServerException {
 		return ResponseEntity.ok(this.fileService.renameFile(rfd));
 	} 

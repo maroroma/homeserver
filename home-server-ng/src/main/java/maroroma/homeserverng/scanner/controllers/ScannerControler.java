@@ -1,15 +1,5 @@
 package maroroma.homeserverng.scanner.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-
 import maroroma.homeserverng.scanner.ScannerModuleDescriptor;
 import maroroma.homeserverng.scanner.model.ScanRequest;
 import maroroma.homeserverng.scanner.model.ScannerColorMode;
@@ -18,6 +8,15 @@ import maroroma.homeserverng.scanner.services.ScannerService;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.model.FileDescriptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import java.util.List;
 
 /**
  * Controller pour la gestion des scans.
@@ -44,7 +43,7 @@ public class ScannerControler {
 	 * Listing des scans déjà présents.
 	 * @return -
 	 */
-	@RequestMapping("/scanner/scans")
+	@RequestMapping("${homeserver.api.path:}/scanner/scans")
 	public ResponseEntity<List<FileDescriptor>> listDoneScans() {
 		return ResponseEntity.ok(this.scannerService.listDoneScans());
 	}
@@ -54,7 +53,7 @@ public class ScannerControler {
 	 * @param fileName identifiant du fichier à supprimer
 	 * @return -
 	 */
-	@RequestMapping(value = "/scanner/scan/{id}", method = {RequestMethod.DELETE})
+	@RequestMapping(value = "${homeserver.api.path:}/scanner/scan/{id}", method = {RequestMethod.DELETE})
 	public ResponseEntity<List<FileDescriptor>> deleteScan(@PathVariable("id") final String fileName) {
 		this.scannerService.deleteScan(fileName);
 		return ResponseEntity.ok(this.scannerService.listDoneScans());
@@ -67,7 +66,7 @@ public class ScannerControler {
 	 * @return -
 	 * @throws HomeServerException  -
 	 */
-	@RequestMapping(value = "/scanner/scan", method = { RequestMethod.POST })
+	@RequestMapping(value = "${homeserver.api.path:}/scanner/scan", method = { RequestMethod.POST })
 	public ResponseEntity<Boolean> scan(@RequestBody final ScanRequest scanRequest) throws HomeServerException {
 		this.scannerService.validateScanRequest(scanRequest);
 		this.scannerService.scanWithOptions(scanRequest);
@@ -80,7 +79,7 @@ public class ScannerControler {
 	 * @return {@link SseEmitter}
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/scanner/events/{id}")
+	@RequestMapping(value = "${homeserver.api.path:}/scanner/events/{id}")
 	public SseEmitter subscribeScannerEvents(@PathVariable("id") final String id) throws HomeServerException {
 		return this.scannerEventEmitter.createEmitter(id);
 	}
@@ -89,7 +88,7 @@ public class ScannerControler {
 	 * Retourne la liste des options pour les couleurs lors du scan.
 	 * @return -
 	 */
-	@RequestMapping("/scanner/options/colormodes")
+	@RequestMapping("${homeserver.api.path:}/scanner/options/colormodes")
 	public ResponseEntity<List<ScannerColorMode>> listColorModes() {
 		return ResponseEntity.ok(this.scannerService.listColorModes());
 	}

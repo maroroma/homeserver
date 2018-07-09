@@ -44,7 +44,7 @@ public class SeedBoxController {
 	 * @return -
 	 * @throws HomeServerException 
 	 */
-	@RequestMapping("/seedbox/todo/completedtorrents")
+	@RequestMapping("${homeserver.api.path:}/seedbox/todo/completedtorrents")
 	public final ResponseEntity<List<TodoFile>> getTodoList() throws HomeServerException {
 		return ResponseEntity.ok(
 				todoService.getTodoList());
@@ -58,7 +58,7 @@ public class SeedBoxController {
 	 * @throws JsonMappingException 
 	 * @throws JsonParseException 
 	 */
-	@RequestMapping(value = "/seedbox/todo/completedtorrent", method = {RequestMethod.DELETE})
+	@RequestMapping(value = "${homeserver.api.path:}/seedbox/todo/completedtorrent", method = {RequestMethod.DELETE})
 	public final ResponseEntity<List<TodoFile>> deleteTodoFile(@RequestBody final TodoFile toDelete) {
 		return ResponseEntity.ok(todoService.deleteTodoFile(toDelete));
 	}
@@ -71,7 +71,7 @@ public class SeedBoxController {
 	 * @throws JsonMappingException 
 	 * @throws JsonParseException 
 	 */
-	@RequestMapping(value = "/seedbox/todo/completedtorrents/{id}", method = {RequestMethod.DELETE})
+	@RequestMapping(value = "${homeserver.api.path:}/seedbox/todo/completedtorrents/{id}", method = {RequestMethod.DELETE})
 	public final ResponseEntity<List<TodoFile>> deleteTodoFile(@PathVariable("id") final String fileId) {
 		return ResponseEntity.ok(todoService.deleteTodoFile(fileId));
 	}
@@ -80,7 +80,7 @@ public class SeedBoxController {
 	 * retourne la liste des répertoires cible.
 	 * @return -
 	 */
-	@RequestMapping("/seedbox/todo/targets")
+	@RequestMapping("${homeserver.api.path:}/seedbox/todo/targets")
 	public ResponseEntity<List<TargetDirectory>> getTargetList() {
 		
 		return ResponseEntity.ok(todoService.getTargetList());
@@ -92,7 +92,7 @@ public class SeedBoxController {
 	 * @param directoryToParse -
 	 * @return -
 	 */
-	@RequestMapping(value = "/seedbox/todo/target/detail", method = { RequestMethod.POST })
+	@RequestMapping(value = "${homeserver.api.path:}/seedbox/todo/target/detail", method = { RequestMethod.POST })
 	public ResponseEntity<List<FileDescriptor>> getFolderContent(@RequestBody final FileDescriptor directoryToParse) {
 		return ResponseEntity.ok(this.todoService.getDirectoryDetails(directoryToParse));
 	}
@@ -102,7 +102,7 @@ public class SeedBoxController {
 	 * @param fileId -
 	 * @return -
 	 */
-	@RequestMapping(value = "/seedbox/todo/targets/{id}/files", method = { RequestMethod.GET })
+	@RequestMapping(value = "${homeserver.api.path:}/seedbox/todo/targets/{id}/files", method = { RequestMethod.GET })
 	public ResponseEntity<FileDirectoryDescriptor> getFolderContent(@PathVariable("id") final String fileId) {
 		return ResponseEntity.ok(this.todoService.getDirectoryDetails(fileId));
 	}
@@ -113,7 +113,7 @@ public class SeedBoxController {
 	 * @return -
 	 * @throws HomeServerException 
 	 */
-	@RequestMapping(value = "/seedbox/todo/sortedfile", method = { RequestMethod.POST })
+	@RequestMapping(value = "${homeserver.api.path:}/seedbox/todo/sortedfile", method = { RequestMethod.POST })
 	public ResponseEntity<List<MovedFile>> moveFiles(@RequestBody final MoveRequest moveRequest) throws HomeServerException {
 		
 		return ResponseEntity.ok(todoService.moveFiles(moveRequest));
@@ -124,7 +124,7 @@ public class SeedBoxController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@GetMapping("/seedbox/torrents")
+	@GetMapping("${homeserver.api.path:}/seedbox/torrents")
 	public ResponseEntity<List<RunningTorrent>> getRunningTorrents() throws HomeServerException {
 		return ResponseEntity.ok(this.seedBoxRemoteService.getTorrents());
 	}
@@ -134,13 +134,13 @@ public class SeedBoxController {
 	 * @param newTorrent -
 	 * @return -
 	 */
-	@PostMapping("/seedbox/torrents")
+	@PostMapping("${homeserver.api.path:}/seedbox/torrents")
 	public ResponseEntity addTorrent(@RequestBody NewTorrents newTorrent) {
 		this.seedBoxRemoteService.addTorrent(newTorrent);
 		return ResponseEntity.ok().build();
 	}
 
-	@DeleteMapping("/seedbox/torrents")
+	@DeleteMapping("${homeserver.api.path:}/seedbox/torrents")
 	public ResponseEntity removeTorrents(@RequestBody TorrentsToDelete torrentsToDelete) {
 		this.seedBoxRemoteService.removeTorrents(torrentsToDelete);
 		return ResponseEntity.ok().build();

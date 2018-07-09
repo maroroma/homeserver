@@ -34,7 +34,7 @@ public class NetworkController {
 	 * @return liste des {@link ServerDescriptor}
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping("/network/availableservers")
+	@RequestMapping("${homeserver.api.path:}/network/availableservers")
 	public ResponseEntity<List<ServerDescriptor>> getAvailablesServers() throws HomeServerException {
 		return ResponseEntity.ok(this.networkRepository.getAvailableServer());
 	}
@@ -44,7 +44,7 @@ public class NetworkController {
 	 * @return liste des {@link ServerDescriptor}
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping("/network/servers")
+	@RequestMapping("${homeserver.api.path:}/network/servers")
 	public ResponseEntity<List<ServerDescriptor>> getServers() throws HomeServerException {
 		return ResponseEntity.ok(this.networkRepository.getServerDescriptors());
 	}
@@ -55,7 +55,7 @@ public class NetworkController {
 	 * @return liste des {@link ServerDescriptor}
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/network/server", method = {RequestMethod.POST })
+	@RequestMapping(value = "${homeserver.api.path:}/network/server", method = {RequestMethod.POST })
 	public ResponseEntity<List<ServerDescriptor>> saveServer(@RequestBody final ServerDescriptor server) throws HomeServerException {
 		return ResponseEntity.ok(this.networkRepository.saveServerDescriptor(server));
 	}
@@ -67,7 +67,7 @@ public class NetworkController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/network/server/{id}", method = {RequestMethod.PATCH })
+	@RequestMapping(value = "${homeserver.api.path:}/network/server/{id}", method = {RequestMethod.PATCH })
 	public ResponseEntity<List<ServerDescriptor>> updateServer(@PathVariable("id") final String id,
 			@RequestBody final ServerDescriptor newServer) throws HomeServerException {
 		return ResponseEntity.ok(this.networkRepository.updateServer(newServer));
@@ -79,7 +79,7 @@ public class NetworkController {
 	 * @return liste des {@link ServerDescriptor}
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/network/server/{id}", method = {RequestMethod.DELETE })
+	@RequestMapping(value = "${homeserver.api.path:}/network/server/{id}", method = {RequestMethod.DELETE })
 	public ResponseEntity<List<ServerDescriptor>> deleteServer(@PathVariable("id") final String id) throws HomeServerException {
 		
 		return ResponseEntity.ok(this.networkRepository.deleteServerDescriptor(id));
@@ -91,7 +91,7 @@ public class NetworkController {
 	 * @return true si accessible.
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/network/server/{id}/status")
+	@RequestMapping(value = "${homeserver.api.path:}/network/server/{id}/status")
 	public ResponseEntity<Boolean> getServerStatus(@PathVariable("id") final String id) throws HomeServerException {
 		return ResponseEntity.ok(this.networkRepository.getServerStatus(id));
 	}

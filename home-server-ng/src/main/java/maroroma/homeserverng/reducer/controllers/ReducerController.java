@@ -38,7 +38,7 @@ public class ReducerController {
 	 * @param base64ReducedImage -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/reducer/reducedImage", method = { RequestMethod.POST })
+	@RequestMapping(value = "${homeserver.api.path:}/reducer/reducedImage", method = { RequestMethod.POST })
 	public void uploadReducedImage(@RequestBody final ReducedImageInput base64ReducedImage) throws HomeServerException {
 			this.service.uploadReducedImage(base64ReducedImage);
 	}
@@ -48,7 +48,7 @@ public class ReducerController {
 	 * @param imageToReduce -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/reducer/fullSizeImage", method = { RequestMethod.POST })
+	@RequestMapping(value = "${homeserver.api.path:}/reducer/fullSizeImage", method = { RequestMethod.POST })
 	public void uploadImageToReduce(@RequestBody final MultipartFile imageToReduce) throws HomeServerException {
 		this.service.reduceImage(imageToReduce);
 	}
@@ -58,7 +58,7 @@ public class ReducerController {
 	 * @param mailRequest -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/reducer/mail", method = { RequestMethod.POST })
+	@RequestMapping(value = "${homeserver.api.path:}/reducer/mail", method = { RequestMethod.POST })
 	public void uploadReducedImage(@RequestBody final SendMailRequest mailRequest) throws HomeServerException {
 			this.service.sendMail(mailRequest);
 	}
@@ -69,7 +69,7 @@ public class ReducerController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping("/reducer/mail/contacts/{pattern}")
+	@RequestMapping("${homeserver.api.path:}/reducer/mail/contacts/{pattern}")
 	public ResponseEntity<List<ContactDescriptor>> findContacts(@PathVariable("pattern") final String pattern) throws HomeServerException {
 		return ResponseEntity.ok(this.service.findContacts(pattern));
 	}
@@ -79,7 +79,7 @@ public class ReducerController {
 	 * @param base64ReducedImage -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/reducer/reducedImage", method = { RequestMethod.DELETE })
+	@RequestMapping(value = "${homeserver.api.path:}/reducer/reducedImage", method = { RequestMethod.DELETE })
 	public void deleteReducedImage(@RequestBody final FileDescriptor base64ReducedImage) throws HomeServerException {
 			this.service.deleteReducedImage(base64ReducedImage);
 	}
@@ -89,7 +89,7 @@ public class ReducerController {
 	 * @param fileID -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/reducer/reducedImage/{id}", method = { RequestMethod.DELETE })
+	@RequestMapping(value = "${homeserver.api.path:}/reducer/reducedImage/{id}", method = { RequestMethod.DELETE })
 	public void deleteReducedImage(@PathVariable("id") final String fileID) throws HomeServerException {
 			this.service.deleteReducedImage(fileID);
 	}
@@ -99,7 +99,7 @@ public class ReducerController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping("/reducer/reducedImages")
+	@RequestMapping("${homeserver.api.path:}/reducer/reducedImages")
 	public ResponseEntity<List<FileDescriptor>> getReducedImages() throws HomeServerException {
 		return ResponseEntity.ok(this.service.getReducedImages());
 	}
@@ -110,7 +110,7 @@ public class ReducerController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "/reducer/reducedImages/{base64FileName}", produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})
+	@RequestMapping(value = "${homeserver.api.path:}/reducer/reducedImages/{base64FileName}", produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})
 	public ResponseEntity<byte[]> getReducedImage(@PathVariable("base64FileName") final String fileName) throws HomeServerException {
 		return ResponseEntity.ok(this.service.getReducedImage(fileName));
 	}

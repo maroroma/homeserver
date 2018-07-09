@@ -70,6 +70,9 @@ public class TodoDirectoryMonitor {
     @Property(SeedboxModuleConstants.HOMESERVER_SEEDBOX_TODO_DIRECTORY_PROP_KEY)
     private HomeServerPropertyHolder todoDirectory;
 
+    @Property("homeserver.seedbox.download.linkformat")
+    private HomeServerPropertyHolder downloadLinkFormat;
+
     /**
      * à l'init du serveur, mise en place de la surveillance du répertoire todo.
      *
@@ -192,8 +195,7 @@ public class TodoDirectoryMonitor {
      * @return -
      */
     private String buildDownloadLink(FileDescriptor downloadFile) {
-        // http://melchior/api/filemanager/files/L21lZGlhL2Rpc2swMS9TSEFSRS9BVHJpZXIvW0hvcnJpYmxlU3Vic10gRGFybGluZyBpbiB0aGUgRnJhblhYIC0gMjMgWzQ4MHBdLm1rdg==
-        return String.format("http://%s/filemanager/directdownload?id=%s",
+        return String.format(this.downloadLinkFormat.getResolvedValue(),
                 this.networkService.getMyIPAddress(),
                 downloadFile.getBase64FullName());
     }

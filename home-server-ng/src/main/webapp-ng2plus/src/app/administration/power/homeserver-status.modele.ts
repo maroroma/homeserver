@@ -6,6 +6,7 @@ export class HomeServerStatus {
     public hostName: string;
     public operatingSystem: string;
     public drives: Array<Drive>;
+    public ipAddress: string;
 
     public static mapFromJson(rawValue: any) {
         const returnValue = new HomeServerStatus();
@@ -14,6 +15,7 @@ export class HomeServerStatus {
         returnValue.startUpTime = rawValue.startUpTime;
         returnValue.hostName = rawValue.hostName;
         returnValue.operatingSystem = rawValue.operatingSystem;
+        returnValue.ipAddress = rawValue.ipAddress;
 
         returnValue.drives = JsonTools.map(rawValue.drives, Drive.fromRaw);
 

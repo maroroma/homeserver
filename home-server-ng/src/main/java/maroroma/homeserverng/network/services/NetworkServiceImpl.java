@@ -6,6 +6,7 @@ import maroroma.homeserverng.network.model.UrlScanParameter;
 import maroroma.homeserverng.network.tools.UrlScanParameterHLP;
 import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
+import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,13 @@ public class NetworkServiceImpl {
 			persistedType = ServerDescriptor.class,
 			idField = "nom")
 	private NanoRepository repository;
+
+	/**
+	 * Adresse ip locale.
+	 * Les implémentations de la jdk variant, ça évite de se taper de la boucle locale.
+	 */
+	@Property("homeserver.network.ip")
+	private HomeServerPropertyHolder myIP;
 
 	/**
 	 * Helper pour la construction d'un {@link UrlScanParameter}.
@@ -135,11 +143,22 @@ public class NetworkServiceImpl {
 	 * @return -
 	 */
 	public String getMyIPAddress() {
+		return this.myIP.getResolvedValue();
+	}
+
+	/**
+	 * Retourne le hostname de la machine
+	 * @return
+	 */
+	public String getHostName() {
+		String hostName = "NC";
 		try {
-			return InetAddress.getLocalHost().getHostAddress();
+			hostName = InetAddress.getLocalHost().getHostName();
 		} catch (UnknownHostException e) {
-			return "127.0.0.1";
+			log.warn("Impossible de déterminer le nom de l'host");
 		}
+
+		return hostName;
 	}
 
 }
