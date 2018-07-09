@@ -35,6 +35,5 @@ export class TooltipDirective implements OnChanges {
         decoratedElement.addEventListener('mouseout', (event) => {
             this.renderer.removeChild(parentElement, tooltipContainer);
         });
-        console.log(this.homeserverTooltip);
     }
 }

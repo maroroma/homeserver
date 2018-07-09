@@ -165,7 +165,7 @@ export class VisualItemDataSource<T> {
 
     public updateSourceList(rawItems: Array<T>, restoreSelection = false): void {
 
-        const currentSelectionIds = this.sourceList ? this.getSelectedItem().map(visualItem => visualItem.id) : new Array<VisualItem<T>>();
+        const currentSelectionIds = this.sourceList ? this.getSelectedItem().map(visualItem => visualItem.id) : new Array<any>();
 
         this.sourceList = VisualItem.of(rawItems, this.propertiesMapper);
         this.updateDisplayList();

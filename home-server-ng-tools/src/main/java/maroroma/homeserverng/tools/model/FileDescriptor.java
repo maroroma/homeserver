@@ -1,17 +1,16 @@
 package maroroma.homeserverng.tools.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.util.Assert;
+import org.springframework.util.Base64Utils;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.util.Assert;
-import org.springframework.util.Base64Utils;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 /**
  * DTO pour la description des fichiers présents
@@ -67,7 +66,10 @@ public class FileDescriptor {
 	public FileDescriptor(final File file) {
 		this(file.getName(), file.getAbsolutePath());
 		try {
-			this.size = Files.size(file.toPath());
+			// pour les répertoire, ça pète. autant éviter la gestion d'exception
+			if(file.isFile()) {
+				this.size = Files.size(file.toPath());
+			}
 		} catch (IOException e) {
 			log.warn("Problème rencontré lors de la récupération de la taille du fichier {}", file.getAbsolutePath());
 		}

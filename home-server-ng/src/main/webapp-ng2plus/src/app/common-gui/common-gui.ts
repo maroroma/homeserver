@@ -33,19 +33,20 @@ import { MenuComponent } from './menu/menu.component';
 import { NgModule } from '@angular/core';
 import { DownloadFileListComponent } from './file-browser/file-browser-download/download-file-list.component';
 import { MusicPlayerComponent } from './players/music-player/music-player.component';
+import { GoToTopDirective } from './directives/goto-top.directive';
 
 
 @NgModule({
     imports: [CommonModule, RouterModule, FormsModule],
     exports: [MenuComponent, PageHeaderComponent, PrettyCheckboxComponent,
         SimpleDatagridComponent, SDInputValueDirective, NotifyerComponent,
-        PopupComponent, AnchorExportDirective, ToggleButtonDirective, TooltipDirective,
+        PopupComponent, AnchorExportDirective, GoToTopDirective, ToggleButtonDirective, TooltipDirective,
         ImportFileButtonComponent, StepsBarComponent, FileGlyphiconResolverPipe, FileBrowserComponent,
         CancelableInputTextComponent, EditCollapsablePanelComponent, ImageViewerComponent, AutoFocusDirective,
-        ByteFormatPipe, MusicPlayerComponent, VideoPlayerComponent, PlayedItemComponent, PopupPlayerComponent],
+        ByteFormatPipe, FileBrowserDownloadComponent, DownloadFileListComponent, MusicPlayerComponent, VideoPlayerComponent, PlayedItemComponent, PopupPlayerComponent],
     declarations: [MenuComponent, PageHeaderComponent, PrettyCheckboxComponent,
         SimpleDatagridComponent, SDInputValueDirective, NotifyerComponent,
-        PopupComponent, AnchorExportDirective, ToggleButtonDirective, TooltipDirective,
+        PopupComponent, AnchorExportDirective, GoToTopDirective, ToggleButtonDirective, TooltipDirective,
         ImportFileButtonComponent, StepsBarComponent, FileGlyphiconResolverPipe, FileBrowserComponent,
         CancelableInputTextComponent, EditCollapsablePanelComponent, ImageViewerComponent, AutoFocusDirective,
         FileBrowserToolBarComponent, FileBrowserRenameComponent, ByteFormatPipe, FileBrowserDownloadComponent,

@@ -74,6 +74,16 @@ public class FileManagerController {
 	public void downloadFile(@PathVariable("id") final String base64FileName, final HttpServletResponse response) throws HomeServerException {
 		this.fileService.getFile(base64FileName, response);
 	}
+
+	/**
+	 * Retourne le file descriptor correspondant à l'id de fichier.
+	 * @param base64FileName -
+	 * @return -
+	 */
+	@GetMapping("/filemanager/filedescriptors/{id}")
+	public ResponseEntity<FileDescriptor> getFileDescriptor(@PathVariable("id") final String base64FileName) {
+		return ResponseEntity.ok(this.fileService.getFileDescriptor(base64FileName));
+	}
 	
 	/**
 	 * Permet de streamer un fichier multimédia.

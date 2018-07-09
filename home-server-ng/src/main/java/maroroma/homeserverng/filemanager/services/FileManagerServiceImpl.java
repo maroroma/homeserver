@@ -140,7 +140,7 @@ public class FileManagerServiceImpl {
 	private void validateAuthorizedPath(final File fd) {
 		Assert.isTrue(this.rootDirectoriesList.asStringList().stream()
 				.anyMatch(rootPath -> FileAndDirectoryHLP.isParentOf(rootPath, fd)),
-				"Le fichier à supprimer ne fait pas partie des répertoires gérables");
+				"Le fichier ne fait pas partie des répertoires gérables");
 	}
 
 
@@ -153,7 +153,7 @@ public class FileManagerServiceImpl {
 	public void getFile(final String base64FileName, final HttpServletResponse response) throws HomeServerException {
 
 		// récupération du fichier
-		File toDownload = FileAndDirectoryHLP.decodeFile(base64FileName);
+		FileDescriptor toDownload = FileAndDirectoryHLP.decodeFileDescriptor(base64FileName);
 
 		// validation de son existence
 		Assert.isValidFile(toDownload);
@@ -163,6 +163,23 @@ public class FileManagerServiceImpl {
 
 		FileAndDirectoryHLP.copyFileToOuputStream(toDownload, response);
 
+	}
+
+	/**
+	 * Retourne un file descriptor en fonction de l'id
+	 * @param base64FileName-
+	 * @return -
+	 */
+	public FileDescriptor getFileDescriptor(final String base64FileName) {
+		File file = FileAndDirectoryHLP.decodeFile(base64FileName);
+
+		// validation de son existence
+		Assert.isValidFile(file);
+
+		// validation de son accès
+		this.validateAuthorizedPath(file);
+
+		return new FileDescriptor(file);
 	}
 
 	/**

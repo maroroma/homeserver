@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
   public ngOnInit() {
     this.adminService.loadAllModules().subscribe(res => {
       this.navHelper.init();
+      console.log("modules chargés");
     });
 
   }

@@ -6,6 +6,7 @@ import { SeedboxComponent } from './seedbox/seedbox.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { RouterModule, Routes } from '@angular/router';
 import { KioskMainScreenComponent } from 'app/kiosk/kiosk-main-screen.component';
+import { DirectDownloadComponent } from './filemanager/direct-download/direct-download.component';
 
 const routes: Routes = [
   //   { path: 'administration', component: StarterComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'seedbox', component: SeedboxComponent },
   { path: 'reducer', component: ReducerComponent },
   { path: 'filemanager', component: FileManagerComponent },
+  { path: 'filemanager/directdownload', component: DirectDownloadComponent },
   { path: 'music', component: MusicComponent },
   { path: 'kiosk', component: KioskMainScreenComponent }
 ];

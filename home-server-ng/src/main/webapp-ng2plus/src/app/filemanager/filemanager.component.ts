@@ -22,7 +22,10 @@ export class FileManagerComponent implements OnInit {
         .selection()
         .renaming()
         .downloading()
-        .withResolver(new FileManagerResolver()).toolbar().build();
+        .withResolver(new FileManagerResolver())
+        .toolbar()
+        .scrollableToTop()
+        .build();
 
 
 

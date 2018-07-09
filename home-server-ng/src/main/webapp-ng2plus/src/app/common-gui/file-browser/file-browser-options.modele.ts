@@ -61,5 +61,10 @@ export class FileBrowserOptions {
      */
     public resolver: FileBrowserResolver;
 
+    /**
+     * Détermine si on doit afficher le bouton pour remonter en haut de la fenêtre
+     */
+    public displayScrollToTop = false;
+
 
 }

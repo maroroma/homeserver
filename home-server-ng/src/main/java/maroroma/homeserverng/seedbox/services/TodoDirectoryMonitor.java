@@ -1,6 +1,7 @@
 package maroroma.homeserverng.seedbox.services;
 
 import lombok.extern.log4j.Log4j2;
+import maroroma.homeserverng.network.services.NetworkServiceImpl;
 import maroroma.homeserverng.seedbox.model.EpisodeParseResult;
 import maroroma.homeserverng.seedbox.tools.SeedboxModuleConstants;
 import maroroma.homeserverng.tools.annotations.Property;
@@ -9,6 +10,7 @@ import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.directorymonitoring.DirectoryEvent;
 import maroroma.homeserverng.tools.directorymonitoring.DirectoryMonitor;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.model.FileDescriptor;
 import maroroma.homeserverng.tools.model.MovedFile;
 import maroroma.homeserverng.tools.notifications.NotificationEvent;
 import maroroma.homeserverng.tools.notifications.NotifyerContainer;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Bean dédié à la surveillance en live du répertoire de téléchargements complétés.
@@ -54,6 +57,12 @@ public class TodoDirectoryMonitor {
      */
     @Autowired
     private SeedBoxTodoServiceImpl seedBoxTodoService;
+
+    /**
+     * Utilisé pour la récupération de l'adresse IP du serveur
+     */
+    @Autowired
+    private NetworkServiceImpl networkService;
 
     /**
      * Répertoire pour les fichiers à trier.
@@ -119,7 +128,8 @@ public class TodoDirectoryMonitor {
             NotificationEvent.NotificationEventBuilder notificationEventBuilder = NotificationEvent.builder()
                     .creationDate(new Date())
                     .title("Téléchargement terminé")
-                    .message("Le fichier \"" + event.getFile().getName() + "\" a fini d'être téléchargé.");
+                    .message("Le fichier \"" + event.getFile().getName() + "\" a fini d'être téléchargé.")
+                    .complexMessage(this.todoFileDownloadMessage(event.getFile()));
 
             // si le fichier ressemble à une série TV
             if (this.episodeParser.isTvShowEpisode(event.getFile())) {
@@ -128,16 +138,19 @@ public class TodoDirectoryMonitor {
                 EpisodeParseResult episodeParseResult = this.episodeParser.parseFile(event.getFile());
 
                 // si le parsing à réussi
-                if (episodeParseResult.isSuccess()
-                        // et que l'intégralité des déplacement est ok
-                        && this.seedBoxTodoService.moveFiles(episodeParseResult.generateMoveRequest())
-                        .stream()
-                        .allMatch(MovedFile::isSuccess)) {
+                if (episodeParseResult.isSuccess()) {
+                    // émission déplacemet
+                    List<MovedFile> movedFileList = this.seedBoxTodoService.moveFiles(episodeParseResult.generateMoveRequest());
 
-                    // modification des propriétés à émettre
-                    notificationEventBuilder
-                            .title("Téléchargement trié")
-                            .message("Le fichier\"" + event.getFile().getName() + "\" a été déplacé et scanné.");
+                    // si tous les déplacements sont ok
+                    if (movedFileList.stream().allMatch(MovedFile::isSuccess)) {
+
+                        // modification des propriétés à émettre
+                        notificationEventBuilder
+                                .title("Téléchargement trié")
+                                .complexMessage(this.sortedFileDownloadMessage(movedFileList.get(0).getTargetFile()))
+                                .message("Le fichier\"" + event.getFile().getName() + "\" a été déplacé et scanné.");
+                    }
                 }
             }
 
@@ -149,5 +162,40 @@ public class TodoDirectoryMonitor {
         }
     }
 
+    /**
+     * Construction d'un message html pour la récupération d'un fichier non trié
+     * @param downloadFile -
+     * @return -
+     */
+    private String todoFileDownloadMessage(FileDescriptor downloadFile) {
+        return String.format("Le téléchargement du fichier <a href=\"%s\" download=\"%s\">%s</a> est terminé",
+                this.buildDownloadLink(downloadFile),
+                downloadFile.getName(),
+                downloadFile.getName());
+    }
+
+    /**
+     * Construction d'un message html pour la récupération d'un fichier trié
+     * @param downloadFile -
+     * @return -
+     */
+    private String sortedFileDownloadMessage(FileDescriptor downloadFile) {
+        return String.format("Le fichier <a href=\"%s\" download=\"%s\">%s</a> a été déplacé et scanné automatiquement",
+                this.buildDownloadLink(downloadFile),
+                downloadFile.getName(),
+                downloadFile.getName());
+    }
+
+    /**
+     * Construction du lien vers l'ihm pour proposer le téléchargement du fichier.
+     * @param downloadFile -
+     * @return -
+     */
+    private String buildDownloadLink(FileDescriptor downloadFile) {
+        // http://melchior/api/filemanager/files/L21lZGlhL2Rpc2swMS9TSEFSRS9BVHJpZXIvW0hvcnJpYmxlU3Vic10gRGFybGluZyBpbiB0aGUgRnJhblhYIC0gMjMgWzQ4MHBdLm1rdg==
+        return String.format("http://%s/filemanager/directdownload?id=%s",
+                this.networkService.getMyIPAddress(),
+                downloadFile.getBase64FullName());
+    }
 
 }

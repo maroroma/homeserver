@@ -1,14 +1,18 @@
 <div class="file-browser-currentpath">
-    <a *ngFor="let item of pathStack" (click)="selectSubDirectoryFromStack(item)"><span class="glyphicon glyphicon-triangle-right" ></span>{{item.name}}</a>
+    <a *ngFor="let item of pathStack" (click)="selectSubDirectoryFromStack(item)">
+        <span class="glyphicon glyphicon-triangle-right"></span>{{item.name}}</a>
 </div>
 <div class="file-browser-currentdirectory edit-zone-target">
     <ul class="list-group directories">
         <li class="list-group-item justify-content-between" *ngIf="options.displayToolBar">
-            <homeserver-file-browser-toolbar [options]="options" [isFilesSelected]="someFileSelected" [isCurrentDirectoryRoot]="pathStack?.length==1" (refreshCurrentDirectory)="refreshCurrentDirectory()" (displayDirectoryCreation)="displayDirectoryCreation()" (displayDirectoryDeletionConfirmation)="displayDirectoryDeleteConfirmation()"
-                (selectAll)="selectAll()" (unSelectAll)="unselectAll()" (rename)="displayRenamePopup()" (download)="displayDownloadPopup()"></homeserver-file-browser-toolbar>
+            <homeserver-file-browser-toolbar [options]="options" [isFilesSelected]="someFileSelected" [isCurrentDirectoryRoot]="pathStack?.length==1"
+                (refreshCurrentDirectory)="refreshCurrentDirectory()" (displayDirectoryCreation)="displayDirectoryCreation()"
+                (displayDirectoryDeletionConfirmation)="displayDirectoryDeleteConfirmation()" (selectAll)="selectAll()" (unSelectAll)="unselectAll()"
+                (rename)="displayRenamePopup()" (download)="displayDownloadPopup()"></homeserver-file-browser-toolbar>
         </li>
         <li class="list-group-item justify-content-between" *ngIf="pathStack?.length>1" (click)="selectParentDirectory()">..</li>
-        <li class="list-group-item justify-content-between" [ngClass]="{'selected': options.allowItemSelection && oneDirectory.selected}" *ngFor="let oneDirectory of directoryList.displayList" (click)="selectSubDirectoryFromList(oneDirectory.item)">
+        <li class="list-group-item justify-content-between" [ngClass]="{'selected': options.allowItemSelection && oneDirectory.selected}"
+            *ngFor="let oneDirectory of directoryList.displayList" (click)="selectSubDirectoryFromList(oneDirectory.item)">
             <div class="d-flex">
                 <div class="align-self-center file-selection" *ngIf="options.allowItemSelection">
                     <input type="checkbox" (click)="selectItem($event, directoryList, oneDirectory)" [checked]="oneDirectory.selected" />
@@ -23,7 +27,8 @@
                 </div>
             </div>
         </li>
-        <li class="list-group-item justify-content-between" [ngClass]="{'selected': options.allowItemSelection && oneFile.selected}" *ngFor="let oneFile of fileList.displayList">
+        <li class="list-group-item justify-content-between" [ngClass]="{'selected': options.allowItemSelection && oneFile.selected}"
+            *ngFor="let oneFile of fileList.displayList">
             <div class="d-flex">
                 <div class="align-self-center file-selection" *ngIf="options.allowItemSelection">
                     <input type="checkbox" (click)="selectItem($event, fileList, oneFile)" [checked]="oneFile.selected" />
@@ -41,8 +46,8 @@
     </ul>
 </div>
 
-<div class="edit-zone">
-     <button class="btn btn-primary btn-lg secondary-action circle" (click)="goToTop()"><span class="glyphicon glyphicon-arrow-up"></span></button>
+<div class="edit-zone" *ngIf="options.displayScrollToTop">
+    <button homeserverGoToTop></button>
 </div>
 
 <homeserver-popup #popupCreateDirectory title="Création d'un nouveau répertoire" (ok)="confirmCreation()">

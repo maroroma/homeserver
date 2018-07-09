@@ -9,15 +9,15 @@
             <ul>
                 <li>
                     <button class="btn btn-primary btn-sm" (click)="autoTrackNumber()">
-            <span class="glyphicon glyphicon-sort-by-order"></span>
-            <span>Numéro Auto</span>
-            </button>
+                        <span class="glyphicon glyphicon-sort-by-order"></span>
+                        <span>Numéro Auto</span>
+                    </button>
                 </li>
                 <li>
                     <button class="btn btn-primary btn-sm" (click)="autoRenameFilenameFromTags()">
-            <span class="glyphicon glyphicon-transfer"></span>
-            <span>Renommage auto</span>
-            </button>
+                        <span class="glyphicon glyphicon-transfer"></span>
+                        <span>Renommage auto</span>
+                    </button>
                 </li>
             </ul>
         </div>
@@ -29,6 +29,10 @@
 </div>
 
 <div class="edit-zone">
-    <button class="btn btn-primary btn-lg secondary-action circle" (click)="updateList()"><span class="glyphicon glyphicon-refresh"></span></button>
-    <button class="btn btn-primary btn-lg main-action circle" (click)="updateAllTracks()"><span class="glyphicon glyphicon-share-alt"></span></button>
+    <button class="btn btn-primary" (click)="updateList()">
+        <span class="glyphicon glyphicon-refresh"></span>
+    </button>
+    <button class="btn btn-primary btn-lg" (click)="updateAllTracks()">
+        <span class="glyphicon glyphicon-share-alt"></span>
+    </button>
 </div>

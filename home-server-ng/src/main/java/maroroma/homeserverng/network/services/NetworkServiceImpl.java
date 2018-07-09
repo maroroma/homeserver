@@ -14,6 +14,7 @@ import org.springframework.web.client.ResourceAccessException;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -127,6 +128,18 @@ public class NetworkServiceImpl {
 		.filter(oneServer -> oneServer.isReachable())
 		.collect(Collectors.toList());
 
+	}
+
+	/**
+	 * Retourne l'adresse IP du serveur, ou un truc bidon sinon
+	 * @return -
+	 */
+	public String getMyIPAddress() {
+		try {
+			return InetAddress.getLocalHost().getHostAddress();
+		} catch (UnknownHostException e) {
+			return "127.0.0.1";
+		}
 	}
 
 }

@@ -1,6 +1,7 @@
 package maroroma.homeserverng.tools.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class MovedFile {
 
 	/**
@@ -28,5 +30,10 @@ public class MovedFile {
 	 * Indique si le fichier a bien pu être déplacé.
 	 */
 	private boolean success;
-	
+
+	/**
+	 * Fichier final.
+	 */
+	private FileDescriptor targetFile;
+
 }

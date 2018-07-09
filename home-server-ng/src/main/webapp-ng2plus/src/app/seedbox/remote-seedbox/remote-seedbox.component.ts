@@ -10,6 +10,7 @@ import { Component, OnInit, OnDestroy, EventEmitter, Output, ViewChild } from '@
 import { AdministrationService } from '../../administration/administration.service';
 import { PopupComponent } from '../../common-gui/popup/popup.component';
 import { NewTorrent } from './models/new-torrent.modele';
+import { NotifyerService } from '../../common-gui/notifyer/notifyer.service';
 
 @Component({
     selector: 'homeserver-remote-seedbox',
@@ -36,7 +37,8 @@ export class RemoteSeedBoxComponent implements OnInit, OnDestroy {
     public currentMagLink = "";
 
     constructor(private remoteService: RemoteSeedBoxService, private searchService: PageHeaderSearchService,
-        private administrationService: AdministrationService) { }
+        private administrationService: AdministrationService,
+        private notifyer: NotifyerService) { }
 
     ngOnInit() {
 
@@ -80,6 +82,8 @@ export class RemoteSeedBoxComponent implements OnInit, OnDestroy {
     }
 
     public removeSelectedTorrents(): void {
-        this.remoteService.removeTorrents(this.runningTorrents.getRawSelectedItems()).subscribe();
+        this.remoteService
+            .removeTorrents(this.runningTorrents.getRawSelectedItems())
+            .subscribe(() => this.notifyer.showInfo('Demande de suppression des torrents émise'));
     }
 }

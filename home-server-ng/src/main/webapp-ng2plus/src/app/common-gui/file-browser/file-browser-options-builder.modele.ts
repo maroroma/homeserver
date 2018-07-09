@@ -53,6 +53,11 @@ export class FileBrowserOptionsBuilder {
         return this;
     }
 
+    public scrollableToTop(): FileBrowserOptionsBuilder {
+        this.target.displayScrollToTop = true;
+        return this;
+    }
+
     public build(): FileBrowserOptions {
         return this.target;
     }

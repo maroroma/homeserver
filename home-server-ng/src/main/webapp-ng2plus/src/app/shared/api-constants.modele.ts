@@ -31,6 +31,7 @@ export class ApiConstants {
     public static readonly FILEMANAGER_DIRECTORIES_API = ApiConstants.FILEMANAGER_API + 'directories';
     public static readonly FILEMANAGER_FILES_API = ApiConstants.FILEMANAGER_API + 'files';
     public static readonly FILEMANAGER_ROOT_DIRECTORIES_API = ApiConstants.FILEMANAGER_API + 'rootdirectories';
+    public static readonly FILEMANAGER_FILE_DESCRIPTORS_API = ApiConstants.FILEMANAGER_API + 'filedescriptors';
 
     public static readonly MUSIC_API = ApiConstants.ROOT_API + 'music/';
     public static readonly MUSIC_WORKING_DIR_API = ApiConstants.MUSIC_API + 'workingdirectories';

@@ -21,7 +21,7 @@ import {
     styleUrls: ['notifyer.component.scss'],
     animations: [trigger('flyInOut', [
         state('display', style({ opacity: 1 })),
-        state('hide', style({ opacity: 0 })),
+        state('hide', style({ opacity: 0, display: 'none' })),
         transition('hide => display', animate('300ms ease-in')),
         transition('display => hide', animate('100ms ease-out'))
     ])]

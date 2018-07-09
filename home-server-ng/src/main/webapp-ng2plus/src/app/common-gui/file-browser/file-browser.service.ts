@@ -29,9 +29,14 @@ export class FileBrowserService {
      * @memberOf FileBrowserService
      */
     public getDirectoryDetail(directory: DirectoryDescriptor, resolver: FileBrowserResolver): Observable<DirectoryDescriptor> {
-        return this.http.get(resolver.directoryDetailsUri(directory)).map(res => {
-            return DirectoryDescriptor.dfFromRaw(res.json());
-        });
+        return this.http.get(resolver.directoryDetailsUri(directory))
+            .map(res => {
+                return DirectoryDescriptor.dfFromRaw(res.json());
+            })
+            .catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de la récupération du répertoire');
+                return Observable.of(new DirectoryDescriptor());
+            });
         // return Observable.of(directory);
     }
 

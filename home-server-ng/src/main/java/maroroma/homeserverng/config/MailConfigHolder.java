@@ -1,10 +1,9 @@
 package maroroma.homeserverng.config;
 
-import org.springframework.stereotype.Component;
-
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.mail.MailBuilder;
+import org.springframework.stereotype.Component;
 
 /**
  * Permet de centraliser la configuration du compte mail utilisé au niveau du serveur
@@ -44,7 +43,8 @@ public class MailConfigHolder {
 	 */
 	public MailBuilder createMailBuilder() {
 		return new MailBuilder()
-				.from(this.smtpLogin.getResolvedValue()).connectionBuilder()
+				.from(this.smtpLogin.getResolvedValue())
+				.connectionBuilder()
 		.authenticated(true)
 		.startTLS(true)
 		.host(this.smtpHost.getValue())
@@ -53,5 +53,5 @@ public class MailConfigHolder {
 		.password(this.smtpPassword.getValue())
 		.end();
 	}
-	
+
 }

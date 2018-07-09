@@ -1,13 +1,12 @@
 package maroroma.homeserverng.tools.helpers;
 
+import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.model.FileDescriptor;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
-import maroroma.homeserverng.tools.model.FileDescriptor;
 
 /**
  * Extension de {@link org.springframework.util.Assert} avec quelques méthodes supplémentaires.
@@ -58,6 +57,15 @@ public abstract class Assert extends org.springframework.util.Assert {
 
 		Assert.isTrue(toTest.isDirectory(), "Le répertoire " 
 				+ toTest.getAbsolutePath() + " n'est pas un répertoire. Vérifier la propriété applicative [" + property.getId() + "]");
+	}
+
+	/**
+	 * Détermine si le {@link FileDescriptor} passé en paramètre est ok
+	 * @param fileDescriptor -
+	 * @param extensions -
+	 */
+	public static void isValidFile(final FileDescriptor fileDescriptor, final String... extensions) {
+		isValidFile(fileDescriptor.createFile(), extensions);
 	}
 
 	/**

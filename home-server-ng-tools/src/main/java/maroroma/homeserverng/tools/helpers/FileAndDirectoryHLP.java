@@ -1,21 +1,9 @@
 package maroroma.homeserverng.tools.helpers;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import javax.servlet.http.HttpServletResponse;
-
+import lombok.extern.log4j.Log4j2;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
+import maroroma.homeserverng.tools.model.FileDescriptor;
 import org.kamranzafar.jtar.TarEntry;
 import org.kamranzafar.jtar.TarOutputStream;
 import org.springframework.util.Base64Utils;
@@ -23,10 +11,13 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.extern.log4j.Log4j2;
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Classe utilitaire pour la manipulation de répertoires et de fichiers.
@@ -375,6 +366,18 @@ public abstract class FileAndDirectoryHLP {
 		} catch (IOException e) {
 			throw new HomeServerException("Erreur rencontrée lors de la récupération du flux de sortie", e);
 		}
+	}
+/**
+	 * Recopie d'un fichier dans un ouputstream, sans passage temporaire en mémoire.
+	 * @param toDownload -
+	 * @param response -
+	 * @throws HomeServerException -
+	 */
+	public static void copyFileToOuputStream(final FileDescriptor toDownload, final HttpServletResponse response) throws HomeServerException {
+		Assert.notNull(response, "response can't be null");
+		Assert.isValidFile(toDownload);
+		response.setHeader("Content-Length", ""+toDownload.getSize());
+		copyFileToOuputStream(toDownload.createFile(), response);
 	}
 
 }

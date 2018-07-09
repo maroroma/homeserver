@@ -10,10 +10,7 @@ import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.CommonFileFilter;
 import maroroma.homeserverng.tools.helpers.FileAndDirectoryHLP;
-import maroroma.homeserverng.tools.model.FileDescriptor;
-import maroroma.homeserverng.tools.model.FileDirectoryDescriptor;
-import maroroma.homeserverng.tools.model.MoveRequest;
-import maroroma.homeserverng.tools.model.MovedFile;
+import maroroma.homeserverng.tools.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -139,12 +136,7 @@ public class SeedBoxTodoServiceImpl {
 		// déplacement du fichier
 		List<MovedFile> returnValue = request.getFilesToMove()
 				.stream()
-				.map(oneFileToMove -> {
-					boolean moveResult = oneFileToMove
-							.createFile()
-							.renameTo(new File(request.getTarget().getFullName() + File.separator + oneFileToMove.getNewName()));
-					return new MovedFile(oneFileToMove, request.getTarget().getFullName(), moveResult);
-				})
+				.map(oneFileToMove -> this.moveOneFile(request, oneFileToMove))
 				.collect(Collectors.toList());
 
 		// lancement du scan vers kodi sur la target
@@ -197,6 +189,16 @@ public class SeedBoxTodoServiceImpl {
 	public List<TodoFile> deleteTodoFile(final String fileId) {
 		Assert.hasLength(fileId, "fileId can't be null");
 		return this.deleteTodoFile(FileAndDirectoryHLP.decodeFileDescriptor(fileId));
+	}
+
+	private MovedFile moveOneFile(MoveRequest request, FileToMoveDescriptor oneFileToMove) {
+		File finalFile = new File(request.getTarget().getFullName() + File.separator + oneFileToMove.getNewName());
+		return MovedFile.builder()
+				.sourceFile(oneFileToMove)
+				.targetFile(new FileDescriptor(finalFile))
+				.success(oneFileToMove.createFile().renameTo(finalFile))
+				.finalPath(request.getTarget().getFullName())
+				.build();
 	}
 
 }

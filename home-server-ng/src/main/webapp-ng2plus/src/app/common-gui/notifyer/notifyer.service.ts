@@ -27,6 +27,7 @@ export class NotifyerService {
 
     public hide(): void {
         this.currentState = 'hide';
+        this.blocking = false;
     }
 
     public display(message: string, detail?: string, timeout?: number): void {

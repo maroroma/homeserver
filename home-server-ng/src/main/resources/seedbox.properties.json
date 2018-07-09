@@ -30,7 +30,7 @@
   "moduleId" : "seedbox"
 }, {
   "id" : "homeserver.seedbox.transmission.url",
-  "value" : "http://melchior:9091/transmission",
+  "value" : "http://192.168.0.53:9091/transmission",
   "description" : "Url principale de l'api transmission",
   "readOnly" : false,
   "moduleId" : "seedbox"
@@ -42,7 +42,7 @@
   "moduleId" : "seedbox"
 }, {
   "id" : "homeserver.seedbox.todo.directory",
-  "value" : "/media/disk01/SHARE/ATrier",
+  "value" : "C:\\tmp\\homeserver\\TODO",
   "description" : "Emplacement des fichiers à trier",
   "readOnly" : false,
   "moduleId" : "seedbox"

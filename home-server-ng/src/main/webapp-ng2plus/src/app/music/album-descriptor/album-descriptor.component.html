@@ -18,5 +18,8 @@
 
 
 <div class="edit-zone">
-    <button class="btn btn-primary btn-lg main-action circle" (click)="gotoAlbumArtSelection()" [disabled]="!albumDescriptor?.albumName?.length || !albumDescriptor?.artistName?.length" [ngClass]="{'animated flip': albumDescriptor?.albumName?.length && albumDescriptor?.artistName?.length}"><span class="glyphicon glyphicon-share-alt"></span></button>
+    <button class="btn btn-primary btn-lg" (click)="gotoAlbumArtSelection()" [disabled]="!albumDescriptor?.albumName?.length || !albumDescriptor?.artistName?.length"
+        [ngClass]="{'animated flip': albumDescriptor?.albumName?.length && albumDescriptor?.artistName?.length}">
+        <span class="glyphicon glyphicon-share-alt"></span>
+    </button>
 </div>

@@ -1,9 +1,10 @@
 package maroroma.homeserverng.tools.notifications;
 
-import java.util.Date;
-
 import lombok.Builder;
 import lombok.Data;
+import maroroma.homeserverng.tools.helpers.StringUtils;
+
+import java.util.Date;
 
 /**
  * Event général de notification.
@@ -21,8 +22,22 @@ public class NotificationEvent {
 	 * Message de l'event.
 	 */
 	private String message;
+
+	/**
+	 * Message complexe (html)
+	 */
+	private String complexMessage;
+
 	/**
 	 * Date de création.
 	 */
 	private Date creationDate;
+
+	/**
+	 * Détermine si un message complexe est renseigné.
+	 * @return -
+	 */
+	public boolean hasComplexMessage() {
+		return StringUtils.hasLength(this.complexMessage);
+	}
 }

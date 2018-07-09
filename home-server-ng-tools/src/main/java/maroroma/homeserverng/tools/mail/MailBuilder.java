@@ -1,28 +1,23 @@
 package maroroma.homeserverng.tools.mail;
 
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.helpers.Assert;
+import maroroma.homeserverng.tools.helpers.ExclusifTuple;
+import maroroma.homeserverng.tools.helpers.FluentMap;
+import maroroma.homeserverng.tools.notifications.NotificationEvent;
+
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-
-import javax.activation.DataHandler;
-import javax.activation.FileDataSource;
-import javax.mail.Authenticator;
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.helpers.FluentMap;
 
 /**
  * Classe utilitaire pour la construction d'email.
@@ -67,11 +62,6 @@ public class MailBuilder {
 	private List<String> sendToList = new ArrayList<>();
 
 	/**
-	 * Contenu simple du mail.
-	 */
-	private String simpleContent;
-
-	/**
 	 * Liste des fichiers à transmettre.
 	 * <br /> cette liste correspond aux fichiers présents en local sur le serveur, et qui seront attachés au mail.
 	 */
@@ -81,6 +71,11 @@ public class MailBuilder {
 	 * Liste de fichiers bruts à transmettre.
 	 */
 	private List<RawFileAttachment> rawAttachmentFiles = new ArrayList<>();
+
+	/**
+	 * Contenu html du mail.
+	 */
+	private ExclusifTuple<String,String> messageContent = ExclusifTuple.empty();
 
 
 	/**
@@ -196,8 +191,38 @@ public class MailBuilder {
 	 */
 	public MailBuilder content(final String content) {
 		Assert.hasLength(content);
-		this.simpleContent = content;
+		this.messageContent.option1(content);
 		return this;
+	}
+
+	/**
+	 * Contenu html du mail.
+	 * @param htmlContent -
+	 * @return
+	 */
+	public MailBuilder htmlContent(final String htmlContent) {
+		Assert.hasLength(htmlContent);
+		this.messageContent.option2(htmlContent);
+		return this;
+	}
+
+	/**
+	 * Construit le mail en fonction du content d'une {@link NotificationEvent}
+	 * <br /> renseigne automatiquement les champs content, sujet et date
+	 * @param notification -
+	 * @return -
+	 */
+	public MailBuilder notification(final NotificationEvent notification) {
+
+		// le message de rendu complexe prend la priorité sur le message simple
+		if(notification.hasComplexMessage()) {
+			this.htmlContent(notification.getComplexMessage());
+		} else {
+			this.content(notification.getMessage());
+		}
+
+		return this.subject(notification.getTitle())
+				.date(notification.getCreationDate());
 	}
 
 	/**
@@ -212,7 +237,7 @@ public class MailBuilder {
 		Assert.notNull(this.connectionBuilder, "la session n'a pas été initialisée");
 		Assert.hasLength(this.emailSubject, "no subject");
 		Assert.hasLength(this.senderEmailAddress, "from n'a pas été renseigné");
-		Assert.hasLength(this.simpleContent, "aucun contenu");
+		Assert.isTrue(!this.messageContent.isEmpty(), "aucun contenu");
 		Assert.notEmpty(this.sendToList, "le mail n'a pas de destinataires");
 		Assert.notNull(this.sentDate, "le mail n'a pas de date de création");
 
@@ -223,7 +248,6 @@ public class MailBuilder {
 		Session newSession = this.connectionBuilder.buildSession();
 
 		MimeMessage returnValue = new MimeMessage(newSession);
-
 		try {
 			// rajout des headers
 			addHeaders(returnValue);
@@ -260,7 +284,16 @@ public class MailBuilder {
 
 		// contenu du mail
 		BodyPart messageBodyPart = new MimeBodyPart();
-		messageBodyPart.setText(this.simpleContent);
+		if(this.messageContent.isOption1()) {
+			messageBodyPart.setText(this.messageContent.option1());
+		} else {
+			messageBodyPart.setContent(this.messageContent.option2(), "text/html; charset=utf-8");
+		}
+
+//		this.messageContent
+//				.whenOption1(opt1 -> messageBodyPart.setText(opt1))
+//				.whenOption2(opt2 -> messageBodyPart.setContent(this.messageContent.option2(), "text/html; charset=utf-8"))
+//				.apply();
 
 		// rajout dans le contenu principal
 		contentMultipart.addBodyPart(messageBodyPart);
@@ -450,7 +483,9 @@ public class MailBuilder {
 					.add("mail.smtp.host", this.smtpHost)
 					.add("mail.smtp.port", this.smtpPort)
 					.add("mail.smtp.auth", Boolean.toString(this.smtpAuth).toLowerCase())
-					.add("mail.smtp.starttls.enable", Boolean.toString(this.startTLSEnabled).toLowerCase()).buildProperties();
+					.add("mail.smtp.starttls.enable", Boolean.toString(this.startTLSEnabled).toLowerCase())
+					.add("mail.smtp.ssl.trust", this.smtpHost)
+					.buildProperties();
 		}
 
 		/**

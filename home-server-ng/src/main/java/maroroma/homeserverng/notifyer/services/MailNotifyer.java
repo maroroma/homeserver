@@ -1,12 +1,5 @@
 package maroroma.homeserverng.notifyer.services;
 
-import javax.mail.MessagingException;
-import javax.mail.Transport;
-import javax.mail.internet.MimeMessage;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.config.MailConfigHolder;
 import maroroma.homeserverng.tools.annotations.Property;
@@ -14,6 +7,12 @@ import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.notifications.NotificationEvent;
 import maroroma.homeserverng.tools.notifications.Notifyer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import javax.mail.Transport;
+import javax.mail.internet.MimeMessage;
 
 /**
  * Implémentation de {@link Notifyer} permettant d'envoyer des mails.
@@ -43,12 +42,10 @@ public class MailNotifyer extends AbstractDisableableNotifyer implements Notifye
 	@Override
 	protected void doNotify(final NotificationEvent notification)   throws HomeServerException {
 		// construction du mail via le builder
-		MimeMessage mail = this.mailConfigHolder.createMailBuilder()
-//				.from(this.smtpLogin.getValue())
+		MimeMessage mail = this.mailConfigHolder
+				.createMailBuilder()
 				.sendTo(this.notificationClients.asStringList())
-				.subject(notification.getTitle())
-				.content(notification.getMessage())
-				.date(notification.getCreationDate())
+				.notification(notification)
 				// construction finale
 				.build();
 

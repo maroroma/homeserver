@@ -32,7 +32,9 @@ export class NavigationHelperService {
     }
 
     private getCurrentModuleAndNotify(url: string) {
-        this.currentModule = this.adminService.findModuleById(url.replace('/', ''));
+        url.split('/').filter(fragment => fragment !== '')[0]
+        // this.currentModule = this.adminService.findModuleById(url.replace('/', ''));
+        this.currentModule = this.adminService.findModuleById(url.split('/').filter(fragment => fragment !== '')[0]);
         this.moduleChanged.next(this.currentModule);
     }
 
