@@ -21,6 +21,8 @@ import { ApiConstants } from 'app/shared/api-constants.modele';
 import { MusicPlayerComponent } from 'app/common-gui/players/music-player/music-player.component';
 import { VideoPlayerComponent } from 'app/common-gui/players/video-player/video-player.component';
 import { PopupPlayerComponent } from 'app/common-gui/players/popup-player/popup-player.component';
+import { FileBrowserUploadComponent } from './file-browser-upload/file-browser-upload.component';
+import { ImportedFiles } from '../import-file-button/imported-files.modele';
 
 @Component({
     selector: 'homeserver-file-browser',
@@ -139,6 +141,10 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
      */
     @ViewChild('popupDownloadFiles')
     popupDownloadFiles: FileBrowserDownloadComponent;
+
+    @ViewChild('popupUploadFiles')
+    popupUploadFiles: FileBrowserUploadComponent;
+
 
     constructor(private browserService: FileBrowserService, private searchService: PageHeaderSearchService,
         private notifyer: NotifyerService) { }
@@ -378,12 +384,26 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
             });
     }
 
+    public confirmUpload(filesToImport: ImportedFiles): void {
+        this.browserService.uploadFile(this.getLastPathStack(), filesToImport, this.options.resolver)
+            .subscribe(res => {
+                this.refreshCurrentDirectory();
+            });
+    }
+
     /**
      * Affichage de la popup de download.
      */
     public displayDownloadPopup(): void {
         this.popupDownloadFiles.display(this.options.resolver,
             this.directoryList.getRawSelectedItems(), this.fileList.getRawSelectedItems());
+    }
+
+    /**
+     * Affichage de la popup d'upload de fichiers
+     */
+    public displayUploadPopup(): void {
+        this.popupUploadFiles.display();
     }
 
     /**
@@ -410,8 +430,8 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
 
     }
 
-    public goToTop() : void {
-        window.scrollTo(0,0);
+    public goToTop(): void {
+        window.scrollTo(0, 0);
     }
 
 }

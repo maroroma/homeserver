@@ -84,6 +84,16 @@ public class FileManagerController {
 	public ResponseEntity<FileDescriptor> getFileDescriptor(@PathVariable("id") final String base64FileName) {
 		return ResponseEntity.ok(this.fileService.getFileDescriptor(base64FileName));
 	}
+
+	/**
+	 * Upload d'un fichier sur le serveur
+	 * @param base64DirectoryName -
+	 * @return -
+	 */
+	@PostMapping("${homeserver.api.path:}/filemanager/files/{id}")
+	public ResponseEntity<List<FileDescriptor>> uploadFile(@PathVariable("id") final String base64DirectoryName, final HttpServletRequest request) throws HomeServerException {
+		return ResponseEntity.ok(this.fileService.uploadFiles(base64DirectoryName, request));
+	}
 	
 	/**
 	 * Permet de streamer un fichier multimédia.

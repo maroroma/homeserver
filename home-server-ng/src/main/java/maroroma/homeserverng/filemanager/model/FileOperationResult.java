@@ -1,6 +1,7 @@
 package maroroma.homeserverng.filemanager.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import maroroma.homeserverng.tools.model.FileDescriptor;
@@ -13,6 +14,7 @@ import maroroma.homeserverng.tools.model.FileDescriptor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class FileOperationResult {
 	
 	/**

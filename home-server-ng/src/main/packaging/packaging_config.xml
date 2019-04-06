@@ -15,10 +15,10 @@
 	<files>
 		<!-- inclusion du fichier de properties -->
 		<file>
-			<source>${basedir}/src/main/packaging/application-build.properties</source>
+			<source>${basedir}/src/main/packaging/application-prod.properties</source>
 			<outputDirectory>/config/</outputDirectory>
 			<lineEnding>unix</lineEnding>
-			<destName>application.properties</destName>
+			<destName>application-prod.properties</destName>
 			<filtered>true</filtered>
 		</file>
 		<!-- inclusion fichier de properties pour les logs -->

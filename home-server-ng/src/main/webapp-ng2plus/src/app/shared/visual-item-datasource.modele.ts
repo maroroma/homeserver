@@ -105,7 +105,11 @@ export class VisualItemDataSource<T> {
      * @memberof VisualItemDataSource
      */
     public getRawItemsFromSource(): Array<T> {
-        return this.sourceList.map(vi => vi.item);
+        if (this.sourceList !== undefined) {
+            return this.sourceList.map(vi => vi.item);
+        } else {
+            return new Array<T>();
+        }
     }
 
     /**
@@ -161,6 +165,21 @@ export class VisualItemDataSource<T> {
         const selectedItems = this.getSelectedItem();
         this.nbItemSelected = selectedItems.length;
         this.hasItemSelected = this.nbItemSelected > 0;
+    }
+
+
+    public clearSourceList(): void {
+        this.updateSourceList(new Array<T>());
+    }
+
+    /**
+     * Ajout des items à la source liste existante.
+     * @param rawItems 
+     * @param restoreSelection 
+     */
+    public addToSourceList(rawItems: Array<T>, restoreSelection = false): void {
+        const lastRawList = this.getRawItemsFromSource();
+        this.updateSourceList(lastRawList.concat(rawItems), restoreSelection);
     }
 
     public updateSourceList(rawItems: Array<T>, restoreSelection = false): void {

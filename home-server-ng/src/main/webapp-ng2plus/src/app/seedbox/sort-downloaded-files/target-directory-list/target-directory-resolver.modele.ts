@@ -10,6 +10,9 @@ import { FileBrowserResolver } from './../../../common-gui/file-browser/file-bro
  * @implements {FileBrowserResolver}
  */
 export class TargetDirectoryResolver implements FileBrowserResolver {
+    fileUploadUri(directory: DirectoryDescriptor): string {
+        throw new Error("Method not implemented.");
+    }
     public directoryDetailsUri(directory: DirectoryDescriptor): string {
         return ApiConstants.SEEDBOX_TARGETS_API + '/' + directory.id + '/files';
     }

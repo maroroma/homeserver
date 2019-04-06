@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Profile;
  * @author RLEVEXIE
  *
  */
-@Profile("developpement")
+@Profile("dev")
 public @interface DevProfile {
 }

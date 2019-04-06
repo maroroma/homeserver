@@ -11,9 +11,9 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'fileGlyphiconResolver'
 })
 export class FileGlyphiconResolverPipe implements PipeTransform {
-    transform(value: FileDescriptor | string): string {
+    transform(value: FileDescriptor | File | string): string {
         const returnValue = 'glyphicon glyphicon-';
-        if (value instanceof FileDescriptor) {
+        if (value instanceof FileDescriptor || value instanceof File) {
             const file = value as FileDescriptor;
             if (FileDescriptor.isVideoFile(value)) {
                 return returnValue + 'film';

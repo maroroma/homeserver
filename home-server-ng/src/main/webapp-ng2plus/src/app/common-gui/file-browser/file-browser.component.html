@@ -8,7 +8,7 @@
             <homeserver-file-browser-toolbar [options]="options" [isFilesSelected]="someFileSelected" [isCurrentDirectoryRoot]="pathStack?.length==1"
                 (refreshCurrentDirectory)="refreshCurrentDirectory()" (displayDirectoryCreation)="displayDirectoryCreation()"
                 (displayDirectoryDeletionConfirmation)="displayDirectoryDeleteConfirmation()" (selectAll)="selectAll()" (unSelectAll)="unselectAll()"
-                (rename)="displayRenamePopup()" (download)="displayDownloadPopup()"></homeserver-file-browser-toolbar>
+                (rename)="displayRenamePopup()" (download)="displayDownloadPopup()" (upload)="displayUploadPopup()"></homeserver-file-browser-toolbar>
         </li>
         <li class="list-group-item justify-content-between" *ngIf="pathStack?.length>1" (click)="selectParentDirectory()">..</li>
         <li class="list-group-item justify-content-between" [ngClass]="{'selected': options.allowItemSelection && oneDirectory.selected}"
@@ -67,6 +67,7 @@
 <homeserver-file-browser-rename #popupRenameFiles (confirmRename)="confirmRename($event)"></homeserver-file-browser-rename>
 
 <homeserver-file-browser-download #popupDownloadFiles></homeserver-file-browser-download>
+<homeserver-file-browser-upload #popupUploadFiles (confirmUpload)="confirmUpload($event)"></homeserver-file-browser-upload>
 
 <homeserver-image-viewer #imageViewer></homeserver-image-viewer>
 

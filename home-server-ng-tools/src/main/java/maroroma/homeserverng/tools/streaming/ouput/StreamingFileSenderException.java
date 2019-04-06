@@ -1,10 +1,9 @@
-package maroroma.homeserverng.tools.streaming;
-
-import org.springframework.http.HttpStatus;
+package maroroma.homeserverng.tools.streaming.ouput;
 
 import lombok.Getter;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.helpers.Tuple;
+import org.springframework.http.HttpStatus;
 
 /**
  * Exception dédiée à la gestion du streaming.

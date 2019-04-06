@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Profile;
  * @author RLEVEXIE
  *
  */
-@Profile("production")
+@Profile("prod")
 public @interface ProductionProfile {
 
 }

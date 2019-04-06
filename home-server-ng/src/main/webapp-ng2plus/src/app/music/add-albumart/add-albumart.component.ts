@@ -23,7 +23,7 @@ export class AddAlbumArtComponent implements OnInit {
     }
 
     public startUploadFile(file: ImportedFiles): void {
-        this.musicService.addAlbumArt(file.files).subscribe(res => {
+        this.musicService.addAlbumArt(file).subscribe(res => {
             this.albumDescriptor = this.musicService.currentAlbumDescriptor;
         });
     }

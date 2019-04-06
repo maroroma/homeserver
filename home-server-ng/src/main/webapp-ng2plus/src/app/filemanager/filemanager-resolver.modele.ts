@@ -10,6 +10,9 @@ import { FileBrowserResolver } from './../common-gui/file-browser/file-browser-r
  * @implements {FileBrowserResolver}
  */
 export class FileManagerResolver implements FileBrowserResolver {
+    fileUploadUri(directory: DirectoryDescriptor): string {
+        return ApiConstants.FILEMANAGER_FILES_API + '/' + directory.id;
+    }
     public directoryDetailsUri(directory: DirectoryDescriptor): string {
         return ApiConstants.FILEMANAGER_DIRECTORIES_API + '/' + directory.id;
     }

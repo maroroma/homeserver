@@ -1,1 +1,1 @@
-sudo java -jar home-server-ng-${project.version}.jar
+sudo java -Dspring.profiles.active=prod -jar home-server-ng-${project.version}.jar

@@ -8,6 +8,7 @@ import { AlbumDescriptor } from './models/album-descriptor.modele';
 import { NotifyerService } from './../common-gui/notifyer/notifyer.service';
 import { Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
+import { ImportedFiles } from '../common-gui/import-file-button/imported-files.modele';
 
 @Injectable()
 export class MusicService {
@@ -52,11 +53,10 @@ export class MusicService {
      * @returns {Observable<AlbumDescriptor>}
      * @memberof MusicService
      */
-    public addAlbumArt(fileList: FileList): Observable<AlbumDescriptor | {}> {
+    public addAlbumArt(fileList: ImportedFiles): Observable<AlbumDescriptor | {}> {
         // génération des x appels
 
-        const fd = new FormData();
-        fd.append('albumart', fileList[0]);
+        const fd = fileList.mapUniqueFileToFormData('albumart');
         return this.http.patch(ApiConstants.MUSIC_WORKING_DIR_API + '/'
             + this.currentAlbumDescriptor.directoryDescriptor.id
             + '/albumart/', fd)

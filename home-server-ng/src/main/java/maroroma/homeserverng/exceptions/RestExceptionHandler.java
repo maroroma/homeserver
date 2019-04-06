@@ -1,18 +1,16 @@
 package maroroma.homeserverng.exceptions;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletResponse;
-
+import maroroma.homeserverng.tools.exceptions.DisableModuleException;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.streaming.ouput.StreamingFileSenderException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import maroroma.homeserverng.tools.exceptions.DisableModuleException;
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.streaming.StreamingFileSenderException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Gestion des exceptions connues.

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>maro.roma</groupId>
 		<artifactId>home-server-ng-parent</artifactId>
-		<version>0.0.24-SNAPSHOT</version>
+		<version>0.0.25-SNAPSHOT</version>
 		<relativePath>../home-server-ng-parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>home-server-ng-tools</artifactId>
@@ -72,6 +72,13 @@
 			<groupId>org.kamranzafar</groupId>
 			<artifactId>jtar</artifactId>
 			<version>2.3</version>
+		</dependency>
+
+		<!-- upload amélioré des fichiers-->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.4</version>
 		</dependency>
 
 		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-context-support</artifactId> 

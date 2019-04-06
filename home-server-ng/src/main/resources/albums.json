@@ -1,22 +1,31 @@
 [ {
-  "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2Rpclx0ZXN0XHRlc3QgLSB0ZXN0",
-  "albumName" : "test",
-  "artistName" : "test",
+  "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2Rpclx6ZHplZnplZlx6ZHplZnplZiAtIHplZnplZnplZg==",
+  "albumName" : "zefzefzef",
+  "artistName" : "zdzefzef",
   "directoryDescriptor" : {
-    "name" : "test - test",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\test\\test - test",
+    "name" : "zdzefzef - zefzefzef",
+    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\zdzefzef\\zdzefzef - zefzefzef",
     "httpRessource" : null,
-    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2Rpclx0ZXN0XHRlc3QgLSB0ZXN0",
+    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2Rpclx6ZHplZnplZlx6ZHplZnplZiAtIHplZnplZnplZg==",
     "size" : 0,
     "files" : null,
     "directories" : null
   },
-  "albumart" : {
-    "name" : "albumart.png",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\test\\test - test\\albumart.png",
+  "albumart" : null,
+  "lastRefresh" : 1554247985884
+}, {
+  "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxzZGZzZGZzZGZcc2Rmc2Rmc2RmIC0gc2Rmc2Rmc2Rmc2Rm",
+  "albumName" : "sdfsdfsdfsdf",
+  "artistName" : "sdfsdfsdf",
+  "directoryDescriptor" : {
+    "name" : "sdfsdfsdf - sdfsdfsdfsdf",
+    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\sdfsdfsdf\\sdfsdfsdf - sdfsdfsdfsdf",
     "httpRessource" : null,
-    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2Rpclx0ZXN0XHRlc3QgLSB0ZXN0XGFsYnVtYXJ0LnBuZw==",
-    "size" : 0
+    "base64FullName" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxzZGZzZGZzZGZcc2Rmc2Rmc2RmIC0gc2Rmc2Rmc2Rmc2Rm",
+    "size" : 0,
+    "files" : null,
+    "directories" : null
   },
-  "lastRefresh" : 1517560104518
+  "albumart" : null,
+  "lastRefresh" : 1554500870399
 } ]

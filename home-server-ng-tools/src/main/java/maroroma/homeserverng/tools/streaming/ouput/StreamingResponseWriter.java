@@ -1,20 +1,18 @@
-package maroroma.homeserverng.tools.streaming;
+package maroroma.homeserverng.tools.streaming.ouput;
 
+import lombok.Builder;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.Assert;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.Assert;
-
-import lombok.Builder;
-import lombok.extern.log4j.Log4j2;
 
 /**
  * Classe utilitaire pour la recopie du fichier à streamer dans le flux de sortie de la {@link HttpServletResponse}.

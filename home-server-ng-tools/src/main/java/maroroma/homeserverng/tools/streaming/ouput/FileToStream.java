@@ -1,4 +1,8 @@
-package maroroma.homeserverng.tools.streaming;
+package maroroma.homeserverng.tools.streaming.ouput;
+
+import lombok.Getter;
+import maroroma.homeserverng.tools.helpers.StringUtils;
+import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,11 +11,6 @@ import java.nio.file.attribute.FileTime;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-
-import org.springframework.http.HttpStatus;
-
-import lombok.Getter;
-import maroroma.homeserverng.tools.helpers.StringUtils;
 
 /**
  * Container utilitaire pour le fichier à streamer.

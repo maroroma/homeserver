@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Rx';
 import { Http, Response } from '@angular/http';
 import { NotifyerService } from './../common-gui/notifyer/notifyer.service';
 import { Injectable } from '@angular/core';
+import { ImportedFiles } from '../common-gui/import-file-button/imported-files.modele';
 
 @Injectable()
 export class ReducerService {
@@ -41,18 +42,11 @@ export class ReducerService {
 
     }
 
-    public remoteReduceImage(fileList: FileList): Observable<Array<ReducedImage>> {
+    public remoteReduceImage(fileList: ImportedFiles): Observable<Array<ReducedImage>> {
         // génération des x appels
 
-        const responsesPromises = new Array<Observable<Response>>();
-
-
-        for (let i = 0; i < fileList.length; i++) {
-            const fd = new FormData();
-            fd.append('imageToReduce', fileList[i]);
-            responsesPromises.push(this.http.post(ApiConstants.REDUCER_REDUCED_FULL_SIZE_IMAGE_API, fd));
-        }
-
+        const responsesPromises = fileList.mapAllFileToFormData(oneFile => 'imageToReduce')
+            .map(oneFormData => this.http.post(ApiConstants.REDUCER_REDUCED_FULL_SIZE_IMAGE_API, oneFormData))
 
         return Observable.forkJoin(responsesPromises).flatMap(res => {
             this.notifyer.showSuccess('Toutes les images ont bien été réduites.');

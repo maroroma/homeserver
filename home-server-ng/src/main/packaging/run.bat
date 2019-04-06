@@ -1,1 +1,1 @@
-java -jar home-server-ng-${project.version}.jar
+java -Dspring.profiles.active=prod -jar home-server-ng-${project.version}.jar

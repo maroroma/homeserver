@@ -26,7 +26,7 @@ export class ReducerUploadComponent implements OnInit {
 
         this.notifyer.waitingInfo('Import des images en cours...');
 
-        this.reducerService.remoteReduceImage(file.files).subscribe(res => {
+        this.reducerService.remoteReduceImage(file).subscribe(res => {
             this.imageListUpdated.emit(res);
             this.notifyer.hide();
         });

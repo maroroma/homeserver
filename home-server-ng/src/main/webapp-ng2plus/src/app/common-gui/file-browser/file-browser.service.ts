@@ -10,6 +10,9 @@ import { Observable } from 'rxjs/Rx';
 import { DirectoryDescriptor } from './../../shared/directory-descriptor.modele';
 import { Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
+import { ImportedFiles } from '../import-file-button/imported-files.modele';
+import { HttpRequest } from 'selenium-webdriver/http';
+import { ChainedHttpCalls } from '../../shared/chained-http-calls.service';
 
 /**
  * Service utilisé par le file browser pour réaliser ces appels https de manipulation de fichiers.
@@ -50,6 +53,28 @@ export class FileBrowserService {
                 this.notifyer.showError('Une erreur est survenue lors de la création du répertoire');
                 return Observable.of(new DirectoryDescriptor());
             });
+    }
+
+    /**
+     * upload d'un fichier
+     * @param targetDirectory répertoire cible de l'upload 
+     * @param fileList liste des fichiers à uploader
+     * @param resolver résolver
+     */
+    public uploadFile(targetDirectory: DirectoryDescriptor, fileList: ImportedFiles, resolver: FileBrowserResolver): Observable<DirectoryDescriptor> {
+
+        this.notifyer.waitingInfo('upload en cours...');
+
+        return this.http.post(resolver.fileUploadUri(targetDirectory), fileList.mapToFormData())
+            .map(res => {
+                this.notifyer.showSuccess('file uploadé rajouté');
+                return new DirectoryDescriptor();
+            })
+            .catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de l\'upload du fichier', err.json().message);
+                return Observable.of(new DirectoryDescriptor());
+            });
+
     }
 
     /**

@@ -1,9 +1,8 @@
-package maroroma.homeserverng.tools.streaming;
-
-import java.io.IOException;
-import java.io.InputStream;
+package maroroma.homeserverng.tools.streaming.ouput;
 
 import javax.servlet.ServletOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Interface fonctionnelle pour l'écriture dans le flux de sortie, levant une exception de {@link IOException}.

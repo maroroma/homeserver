@@ -25,9 +25,8 @@ export class ImportFileButtonComponent implements OnInit {
     }
 
     public innerChange(event: Event): any {
-        const returnValue = new ImportedFiles();
-        returnValue.associatedItem = this.associatedItem;
-        returnValue.files = (event.target as HTMLInputElement).files;
+        const returnValue = new ImportedFiles((event.target as HTMLInputElement).files,
+            this.associatedItem);
         this.fileChanged.emit(returnValue);
         (event.target as HTMLInputElement).value = '';
     }

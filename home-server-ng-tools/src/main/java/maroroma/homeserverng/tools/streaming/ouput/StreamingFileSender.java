@@ -1,17 +1,16 @@
-package maroroma.homeserverng.tools.streaming;
+package maroroma.homeserverng.tools.streaming.ouput;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.extern.log4j.Log4j2;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.extern.log4j.Log4j2;
 
 /**
  * Classe utilitaire pour gérer le streaming d'un fichier.

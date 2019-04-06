@@ -48,6 +48,13 @@ export class FileBrowserOptionsBuilder {
         return this;
     }
 
+    public uploading(): FileBrowserOptionsBuilder {
+        this.target.allowUpload = true;
+        return this;
+    }
+
+
+
     public withResolver(resolver: FileBrowserResolver): FileBrowserOptionsBuilder {
         this.target.resolver = resolver;
         return this;

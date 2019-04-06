@@ -40,26 +40,37 @@ export class FileDescriptor {
         }
     }
 
-    public static isVideoFile(file: FileDescriptor): boolean {
-        return FilterTools.contains(FileDescriptor.MOVIE_EXTENSIONS, file.extension);
+    private static isFileOfType(extensions: Array<string>, file: FileDescriptor | File) {
+        let extension: string;
+        if (file instanceof FileDescriptor) {
+            extension = (file as FileDescriptor).extension;
+        } else {
+            extension = FileDescriptor.getFileExtension((file as File).name);
+        }
+
+        return FilterTools.contains(extensions, extension);
     }
 
-    public static isCommonFile(file: FileDescriptor): boolean {
-        return FilterTools.contains(FileDescriptor.FILE_EXTENSIONS, file.extension);
+    public static isVideoFile(file: FileDescriptor | File): boolean {
+        return FileDescriptor.isFileOfType(FileDescriptor.MOVIE_EXTENSIONS, file);
     }
 
-    public static isMusicFile(file: FileDescriptor): boolean {
-        return FilterTools.contains(FileDescriptor.MUSIC_EXTENSIONS, file.extension);
-    }
-    public static isSubtitleFile(file: FileDescriptor): boolean {
-        return FilterTools.contains(FileDescriptor.SUBTITLE_EXTENSIONS, file.extension);
+    public static isCommonFile(file: FileDescriptor | File): boolean {
+        return FileDescriptor.isFileOfType(FileDescriptor.FILE_EXTENSIONS, file);
     }
 
-    public static isImageFile(file: FileDescriptor): boolean {
-        return FilterTools.contains(FileDescriptor.IMAGE_EXTENSIONS, file.extension);
+    public static isMusicFile(file: FileDescriptor | File): boolean {
+        return FileDescriptor.isFileOfType(FileDescriptor.MUSIC_EXTENSIONS, file);
+    }
+    public static isSubtitleFile(file: FileDescriptor | File): boolean {
+        return FileDescriptor.isFileOfType(FileDescriptor.SUBTITLE_EXTENSIONS, file);
     }
 
-    public static isArchiveFile(file: FileDescriptor): boolean {
-        return FilterTools.contains(FileDescriptor.ARCHIVE_EXTENSIONS, file.extension);
+    public static isImageFile(file: FileDescriptor | File): boolean {
+        return FileDescriptor.isFileOfType(FileDescriptor.IMAGE_EXTENSIONS, file);
+    }
+
+    public static isArchiveFile(file: FileDescriptor | File): boolean {
+        return FileDescriptor.isFileOfType(FileDescriptor.ARCHIVE_EXTENSIONS, file);
     }
 }

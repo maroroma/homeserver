@@ -1,0 +1,24 @@
+<homeserver-popup #popupUploadFiles title="Upload de fichiers" (ok)="innerOk()" (ko)="innerKo()">
+    <div class="upload-button">
+        <homeserver-import-file-button (fileChanged)="addFilesToUpload($event)" [isMultiple]="true"></homeserver-import-file-button>
+    </div>
+    <div>
+        <li class="list-group-item justify-content-between" *ngFor="let oneFile of uploadFileList.displayList">
+            <div class="d-flex">
+                <div class="align-self-center file-infos">
+                    <div>
+                        <span class="{{oneFile.item | fileGlyphiconResolver}}"></span>
+                    </div>
+                </div>
+                <div class="align-self-center file-name">
+                    {{oneFile.item.name}}
+                </div>
+                <div class="align-self-right file-name">
+                    <button class="btn btn-sm btn-danger" (click)="removeFileToUpload(oneFile)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </div>
+        </li>
+    </div>
+</homeserver-popup>

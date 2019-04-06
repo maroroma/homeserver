@@ -36,13 +36,7 @@ export class UploadTracksComponent implements OnInit {
     }
 
     public prepareUploadFile(files: ImportedFiles): void {
-        const rawList = new Array<UploadTrackCandidate>();
-        for (let index = 0; index < files.files.length; index++) {
-            rawList.push(new UploadTrackCandidate(files.files.item(index)));
-        }
-
-        this.filesToUpload.updateSourceList(rawList);
-
+        this.filesToUpload.updateSourceList(files.files.map(oneFile => new UploadTrackCandidate(oneFile)));
     }
 
     public deleteSelectedFiles(): void {

@@ -11,8 +11,9 @@ import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.FileAndDirectoryHLP;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 import maroroma.homeserverng.tools.model.FileDirectoryDescriptor;
-import maroroma.homeserverng.tools.streaming.StreamingFileSender;
-import maroroma.homeserverng.tools.streaming.StreamingFileSenderException;
+import maroroma.homeserverng.tools.streaming.input.UploadFileStream;
+import maroroma.homeserverng.tools.streaming.ouput.StreamingFileSender;
+import maroroma.homeserverng.tools.streaming.ouput.StreamingFileSenderException;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -104,6 +105,24 @@ public class FileManagerServiceImpl {
 				.values().stream()
 				// la suppression est ok que si l'ensemble des fichiers a bien été supprimé.
 				.allMatch(value -> value));
+	}
+
+	/**
+	 * Upload d'une liste de fichiers
+	 * @param directoryId identifiant du répertoire dans lequel on veut faire la recopie
+	 * @param request requete à traiter
+	 * @return liste des fichiers copiés sur le serveur
+	 * @throws HomeServerException
+	 */
+	public List<FileDescriptor> uploadFiles(final String directoryId, final HttpServletRequest request) throws HomeServerException {
+		Assert.hasLength(directoryId, "id can't be null or empty");
+		final FileDescriptor directoryTarget = FileAndDirectoryHLP.decodeFileDescriptor(directoryId);
+		Assert.isValidDirectory(directoryTarget);
+		this.validateAuthorizedPath(directoryTarget);
+
+		return UploadFileStream.fromRequest(request)
+				.foreach(oneFile -> oneFile.copyTo(directoryTarget))
+				.collect(Collectors.toList());
 	}
 
 

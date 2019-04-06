@@ -380,4 +380,32 @@ public abstract class FileAndDirectoryHLP {
 		copyFileToOuputStream(toDownload.createFile(), response);
 	}
 
+	/**
+	 * Recopie le flux en entrée dans le fichier donné.
+	 * @param inputStream -
+	 * @param file -
+	 * @throws HomeServerException -
+	 */
+	public static void copyInputStreamToFile(final InputStream inputStream, final FileDescriptor file) throws HomeServerException {
+		Assert.notNull(inputStream, "inputStream can't be null");
+		Assert.notNull(file, "file can't be null");
+		copyInputStreamToFile(inputStream, file.createFile());
+	}
+
+	/**
+	 * Recopie le flux en entrée dans le fichier donné.
+	 * @param inputStream -
+	 * @param file -
+	 * @throws HomeServerException -
+	 */
+	public static void copyInputStreamToFile(final InputStream inputStream, final File file) throws HomeServerException {
+		Assert.notNull(inputStream, "inputStream can't be null");
+		Assert.notNull(file, "file can't be null");
+		try {
+			FileCopyUtils.copy(inputStream, new FileOutputStream(file));
+		} catch (IOException e) {
+			throw new HomeServerException("impossible de recopier l'input stream dans le fichier", e);
+		}
+	}
+
 }

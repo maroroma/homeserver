@@ -35,6 +35,8 @@ export class FileBrowserToolBarComponent implements OnInit {
     public rename = new EventEmitter<any>();
     @Output()
     public download = new EventEmitter<any>();
+    @Output()
+    public upload = new EventEmitter<any>();
 
 
     constructor() { }
@@ -64,6 +66,9 @@ export class FileBrowserToolBarComponent implements OnInit {
 
     public innerDownload(): void {
         this.download.emit();
+    }
+    public innerUpload(): void {
+        this.upload.emit();
     }
 
 

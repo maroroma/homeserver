@@ -34,6 +34,7 @@ import { NgModule } from '@angular/core';
 import { DownloadFileListComponent } from './file-browser/file-browser-download/download-file-list.component';
 import { MusicPlayerComponent } from './players/music-player/music-player.component';
 import { GoToTopDirective } from './directives/goto-top.directive';
+import { FileBrowserUploadComponent } from './file-browser/file-browser-upload/file-browser-upload.component';
 
 
 @NgModule({
@@ -43,13 +44,13 @@ import { GoToTopDirective } from './directives/goto-top.directive';
         PopupComponent, AnchorExportDirective, GoToTopDirective, ToggleButtonDirective, TooltipDirective,
         ImportFileButtonComponent, StepsBarComponent, FileGlyphiconResolverPipe, FileBrowserComponent,
         CancelableInputTextComponent, EditCollapsablePanelComponent, ImageViewerComponent, AutoFocusDirective,
-        ByteFormatPipe, FileBrowserDownloadComponent, DownloadFileListComponent, MusicPlayerComponent, VideoPlayerComponent, PlayedItemComponent, PopupPlayerComponent],
+        ByteFormatPipe, FileBrowserDownloadComponent, FileBrowserUploadComponent, DownloadFileListComponent, MusicPlayerComponent, VideoPlayerComponent, PlayedItemComponent, PopupPlayerComponent],
     declarations: [MenuComponent, PageHeaderComponent, PrettyCheckboxComponent,
         SimpleDatagridComponent, SDInputValueDirective, NotifyerComponent,
         PopupComponent, AnchorExportDirective, GoToTopDirective, ToggleButtonDirective, TooltipDirective,
         ImportFileButtonComponent, StepsBarComponent, FileGlyphiconResolverPipe, FileBrowserComponent,
         CancelableInputTextComponent, EditCollapsablePanelComponent, ImageViewerComponent, AutoFocusDirective,
-        FileBrowserToolBarComponent, FileBrowserRenameComponent, ByteFormatPipe, FileBrowserDownloadComponent,
+        FileBrowserToolBarComponent, FileBrowserRenameComponent, ByteFormatPipe, FileBrowserDownloadComponent, FileBrowserUploadComponent,
         DownloadFileListComponent, MusicPlayerComponent, VideoPlayerComponent, PlayedItemComponent, PopupPlayerComponent],
     providers: [NavigationHelperService, NotifyerService, FileBrowserService, PageHeaderSearchService],
 })

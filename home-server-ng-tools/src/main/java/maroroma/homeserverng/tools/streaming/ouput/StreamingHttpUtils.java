@@ -1,15 +1,13 @@
-package maroroma.homeserverng.tools.streaming;
+package maroroma.homeserverng.tools.streaming.ouput;
 
-import java.util.Arrays;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import maroroma.homeserverng.tools.helpers.Tuple;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import maroroma.homeserverng.tools.helpers.Tuple;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 /**
  * Classe utilitaire http pour le streaming.

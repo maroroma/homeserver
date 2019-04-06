@@ -1,20 +1,18 @@
-package maroroma.homeserverng.tools.streaming;
+package maroroma.homeserverng.tools.streaming.ouput;
 
+import lombok.Data;
+import maroroma.homeserverng.tools.helpers.CustomCollectors;
+import maroroma.homeserverng.tools.helpers.Tuple;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-
-import lombok.Data;
-import maroroma.homeserverng.tools.helpers.CustomCollectors;
-import maroroma.homeserverng.tools.helpers.Tuple;
 
 /**
  * Classe utilitaire pour déterminer les fragmens de fichier à renvoyer ou à écrire dans le flux.

@@ -29,6 +29,11 @@ export class FileBrowserOptions {
      */
     public allowDownload = false;
 
+
+    /**
+     * Détermine si un upload est possible
+     */
+    public allowUpload = false;
     /**
      * 
      * Détermine si la barre d'outil doit être affichée.
