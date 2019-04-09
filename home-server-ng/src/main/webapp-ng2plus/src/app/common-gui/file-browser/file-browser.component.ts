@@ -387,6 +387,7 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
     public confirmUpload(filesToImport: ImportedFiles): void {
         this.browserService.uploadFile(this.getLastPathStack(), filesToImport, this.options.resolver)
             .subscribe(res => {
+                console.debug("fin du téléchargement");
                 this.refreshCurrentDirectory();
             });
     }

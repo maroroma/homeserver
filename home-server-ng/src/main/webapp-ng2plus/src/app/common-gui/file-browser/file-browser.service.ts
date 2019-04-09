@@ -13,6 +13,7 @@ import { Injectable } from '@angular/core';
 import { ImportedFiles } from '../import-file-button/imported-files.modele';
 import { HttpRequest } from 'selenium-webdriver/http';
 import { ChainedHttpCalls } from '../../shared/chained-http-calls.service';
+import { FileHttpUploader } from '../../shared/file-http-uploader.modele';
 
 /**
  * Service utilisé par le file browser pour réaliser ces appels https de manipulation de fichiers.
@@ -61,20 +62,12 @@ export class FileBrowserService {
      * @param fileList liste des fichiers à uploader
      * @param resolver résolver
      */
-    public uploadFile(targetDirectory: DirectoryDescriptor, fileList: ImportedFiles, resolver: FileBrowserResolver): Observable<DirectoryDescriptor> {
+    public uploadFile(targetDirectory: DirectoryDescriptor, fileList: ImportedFiles, resolver: FileBrowserResolver): Observable<any> {
 
-        this.notifyer.waitingInfo('upload en cours...');
-
-        return this.http.post(resolver.fileUploadUri(targetDirectory), fileList.mapToFormData())
-            .map(res => {
-                this.notifyer.showSuccess('file uploadé rajouté');
-                return new DirectoryDescriptor();
-            })
-            .catch((err, data) => {
-                this.notifyer.showError('Une erreur est survenue lors de l\'upload du fichier', err.json().message);
-                return Observable.of(new DirectoryDescriptor());
-            });
-
+        return FileHttpUploader
+            .toUrl(resolver.fileUploadUri(targetDirectory))
+            .progress(progressEvent => this.notifyer.showProgress("upload en cours", progressEvent))
+            .upload(fileList.mapToFormData());
     }
 
     /**

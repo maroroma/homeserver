@@ -1,5 +1,12 @@
 <div class="blocking" *ngIf="notifyer.blocking"></div>
-<div class="notifyer-content" [ngClass]="{'notifyer-content-success': notifyer.forSuccess, 'notifyer-content-info': notifyer.forInfo, 'notifyer-content-error': notifyer.forError}" [@flyInOut]="notifyer.currentState">
+<div class="notifyer-content" [ngClass]="{'notifyer-content-success': notifyer.forSuccess, 'notifyer-content-info': notifyer.forInfo, 'notifyer-content-error': notifyer.forError}"
+    [@flyInOut]="notifyer.currentState">
     <div>{{notifyer.message}}</div>
     <div *ngIf="notifyer.detail">{{notifyer.detail}}</div>
+    <div class="progress" *ngIf="notifyer.forProgress">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+            [ngStyle]="{'width': notifyer.lastProgress.percentageDone + '%'}">
+            <span class="sr-only">60% Complete</span>
+        </div>
+    </div>
 </div>
