@@ -1,12 +1,11 @@
 package maroroma.homeserverng.tools.notifications;
 
-import java.util.List;
-
+import lombok.extern.log4j.Log4j2;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.log4j.Log4j2;
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import java.util.List;
 
 /**
  * Implémentation de {@link Notifyer} permettant d'aggréget un ensemble de {@link Notifyer}.
@@ -40,7 +39,7 @@ public class NotifyerContainer implements Notifyer {
 			notifiers.forEach(oneNotifyer -> {
 				try {
 					oneNotifyer.notify(notification);
-				} catch (HomeServerException e) {
+				} catch (Exception e) {
 					log.warn("Erreur rencontrée lors de l'émission d'une notification", e);
 				}
 			});
