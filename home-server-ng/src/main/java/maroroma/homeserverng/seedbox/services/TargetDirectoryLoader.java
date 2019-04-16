@@ -20,7 +20,7 @@ public interface TargetDirectoryLoader {
 	 * Retourne le nom du répertoire dans les alias kodi. cette information doit permettre le scan du répertoire.
 	 * @return -
 	 */
-	String getKodiAlias();
+	String[] getKodiAliases();
 
 	/**
 	 * Détermine si cette cible contient le répertoire en entrée.

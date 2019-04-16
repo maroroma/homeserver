@@ -1,10 +1,4 @@
 [ {
-  "id" : "homeserver.notifyer.kodi.urls",
-  "value" : "http://192.168.0.51/jsonrpc",
-  "description" : "urls utilisées pour les accès aux apis Json rpc de différents kodi",
-  "readOnly" : false,
-  "moduleId" : "notifyer"
-}, {
   "id" : "homeserver.notifyer.mail.smtp.password",
   "value" : "local.homeserver.ng.azer1234",
   "description" : "Mot de passe de l'utilisateur smtp pour la notification",
@@ -26,12 +20,6 @@
   "id" : "homeserver.notifyer.mail.smtp.port",
   "value" : "587",
   "description" : "port smtp",
-  "readOnly" : false,
-  "moduleId" : "notifyer"
-}, {
-  "id" : "homeserver.notifyer.kodi.url.displaytime",
-  "value" : "10000",
-  "description" : "Temps en millis d'affichage de la notification",
   "readOnly" : false,
   "moduleId" : "notifyer"
 }, {

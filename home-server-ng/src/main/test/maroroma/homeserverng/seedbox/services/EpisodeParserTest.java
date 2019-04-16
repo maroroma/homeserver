@@ -2,11 +2,6 @@ package maroroma.homeserverng.seedbox.services;
 
 import maroroma.homeserverng.seedbox.model.EpisodeParseResult;
 import maroroma.homeserverng.seedbox.model.TargetDirectory;
-import maroroma.homeserverng.tools.kodi.methods.GetSources;
-import maroroma.homeserverng.tools.kodi.methods.KodiClient;
-import maroroma.homeserverng.tools.kodi.methods.VideoLibraryScan;
-import maroroma.homeserverng.tools.kodi.model.GetSourcesResponse;
-import maroroma.homeserverng.tools.kodi.model.KodiSource;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,8 +12,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.io.File;
 import java.util.Collections;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.BDDMockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EpisodeParserTest {
@@ -80,16 +76,7 @@ public class EpisodeParserTest {
 
     }
 
-    @Test
-    public void testBidon() {
-        GetSourcesResponse response = GetSources.create().build().execute(new KodiClient("http://192.168.0.51/jsonrpc"));
-        System.out.println(response);
 
-        System.out.println(VideoLibraryScan.create().kodiSource(KodiSource.builder().file("smb://MELCHIOR/SHARE/Videos/Series/").build())
-                .withDialog()
-                .build()
-                .execute(new KodiClient("http://192.168.0.51/jsonrpc")));
-    }
 
 
 }

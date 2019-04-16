@@ -1,24 +1,25 @@
 package maroroma.homeserverng.tools.kodi.methods;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import maroroma.homeserverng.tools.kodi.model.KodiResponse;
 import org.springframework.web.client.RestTemplate;
 
 /**
  * Interface de définition d'un executor des requêtes KODI
  */
+@NoArgsConstructor
+@AllArgsConstructor
 public class KodiClient {
 
     /**
      * Url du kodi.
      */
+    @Getter
+    @Setter
     private String kodiUrl;
-
-    /**
-     * Constructeur.
-     * @param kodiUrl -
-     */
-    public KodiClient(final String kodiUrl) {
-        this.kodiUrl = kodiUrl;
-    }
 
     /**
      * Execution d'une {@link KodiMethod}
@@ -28,8 +29,10 @@ public class KodiClient {
      * @param <T> type de la méthode
      * @return
      */
-    public <I, R, T extends KodiMethod<I, R>> R execute(T kodiMethod) {
+    public <I, R, T extends KodiMethod<I, R>> KodiResponse<R> execute(T kodiMethod) {
         RestTemplate rt = new RestTemplate();
-        return rt.postForObject(this.kodiUrl, kodiMethod, kodiMethod.getResponseClazz());
+        R response = rt.postForObject(this.kodiUrl, kodiMethod, kodiMethod.getResponseClazz());
+        return KodiResponse.<R>fromInstance(this).withResponse(response);
     }
+
 }

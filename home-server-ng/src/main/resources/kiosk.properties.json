@@ -11,12 +11,6 @@
   "readOnly" : false,
   "moduleId" : "kiosk"
 }, {
-  "id" : "homeserver.kiosk.kodi.urls",
-  "value" : "${homeserver.notifyer.kodi.urls}",
-  "description" : "Liste des urls kodi",
-  "readOnly" : false,
-  "moduleId" : "kiosk"
-}, {
   "id" : "homeserver.kiosk.displayHour",
   "value" : "true",
   "description" : "Détermine si on doit afficher l'heure",

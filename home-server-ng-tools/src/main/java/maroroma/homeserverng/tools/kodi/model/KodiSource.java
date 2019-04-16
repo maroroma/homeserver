@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import maroroma.homeserverng.tools.kodi.methods.VideoLibraryScan;
+
+import java.util.stream.Stream;
 
 
 /**
@@ -13,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class KodiSource {
+public class KodiSource extends FromKodiInstance<KodiSource> {
 
     /**
      * Répertoire (smb ou local)
@@ -23,5 +26,13 @@ public class KodiSource {
      * Nom de la source.
      */
     private String label;
+
+    public boolean matcheOneAlias(String... aliases) {
+        return Stream.of(aliases).anyMatch(label::equalsIgnoreCase);
+    }
+
+    public VideoLibraryScan mapToLibraryScan() {
+        return VideoLibraryScan.create().kodiSource(this).withDialog();
+    }
 
 }

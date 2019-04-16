@@ -1,0 +1,15 @@
+[
+  {
+    "id" : "homeserver.kodimanager.instances.urls",
+    "value" : "http://192.168.0.51/jsonrpc,http://192.168.0.18:8080/jsonrpc",
+    "description" : "liste des urls des instances kodi",
+    "readOnly" : false,
+    "moduleId" : "kodimanager"
+  },{
+    "id" : "homeserver.kodimanager.notification.displaytime",
+    "value" : "10000",
+    "description" : "Temps en millis d'affichage des notifications sur kodi",
+    "readOnly" : false,
+    "moduleId" : "kodimanager"
+  }
+]

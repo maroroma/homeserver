@@ -1,7 +1,5 @@
 package maroroma.homeserverng.seedbox.services;
 
-import org.springframework.stereotype.Component;
-
 import maroroma.homeserverng.seedbox.model.TargetDirectory;
 import maroroma.homeserverng.seedbox.model.TargetDirectoryType;
 import maroroma.homeserverng.tools.annotations.Property;
@@ -9,6 +7,7 @@ import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.CommonFileFilter;
 import maroroma.homeserverng.tools.model.FileDescriptor;
+import org.springframework.stereotype.Component;
 
 /**
  * Implémentation de {@link TargetDirectoryLoader} pour les séries tv.
@@ -44,8 +43,8 @@ public class TargetDirectoryTvShowLoader extends AbstractTargetDirectoryLoader {
 	}
 
 	@Override
-	public String getKodiAlias() {
-		return this.kodiAlias.getResolvedValue();
+	public String[] getKodiAliases() {
+		return this.kodiAlias.asStringArray();
 	}
 
 }

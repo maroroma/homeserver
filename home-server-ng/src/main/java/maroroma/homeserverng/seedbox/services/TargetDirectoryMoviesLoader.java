@@ -42,8 +42,8 @@ public class TargetDirectoryMoviesLoader extends AbstractTargetDirectoryLoader {
 
 
 	@Override
-	public String getKodiAlias() {
-		return this.kodiAlias.getResolvedValue();
+	public String[] getKodiAliases() {
+		return this.kodiAlias.asStringArray();
 	}
 
 	@Override

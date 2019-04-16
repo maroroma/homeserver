@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import maroroma.homeserverng.tools.kodi.model.KodiResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +50,7 @@ public class KodiMethod<T, U> {
      * @param kodiClient executor de la requete
      * @return type attendu en réponse
      */
-    public U execute(KodiClient kodiClient) {
+    public KodiResponse<U> execute(KodiClient kodiClient) {
         return kodiClient.execute(this);
     }
 

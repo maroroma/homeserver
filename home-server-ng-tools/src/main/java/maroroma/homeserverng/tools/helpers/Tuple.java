@@ -1,11 +1,12 @@
 package maroroma.homeserverng.tools.helpers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
 /**
  * Classe utilitaire pour la gestion d'un tuple.
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @NoArgsConstructor
-public final class Tuple<T, U> {
+public class Tuple<T, U> {
 	/**
 	 * Item 1.
 	 */
@@ -33,9 +34,13 @@ public final class Tuple<T, U> {
 	 * @param i1 -
 	 * @param i2 -
 	 */
-	private Tuple(final T i1, final U i2) {
+	protected Tuple(final T i1, final U i2) {
 		this.item1 = i1;
 		this.item2 = i2;
+	}
+
+	public <V,W> Tuple<V,W> map(Function<T, V> item1Mapper, Function<U, W> item2Mapper) {
+		return Tuple.from(item1Mapper.apply(this.getItem1()), item2Mapper.apply(this.getItem2()));
 	}
 	
 	/**
