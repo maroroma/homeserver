@@ -39,8 +39,13 @@ public class RuntimeHomeServerException extends RuntimeException {
 	 * Constructeur.
 	 * @param exception -
 	 */
-	public RuntimeHomeServerException(final Exception exception) {
+	public RuntimeHomeServerException(final Throwable exception) {
 		super(exception);
+		this.innerException = Optional.empty();
+	}
+
+	public RuntimeHomeServerException(final Throwable exception, final String message) {
+		super(message, exception);
 		this.innerException = Optional.empty();
 	}
 	
@@ -51,5 +56,7 @@ public class RuntimeHomeServerException extends RuntimeException {
 	public HomeServerException getInnerHomeServerException() {
 		return this.innerException.orElse(new HomeServerException("Erreur inconnue", this.getCause()));
 	}
+
+
 	
 }

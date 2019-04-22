@@ -52,19 +52,6 @@ public class SeedBoxController {
 	
 	/**
 	 * Permet de supprimer un fichier ou un répertoire de la todolist.
-	 * @param toDelete -
-	 * @return -
-	 * @throws IOException 
-	 * @throws JsonMappingException 
-	 * @throws JsonParseException 
-	 */
-	@RequestMapping(value = "${homeserver.api.path:}/seedbox/todo/completedtorrent", method = {RequestMethod.DELETE})
-	public final ResponseEntity<List<TodoFile>> deleteTodoFile(@RequestBody final TodoFile toDelete) {
-		return ResponseEntity.ok(todoService.deleteTodoFile(toDelete));
-	}
-	
-	/**
-	 * Permet de supprimer un fichier ou un répertoire de la todolist.
 	 * @param fileId -
 	 * @return -
 	 * @throws IOException 

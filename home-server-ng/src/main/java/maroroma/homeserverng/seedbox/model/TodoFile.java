@@ -19,7 +19,7 @@ public class TodoFile extends FileDescriptor {
 	 * Détermine si le fichier a été détecté comme nouveau.
 	 */
 	private boolean isNew;
-	
+
 	/**
 	 * Constructeur.
 	 * @param source -

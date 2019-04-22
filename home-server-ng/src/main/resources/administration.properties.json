@@ -4,4 +4,10 @@
   "description" : "Chemin vers les montages unix",
   "readOnly" : false,
   "moduleId" : "administration"
+},{
+  "id" : "homeserver.administrations.sambaUser",
+  "value" : "yourname@yourpassword",
+  "description" : "user samba",
+  "readOnly" : false,
+  "moduleId" : "administration"
 }]

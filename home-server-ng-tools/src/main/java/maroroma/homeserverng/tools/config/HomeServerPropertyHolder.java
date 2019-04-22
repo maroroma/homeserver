@@ -5,13 +5,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import maroroma.homeserverng.tools.files.FileDescriptorFactory;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.Tuple;
+import maroroma.homeserverng.tools.security.SimpleUser;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Holder pour une propriété applicative modifiable.
@@ -124,14 +127,24 @@ public class HomeServerPropertyHolder {
 	 * Retourne la propriété en tant que {@link File}.
 	 * @return -
 	 */
+	@Deprecated
 	public File asFile() {
 		return new File(this.getResolvedValue());
+	}
+
+	public FileDescriptorFactory asFileDescriptorFactory() {
+		return FileDescriptorFactory.fromPath(this.getResolvedValue());
+	}
+
+	public List<FileDescriptorFactory> asFileDescriptorFactories() {
+		return asStringList().stream().map(FileDescriptorFactory::fromPath).collect(Collectors.toList());
 	}
 	
 	/**
 	 * Retourne la propriété en tant que {@link List} de {@link File}.
 	 * @return -
 	 */
+	@Deprecated
 	public List<File> asFileList() {
 		List<File>  returnValue = new ArrayList<>();
 		
@@ -197,6 +210,11 @@ public class HomeServerPropertyHolder {
 	 */
 	public boolean asBoolean() {
 		return Boolean.parseBoolean(this.getResolvedValue());
+	}
+
+	public SimpleUser asUser() {
+		List<String> infos = this.asStringList("@");
+		return SimpleUser.builder().login(infos.get(0)).password(infos.get(1)).build();
 	}
 	
 	/**

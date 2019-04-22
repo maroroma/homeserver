@@ -1,14 +1,9 @@
 package maroroma.homeserverng.tools.directorymonitoring;
 
-import java.io.File;
-import java.nio.file.ClosedWatchServiceException;
-import java.nio.file.Path;
-import java.nio.file.StandardWatchEventKinds;
-import java.nio.file.WatchEvent;
-import java.nio.file.WatchKey;
-
+import maroroma.homeserverng.tools.files.FileDescriptorFactory;
 import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+
+import java.nio.file.*;
 
 /**
  * {@link Runnable} dédié à la surveillance de répertoire.
@@ -63,9 +58,12 @@ public class DirectoryMonitoringTask implements Runnable {
 			        	// création de l'event spécifique
 			        	DirectoryEvent eventToDispatch = DirectoryEvent.builder()
 			        			.eventType(DirectoryEventType.fromKind(kind))
-			        			.file(new FileDescriptor(
-			        							new File(this.mainMonitor.getDirectoryToWatch(),
-			        									"" + fileName))).build();
+								.file(FileDescriptorFactory
+										.fromPath(this.mainMonitor.getDirectoryToWatch().getAbsolutePath())
+										.combinePath(fileName.toString())
+										.fileDescriptor()
+								)
+								.build();
 			        	
 			        	// récupération des events listeners associé pour appel
 			        	this.mainMonitor.getEventListener(kind).forEach(

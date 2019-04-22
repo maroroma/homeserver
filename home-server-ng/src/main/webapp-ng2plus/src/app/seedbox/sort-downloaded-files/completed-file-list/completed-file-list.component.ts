@@ -58,11 +58,12 @@ export class CompletedFileListComponent implements OnInit, OnChanges, OnDestroy 
     public nbFileToDelete = 0;
 
     constructor(private sortService: SortDownloadedFilesService, private notifyer: NotifyerService,
-        private searchService: PageHeaderSearchService) { }
+        private searchService: PageHeaderSearchService) {
+        this.completedFiles = this.sortService.moveRequestBuilder.completedFiles;
+    }
 
     ngOnInit() {
         this.sortService.loadCompletedFiles().subscribe(res => {
-            this.completedFiles = res.completedFiles;
             this.updateAvailableFileTypes();
             // sinon on maintient le filtre même en quittant l'écran
             this.applyComplexFilter();
@@ -83,7 +84,9 @@ export class CompletedFileListComponent implements OnInit, OnChanges, OnDestroy 
 
     updateList() {
         this.sortService.loadCompletedFiles().subscribe(res => {
-            this.completedFiles = res.completedFiles;
+            this.updateAvailableFileTypes();
+            // sinon on maintient le filtre même en quittant l'écran
+            this.applyComplexFilter();
             this.notifyer.showInfo('Liste mise à jour');
         });
     }
@@ -95,7 +98,7 @@ export class CompletedFileListComponent implements OnInit, OnChanges, OnDestroy 
 
     confirmDeletion(): void {
         this.sortService.deleteCompletedFiles(this.completedFiles.getSelectedItem().map(visualItem => visualItem.item))
-            .subscribe(res => this.completedFiles = res.completedFiles);
+            .subscribe(res => console.log('file deleted'));
     }
 
     goToTargetSelection(): void {

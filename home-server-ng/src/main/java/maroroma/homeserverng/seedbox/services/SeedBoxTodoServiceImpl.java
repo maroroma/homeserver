@@ -7,16 +7,18 @@ import maroroma.homeserverng.seedbox.tools.SeedboxModuleConstants;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.files.FileDescriptorFactory;
+import maroroma.homeserverng.tools.files.FileDescriptorFilter;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.CommonFileFilter;
-import maroroma.homeserverng.tools.helpers.FileAndDirectoryHLP;
 import maroroma.homeserverng.tools.model.*;
+import maroroma.homeserverng.tools.security.SecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +43,9 @@ public class SeedBoxTodoServiceImpl {
 	@Autowired
 	private List<TargetDirectoryLoader> targetLoaders;
 
+	@Autowired
+	private SecurityManager securityManager;
+
 	/**
 	 * Permet de stocker la dernière liste de nom de fichiers scannés.
 	 * <br /> amène l'introduction d'un indicateur {@link TodoFile#isNew()} dans le retour du service, permettant de savoir quel fichier a été ajouté
@@ -55,54 +60,38 @@ public class SeedBoxTodoServiceImpl {
 	 * @return -
 	 */
 	public List<TodoFile> getTodoList() {
-		Assert.isValidDirectory(this.todoDirectory);
 
-		// retour de la fonction
-		List<TodoFile> returnValue = new ArrayList<>();
-		
-		// répertoire à scanner
-		File file = this.todoDirectory.asFile();
-		
-		// liste complete des fichiers du répertoire à scanner
-		List<FileDescriptor> rawTodoListToPopulate = new ArrayList<>();
+		FileDescriptor todoDirectoryDescriptor = this.todoDirectory.asFileDescriptorFactory()
+				.withSecurityManager(this.securityManager)
+				.fileDescriptor();
 
-		// lancement du listing des fichiers.
-		this.listFiles(rawTodoListToPopulate, file, CommonFileFilter.pureFileFilter());
+		List<FileDescriptor> allTodoFiles = Collections.synchronizedList(new ArrayList<>());
+		this.listFiles(allTodoFiles, todoDirectoryDescriptor);
 
-		returnValue = rawTodoListToPopulate
-				.stream()
-				// on convertit en todofile, en checkant si le fichier semble nouveau
-				.map(oneFile -> new TodoFile(oneFile, !this.lastCompletedFileList.contains(oneFile.getFullName())))
+		List<TodoFile> todoFiles = allTodoFiles.stream()
+				.map(oneFile -> new TodoFile(oneFile, !this.lastCompletedFileList.contains(oneFile.getId())))
 				.collect(Collectors.toList());
 
 		// mise à jour de la liste de noms de fichier pour le prochain appel
-		this.lastCompletedFileList = returnValue.stream()
-				.map(oneTodoFile -> oneTodoFile.getFullName())
+		this.lastCompletedFileList = todoFiles.stream()
+				.map(oneTodoFile -> oneTodoFile.getId())
 				.collect(Collectors.toList());
 
-		return returnValue;
+
+		return todoFiles;
 	}
 
-	/**
-	 * Scan récursif d'un répertoire.
-	 * @param toPopulate liste à peupler à par la fonction récursive
-	 * @param srcFile repertoire source
-	 * @param filter fitlre pour le type de fichier à scanner.
-	 */
-	private void listFiles(final List<FileDescriptor> toPopulate, final File srcFile, final FileFilter filter) {
+	private void listFiles(final List<FileDescriptor> toPopulate, final FileDescriptor srcFile) {
+
+		// récupération oneshot de tous les fichiers
+		List<FileDescriptor> allFiles = srcFile.listFiles(FileDescriptorFilter.noFilter());
 
 		// récupération des fichiers
-		File[] listeFilesTodo = srcFile.listFiles(filter);
+		toPopulate.addAll(allFiles.stream().filter(FileDescriptorFilter.fileFilter()).collect(Collectors.toList()));
 
-		FileDescriptor.addToList(toPopulate, listeFilesTodo);
-
-
-		// récupération des sous dossiers
-		File[] listeDirectoryTodo = srcFile.listFiles(CommonFileFilter.pureDirectoryFilter());
-
-		for (File file : listeDirectoryTodo) {
-			this.listFiles(toPopulate, file, filter);
-		}
+		allFiles.parallelStream()
+				.filter(FileDescriptorFilter.directoryFilter())
+				.forEach(oneDirectory -> listFiles(toPopulate, oneDirectory));
 	}
 
 	/**
@@ -124,10 +113,15 @@ public class SeedBoxTodoServiceImpl {
 
 		log.info("déplacement d'un fichier : " + request.toString());
 
+		// résolution répertoire cible
+		FileDescriptor selectedTargetDirectory = FileDescriptorFactory
+				.fromId(request.getTarget().getId())
+				.withSecurityManager(this.securityManager)
+				.fileDescriptor();
 
 		// récupération du loader et controle de la bonne hierarchie
 		TargetDirectoryLoader loader = this.targetLoaders.stream()
-				.filter(tl -> tl.includes(request.getTarget()))
+				.filter(tl -> tl.includes(selectedTargetDirectory))
 				.findFirst()
 				.orElseThrow(() -> new HomeServerException("Le répertoire cible ne fait pas partie des cibles proposées"));
 
@@ -151,6 +145,7 @@ public class SeedBoxTodoServiceImpl {
 	 * @param directoryToParse -
 	 * @return -
 	 */
+	@Deprecated
 	public List<FileDescriptor> getDirectoryDetails(final FileDescriptor directoryToParse) {
 		
 		File toScan = directoryToParse.createFile();
@@ -165,20 +160,9 @@ public class SeedBoxTodoServiceImpl {
 	 * @return -
 	 */
 	public FileDirectoryDescriptor getDirectoryDetails(final String fileId) {
-		File toScan = FileAndDirectoryHLP.decodeFile(fileId);
-		Assert.isValidDirectory(toScan);
-		return FileDirectoryDescriptor.createWithSubDirectories(toScan);
-	}
-
-	/**
-	 * Permet de supprimer un fichier de la todolist.
-	 * @param toDelete -
-	 * @return -
-	 */
-	public List<TodoFile> deleteTodoFile(final FileDescriptor toDelete) {
-		Assert.notNull(toDelete, "toDelete can't be null");
-		Assert.isTrue(toDelete.deleteFile(), "Le fichier n'a pu être supprimé");
-		return this.getTodoList();
+		return FileDescriptorFactory.fromId(fileId)
+				.withSecurityManager(this.securityManager)
+				.fileDirectoryDescriptor(false, true);
 	}
 
 	/**
@@ -188,15 +172,30 @@ public class SeedBoxTodoServiceImpl {
 	 */
 	public List<TodoFile> deleteTodoFile(final String fileId) {
 		Assert.hasLength(fileId, "fileId can't be null");
-		return this.deleteTodoFile(FileAndDirectoryHLP.decodeFileDescriptor(fileId));
+		FileDescriptorFactory.fromId(fileId)
+				.withSecurityManager(this.securityManager)
+				.fileDescriptor()
+				.deleteFile();
+		return this.getTodoList();
 	}
 
 	private MovedFile moveOneFile(MoveRequest request, FileToMoveDescriptor oneFileToMove) {
-		File finalFile = new File(request.getTarget().getFullName() + File.separator + oneFileToMove.getNewName());
+
+		FileDescriptor source = FileDescriptorFactory
+				.fromId(oneFileToMove.getId())
+				.withSecurityManager(this.securityManager)
+				.fileDescriptor();
+
+		FileDescriptor target = FileDescriptorFactory
+				.fromId(request.getTarget().getId())
+				.withSecurityManager(this.securityManager)
+				.combinePath(oneFileToMove.getNewName())
+				.fileDescriptor();
+
 		return MovedFile.builder()
 				.sourceFile(oneFileToMove)
-				.targetFile(new FileDescriptor(finalFile))
-				.success(oneFileToMove.createFile().renameTo(finalFile))
+				.targetFile(target)
+				.success(source.moveFile(target).isCompleted())
 				.finalPath(request.getTarget().getFullName())
 				.build();
 	}

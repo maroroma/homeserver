@@ -70,6 +70,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @param genericFilesToDelete liste des fichiers à supprimer
 	 * @return mapping nom de fichier / status de suppression
 	 */
+	@Deprecated
 	public static Map<File, Boolean> deleteGenericFileWithStatus(final File... genericFilesToDelete) {
 
 		List<File> files = Arrays.asList(genericFilesToDelete);
@@ -102,6 +103,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
+	@Deprecated
 	public static byte[] convertFileToByteArray(final String base64Path) throws HomeServerException {
 		return FileAndDirectoryHLP.convertFileToByteArray(FileAndDirectoryHLP.decodeFile(base64Path));
 	}
@@ -112,6 +114,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
+	@Deprecated
 	public static byte[] convertFileToByteArray(final File toConvert) throws HomeServerException {
 		Assert.isValidFile(toConvert);
 		InputStream is = null;
@@ -140,6 +143,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @param output -
 	 * @throws HomeServerException -
 	 */
+	@Deprecated
 	public static void convertByteArrayToFile(final MultipartFile input, final File output) throws HomeServerException {
 
 		Assert.notNull(input, "bytes can't be null");
@@ -190,6 +194,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @param fileId -
 	 * @return -
 	 */
+	@Deprecated
 	public static File decodeFile(final String fileId) {
 		return new File(decodeFileName(fileId));
 	}
@@ -199,6 +204,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @param fileId -
 	 * @return -
 	 */
+	@Deprecated
 	public static FileDescriptor decodeFileDescriptor(final String fileId) {
 		return new FileDescriptor(decodeFile(fileId));
 	}
@@ -209,6 +215,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @param child -
 	 * @return -
 	 */
+	@Deprecated
 	public static boolean isParentOf(final File parent, final File child) {
 		Assert.notNull(parent, "parent can't be null or empty");
 		Assert.notNull(child, "parent can't be null or empty");
@@ -221,6 +228,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @param child -
 	 * @return -
 	 */
+	@Deprecated
 	public static boolean isParentOf(final String parent, final File child) {
 		Assert.hasLength(parent, "parent can't be null or empty");
 		Assert.notNull(child, "parent can't be null or empty");
@@ -233,6 +241,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @param child -
 	 * @return -
 	 */
+	@Deprecated
 	public static boolean isParentOf(final String parent, final String child) {
 		Assert.hasLength(parent, "parent can't be null or empty");
 		Assert.hasLength(child, "parent can't be null or empty");
@@ -245,6 +254,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @param child -
 	 * @return -
 	 */
+	@Deprecated
 	public static boolean isParentOf(final File parent, final String child) {
 		Assert.notNull(parent, "parent can't be null or empty");
 		Assert.hasLength(child, "parent can't be null or empty");
@@ -257,6 +267,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @param child -
 	 * @return -
 	 */
+	@Deprecated
 	public static boolean isParentOf(final FileDescriptor parent, final FileDescriptor child) {
 		Assert.notNull(parent, "parent can't be null or empty");
 		Assert.notNull(child, "parent can't be null or empty");
@@ -328,6 +339,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @param output -
 	 * @throws HomeServerException -
 	 */
+	@Deprecated
 	public static void copyFileToOuputStream(final File toDownload, final OutputStream output) throws HomeServerException {
 
 		Assert.notNull(output, "output can't be null");
@@ -359,6 +371,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @param response -
 	 * @throws HomeServerException -
 	 */
+	@Deprecated
 	public static void copyFileToOuputStream(final File toDownload, final HttpServletResponse response) throws HomeServerException {
 		Assert.notNull(response, "response can't be null");
 		try {
@@ -373,6 +386,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @param response -
 	 * @throws HomeServerException -
 	 */
+@Deprecated
 	public static void copyFileToOuputStream(final FileDescriptor toDownload, final HttpServletResponse response) throws HomeServerException {
 		Assert.notNull(response, "response can't be null");
 		Assert.isValidFile(toDownload);
@@ -386,6 +400,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @param file -
 	 * @throws HomeServerException -
 	 */
+	@Deprecated
 	public static void copyInputStreamToFile(final InputStream inputStream, final FileDescriptor file) throws HomeServerException {
 		Assert.notNull(inputStream, "inputStream can't be null");
 		Assert.notNull(file, "file can't be null");
@@ -398,6 +413,7 @@ public abstract class FileAndDirectoryHLP {
 	 * @param file -
 	 * @throws HomeServerException -
 	 */
+	@Deprecated
 	public static void copyInputStreamToFile(final InputStream inputStream, final File file) throws HomeServerException {
 		Assert.notNull(inputStream, "inputStream can't be null");
 		Assert.notNull(file, "file can't be null");

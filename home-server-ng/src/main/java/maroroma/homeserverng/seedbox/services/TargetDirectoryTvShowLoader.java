@@ -4,8 +4,8 @@ import maroroma.homeserverng.seedbox.model.TargetDirectory;
 import maroroma.homeserverng.seedbox.model.TargetDirectoryType;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.files.FileDescriptorFilter;
 import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.helpers.CommonFileFilter;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +21,7 @@ public class TargetDirectoryTvShowLoader extends AbstractTargetDirectoryLoader {
 	 * Répertoire contenant les répertoires cibles.
 	 */
 	@Property("homeserver.seedbox.target.directory.tvshows")
-	private HomeServerPropertyHolder targetDirectory;
+	private HomeServerPropertyHolder targetDirectoryPropertyHolder;
 
 	@Property("homeserver.seedbox.target.directory.tvshows.kodialias")
 	private HomeServerPropertyHolder kodiAlias;
@@ -33,12 +33,16 @@ public class TargetDirectoryTvShowLoader extends AbstractTargetDirectoryLoader {
 	@Override
 	public TargetDirectory loadTargetDirectory() {
 		
-		Assert.isValidDirectory(this.targetDirectory);
-		
-		TargetDirectory returnValue = new TargetDirectory(targetDirectory.asFile(), TargetDirectoryType.TVSHOWS);
-				
-		FileDescriptor.addToList(returnValue.getSubDirectories(), targetDirectory.asFile().listFiles(CommonFileFilter.pureDirectoryFilter()));
-		
+		Assert.isValidDirectory(this.targetDirectoryPropertyHolder);
+
+		FileDescriptor targetDirectoryDescriptor = this.targetDirectoryPropertyHolder.asFileDescriptorFactory()
+				.withSecurityManager(this.getSecurityManager())
+				.fileDescriptor();
+
+		TargetDirectory returnValue = new TargetDirectory(targetDirectoryDescriptor, TargetDirectoryType.TVSHOWS);
+
+		returnValue.getSubDirectories()
+				.addAll(targetDirectoryDescriptor.listFiles(FileDescriptorFilter.directoryFilter()));
 		return returnValue;
 	}
 

@@ -94,7 +94,7 @@ public class MusicServiceImpl {
 				.albumName(request.getAlbumName())
 				.artistName(request.getArtistName())
 				.directoryDescriptor(fdd)
-				.id(fdd.getBase64FullName())
+				.id(fdd.getId())
 				.build());
 
 	}

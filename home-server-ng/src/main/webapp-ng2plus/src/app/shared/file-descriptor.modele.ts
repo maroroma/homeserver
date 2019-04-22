@@ -19,7 +19,7 @@ export class FileDescriptor {
         const returnValue = new type();
         returnValue.name = rawFile.name;
         returnValue.fullName = rawFile.fullName;
-        returnValue.id = rawFile.base64FullName;
+        returnValue.id = rawFile.id;
         returnValue.extension = FileDescriptor.getFileExtension(returnValue.name);
         returnValue.size = rawFile.size;
 

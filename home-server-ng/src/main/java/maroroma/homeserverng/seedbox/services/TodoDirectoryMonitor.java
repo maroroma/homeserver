@@ -197,7 +197,7 @@ public class TodoDirectoryMonitor {
     private String buildDownloadLink(FileDescriptor downloadFile) {
         return String.format(this.downloadLinkFormat.getResolvedValue(),
                 this.networkService.getMyIPAddress(),
-                downloadFile.getBase64FullName());
+                downloadFile.getId());
     }
 
 }

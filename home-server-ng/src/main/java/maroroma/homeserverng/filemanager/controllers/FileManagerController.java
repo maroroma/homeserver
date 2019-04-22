@@ -2,11 +2,11 @@ package maroroma.homeserverng.filemanager.controllers;
 
 import maroroma.homeserverng.filemanager.FileManagerModuleDescriptor;
 import maroroma.homeserverng.filemanager.model.DirectoryCreationRequest;
-import maroroma.homeserverng.filemanager.model.FileOperationResult;
 import maroroma.homeserverng.filemanager.model.RenameFileDescriptor;
 import maroroma.homeserverng.filemanager.services.FileManagerServiceImpl;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.files.FileOperationResult;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 import maroroma.homeserverng.tools.model.FileDirectoryDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;

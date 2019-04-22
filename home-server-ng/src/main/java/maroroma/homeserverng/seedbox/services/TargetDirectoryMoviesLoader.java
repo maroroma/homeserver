@@ -4,7 +4,6 @@ import maroroma.homeserverng.seedbox.model.TargetDirectory;
 import maroroma.homeserverng.seedbox.model.TargetDirectoryType;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
-import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.model.FileDescriptor;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +19,7 @@ public class TargetDirectoryMoviesLoader extends AbstractTargetDirectoryLoader {
 	 * Répertoire contenant les répertoires cibles.
 	 */
 	@Property("homeserver.seedbox.target.directory.movies")
-	private HomeServerPropertyHolder targetDirectory;
+	private HomeServerPropertyHolder targetDirectoryPropertyHolder;
 
 	@Property("homeserver.seedbox.target.directory.movies.kodialias")
 	private HomeServerPropertyHolder kodiAlias;
@@ -30,12 +29,13 @@ public class TargetDirectoryMoviesLoader extends AbstractTargetDirectoryLoader {
 	 */
 	@Override
 	public TargetDirectory loadTargetDirectory() {
-		
-		Assert.isValidDirectory(this.targetDirectory);
-		
-		TargetDirectory returnValue = new TargetDirectory(targetDirectory.asFile(), TargetDirectoryType.MOVIES);
-		
-		returnValue.getSubDirectories().add(new FileDescriptor(targetDirectory.asFile()));
+		FileDescriptor targetDirectoryDescriptor = targetDirectoryPropertyHolder.asFileDescriptorFactory()
+				.withSecurityManager(this.getSecurityManager())
+				.fileDescriptor();
+
+		TargetDirectory returnValue = new TargetDirectory(targetDirectoryDescriptor, TargetDirectoryType.MOVIES);
+
+		returnValue.getSubDirectories().add(targetDirectoryDescriptor);
 		
 		return returnValue;
 	}
@@ -48,8 +48,7 @@ public class TargetDirectoryMoviesLoader extends AbstractTargetDirectoryLoader {
 
 	@Override
 	public boolean includes(FileDescriptor fileDescriptor) {
-		return fileDescriptor.createFile()
-				.getAbsolutePath()
+		return fileDescriptor.getFullName()
 				.startsWith(this.loadTargetDirectory().getFullName());
 	}
 }

@@ -1,7 +1,7 @@
 export class ReducedImageInput {
-    public base64FullName: string;
+    public id: string;
 
-    public constructor(base64FullName?: string) {
-        this.base64FullName = base64FullName;
+    public constructor(id?: string) {
+        this.id = id;
     }
 }

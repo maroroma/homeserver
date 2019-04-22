@@ -1,12 +1,12 @@
 package maroroma.homeserverng.seedbox.model;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import maroroma.homeserverng.tools.model.FileDescriptor;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Correspond à un répertoire cible, ie un {@link FileDescriptor} disposant de sous {@link FileDescriptor}.
@@ -32,8 +32,15 @@ public class TargetDirectory extends FileDescriptor {
 	 * @param file fichier correspondant au répertoire.;
 	 * @param theType -
 	 */
+	@Deprecated
 	public TargetDirectory(final File file, final TargetDirectoryType theType) {
 		super(file);
+		this.type = theType;
+		this.subDirectories = new ArrayList<>();
+	}
+
+	public TargetDirectory(final FileDescriptor fileDescriptor, final TargetDirectoryType theType) {
+		super(fileDescriptor);
 		this.type = theType;
 		this.subDirectories = new ArrayList<>();
 	}
