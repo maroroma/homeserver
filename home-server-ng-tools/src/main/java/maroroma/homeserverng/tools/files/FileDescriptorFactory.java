@@ -1,8 +1,6 @@
 package maroroma.homeserverng.tools.files;
 
 import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.model.FileDescriptor;
-import maroroma.homeserverng.tools.model.FileDirectoryDescriptor;
 import maroroma.homeserverng.tools.security.SecurityManager;
 import org.springframework.util.Base64Utils;
 

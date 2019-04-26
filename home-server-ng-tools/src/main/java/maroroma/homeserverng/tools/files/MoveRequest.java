@@ -1,10 +1,10 @@
-package maroroma.homeserverng.tools.model;
-
-import java.util.List;
+package maroroma.homeserverng.tools.files;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * Requête de déplacement.

@@ -1,10 +1,9 @@
 package maroroma.homeserverng.photo.model;
 
-import java.io.File;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import java.io.File;
 
 /**
  * Permet de décrire une photo.

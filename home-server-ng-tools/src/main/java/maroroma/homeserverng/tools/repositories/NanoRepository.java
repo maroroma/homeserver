@@ -7,8 +7,8 @@ import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.model.FileDescriptor;
 import org.springframework.util.ReflectionUtils;
 
 import java.io.IOException;

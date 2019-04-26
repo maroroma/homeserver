@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import maroroma.homeserverng.tools.model.FileDescriptor;
 
 /**
  * Résultat de la suppression d'un fichier.

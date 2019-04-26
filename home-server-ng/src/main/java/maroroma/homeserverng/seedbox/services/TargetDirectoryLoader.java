@@ -1,7 +1,7 @@
 package maroroma.homeserverng.seedbox.services;
 
 import maroroma.homeserverng.seedbox.model.TargetDirectory;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 
 /**
  * Interface de définition d'un chargeur de {@link TargetDirectory}.

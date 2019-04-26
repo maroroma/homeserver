@@ -1,10 +1,11 @@
 package maroroma.homeserverng.tools.model;
 
-import java.io.File;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
+
+import java.io.File;
 
 /**
  * Descriptor pour un fichier uploadé.

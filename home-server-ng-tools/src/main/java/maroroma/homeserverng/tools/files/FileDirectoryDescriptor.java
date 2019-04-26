@@ -1,9 +1,7 @@
-package maroroma.homeserverng.tools.model;
+package maroroma.homeserverng.tools.files;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import maroroma.homeserverng.tools.files.AbstractFileDescriptorAdapter;
-import maroroma.homeserverng.tools.files.FileDescriptorFilter;
 import maroroma.homeserverng.tools.helpers.CommonFileFilter;
 
 import java.io.File;

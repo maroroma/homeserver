@@ -2,7 +2,7 @@ package maroroma.homeserverng.seedbox.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 
 import java.io.File;
 import java.util.ArrayList;

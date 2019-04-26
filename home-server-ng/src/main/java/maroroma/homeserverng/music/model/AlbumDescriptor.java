@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import maroroma.homeserverng.tools.model.FileDescriptor;
-import maroroma.homeserverng.tools.model.FileDirectoryDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileDirectoryDescriptor;
 
 /**
  * Permet de décrire un répertoire correspondant à un album.

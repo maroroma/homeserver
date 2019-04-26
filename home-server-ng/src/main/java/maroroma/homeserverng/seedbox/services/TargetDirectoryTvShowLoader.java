@@ -4,9 +4,9 @@ import maroroma.homeserverng.seedbox.model.TargetDirectory;
 import maroroma.homeserverng.seedbox.model.TargetDirectoryType;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 import maroroma.homeserverng.tools.files.FileDescriptorFilter;
 import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.model.FileDescriptor;
 import org.springframework.stereotype.Component;
 
 /**

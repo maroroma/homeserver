@@ -1,16 +1,15 @@
 package maroroma.homeserverng.photo.model;
 
-import java.io.File;
-import java.time.LocalDate;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import maroroma.homeserverng.photo.tools.PhotoUriHLP;
+import maroroma.homeserverng.tools.files.DirectoryDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 import maroroma.homeserverng.tools.helpers.CommonFileFilter;
-import maroroma.homeserverng.tools.model.DirectoryDescriptor;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+
+import java.io.File;
+import java.time.LocalDate;
 
 /**
  * Implémentation abstraite de {@link DirectoryDescriptor} pour une spécialisation de la gestion des photos.

@@ -3,9 +3,9 @@ package maroroma.homeserverng.seedbox.model;
 
 import lombok.Builder;
 import lombok.Data;
-import maroroma.homeserverng.tools.model.FileDescriptor;
-import maroroma.homeserverng.tools.model.FileToMoveDescriptor;
-import maroroma.homeserverng.tools.model.MoveRequest;
+import maroroma.homeserverng.tools.files.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileToMoveDescriptor;
+import maroroma.homeserverng.tools.files.MoveRequest;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;

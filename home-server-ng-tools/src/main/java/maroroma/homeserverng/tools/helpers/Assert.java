@@ -1,7 +1,7 @@
 package maroroma.homeserverng.tools.helpers;
 
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;

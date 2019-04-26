@@ -7,7 +7,7 @@ import maroroma.homeserverng.scanner.services.ScannerEventEmitter;
 import maroroma.homeserverng.scanner.services.ScannerService;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

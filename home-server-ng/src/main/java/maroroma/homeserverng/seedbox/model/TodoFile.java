@@ -3,7 +3,7 @@ package maroroma.homeserverng.seedbox.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 
 /**
  * DTO pour la gestion des fichiers de la todolist.

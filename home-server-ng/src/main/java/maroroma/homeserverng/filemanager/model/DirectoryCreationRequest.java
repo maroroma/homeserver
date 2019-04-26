@@ -1,7 +1,7 @@
 package maroroma.homeserverng.filemanager.model;
 
 import lombok.Data;
-import maroroma.homeserverng.tools.model.FileDirectoryDescriptor;
+import maroroma.homeserverng.tools.files.FileDirectoryDescriptor;
 
 /**
  * REquete pour la création d'un répertoire.

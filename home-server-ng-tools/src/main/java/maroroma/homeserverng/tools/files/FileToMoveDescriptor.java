@@ -1,4 +1,4 @@
-package maroroma.homeserverng.tools.model;
+package maroroma.homeserverng.tools.files;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,16 +1,15 @@
 package maroroma.homeserverng.scanner.services;
 
-import java.io.File;
-import java.util.List;
-
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.scanner.model.ScanRequest;
 import maroroma.homeserverng.tools.annotations.DevProfile;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * Classe pour le dev et le test des events sur le scanner.

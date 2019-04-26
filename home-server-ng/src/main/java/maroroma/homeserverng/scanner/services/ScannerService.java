@@ -1,11 +1,11 @@
 package maroroma.homeserverng.scanner.services;
 
-import java.util.List;
-
 import maroroma.homeserverng.scanner.model.ScanRequest;
 import maroroma.homeserverng.scanner.model.ScannerColorMode;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
+
+import java.util.List;
 
 /**
  * 

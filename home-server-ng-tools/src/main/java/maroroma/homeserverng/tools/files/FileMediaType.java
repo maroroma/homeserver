@@ -1,4 +1,4 @@
-package maroroma.homeserverng.tools.model;
+package maroroma.homeserverng.tools.files;
 
 /**
  * Enumération permettant d'indiquer quel type de fichier on manipule.

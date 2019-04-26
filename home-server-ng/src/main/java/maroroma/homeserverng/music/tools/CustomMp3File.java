@@ -1,19 +1,18 @@
 package maroroma.homeserverng.music.tools;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.NotSupportedException;
 import com.mpatric.mp3agic.UnsupportedTagException;
-
 import maroroma.homeserverng.music.model.AlbumDescriptor;
 import maroroma.homeserverng.music.model.TrackDescriptor;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 /**
  * Utilitaire pour la gestion d'un {@link Mp3File}.

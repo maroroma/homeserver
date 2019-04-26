@@ -3,7 +3,7 @@ package maroroma.homeserverng.tools.helpers;
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 import org.kamranzafar.jtar.TarEntry;
 import org.kamranzafar.jtar.TarOutputStream;
 import org.springframework.util.Base64Utils;

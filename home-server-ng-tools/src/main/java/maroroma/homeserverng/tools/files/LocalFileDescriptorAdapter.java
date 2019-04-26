@@ -1,7 +1,6 @@
 package maroroma.homeserverng.tools.files;
 
 import maroroma.homeserverng.tools.exceptions.Traper;
-import maroroma.homeserverng.tools.model.FileDescriptor;
 import maroroma.homeserverng.tools.security.SecurityManager;
 
 import java.io.*;

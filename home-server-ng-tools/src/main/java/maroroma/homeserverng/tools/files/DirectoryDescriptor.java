@@ -1,13 +1,13 @@
-package maroroma.homeserverng.tools.model;
+package maroroma.homeserverng.tools.files;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * Extension de {@link FileDescriptor} correspondant à un répertoire.

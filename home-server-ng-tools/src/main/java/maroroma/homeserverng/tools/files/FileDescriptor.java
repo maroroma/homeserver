@@ -1,13 +1,10 @@
-package maroroma.homeserverng.tools.model;
+package maroroma.homeserverng.tools.files;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.tools.exceptions.Traper;
-import maroroma.homeserverng.tools.files.AbstractFileDescriptorAdapter;
-import maroroma.homeserverng.tools.files.FileDescriptorFilter;
-import maroroma.homeserverng.tools.files.FileOperationResult;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.FileCopyUtils;
 

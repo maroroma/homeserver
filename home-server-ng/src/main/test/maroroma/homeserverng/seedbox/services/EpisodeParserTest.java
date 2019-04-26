@@ -2,7 +2,7 @@ package maroroma.homeserverng.seedbox.services;
 
 import maroroma.homeserverng.seedbox.model.EpisodeParseResult;
 import maroroma.homeserverng.seedbox.model.TargetDirectory;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

@@ -5,7 +5,6 @@ import jcifs.smb.SmbFile;
 import jcifs.smb.SmbFileInputStream;
 import jcifs.smb.SmbFileOutputStream;
 import maroroma.homeserverng.tools.exceptions.Traper;
-import maroroma.homeserverng.tools.model.FileDescriptor;
 import maroroma.homeserverng.tools.security.SecurityManager;
 
 import java.io.InputStream;

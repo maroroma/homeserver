@@ -1,15 +1,12 @@
 package maroroma.homeserverng.seedbox.services;
 
 import maroroma.homeserverng.seedbox.model.EpisodeParseResult;
-import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**

@@ -2,7 +2,6 @@ package maroroma.homeserverng.tools.files;
 
 import lombok.Getter;
 import maroroma.homeserverng.tools.exceptions.Traper;
-import maroroma.homeserverng.tools.model.FileDescriptor;
 import maroroma.homeserverng.tools.security.SecurityManager;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.FileCopyUtils;

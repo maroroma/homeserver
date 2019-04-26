@@ -1,7 +1,5 @@
 package maroroma.homeserverng.tools.files;
 
-import maroroma.homeserverng.tools.model.FileDescriptor;
-
 import java.util.function.Predicate;
 
 

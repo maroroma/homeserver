@@ -1,15 +1,14 @@
 package maroroma.homeserverng.music.tools;
 
-import java.io.File;
-import java.util.Arrays;
-
+import maroroma.homeserverng.music.model.AlbumDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
+import maroroma.homeserverng.tools.helpers.Assert;
+import maroroma.homeserverng.tools.helpers.CommonFileFilter;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.util.MimeTypeUtils;
 
-import maroroma.homeserverng.music.model.AlbumDescriptor;
-import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.helpers.CommonFileFilter;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import java.io.File;
+import java.util.Arrays;
 
 /**
  * Regroupe les constantes utilisées pour la normalisation du nommage pour la gestion des tags et répertoire mp3.

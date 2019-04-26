@@ -3,7 +3,7 @@ package maroroma.homeserverng.tools.directorymonitoring;
 
 import lombok.Builder;
 import lombok.Data;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 
 /**
  * Correspond à une notification de modificcation de répertoire.

@@ -2,7 +2,7 @@ package maroroma.homeserverng.filemanager.model;
 
 
 import lombok.Data;
-import maroroma.homeserverng.tools.model.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptor;
 
 /**
  * Correspond à une requête de renommage.
