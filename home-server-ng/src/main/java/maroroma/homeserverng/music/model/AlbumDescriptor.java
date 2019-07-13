@@ -42,11 +42,21 @@ public class AlbumDescriptor {
 	 * Album art associé.
 	 */
 	private FileDescriptor albumart;
-	
+
+	/**
+	 * Folder art associé
+	 */
+	private FileDescriptor folderart;
+
 	/**
 	 * Temps de la dernier rafraichissement pour l'album descriptor.
 	 */
 	private long lastRefresh;
+
+	/**
+	 * L'album est-il complété ? Cela permet de démarrer un transfert vers un répertoire cible
+	 */
+	private boolean completed;
 	
 	
 }

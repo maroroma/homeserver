@@ -295,6 +295,11 @@ public class AdministrationServiceImpl implements AdministrationService {
 		
 	}
 
+	@Override
+	public void clearRepository(String id) throws HomeServerException {
+		this.repoManager.clearRepository(id);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

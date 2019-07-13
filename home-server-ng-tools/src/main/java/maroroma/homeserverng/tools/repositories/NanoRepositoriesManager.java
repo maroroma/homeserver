@@ -1,17 +1,16 @@
 package maroroma.homeserverng.tools.repositories;
 
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.helpers.Assert;
+import maroroma.homeserverng.tools.helpers.FileAndDirectoryHLP;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.helpers.FileAndDirectoryHLP;
 
 /**
  * Classe utilitaire pour la centralisation des {@link NanoRepository}.
@@ -70,6 +69,10 @@ public class NanoRepositoriesManager {
 	public NanoRepository getRepository(final String repoid) {
 		Assert.isTrue(this.nanoRepositories.containsKey(repoid), repoid + " n'existe pas");
 		return this.nanoRepositories.get(repoid);
+	}
+
+	public void clearRepository(final String repoId) throws HomeServerException {
+		this.getRepository(repoId).clear();
 	}
 
 	/**

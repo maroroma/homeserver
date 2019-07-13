@@ -2,7 +2,7 @@ package maroroma.homeserverng.tools.helpers;
 
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.files.FileDescriptor;
-import org.springframework.web.multipart.MultipartFile;
+import maroroma.homeserverng.tools.streaming.input.UploadFile;
 
 import java.io.File;
 import java.util.Arrays;
@@ -99,8 +99,8 @@ public abstract class Assert extends org.springframework.util.Assert {
 	 * @param file -
 	 * @param extensions -
 	 */
-	public static void hasValidExtension(final MultipartFile file, final String... extensions) {
-		Assert.hasValidExtension(file.getOriginalFilename(), extensions);
+	public static void hasValidExtension(final UploadFile file, final String... extensions) {
+		Assert.hasValidExtension(file.getFileName(), extensions);
 	}
 
 	/**

@@ -57,6 +57,7 @@ public abstract class MusicTools {
 	 * Supprime les fichiers d'albumart si déjà présents.
 	 * @param rawDirectory -
 	 */
+	@Deprecated
 	public static void removeExistingAlbumArt(final File rawDirectory) {
 		Assert.notNull(rawDirectory, "rawDirectory can't be null or empty");
 		Assert.isValidDirectory(rawDirectory);

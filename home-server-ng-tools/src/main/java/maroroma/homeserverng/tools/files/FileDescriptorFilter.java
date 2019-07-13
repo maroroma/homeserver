@@ -1,5 +1,7 @@
 package maroroma.homeserverng.tools.files;
 
+import maroroma.homeserverng.tools.helpers.FileExtensionHelper;
+
 import java.util.function.Predicate;
 
 
@@ -14,5 +16,9 @@ public interface FileDescriptorFilter extends Predicate<FileDescriptor> {
 
     static FileDescriptorFilter noFilter() {
         return file -> true;
+    }
+
+    static FileDescriptorFilter withExtensions(String... extensions) {
+        return file -> FileExtensionHelper.hasExtension(file.getName(), extensions);
     }
 }

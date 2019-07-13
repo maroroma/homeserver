@@ -122,6 +122,8 @@ public interface AdministrationService extends HomeServerModuleManager {
 	 */
 	void importRepository(String id, MultipartFile file) throws HomeServerException;
 
+	void clearRepository(String id)  throws HomeServerException;
+
 	/**
 	 * Permet d'exporter l'ensemble des configuration serveur sous la forme d'un fichier.
 	 * @return -

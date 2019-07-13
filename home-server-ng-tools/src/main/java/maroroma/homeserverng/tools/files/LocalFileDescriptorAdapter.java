@@ -7,6 +7,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.stream.Stream;
 
+/**
+ * Implémentation pour les fichiers d'un système local.
+ */
 public class LocalFileDescriptorAdapter extends AbstractFileDescriptorAdapter {
 
     private final File file;
@@ -85,6 +88,11 @@ public class LocalFileDescriptorAdapter extends AbstractFileDescriptorAdapter {
     @Override
     public boolean mkdir() {
         return this.file.mkdir();
+    }
+
+    @Override
+    public boolean mkdirs() {
+        return this.file.mkdirs();
     }
 
     @Override

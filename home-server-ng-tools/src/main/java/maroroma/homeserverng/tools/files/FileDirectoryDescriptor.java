@@ -2,9 +2,7 @@ package maroroma.homeserverng.tools.files;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import maroroma.homeserverng.tools.helpers.CommonFileFilter;
 
-import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,23 +32,6 @@ public class FileDirectoryDescriptor extends FileDescriptor {
 		
 	}
 
-	/**
-	 * Constructeur.
-	 * @param file -
-	 * @param parseFiles -
-	 * @param parseDirectories -
-	 */
-	@Deprecated
-	private FileDirectoryDescriptor(final File file, final boolean parseFiles, final boolean parseDirectories) {
-		super(file);
-		if (parseDirectories) {
-			this.directories = FileDescriptor.toList(CommonFileFilter.listDirectories(file));
-		}
-		if (parseFiles) {
-			this.files = FileDescriptor.toList(CommonFileFilter.listFiles(file));
-		}
-	}
-
 	public FileDirectoryDescriptor(final AbstractFileDescriptorAdapter adapter, final boolean parseFiles, final boolean parseDirectories) {
 		super(adapter);
 
@@ -68,43 +49,4 @@ public class FileDirectoryDescriptor extends FileDescriptor {
 		}
 	}
 	
-	/**
-	 * Créer un {@link FileDirectoryDescriptor} à partir d'un {@link File}. Les sous fichier et sous répertoires sont scannés.
-	 * @param file -
-	 * @return -
-	 */
-	@Deprecated
-	public static FileDirectoryDescriptor create(final File file) {
-		return new FileDirectoryDescriptor(file, true, true);
-	}
-	
-	/**
-	 * Créer un {@link FileDirectoryDescriptor} à partir d'un {@link File}. Ne scanne que les sous répertoires.
-	 * @param file -
-	 * @return -
-	 */
-	@Deprecated
-	public static FileDirectoryDescriptor createWithSubDirectories(final File file) {
-		return new FileDirectoryDescriptor(file, false, true);
-	}
-	
-	/**
-	 * Créer un {@link FileDirectoryDescriptor} à partir d'un {@link File}. Ne scanne que les fichiers.
-	 * @param file -
-	 * @return -
-	 */
-	@Deprecated
-	public static FileDirectoryDescriptor createWithFiles(final File file) {
-		return new FileDirectoryDescriptor(file, true, false);
-	}
-	
-	/**
-	 * Crée un {@link FileDirectoryDescriptor} sans sous grappe.
-	 * @param file -
-	 * @return -
-	 */
-	@Deprecated
-	public static FileDirectoryDescriptor createSimple(final File file) {
-		return new FileDirectoryDescriptor(file, false, false);
-	}
 }

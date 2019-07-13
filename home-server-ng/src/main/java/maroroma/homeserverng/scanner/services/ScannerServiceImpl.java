@@ -76,12 +76,10 @@ public class ScannerServiceImpl implements ScannerService {
 	 */
 	@Override
 	public List<FileDescriptor> listDoneScans() {
-
 		// récupération des fichiers
-		File[] listeFilesTodo = this.doneScansDirectory.asFile().listFiles(CommonFileFilter.pureFileFilter());
-
-		return FileDescriptor.toList(listeFilesTodo);
-		
+		return this.doneScansDirectory.asFileDescriptorFactory()
+				.fileDescriptor()
+				.listFilesOnly();
 	}
 
 	/**

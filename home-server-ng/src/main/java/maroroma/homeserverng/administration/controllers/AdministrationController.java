@@ -231,7 +231,12 @@ public class AdministrationController {
 			@RequestBody final MultipartFile file) throws HomeServerException {
 		this.serviceAdministration.importRepository(id, file);
 	}
-	
+
+	@DeleteMapping(path = "${homeserver.api.path:}/administration/repo/{id}")
+	public void deleteRepository(@PathVariable("id") final String id) throws HomeServerException {
+		this.serviceAdministration.clearRepository(id);
+	}
+
 	/**
 	 * Permet d'exporter l'ensemble des propriétés du serveur.
 	 * @return -

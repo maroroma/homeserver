@@ -25,7 +25,7 @@ export class RepositoryListComponent implements OnInit, OnDestroy {
         .forField('item.shortId').display('id').hideForHD().sortable()
         .forField('item.filename').display('fichier').hideForSD().sortable()
         .forField('item.nbItems').display('nombre d\'éléments').hideForSD().sortable()
-        .forAction().exportButton().importButton()
+        .forAction().exportButton().importButton().deleteButton()
         .buildAll();
 
     /**
@@ -54,6 +54,12 @@ export class RepositoryListComponent implements OnInit, OnDestroy {
         console.log('import !', imported);
         this.adminService.uploadRepository((imported.associatedItem as VisualItem<Repository>).item, imported.files[0])
             .subscribe(res => { this.repositories.updateSourceList(res); });
+    }
+
+    public clearRepository(item: VisualItem<Repository>) {
+        console.log("clear repo ", item);
+        this.adminService.clearRepository(item.item)
+            .subscribe(res => this.repositories.updateSourceList(res));
     }
 
     ngOnDestroy() {

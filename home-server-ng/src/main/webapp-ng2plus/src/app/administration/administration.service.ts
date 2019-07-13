@@ -154,7 +154,7 @@ export class AdministrationService {
     /**
      * Récupération d'une propriété unique.
      */
-    public getProperty(propertyId:string) : Observable<Property> {
+    public getProperty(propertyId: string): Observable<Property> {
         return this.http.get(ApiConstants.ADMIN_CONFIGS_API + '/' + propertyId)
             .map(response => Property.fromRaw(response.json()))
             .catch((err, data) => {
@@ -214,6 +214,17 @@ export class AdministrationService {
             })
             .map(res => {
                 this.notifyer.successfullUpload(file);
+                return res;
+            });
+    }
+
+    public clearRepository(repo: Repository): Observable<Array<Repository>> {
+        return this.http.delete(ApiConstants.ADMIN_REPO_API + '/' + repo.id)
+            .flatMap(reponse => {
+                return this.loadAllRepositories();
+            })
+            .map(res => {
+                this.notifyer.showSuccess('repo ' + repo.id + ' nettoyé');
                 return res;
             });
     }

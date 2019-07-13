@@ -7,12 +7,15 @@
 <div class="media">
     <div class="media-left media-middle">
         <!--<a href="#">-->
-        <img class="media-object" *ngIf="albumDescriptor.albumart" src="api/music/workingdirectories/{{albumDescriptor.directoryDescriptor.id}}/albumart/{{albumDescriptor.albumart?.id}}?lastRefresh={{albumDescriptor.lastRefresh}}" alt="...">
+        <img class="media-object" *ngIf="albumDescriptor.albumart" src="api/music/workingdirectories/{{albumDescriptor.directoryDescriptor.id}}/albumart/?lastRefresh={{albumDescriptor.lastRefresh}}"
+            alt="...">
         <img class="media-object" *ngIf="!albumDescriptor.albumart" src="/assets/img/default_albumart.png" alt="...">
         <!--</a>-->
     </div>
     <div class="media-body">
-        <h4 class="media-heading"><span class="glyphicon glyphicon-user"></span> {{albumDescriptor?.artistName}}</h4>
-        <h4 class="media-heading"><span class="glyphicon glyphicon-cd"></span> {{albumDescriptor?.albumName}}</h4>
+        <h4 class="media-heading">
+            <span class="glyphicon glyphicon-user"></span> {{albumDescriptor?.artistName}}</h4>
+        <h4 class="media-heading">
+            <span class="glyphicon glyphicon-cd"></span> {{albumDescriptor?.albumName}}</h4>
     </div>
 </div>

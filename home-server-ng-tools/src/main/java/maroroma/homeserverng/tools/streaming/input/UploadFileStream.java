@@ -63,4 +63,23 @@ public class UploadFileStream {
         return returnValue.stream();
     }
 
+    public <T> T first(final Function<UploadFile, T> action) throws HomeServerException {
+        try {
+            ServletFileUpload upload = new ServletFileUpload();
+            FileItemIterator iterStream = upload.getItemIterator(request);
+            if(iterStream.hasNext()) {
+                FileItemStream item = iterStream.next();
+                if (!item.isFormField()) {
+                    return action.apply(new UploadFile(item));
+                }
+            }
+        } catch(FileUploadException |IOException e) {
+            throw new HomeServerException("Erreur rencontrée lors de l'upload d'un fichier", e);
+        }
+
+        throw new HomeServerException("Aucun fichier récupéré");
+    }
+
+
+
 }

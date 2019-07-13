@@ -16,6 +16,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -396,5 +397,13 @@ public class NanoRepository {
 			throw new HomeServerException("Erreur de la lecture au format json");
 		}
 	}
+
+    /**
+     * Vide le contenu du repository
+     * @throws HomeServerException -
+     */
+	public void clear() throws HomeServerException {
+	    this.saveToFile(Collections.emptyList());
+    }
 
 }

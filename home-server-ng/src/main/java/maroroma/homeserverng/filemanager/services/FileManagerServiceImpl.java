@@ -164,15 +164,6 @@ public class FileManagerServiceImpl {
 	 * Controlle beaucoup trop simple.
 	 * @param fd -
 	 */
-	private void validateAuthorizedPath(final FileDescriptor fd) {
-		this.validateAuthorizedPath(fd.createFile());
-	}
-
-	/**
-	 * Permet de controller la position du fichier par rapport à l'arborescence autorisée.
-	 * Controlle beaucoup trop simple.
-	 * @param fd -
-	 */
 	private void validateAuthorizedPath(final File fd) {
 		Assert.isTrue(this.rootDirectoriesList.asStringList().stream()
 				.anyMatch(rootPath -> FileAndDirectoryHLP.isParentOf(rootPath, fd)),

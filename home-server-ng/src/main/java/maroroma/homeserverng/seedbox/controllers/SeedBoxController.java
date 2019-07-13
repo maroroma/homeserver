@@ -8,7 +8,6 @@ import maroroma.homeserverng.seedbox.services.SeedBoxTodoServiceImpl;
 import maroroma.homeserverng.seedbox.services.SeedboxRemoteControlServiceImpl;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.files.FileDescriptor;
 import maroroma.homeserverng.tools.files.FileDirectoryDescriptor;
 import maroroma.homeserverng.tools.files.MoveRequest;
 import maroroma.homeserverng.tools.files.MovedFile;
@@ -72,18 +71,7 @@ public class SeedBoxController {
 		
 		return ResponseEntity.ok(todoService.getTargetList());
 	}
-	
-		
-	/**
-	 * Retourne le contenu d'un répertoire.
-	 * @param directoryToParse -
-	 * @return -
-	 */
-	@RequestMapping(value = "${homeserver.api.path:}/seedbox/todo/target/detail", method = { RequestMethod.POST })
-	public ResponseEntity<List<FileDescriptor>> getFolderContent(@RequestBody final FileDescriptor directoryToParse) {
-		return ResponseEntity.ok(this.todoService.getDirectoryDetails(directoryToParse));
-	}
-	
+
 	/**
 	 * Retourne le contenu d'un répertoire.
 	 * @param fileId -

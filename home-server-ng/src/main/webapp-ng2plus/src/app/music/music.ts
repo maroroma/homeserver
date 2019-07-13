@@ -10,13 +10,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommonGUIModule } from './../common-gui/common-gui';
 import { NgModule } from '@angular/core';
+import { AlbumListComponent } from './album-list/album-list.component';
 
 
 @NgModule({
     imports: [CommonGUIModule, FormsModule, CommonModule],
     exports: [MusicComponent],
     declarations: [MusicComponent, AlbumDescriptorComponent, AddAlbumArtComponent, AlbumRendererComponent,
-        UploadTracksComponent, TrackListComponent, DownloadTracksComponent],
+        UploadTracksComponent, TrackListComponent, DownloadTracksComponent, AlbumListComponent],
     providers: [MusicService]
 })
 export class MusicModule { }

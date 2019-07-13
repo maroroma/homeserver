@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -151,6 +150,11 @@ public class FileDescriptor {
 				.build();
 	}
 
+	/**
+	 * Déplacement de fichier
+	 * @param target cible pour le déplacement
+	 * @return -
+	 */
 	public FileOperationResult moveFile(final FileDescriptor target) {
 		return FileOperationResult.builder()
 				.initialFile(this)
@@ -158,81 +162,43 @@ public class FileDescriptor {
 				.build();
 	}
 
+	/**
+	 * Ne liste que les fichiers
+	 * @return -
+	 */
 	public List<FileDescriptor> listFilesOnly() {
 		return this.listFiles(FileDescriptorFilter.fileFilter());
 	}
 
+	/**
+	 * Ne liste que les sous réertoires
+	 * @return -
+	 */
 	public List<FileDescriptor> listDirectoriesOnly() {
 		return this.listFiles(FileDescriptorFilter.directoryFilter());
 	}
 
+	/**
+	 * Liste les fichiers de ce répertoire selon le filtre donné
+	 * @param fileDescriptorFilter -
+	 * @return -
+	 */
 	public List<FileDescriptor> listFiles(FileDescriptorFilter fileDescriptorFilter) {
 		return this.adapter.listAllFileDescriptors()
 				.filter(fileDescriptorFilter)
 				.collect(Collectors.toList());
 	}
 
-	
-
 	/**
-	 * Retourne une liste de {@link FileDescriptor} à partir d'une lise de {@link File}.
-	 * @param array -
+	 * Crée le répertoire
 	 * @return -
 	 */
-	@Deprecated
-	public static List<FileDescriptor> toList(final File[] array) {
-		List<FileDescriptor> returnValue = new ArrayList<>();
-		return addToList(returnValue, array);
-	}
-	
-	/**
-	 * Retourne une liste de {@link FileDescriptor} à partir d'une lise de {@link File}.
-	 * @param array -
-	 * @return -
-	 */
-	@Deprecated
-	public static List<FileDescriptor> toList(final List<File> array) {
-		List<FileDescriptor> returnValue = new ArrayList<>();
-		return addToList(returnValue, array);
-	}
-
-	/**
-	 * Ajoute le tableau de {@link File} dans la liste de {@link FileDescriptor} donnée.
-	 * @param listToPopulate -
-	 * @param files -
-	 * @return -
-	 */
-	@Deprecated
-	public static List<FileDescriptor> addToList(final List<FileDescriptor> listToPopulate, final File[] files) {
-
-		if (files != null) {
-
-			for (File pureFile : files) {
-				listToPopulate.add(new FileDescriptor(pureFile));
-			}
-		}
-
-		return listToPopulate;
-	}
-	
-	/**
-	 * Ajoute le tableau de {@link File} dans la liste de {@link FileDescriptor} donnée.
-	 * @param listToPopulate -
-	 * @param files -
-	 * @return -
-	 */
-	@Deprecated
-	public static List<FileDescriptor> addToList(final List<FileDescriptor> listToPopulate, final List<File> files) {
-
-		if (files != null) {
-			files.forEach(pureFile -> listToPopulate.add(new FileDescriptor(pureFile)));
-		}
-
-		return listToPopulate;
-	}
-
 	public boolean mkdir() {
 		return this.adapter.mkdir();
+	}
+
+	public boolean mkdirs() {
+		return this.adapter.mkdirs();
 	}
 
 	@JsonIgnore
@@ -250,6 +216,11 @@ public class FileDescriptor {
 		return this.adapter.getInputStream();
 	}
 
+	/**
+	 * Copie le contenu du stream en entrée dans le fichier décrit par {@link FileDescriptor}
+	 * @param inputStream stream source à copier dans le fichier
+	 * @return -
+	 */
 	public FileOperationResult copyFrom(final InputStream inputStream) {
 		return FileOperationResult.builder()
 				.initialFile(this)
@@ -257,10 +228,19 @@ public class FileDescriptor {
 				.build();
 	}
 
+	/**
+	 * Copie le contenu du fichier décrit par ce {@link FileDescriptor} dans le flux de sortie fourni
+	 * @param outputStream -
+	 * @return -
+	 */
 	public FileOperationResult copyTo(final OutputStream outputStream) {
 		return FileOperationResult.builder()
 				.initialFile(this)
 				.completed(Traper.trapToBoolean(() -> FileCopyUtils.copy(this.getInputStream(), outputStream)))
 				.build();
+	}
+
+	public boolean exists() {
+		return this.adapter.exists();
 	}
 }

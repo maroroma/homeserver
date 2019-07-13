@@ -11,6 +11,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.stream.Stream;
 
+/**
+ * Implémentation de l'adapteur pour des fichiers smb
+ */
 public class SmbFileDescriptorAdapter extends AbstractFileDescriptorAdapter {
 
     private final SmbFile smbFile;
@@ -93,6 +96,11 @@ public class SmbFileDescriptorAdapter extends AbstractFileDescriptorAdapter {
     @Override
     public boolean mkdir() {
         return Traper.trapToBoolean(this.smbFile::mkdir);
+    }
+
+    @Override
+    public boolean mkdirs() {
+        return Traper.trapToBoolean(this.smbFile::mkdirs);
     }
 
     @Override

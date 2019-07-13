@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -48,8 +49,8 @@ public class MusicController {
 	 */
 	@PatchMapping("${homeserver.api.path:}/music/workingdirectories/{id}/albumart")
 	public ResponseEntity<AlbumDescriptor> addAlbumArt(@PathVariable("id") final String toUpdatePath,
-			@RequestBody final MultipartFile albumart) throws HomeServerException {
-		return ResponseEntity.ok(this.service.addAlbumArt(toUpdatePath, albumart));
+													   final HttpServletRequest request) throws HomeServerException {
+		return ResponseEntity.ok(this.service.addAlbumArt(toUpdatePath, request));
 	}
 
 	
@@ -60,11 +61,12 @@ public class MusicController {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	@GetMapping(value = "${homeserver.api.path:}/music/workingdirectories/{albumpath}/albumart/{albumArtPath}",
+	@GetMapping(value = "${homeserver.api.path:}/music/workingdirectories/{albumId}/albumart",
 			produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})
-	public ResponseEntity<byte[]> getAlbumArt(@PathVariable("albumpath") final String albumPath,
-			@PathVariable("albumArtPath") final String albumArtPath) throws HomeServerException {
-		return ResponseEntity.ok(this.service.getAlbumArt(albumPath, albumArtPath));
+	public void getAlbumArt(
+			@PathVariable("albumId") final String albumPath,
+			final HttpServletResponse response) throws HomeServerException {
+		this.service.getAlbumArt(albumPath, response);
 	}
 	
 	/**
@@ -75,9 +77,8 @@ public class MusicController {
 	 * @throws HomeServerException -
 	 */
 	@PostMapping("${homeserver.api.path:}/music/workingdirectories/{id}/tracks")
-	public ResponseEntity<TrackDescriptor> addTrack(@PathVariable("id") final String toUpdatePath,
-			@RequestBody final MultipartFile track) throws HomeServerException {
-		return ResponseEntity.ok(this.service.addTrack(toUpdatePath, track));
+	public ResponseEntity<TrackDescriptor> addTrack(@PathVariable("id") final String toUpdatePath, final HttpServletRequest request) throws HomeServerException {
+		return ResponseEntity.ok(this.service.addTrack(toUpdatePath, request));
 	}
 	
 	/**
@@ -126,6 +127,27 @@ public class MusicController {
 	@GetMapping(path = "${homeserver.api.path:}/music/workingdirectories/{id}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
 	public ResponseEntity<byte[]> getWorkingDir(@PathVariable("id") final String albumToDownload) throws HomeServerException {
 		return ResponseEntity.ok(this.service.downloadAllFiles(albumToDownload));
+	}
+
+	/**
+	 * Permet de compléter l'album en cours de traitement
+	 * @param albumToComplete identifiant de l'album à compléter
+	 * @return -
+	 * @throws HomeServerException
+	 */
+	@PatchMapping(path = "${homeserver.api.path:}/music/workingdirectories/{id}/complete")
+	public ResponseEntity<AlbumDescriptor> complete(@PathVariable("id") final String albumToComplete) throws HomeServerException {
+		return ResponseEntity.ok(this.service.completeAlbumDescriptor(albumToComplete));
+	}
+
+	/**
+	 * Retourne la liste des albums complétés
+	 * @return -
+	 * @throws HomeServerException -
+	 */
+	@GetMapping(path = "${homeserver.api.path:}/music/workingdirectories")
+	public ResponseEntity<List<AlbumDescriptor>> getCompletedAlbums() throws HomeServerException {
+		return ResponseEntity.ok(this.service.getCompletedAlbumDescriptors());
 	}
 	
 }

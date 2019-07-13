@@ -9,12 +9,10 @@ import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.files.*;
 import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.helpers.CommonFileFilter;
 import maroroma.homeserverng.tools.security.SecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -136,20 +134,6 @@ public class SeedBoxTodoServiceImpl {
 
 
 		return returnValue;
-	}
-
-	/**
-	 * Retourne le détail d'un répertoire contenu dans l'arborescence des cibles.
-	 * @param directoryToParse -
-	 * @return -
-	 */
-	@Deprecated
-	public List<FileDescriptor> getDirectoryDetails(final FileDescriptor directoryToParse) {
-		
-		File toScan = directoryToParse.createFile();
-		Assert.isValidDirectory(toScan);
-		return FileDescriptor.toList(toScan.listFiles(CommonFileFilter.pureDirectoryFilter()));
-		
 	}
 
 	/**

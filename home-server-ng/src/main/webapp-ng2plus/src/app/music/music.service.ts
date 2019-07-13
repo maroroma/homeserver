@@ -87,6 +87,16 @@ export class MusicService {
             });
     }
 
+
+    public getCompletedAlbums(): Observable<Array<AlbumDescriptor>> {
+        return this.http.get(ApiConstants.MUSIC_WORKING_DIR_API)
+            .map(res => JsonTools.map(res.json(), AlbumDescriptor.dfFromRaw))
+            .catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de la récupération des album déjà traités');
+                return Observable.of(null);
+            });
+    }
+
     /**
      * Emission des tracks vers le serveur.
      * Appel multiple en //, avec retour contenant la liste finale des fichiers.
@@ -141,5 +151,18 @@ export class MusicService {
             this.notifyer.showError('Une erreur est survenue lors de la mise à jour des fichiers');
             return Observable.of(new Array<TrackDescriptor>());
         });
+    }
+
+    public completeAlbum(): Observable<AlbumDescriptor> {
+        return this.http.patch(ApiConstants.MUSIC_WORKING_DIR_API + '/'
+            + this.currentAlbumDescriptor.directoryDescriptor.id
+            + '/complete', {})
+            .map(res => {
+                return AlbumDescriptor.dfFromRaw(res.json())
+            }).catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de la complétion de l\'album');
+                return Observable.of(null);
+            });
+
     }
 }

@@ -59,7 +59,7 @@ public final class CustomMp3File {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	public static CustomMp3File readOnly(final File file) throws HomeServerException {
+	public static CustomMp3File readOnly(final FileDescriptor file) throws HomeServerException {
 		return new CustomMp3File(file, true);
 	}
 
@@ -69,7 +69,7 @@ public final class CustomMp3File {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	public static CustomMp3File rw(final File file) throws HomeServerException {
+	public static CustomMp3File rw(final FileDescriptor file) throws HomeServerException {
 		return new CustomMp3File(file, false);
 	}
 
@@ -79,8 +79,10 @@ public final class CustomMp3File {
 	 * @param isReadOnly détermine si le fichier ne doit pas être modifié
 	 * @throws HomeServerException -
 	 */
-	private CustomMp3File(final File file, final boolean isReadOnly) throws HomeServerException {
-		this.originalFile = file;
+	private CustomMp3File(final FileDescriptor file, final boolean isReadOnly) throws HomeServerException {
+
+		this.originalFile = new File(file.getFullName());
+		Assert.isTrue(file.exists(), "file doesn't exists");
 		this.readOnly = isReadOnly;
 		
 		// si lecture seule
@@ -95,7 +97,7 @@ public final class CustomMp3File {
 			// sinon, création d'un fichier temporaire, résultat du renommage du fichier original.
 			// cela permet lors de l'application des modifications de récréer le fichier avec les modifications avec le nom
 			// original
-			this.tmpFile = new File(file.getAbsolutePath() + WORKFILE_EXTENSION);
+			this.tmpFile = new File(file.getFullName() + WORKFILE_EXTENSION);
 			try {
 				// renommage du fichier original en fichier temporaire
 				Files.move(this.originalFile.toPath(), this.tmpFile.toPath());
