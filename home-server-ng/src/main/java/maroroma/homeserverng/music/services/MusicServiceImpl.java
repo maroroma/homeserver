@@ -18,6 +18,7 @@ import maroroma.homeserverng.tools.files.FileDirectoryDescriptor;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.FileAndDirectoryHLP;
 import maroroma.homeserverng.tools.helpers.FileExtensionHelper;
+import maroroma.homeserverng.tools.helpers.Tuple;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
 import maroroma.homeserverng.tools.security.SecurityManager;
 import maroroma.homeserverng.tools.streaming.input.UploadFileStream;
@@ -44,8 +45,15 @@ public class MusicServiceImpl {
 	/**
 	 * Répertoire de travail principal.
 	 */
-	@Property("homeserver.music.directory")
+	@Property("homeserver.music.working.directory")
 	private HomeServerPropertyHolder workingDir;
+
+	/**
+	 * Répertoire où sont recopiés les musiques une fois traitées
+	 */
+	@Property("homeserver.music.target.directory")
+	private HomeServerPropertyHolder targetDir;
+
 
 	/**
 	 * Repository pour la gestion des différents.
@@ -114,7 +122,10 @@ public class MusicServiceImpl {
 		albumDescriptor.setCompleted(true);
 
 		// sauvegarde et retour
-		return this.albumRepo.saveAndReturn(albumDescriptor);
+		this.albumRepo.update(albumDescriptor);
+
+		return this.albumRepo.find(albumId);
+
 	}
 
 	/**
@@ -351,9 +362,45 @@ public class MusicServiceImpl {
 	}
 
 
+	/**
+	 * Recopie d'un album ok vers le repo de musique
+	 * @param albumToArchiveId
+	 * @return
+	 * @throws HomeServerException
+	 */
+	public AlbumDescriptor archive(String albumToArchiveId) throws HomeServerException {
+		// validation de l'album directory
+		AlbumDescriptor albumDescriptor = this.validateAndReturnAlbumDescriptor(albumToArchiveId);
+
+		// album à archiver
+		FileDescriptor albumToArchive = FileDescriptorFactory.fromId(albumDescriptor.getId())
+				.withSecurityManager(this.securityManager)
+				.fileDescriptor();
+
+		// répertoire cible
+		FileDescriptor targetDirectory = this.targetDir.asFileDescriptorFactory()
+				.withSecurityManager(this.securityManager)
+				.combinePath(albumDescriptor.getArtistName())
+				.combinePath(albumDescriptor.getDirectoryDescriptor().getName())
+				.fileDescriptor();
 
 
+		if (!targetDirectory.exists()) {
+			targetDirectory.mkdirs();
+		}
 
+		// recopie des différents fichiers
+		albumToArchive.listFilesOnly()
+				.stream()
+				.map(oneTrackToArchiveDescriptor -> Tuple.from(oneTrackToArchiveDescriptor, this.targetDir.asFileDescriptorFactory()
+						.withSecurityManager(this.securityManager)
+						.combinePath(albumDescriptor.getArtistName())
+						.combinePath(albumDescriptor.getDirectoryDescriptor().getName())
+						.combinePath(oneTrackToArchiveDescriptor.getName())
+						.fileDescriptor()))
+				.forEach(copyPair -> copyPair.getItem1().copyTo(copyPair.getItem2()));
 
+		return albumDescriptor;
 
+	}
 }

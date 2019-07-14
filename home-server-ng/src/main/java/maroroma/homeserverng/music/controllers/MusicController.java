@@ -141,6 +141,17 @@ public class MusicController {
 	}
 
 	/**
+	 * transfert d'un album vers le répertoire final
+	 * @param albumToComplete
+	 * @return
+	 * @throws HomeServerException
+	 */
+	@PostMapping(path = "${homeserver.api.path:}/music/workingdirectories/{id}/archive")
+	public ResponseEntity<AlbumDescriptor> archive(@PathVariable("id") final String albumToComplete) throws HomeServerException {
+		return ResponseEntity.ok(this.service.archive(albumToComplete));
+	}
+
+	/**
 	 * Retourne la liste des albums complétés
 	 * @return -
 	 * @throws HomeServerException -

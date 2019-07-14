@@ -1,16 +1,9 @@
-<!--<div>
-    <div>IMG</div>
-    <div>{{albumDescriptor?.artistName}}</div>
-    <div>{{albumDescriptor?.albumName}}</div>
-</div>-->
-
-<div class="media">
+<div class="media" (click)="clickOnAlbum()">
     <div class="media-left media-middle">
-        <!--<a href="#">-->
-        <img class="media-object" *ngIf="albumDescriptor.albumart" src="api/music/workingdirectories/{{albumDescriptor.directoryDescriptor.id}}/albumart/?lastRefresh={{albumDescriptor.lastRefresh}}"
+        <img class="media-object" *ngIf="albumDescriptor.albumart"
+            src="api/music/workingdirectories/{{albumDescriptor.directoryDescriptor.id}}/albumart/?lastRefresh={{albumDescriptor.lastRefresh}}"
             alt="...">
         <img class="media-object" *ngIf="!albumDescriptor.albumart" src="/assets/img/default_albumart.png" alt="...">
-        <!--</a>-->
     </div>
     <div class="media-body">
         <h4 class="media-heading">

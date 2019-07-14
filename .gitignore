@@ -2,7 +2,7 @@
 # Created by https://www.gitignore.io/api/eclipse
 
 ### Eclipse ###
-
+node_modules
 .metadata
 #bin/
 target/

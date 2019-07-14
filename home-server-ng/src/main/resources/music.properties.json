@@ -1,7 +1,13 @@
 [ {
-  "id" : "homeserver.music.directory",
-  "value" : "D:/temp/TEST/music/musicworkingdir",
-  "description" : "Emplacement pour les fichiers musicaux",
+  "id" : "homeserver.music.working.directory",
+  "value" : "D:/PERSO/homeserver/MUSIK",
+  "description" : "Emplacement de travail pour les fichiers musicaux",
+  "readOnly" : false,
+  "moduleId" : "music"
+}, {
+  "id" : "homeserver.music.target.directory",
+  "value" : "smb://192.168.0.52/Volume_1/musik/",
+  "description" : "Emplacement cible pour les fichiers musicaux",
   "readOnly" : false,
   "moduleId" : "music"
 }, {

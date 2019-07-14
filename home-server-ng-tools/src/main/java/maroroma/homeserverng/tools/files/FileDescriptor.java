@@ -240,6 +240,10 @@ public class FileDescriptor {
 				.build();
 	}
 
+	public FileOperationResult copyTo(final FileDescriptor target) {
+		return copyTo(target.getOutputStream());
+	}
+
 	public boolean exists() {
 		return this.adapter.exists();
 	}

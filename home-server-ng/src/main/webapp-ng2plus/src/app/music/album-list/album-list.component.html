@@ -1,9 +1,18 @@
-<h1>YOLO</h1>
+<div class="album-list-container">
+    <div class="row" *ngFor="let albumDescriptor of dataSource.displayList">
+        <div>
+            <homeserver-album-renderer [albumDescriptor]="albumDescriptor.item">
+            </homeserver-album-renderer>
+        </div>
+        <div>
+            <button class="btn btn-primary album-list-button" (click)="archiveAlbum(albumDescriptor.item)">
+                <span class="glyphicon glyphicon-share-alt"></span>
+            </button>
+        </div>
+    </div>
+</div>
 
 <div class="edit-zone">
-    <button class="btn btn-primary btn-lg" (click)="gotoUploadTracks()" [disabled]="!albumDescriptor?.albumart" [ngClass]="{'animated flip': albumDescriptor?.albumart}">
-        <span class="glyphicon glyphicon-share-alt"></span>
-    </button>
     <button class="btn btn-primary btn-lg" (click)="addNewAlbum()">
         <span class="glyphicon glyphicon-plus"></span>
     </button>

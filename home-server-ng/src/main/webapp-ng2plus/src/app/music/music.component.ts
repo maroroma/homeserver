@@ -14,7 +14,6 @@ export class MusicComponent implements OnInit {
         .addStep('AlbumArt')
         .addStep('Upload')
         .addStep('Tags')
-        .addStep('Download')
         .build();
 
     constructor() { }

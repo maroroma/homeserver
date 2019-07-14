@@ -1,12 +1,12 @@
 [ {
-  "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxGdWxsbWV0YWwgQWxjaGVtaXN0XEZ1bGxtZXRhbCBBbGNoZW1pc3QgLSBPU1QgMDE=",
-  "albumName" : "OST 01",
-  "artistName" : "Fullmetal Alchemist",
+  "id" : "RDpcUEVSU09caG9tZXNlcnZlclxNVVNJS1xBdXJvcmFcQXVyb3JhIC0gSW5mZWN0aW9ucyBPZiBBIERpZmZlcmVudCBLaW5kIC0gU3RlcCAx",
+  "albumName" : "Infections Of A Different Kind - Step 1",
+  "artistName" : "Aurora",
   "directoryDescriptor" : {
-    "name" : "Fullmetal Alchemist - OST 01",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\Fullmetal Alchemist\\Fullmetal Alchemist - OST 01",
+    "name" : "Aurora - Infections Of A Different Kind - Step 1",
+    "fullName" : "D:\\PERSO\\homeserver\\MUSIK\\Aurora\\Aurora - Infections Of A Different Kind - Step 1",
     "httpRessource" : null,
-    "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxGdWxsbWV0YWwgQWxjaGVtaXN0XEZ1bGxtZXRhbCBBbGNoZW1pc3QgLSBPU1QgMDE=",
+    "id" : "RDpcUEVSU09caG9tZXNlcnZlclxNVVNJS1xBdXJvcmFcQXVyb3JhIC0gSW5mZWN0aW9ucyBPZiBBIERpZmZlcmVudCBLaW5kIC0gU3RlcCAx",
     "size" : 0,
     "files" : null,
     "directories" : null,
@@ -15,57 +15,22 @@
   },
   "albumart" : {
     "name" : "albumart.jpg",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\Fullmetal Alchemist\\Fullmetal Alchemist - OST 01\\albumart.jpg",
+    "fullName" : "D:\\PERSO\\homeserver\\MUSIK\\Aurora\\Aurora - Infections Of A Different Kind - Step 1\\albumart.jpg",
     "httpRessource" : null,
-    "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxGdWxsbWV0YWwgQWxjaGVtaXN0XEZ1bGxtZXRhbCBBbGNoZW1pc3QgLSBPU1QgMDFcYWxidW1hcnQuanBn",
+    "id" : "RDpcUEVSU09caG9tZXNlcnZlclxNVVNJS1xBdXJvcmFcQXVyb3JhIC0gSW5mZWN0aW9ucyBPZiBBIERpZmZlcmVudCBLaW5kIC0gU3RlcCAxXGFsYnVtYXJ0LmpwZw==",
     "size" : 0,
     "directory" : false,
     "file" : false
   },
   "folderart" : {
     "name" : "folder.jpg",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\Fullmetal Alchemist\\Fullmetal Alchemist - OST 01\\folder.jpg",
+    "fullName" : "D:\\PERSO\\homeserver\\MUSIK\\Aurora\\Aurora - Infections Of A Different Kind - Step 1\\folder.jpg",
     "httpRessource" : null,
-    "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2RpclxGdWxsbWV0YWwgQWxjaGVtaXN0XEZ1bGxtZXRhbCBBbGNoZW1pc3QgLSBPU1QgMDFcZm9sZGVyLmpwZw==",
+    "id" : "RDpcUEVSU09caG9tZXNlcnZlclxNVVNJS1xBdXJvcmFcQXVyb3JhIC0gSW5mZWN0aW9ucyBPZiBBIERpZmZlcmVudCBLaW5kIC0gU3RlcCAxXGZvbGRlci5qcGc=",
     "size" : 0,
     "directory" : false,
     "file" : false
   },
-  "lastRefresh" : 1557589837582,
-  "completed" : false
-}, {
-  "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2Rpclx6ZXplclx6ZXplciAtIHplcnplcnplcg==",
-  "albumName" : "zerzerzer",
-  "artistName" : "zezer",
-  "directoryDescriptor" : {
-    "name" : "zezer - zerzerzer",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\zezer\\zezer - zerzerzer",
-    "httpRessource" : null,
-    "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2Rpclx6ZXplclx6ZXplciAtIHplcnplcnplcg==",
-    "size" : 0,
-    "files" : null,
-    "directories" : null,
-    "directory" : false,
-    "file" : false
-  },
-  "albumart" : {
-    "name" : "albumart.jpg",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\zezer\\zezer - zerzerzer\\albumart.jpg",
-    "httpRessource" : null,
-    "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2Rpclx6ZXplclx6ZXplciAtIHplcnplcnplclxhbGJ1bWFydC5qcGc=",
-    "size" : 0,
-    "directory" : false,
-    "file" : false
-  },
-  "folderart" : {
-    "name" : "folder.jpg",
-    "fullName" : "D:\\temp\\TEST\\music\\musicworkingdir\\zezer\\zezer - zerzerzer\\folder.jpg",
-    "httpRessource" : null,
-    "id" : "RDpcdGVtcFxURVNUXG11c2ljXG11c2ljd29ya2luZ2Rpclx6ZXplclx6ZXplciAtIHplcnplcnplclxmb2xkZXIuanBn",
-    "size" : 0,
-    "directory" : false,
-    "file" : false
-  },
-  "lastRefresh" : 1557589984589,
-  "completed" : false
+  "lastRefresh" : 1563134119485,
+  "completed" : true
 } ]

@@ -135,7 +135,7 @@ export class MusicService {
      * @returns {Observable<Array<TrackDescriptor>>} -
      * @memberof MusicService
      */
-    public updateTracks(trackList: Array<TrackDescriptor>): Observable<Array<TrackDescriptor>> {
+    public updateTracks(trackList: Array<TrackDescriptor>): Observable<AlbumDescriptor> {
         // génération des x appels
 
         const responsesPromises = trackList.map(oneFile => {
@@ -144,15 +144,19 @@ export class MusicService {
                 + '/tracks', oneFile);
         });
 
-        return Observable.forkJoin(responsesPromises).flatMap(res => {
-            this.notifyer.showSuccess('Tous les fichiers ont bien été mis à jour');
-            return this.getTracks();
-        }).catch((err, data) => {
-            this.notifyer.showError('Une erreur est survenue lors de la mise à jour des fichiers');
-            return Observable.of(new Array<TrackDescriptor>());
-        });
+        return Observable.forkJoin(responsesPromises)
+            .flatMap(res => {
+                this.notifyer.showSuccess('Tous les fichiers ont bien été mis à jour');
+                return this.completeAlbum();
+            }).catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de la mise à jour des fichiers');
+                return Observable.of(new AlbumDescriptor());
+            });
     }
 
+    /**
+     * Marque l'album comme étant complété
+     */
     public completeAlbum(): Observable<AlbumDescriptor> {
         return this.http.patch(ApiConstants.MUSIC_WORKING_DIR_API + '/'
             + this.currentAlbumDescriptor.directoryDescriptor.id
@@ -161,6 +165,22 @@ export class MusicService {
                 return AlbumDescriptor.dfFromRaw(res.json())
             }).catch((err, data) => {
                 this.notifyer.showError('Une erreur est survenue lors de la complétion de l\'album');
+                return Observable.of(null);
+            });
+
+    }
+
+    /**
+     * Marque l'album comme étant complété
+     */
+    public archiveAlbum(albumDescriptor: AlbumDescriptor): Observable<AlbumDescriptor> {
+        return this.http.post(ApiConstants.MUSIC_WORKING_DIR_API + '/'
+            + albumDescriptor.directoryDescriptor.id
+            + '/archive', {})
+            .map(res => {
+                return AlbumDescriptor.dfFromRaw(res.json())
+            }).catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de l\'archivage de l\'album');
                 return Observable.of(null);
             });
 
