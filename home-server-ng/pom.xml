@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>maro.roma</groupId>
 		<artifactId>home-server-ng-parent</artifactId>
-		<version>0.0.27-SNAPSHOT</version>
+		<version>0.0.28-SNAPSHOT</version>
 		<relativePath>../home-server-ng-parent/pom.xml</relativePath>
 	</parent>
 
@@ -189,7 +189,7 @@
 								<exec executable="cmd"
 									dir="${project.basedir}/src/main/webapp-ng2plus" osfamily="windows"
 									resultproperty="cmdresult">
-									<arg line="/c ng build" />
+									<arg line="/c ng build --environment=prod" />
 								</exec>
 								<!-- <loadfile property="grunt.status" srcFile="grunt.status" /> 
 									<echo>${grunt.status}</echo> <delete file="grunt.status" quiet="true" /> 
