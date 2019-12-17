@@ -2,6 +2,7 @@ package maroroma.homeserverng.tools.files;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
  *
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class FileDirectoryDescriptor extends FileDescriptor {
 	
@@ -25,13 +27,6 @@ public class FileDirectoryDescriptor extends FileDescriptor {
 	 */
 	private List<FileDescriptor> directories;
 	
-	/**
-	 * Constructeur.
-	 */
-	public FileDirectoryDescriptor() {
-		
-	}
-
 	public FileDirectoryDescriptor(final AbstractFileDescriptorAdapter adapter, final boolean parseFiles, final boolean parseDirectories) {
 		super(adapter);
 
@@ -49,4 +44,5 @@ public class FileDirectoryDescriptor extends FileDescriptor {
 		}
 	}
 	
+
 }
