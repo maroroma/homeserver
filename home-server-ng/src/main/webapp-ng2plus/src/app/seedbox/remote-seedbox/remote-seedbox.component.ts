@@ -11,6 +11,7 @@ import { AdministrationService } from '../../administration/administration.servi
 import { PopupComponent } from '../../common-gui/popup/popup.component';
 import { NewTorrent } from './models/new-torrent.modele';
 import { NotifyerService } from '../../common-gui/notifyer/notifyer.service';
+import { HostListener } from '@angular/core';
 
 @Component({
     selector: 'homeserver-remote-seedbox',
@@ -85,5 +86,18 @@ export class RemoteSeedBoxComponent implements OnInit, OnDestroy {
         this.remoteService
             .removeTorrents(this.runningTorrents.getRawSelectedItems())
             .subscribe(() => this.notifyer.showInfo('Demande de suppression des torrents émise'));
+    }
+
+    @HostListener('window:keydown', ['$event'])
+    public handleKeyBoard(event?: KeyboardEvent): void {
+        if (this.popupAddTorrent.isVisible) {
+            if (event.key === 'Enter') {
+                this.addMagnetLink();
+            }
+        } else {
+            if (event.key === '+') {
+                this.displayAddTorrent();
+            }
+        }
     }
 }

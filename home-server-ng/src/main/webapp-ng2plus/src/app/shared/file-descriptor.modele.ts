@@ -5,7 +5,7 @@ export class FileDescriptor {
     private static readonly MOVIE_EXTENSIONS = ['mp4', 'avi', 'mkv'];
     private static readonly FILE_EXTENSIONS = ['txt', 'nfo'];
     private static readonly SUBTITLE_EXTENSIONS = ['srt'];
-    private static readonly MUSIC_EXTENSIONS = ['mp3', 'wav'];
+    private static readonly MUSIC_EXTENSIONS = ['mp3', 'wav', 'ogg'];
     private static readonly IMAGE_EXTENSIONS = ['jpeg', 'png', 'jpg'];
     private static readonly ARCHIVE_EXTENSIONS = ['tar', 'zip', 'rar', '7z'];
 

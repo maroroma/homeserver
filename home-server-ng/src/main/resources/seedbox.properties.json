@@ -1,6 +1,6 @@
 [ {
   "id" : "homeserver.seedbox.target.directory.movies",
-  "value" : "smb://192.168.0.52/Volume_1/musik/TEMP/",
+  "value" : "C:/tmp/homeserver/Videos/Films",
   "description" : "Emplacement cible de base pour les fichiers de type films",
   "readOnly" : false,
   "moduleId" : "seedbox"

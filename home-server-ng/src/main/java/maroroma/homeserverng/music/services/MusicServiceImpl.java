@@ -1,11 +1,14 @@
 package maroroma.homeserverng.music.services;
 
 import lombok.extern.log4j.Log4j2;
+import maroroma.homeserverng.music.model.AddTracksFromExistingSourceRequest;
 import maroroma.homeserverng.music.model.AlbumDescriptor;
 import maroroma.homeserverng.music.model.TrackDescriptor;
 import maroroma.homeserverng.music.tools.CustomMp3File;
 import maroroma.homeserverng.music.tools.LastRefreshPreProcessor;
 import maroroma.homeserverng.music.tools.MusicTools;
+import maroroma.homeserverng.seedbox.model.TodoFile;
+import maroroma.homeserverng.seedbox.services.SeedBoxTodoServiceImpl;
 import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
@@ -67,6 +70,9 @@ public class MusicServiceImpl {
 
 	@Autowired
 	private SecurityManager securityManager;
+
+	@Autowired
+	private SeedBoxTodoServiceImpl seedBoxTodoService;
 
 	/**
 	 * Préparation du répertoire de travail pour cet album.
@@ -204,13 +210,57 @@ public class MusicServiceImpl {
 	}
 
 	/**
+	 * Retourne la liste des fichiers en attente de tri qui sont des mp3
+	 * @return -
+	 */
+	public List<TodoFile> listExistingTodoFiles() {
+		return this.seedBoxTodoService.getTodoList(FileExtensionHelper.MP3);
+	}
+
+	/**
+	 * Permet de copier les fichiers spécifiés dans l'album en cours de préparation
+	 * @param albumId identifiant de l'album
+	 * @param addTracksFromExistingSourceRequest
+	 * @return liste des morceaux déplacés et préparés
+	 * @throws HomeServerException
+	 */
+	public List<TrackDescriptor> addExistingTracks(final String albumId, final AddTracksFromExistingSourceRequest addTracksFromExistingSourceRequest) throws HomeServerException {
+		AlbumDescriptor albumDescriptor = validateAndReturnAlbumDescriptor(albumId);
+		Assert.notNull(addTracksFromExistingSourceRequest, "request can't be null");
+		Assert.isNotEmpty(addTracksFromExistingSourceRequest.getFileIdsForWorkingDirectory());
+
+		// liste des fichiers à recopier
+		List<FileDescriptor> srcFiles = addTracksFromExistingSourceRequest.getFileIdsForWorkingDirectory()
+				.stream()
+				.map(oneId ->
+						FileDescriptorFactory.fromId(oneId).withSecurityManager(securityManager)
+								.fileDescriptor())
+				.collect(Collectors.toList());
+
+		// recopie des fichiers, application des tags par défaut et création des tracks descriptors
+		return srcFiles.stream()
+				.map(oneSrcFile -> FileDescriptorFactory
+						.fromPath(albumDescriptor.getDirectoryDescriptor().getFullName())
+						.combinePath(oneSrcFile.getName())
+						.fileDescriptor()
+						.copyFrom(oneSrcFile)
+						.crashIfFailed()
+						.getInitialFile())
+				.map(oneTargetFile -> Traper.trap(() -> CustomMp3File.rw(oneTargetFile)
+						.prefillTags(albumDescriptor)
+						.save()
+						.createTrackDescriptor()))
+				.collect(Collectors.toList());
+	}
+
+	/**
 	 * Ajoute un fichier mp3 dans le répertoire de travail.
 	 * @param toUpdatePath -
 	 * @param oneTrack -
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	public TrackDescriptor addTrack(final String toUpdatePath, final HttpServletRequest oneTrack) throws HomeServerException {
+	public TrackDescriptor addUploadedTrack(final String toUpdatePath, final HttpServletRequest oneTrack) throws HomeServerException {
 
 		// récup de l'album
 		AlbumDescriptor albumDescriptor = validateAndReturnAlbumDescriptor(toUpdatePath);

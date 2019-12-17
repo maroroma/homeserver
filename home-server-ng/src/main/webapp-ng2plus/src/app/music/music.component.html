@@ -2,19 +2,19 @@
 
 <div class="page-content">
     <homeserver-steps-bar #stepsBar [steps]="steps"></homeserver-steps-bar>
-    <div *ngIf="steps[0].isCurrent">
+    <div *ngIf="steps.isCurrent(0)">
         <homeserver-album-list (goToNextStep)="stepsBar.nextStep()"></homeserver-album-list>
     </div>
-    <div *ngIf="steps[1].isCurrent">
+    <div *ngIf="steps.isCurrent(1)">
         <homeserver-album-descriptor (goToNextStep)="stepsBar.nextStep()"></homeserver-album-descriptor>
     </div>
-    <div *ngIf="steps[2].isCurrent">
+    <div *ngIf="steps.isCurrent(2)">
         <homeserver-add-albumart (goToNextStep)="stepsBar.nextStep()"></homeserver-add-albumart>
     </div>
-    <div *ngIf="steps[3].isCurrent">
-        <homeserver-upload-tracks (goToNextStep)="stepsBar.nextStep()"></homeserver-upload-tracks>
+    <div *ngIf="steps.isCurrent(3)">
+        <homeserver-select-tracks (goToNextStep)="stepsBar.nextStep()"></homeserver-select-tracks>
     </div>
-    <div *ngIf="steps[4].isCurrent">
+    <div *ngIf="steps.isCurrent(4)">
         <homeserver-track-list (goToNextStep)="stepsBar.firstStep()"></homeserver-track-list>
     </div>
 </div>

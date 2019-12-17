@@ -35,6 +35,7 @@ export class ApiConstants {
 
     public static readonly MUSIC_API = ApiConstants.ROOT_API + 'music/';
     public static readonly MUSIC_WORKING_DIR_API = ApiConstants.MUSIC_API + 'workingdirectories';
+    public static readonly MUSIC_AVAILABLE_FILES_API = ApiConstants.MUSIC_API + 'availablefiles';
 
 
     public static readonly REDUCER_API = ApiConstants.ROOT_API + 'reducer/';

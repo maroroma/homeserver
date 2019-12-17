@@ -9,6 +9,7 @@ import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.files.*;
 import maroroma.homeserverng.tools.helpers.Assert;
+import maroroma.homeserverng.tools.helpers.FileExtensionHelper;
 import maroroma.homeserverng.tools.security.SecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,16 @@ public class SeedBoxTodoServiceImpl {
 	private List<String> lastCompletedFileList = new ArrayList<>();
 
 
+	/**
+	 * Retourne la liste des fichiers à trier, filtré sur les extensions données
+	 * @param extensions extension pour filtrage
+	 * @return liste filtrée
+	 */
+	public List<TodoFile> getTodoList(String... extensions) {
+		return this.getTodoList().stream()
+				.filter(oneTodoFile -> FileExtensionHelper.hasExtension(oneTodoFile.getName(), extensions))
+				.collect(Collectors.toList());
+	}
 
 	/**
 	 * Retourne la liste des fichiers à trier.

@@ -9,6 +9,8 @@ import { NotifyerService } from './../common-gui/notifyer/notifyer.service';
 import { Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { ImportedFiles } from '../common-gui/import-file-button/imported-files.modele';
+import { FileDescriptor } from '../shared/file-descriptor.modele';
+import { AddTracksFromExistingSourceRequest } from './models/add-tracks-from-existing-source-request.modele';
 
 @Injectable()
 export class MusicService {
@@ -83,6 +85,31 @@ export class MusicService {
             })
             .catch((err, data) => {
                 this.notifyer.showError('Une erreur est survenue lors de la récupération des morceaux');
+                return Observable.of(null);
+            });
+    }
+
+    /**
+     * R2cupère la liste des fichiers mp3 présents sur le serveur et prêts à etre triés
+     */
+    public getAvailableTracks(): Observable<Array<FileDescriptor>> {
+        return this.http.get(ApiConstants.MUSIC_AVAILABLE_FILES_API)
+            .map(res => {
+                return JsonTools.map(res.json(), FileDescriptor.fromRaw);
+            })
+            .catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de la récupération des morceaux existants');
+                return Observable.of(null);
+            });
+    }
+
+    public copyAvailableTracksSelection(selectedFiles: Array<FileDescriptor>): Observable<Array<TrackDescriptor>> {
+        return this.http.post(ApiConstants.MUSIC_WORKING_DIR_API + '/'
+            + this.currentAlbumDescriptor.directoryDescriptor.id + '/existingtracks',
+            new AddTracksFromExistingSourceRequest(selectedFiles.map(oneFile => oneFile.id)))
+            .map(res => JsonTools.map(res.json(), TrackDescriptor.dfFromRaw))
+            .catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de la récupération des morceaux existants');
                 return Observable.of(null);
             });
     }
@@ -171,7 +198,7 @@ export class MusicService {
     }
 
     /**
-     * Marque l'album comme étant complété
+     * Marque l'album comme étant complété, et le recopie dans le répertoire cible
      */
     public archiveAlbum(albumDescriptor: AlbumDescriptor): Observable<AlbumDescriptor> {
         return this.http.post(ApiConstants.MUSIC_WORKING_DIR_API + '/'

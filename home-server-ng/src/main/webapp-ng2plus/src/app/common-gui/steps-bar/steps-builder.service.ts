@@ -1,4 +1,5 @@
 import { Step } from './step.modele';
+import { Steps } from './steps.modele';
 export class StepsBuilder {
     steps: Array<Step> = new Array<Step>();
     currentBuildingStep = new Step();
@@ -23,10 +24,12 @@ export class StepsBuilder {
     }
 
 
-    public build(): Array<Step> {
+    public build(): Steps {
 
+        const stepsToBuild = new Steps();
+
+        // application index et recherche d'un index pour une étape sélectionnée
         let currentIndex = 0;
-
         this.steps.forEach((oneBuilder, index) => {
             oneBuilder.index = index;
             if (oneBuilder.isCurrent) {
@@ -34,14 +37,17 @@ export class StepsBuilder {
             }
         });
 
+
+        // si pas de sélection, on choisit la première par défaut
         if (currentIndex === 0) {
             this.steps[0].isCurrent = true;
         }
 
-        StepsBuilder.setCurrentStep(currentIndex, this.steps);
+        stepsToBuild.steps = this.steps;
+        stepsToBuild.setCurrentStep(currentIndex);
 
 
-        return this.steps;
+        return stepsToBuild;
 
     }
 

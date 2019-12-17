@@ -15,8 +15,8 @@ export class SeedboxComponent implements OnInit {
 
     ngOnInit() {
         this.subMenuItems = SubMenuBuilder
-            .item('TODO').selected()
-            .item('Downloads')
+            .item('TODO')
+            .item('Downloads').selected()
             .buildSubMenu();
     }
 }

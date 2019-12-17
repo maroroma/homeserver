@@ -1,0 +1,10 @@
+<div class="edit-zone-target">
+    <homeserver-file-browser #fileBrowser [starterDirectory]="starterMockDirectory" [options]="fileBrowserOptions" (selectedFilesChange)="onSelectedFilesChange($event)"></homeserver-file-browser>
+</div>
+
+<div class="edit-zone">
+    <button class="btn btn-primary btn-lg" (click)="copyTracks()" [disabled]="!selecteFilesToCopy || selecteFilesToCopy.length == 0"
+        [ngClass]="{'animated flip': selecteFilesToCopy?.length > 0}">
+        <span class="glyphicon glyphicon-share-alt"></span>
+    </button>
+</div>

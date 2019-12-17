@@ -1,46 +1,34 @@
 import { StepsBuilder } from './steps-builder.service';
 import { Step } from './step.modele';
 import { Component, OnInit, Input } from '@angular/core';
+import { Steps } from './steps.modele';
 
 @Component({
     selector: 'homeserver-steps-bar',
-    templateUrl: 'steps-bar.component.html',
-    styleUrls: ['steps-bar.component.scss']
+    templateUrl: 'steps-bar.component-v2.html',
+    styleUrls: ['steps-bar.component-v2.scss']
 })
 export class StepsBarComponent implements OnInit {
 
     @Input()
-    public steps: Array<Step>;
+    public steps: Steps;
+
 
     constructor() { }
 
     ngOnInit() { }
 
-    private findCurrentStepIndex(): number {
-        return this.steps.filter(step => step.isCurrent)[0].index;
-    }
 
     public nextStep(): void {
-        const currentIndex = this.findCurrentStepIndex();
-        if (currentIndex < this.steps.length - 1) {
-            this.setCurrentStep(currentIndex + 1);
-        }
+        this.steps.nextStep();
     }
 
     public previousStep(): void {
-        const currentIndex = this.findCurrentStepIndex();
-        if (currentIndex - 1 >= 0) {
-            this.setCurrentStep(currentIndex - 1);
-        }
-    }
-
-    private setCurrentStep(newCurrentStepIndex: number): void {
-        this.steps[newCurrentStepIndex].current();
-        StepsBuilder.setCurrentStep(newCurrentStepIndex, this.steps);
+        this.steps.previousStep();
     }
 
     public firstStep(): void {
-        this.setCurrentStep(0);
+        this.steps.setCurrentStep(0);
     }
 }
 

@@ -1,12 +1,12 @@
 [ {
-  "id" : "RDpcUEVSU09caG9tZXNlcnZlclxNVVNJS1xBdXJvcmFcQXVyb3JhIC0gSW5mZWN0aW9ucyBPZiBBIERpZmZlcmVudCBLaW5kIC0gU3RlcCAx",
-  "albumName" : "Infections Of A Different Kind - Step 1",
-  "artistName" : "Aurora",
+  "id" : "QzpcdG1wXGhvbWVzZXJ2ZXJcbXAzdGFnd29ya2luZ2RpclxlZnplcnpyZVxlZnplcnpyZSAtIGV6ZXJ6cnpyZQ==",
+  "albumName" : "ezerzrzre",
+  "artistName" : "efzerzre",
   "directoryDescriptor" : {
-    "name" : "Aurora - Infections Of A Different Kind - Step 1",
-    "fullName" : "D:\\PERSO\\homeserver\\MUSIK\\Aurora\\Aurora - Infections Of A Different Kind - Step 1",
+    "name" : "efzerzre - ezerzrzre",
+    "fullName" : "C:\\tmp\\homeserver\\mp3tagworkingdir\\efzerzre\\efzerzre - ezerzrzre",
     "httpRessource" : null,
-    "id" : "RDpcUEVSU09caG9tZXNlcnZlclxNVVNJS1xBdXJvcmFcQXVyb3JhIC0gSW5mZWN0aW9ucyBPZiBBIERpZmZlcmVudCBLaW5kIC0gU3RlcCAx",
+    "id" : "QzpcdG1wXGhvbWVzZXJ2ZXJcbXAzdGFnd29ya2luZ2RpclxlZnplcnpyZVxlZnplcnpyZSAtIGV6ZXJ6cnpyZQ==",
     "size" : 0,
     "files" : null,
     "directories" : null,
@@ -15,22 +15,22 @@
   },
   "albumart" : {
     "name" : "albumart.jpg",
-    "fullName" : "D:\\PERSO\\homeserver\\MUSIK\\Aurora\\Aurora - Infections Of A Different Kind - Step 1\\albumart.jpg",
+    "fullName" : "C:\\tmp\\homeserver\\mp3tagworkingdir\\efzerzre\\efzerzre - ezerzrzre\\albumart.jpg",
     "httpRessource" : null,
-    "id" : "RDpcUEVSU09caG9tZXNlcnZlclxNVVNJS1xBdXJvcmFcQXVyb3JhIC0gSW5mZWN0aW9ucyBPZiBBIERpZmZlcmVudCBLaW5kIC0gU3RlcCAxXGFsYnVtYXJ0LmpwZw==",
+    "id" : "QzpcdG1wXGhvbWVzZXJ2ZXJcbXAzdGFnd29ya2luZ2RpclxlZnplcnpyZVxlZnplcnpyZSAtIGV6ZXJ6cnpyZVxhbGJ1bWFydC5qcGc=",
     "size" : 0,
     "directory" : false,
     "file" : false
   },
   "folderart" : {
     "name" : "folder.jpg",
-    "fullName" : "D:\\PERSO\\homeserver\\MUSIK\\Aurora\\Aurora - Infections Of A Different Kind - Step 1\\folder.jpg",
+    "fullName" : "C:\\tmp\\homeserver\\mp3tagworkingdir\\efzerzre\\efzerzre - ezerzrzre\\folder.jpg",
     "httpRessource" : null,
-    "id" : "RDpcUEVSU09caG9tZXNlcnZlclxNVVNJS1xBdXJvcmFcQXVyb3JhIC0gSW5mZWN0aW9ucyBPZiBBIERpZmZlcmVudCBLaW5kIC0gU3RlcCAxXGZvbGRlci5qcGc=",
+    "id" : "QzpcdG1wXGhvbWVzZXJ2ZXJcbXAzdGFnd29ya2luZ2RpclxlZnplcnpyZVxlZnplcnpyZSAtIGV6ZXJ6cnpyZVxmb2xkZXIuanBn",
     "size" : 0,
     "directory" : false,
     "file" : false
   },
-  "lastRefresh" : 1563134119485,
+  "lastRefresh" : 1576614427942,
   "completed" : true
 } ]

@@ -7,9 +7,6 @@
         </div>
     </div>
     <div class="card-block">
-        <!--<ul class="list-group">
-            <li class="list-group-item" *ngFor="let oneFile of filesToUpload">{{oneFile.name}}</li>
-        </ul>-->
         <ul class="list-group edit-zone-target">
             <li class="list-group-item justify-content-between mp3-file" [ngClass]="{'mp3-file-selected': completedFile.selected}" *ngFor="let completedFile of filesToUpload?.displayList"
                 (click)="filesToUpload.toggleItemSelection(completedFile)">

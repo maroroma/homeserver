@@ -2,10 +2,19 @@
     <div class="image-viewer-background">
     </div>
     <div class="image-viewer-body" *ngIf="urlResolver != null && imageList != null && currentIndex != -1">
-        <img src="{{urlResolver(imageList[currentIndex])}}" class="image-viewer-image-to-display" (click)="next()" [homeserverAutofocus]="true" (keyup)="onKeyUp()" />
-        <button class="btn btn-secondary action action-left-middle" (click)="previous()"><span class="glyphicon glyphicon-chevron-left" ></span></button>
-        <button class="btn btn-secondary action action-right-middle" (click)="next()"><span class="glyphicon glyphicon-chevron-right" ></span></button>
-        <button class="btn btn-warning action action-right-top circle" (click)="hide()"><span class="glyphicon glyphicon-remove-circle" ></span></button>
-        <a class="btn btn-primary action action-left-top" href="{{urlResolver(imageList[currentIndex])}}" download="{{imageList[currentIndex].name}}"><span class="glyphicon glyphicon-floppy-disk" ></span></a>
+        <img src="{{urlResolver(imageList[currentIndex])}}" class="image-viewer-image-to-display" (click)="next()" [homeserverAutofocus]="true"
+            (keyup)="onKeyUp()" />
+        <button class="btn btn-sm btn-secondary action action-left-middle" (click)="previous()">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </button>
+        <button class="btn btn-sm btn-secondary action action-right-middle" (click)="next()">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </button>
+        <button class="btn btn-sm btn-warning action action-right-top" (click)="hide()">
+            <span class="glyphicon glyphicon-remove-circle"></span>
+        </button>
+        <a class="btn btn-sm btn-primary action action-left-top" href="{{urlResolver(imageList[currentIndex])}}" download="{{imageList[currentIndex].name}}">
+            <span class="glyphicon glyphicon-floppy-disk"></span>
+        </a>
     </div>
 </div>

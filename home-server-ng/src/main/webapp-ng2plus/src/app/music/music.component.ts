@@ -9,10 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class MusicComponent implements OnInit {
 
     public steps = new StepsBuilder()
-        .addStep('Déjà ok')
+        .addStep('Archivables')
         .addStep('Album')
         .addStep('AlbumArt')
-        .addStep('Upload')
+        .addStep('Tracks!')
         .addStep('Tags')
         .build();
 

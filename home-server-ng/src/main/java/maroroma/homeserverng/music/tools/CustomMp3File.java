@@ -7,6 +7,7 @@ import com.mpatric.mp3agic.UnsupportedTagException;
 import maroroma.homeserverng.music.model.AlbumDescriptor;
 import maroroma.homeserverng.music.model.TrackDescriptor;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.exceptions.Traper;
 import maroroma.homeserverng.tools.files.FileDescriptor;
 import maroroma.homeserverng.tools.helpers.Assert;
 
@@ -200,7 +201,7 @@ public final class CustomMp3File {
 				.file(new FileDescriptor(this.originalFile))
 				.newFileName(this.originalFile.getName())
 				.trackName(this.innerMp3file.getId3v2Tag().getTitle())
-				.trackNumber(Integer.parseInt(this.innerMp3file.getId3v2Tag().getTrack()))
+				.trackNumber(Traper.trapOr(() -> Integer.parseInt(this.innerMp3file.getId3v2Tag().getTrack()), () -> 0))
 				.artistName(this.innerMp3file.getId3v2Tag().getArtist())
 				.albumName(this.innerMp3file.getId3v2Tag().getAlbum())
 				.build();

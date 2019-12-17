@@ -216,6 +216,11 @@ public class FileDescriptor {
 		return this.adapter.getInputStream();
 	}
 
+
+	public FileOperationResult copyFrom(FileDescriptor sourceFileDescriptor) {
+		return copyFrom(sourceFileDescriptor.getInputStream());
+	}
+
 	/**
 	 * Copie le contenu du stream en entrée dans le fichier décrit par {@link FileDescriptor}
 	 * @param inputStream stream source à copier dans le fichier

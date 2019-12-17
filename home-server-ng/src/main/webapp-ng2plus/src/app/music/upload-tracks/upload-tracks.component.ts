@@ -59,10 +59,5 @@ export class UploadTracksComponent implements OnInit {
         chainCall.oneItemCompleted.subscribe(res => {
             this.notifyer.waitingInfo('upload du fichier ' + res.item2 + '/' + nbFileToUpload);
         });
-
-        // this.musicService.sendTracks(this.filesToUpload.getRawItemsFromSource().map(candidate => candidate.basicFile))
-        //     .subscribe(res => {
-        //         this.goToNextStep.emit();
-        //     });
     }
 }

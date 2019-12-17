@@ -1,9 +1,11 @@
 package maroroma.homeserverng.music.controllers;
 
 import maroroma.homeserverng.music.MusicModuleDescriptor;
+import maroroma.homeserverng.music.model.AddTracksFromExistingSourceRequest;
 import maroroma.homeserverng.music.model.AlbumDescriptor;
 import maroroma.homeserverng.music.model.TrackDescriptor;
 import maroroma.homeserverng.music.services.MusicServiceImpl;
+import maroroma.homeserverng.seedbox.model.TodoFile;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,13 +74,33 @@ public class MusicController {
 	/**
 	 * Upload d'un fichier mp3 dans le répertoire de travail.
 	 * @param toUpdatePath -
-	 * @param track -
 	 * @return -
 	 * @throws HomeServerException -
 	 */
 	@PostMapping("${homeserver.api.path:}/music/workingdirectories/{id}/tracks")
 	public ResponseEntity<TrackDescriptor> addTrack(@PathVariable("id") final String toUpdatePath, final HttpServletRequest request) throws HomeServerException {
-		return ResponseEntity.ok(this.service.addTrack(toUpdatePath, request));
+		return ResponseEntity.ok(this.service.addUploadedTrack(toUpdatePath, request));
+	}
+
+	/**
+	 * Retourne la liste des fichiers disponibles depuis le serveur
+	 * @return -
+	 */
+	@GetMapping("${homeserver.api.path:}/music/availablefiles")
+	public ResponseEntity<List<TodoFile>> availableFilesToAddFromServer() {
+		return ResponseEntity.ok(this.service.listExistingTodoFiles());
+	}
+
+	/**
+	 * Ajout des fichiers séletionnés à l'album. Les fichiers sont issus directement du serveur.
+	 * @param albumId -
+	 * @param addTracksFromExistingSourceRequest -
+	 * @return -
+	 * @throws HomeServerException
+	 */
+	@PostMapping("${homeserver.api.path:}/music/workingdirectories/{id}/existingtracks")
+	public ResponseEntity<List<TrackDescriptor>> addTrackFromExistingFiles(@PathVariable("id") final String albumId, @RequestBody AddTracksFromExistingSourceRequest addTracksFromExistingSourceRequest) throws HomeServerException {
+		return ResponseEntity.ok(this.service.addExistingTracks(albumId, addTracksFromExistingSourceRequest));
 	}
 	
 	/**

@@ -65,7 +65,6 @@ export class ImageViewerComponent implements OnInit {
 
     @HostListener('window:keydown', ['$event'])
     public handleKeyBoard(event?: KeyboardEvent): void {
-        console.log(event);
         if (event.key === 'Escape') {
             this.hide();
         }

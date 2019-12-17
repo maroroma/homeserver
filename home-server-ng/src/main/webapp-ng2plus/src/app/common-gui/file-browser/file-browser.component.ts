@@ -81,6 +81,12 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
     public selectedDirectoryChange = new EventEmitter<DirectoryDescriptor>();
 
     /**
+     * Event levé lorsque la sélection des fichiers à évoluée
+     */
+    @Output()
+    public selectedFilesChange = new EventEmitter<Array<FileDescriptor>>();
+
+    /**
      * Gestion des options pour l'affichage.
      */
     @Input()
@@ -314,6 +320,7 @@ export class FileBrowserComponent implements OnInit, OnChanges, OnDestroy {
     public refreshGlobalSelectionStatus(): void {
         this.someFileSelected = this.directoryList.hasItemSelected || this.fileList.hasItemSelected;
         this.nbFilesSelected = this.directoryList.nbItemSelected + this.fileList.nbItemSelected;
+        this.selectedFilesChange.emit(this.getAllSelectedFiles());
     }
 
     public reinitGlobalSelectionStatus(): void {

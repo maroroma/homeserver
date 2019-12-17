@@ -40,7 +40,7 @@ export class AlbumListComponent implements OnInit {
     }
 
     public archiveAlbum(albumDescriptor: AlbumDescriptor) {
-        this.notifyer.waitingInfo('mise à jour des fichiers en cours');
+        this.notifyer.waitingInfo('archivage des fichiers en cours');
         this.musicService.archiveAlbum(albumDescriptor).subscribe(res =>
             this.notifyer.showSuccess('album archivé')
         );

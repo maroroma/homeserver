@@ -3,9 +3,11 @@ package maroroma.homeserverng.tools.helpers;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.files.FileDescriptor;
 import maroroma.homeserverng.tools.streaming.input.UploadFile;
+import org.springframework.util.CollectionUtils;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 /**
@@ -64,6 +66,7 @@ public abstract class Assert extends org.springframework.util.Assert {
 	 * @param fileDescriptor -
 	 * @param extensions -
 	 */
+	@Deprecated
 	public static void isValidFile(final FileDescriptor fileDescriptor, final String... extensions) {
 		isValidFile(fileDescriptor.createFile(), extensions);
 	}
@@ -132,6 +135,10 @@ public abstract class Assert extends org.springframework.util.Assert {
 	public static void isValidFileOrDirectory(final FileDescriptor file) {
 		Assert.notNull(file, "le fichier ne peut être null");
 		Assert.isValidFileOrDirectory(file.createFile());
+	}
+
+	public static void isNotEmpty(final Collection<?> collection) {
+		Assert.isTrue(!CollectionUtils.isEmpty(collection), "oollection can't be empty");
 	}
 
 }
