@@ -6,7 +6,7 @@
   "moduleId" : "music"
 }, {
   "id" : "homeserver.music.target.directory",
-  "value" : "C:\\tmp\\homeserver\\mp3tagtarget",
+  "value" : "C:/tmp/homeserver/mp3tagtarget",
   "description" : "Emplacement cible pour les fichiers musicaux",
   "readOnly" : false,
   "moduleId" : "music"
