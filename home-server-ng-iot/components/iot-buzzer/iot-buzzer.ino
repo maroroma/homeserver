@@ -2,6 +2,7 @@
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
+#include "Buzzer.cpp"
 
 #ifndef STASSID
 #define STASSID "SFR_B020"
@@ -20,10 +21,12 @@ const int led = LED_BUILTIN;
 const int pinBuzzer = 5;
 const String moduleName = "homeserver-iot-buzzer";
 
-bool isBuzzerOn = false;
+//bool isBuzzerOn = false;
+
+Buzzer buzzer = Buzzer(pinBuzzer);
 
 void buzz() {
-  if(isBuzzerOn) {
+  if(buzzer.isOn()) {
     for (int i = 0; i <80; i++)
     {
       digitalWrite (pinBuzzer, HIGH) ; //send tone
@@ -57,12 +60,14 @@ void handleStatus() {
 }
 
 void handleBuzzerOn() {
-  isBuzzerOn = true;
+//  isBuzzerOn = true;
+  buzzer.switchOn();
   server.send(200, "application/json", "{buzzer:true}");
 }
 
 void handleBuzzerOff() {
-  isBuzzerOn = false;
+//  isBuzzerOn = false;
+  buzzer.switchOff();
   server.send(200, "application/json", "{buzzer:false}");
 }
 
