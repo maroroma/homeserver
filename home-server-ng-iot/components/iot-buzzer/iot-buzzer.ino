@@ -30,9 +30,12 @@ void handleRoot() {
 }
 
 void handleStatus() {
-  String message = moduleName + " status\n";
-  message += "IP address: " + WiFi.localIP().toString();
-  server.send(200, "text/plain", message);
+  String statusMessage = "{componentName:\"" + moduleName + "\",";
+  statusMessage += "ipAddress:\""+WiFi.localIP().toString()+"\",";
+  statusMessage += "buzzerStatus:";
+  statusMessage += buzzer.isOn() ? "true" : "false";
+  statusMessage += "}";
+  server.send(200, "application/json", statusMessage);
 }
 /**
  * Activation du buzzer
@@ -85,7 +88,7 @@ void setup(void) {
     Serial.println("MDNS responder started");
   }
 
-  server.on("/", handleRoot);
+  server.on("/", handleStatus);
   server.on("/status", handleStatus);
 
   // pilotage du buzzer via les urls suivantes
