@@ -20,32 +20,8 @@ const int led = LED_BUILTIN;
 // pin pour le buzzer
 const int pinBuzzer = 5;
 const String moduleName = "homeserver-iot-buzzer";
-
-//bool isBuzzerOn = false;
-
+// gestion du buzzer sonore
 Buzzer buzzer = Buzzer(pinBuzzer);
-
-void buzz() {
-  if(buzzer.isOn()) {
-    for (int i = 0; i <80; i++)
-    {
-      digitalWrite (pinBuzzer, HIGH) ; //send tone
-      delay (1) ;
-      digitalWrite (pinBuzzer, LOW) ; //no tone
-      delay (1) ;
-    }
-    for (int i = 0; i <100; i++) 
-    {
-      digitalWrite (pinBuzzer, HIGH) ;
-      delay (2) ;
-      digitalWrite (pinBuzzer, LOW) ;
-      delay (2) ;
-    }
-  } else {
-    digitalWrite (pinBuzzer, HIGH) ;
-  }
-}
-
 
 void handleRoot() {
   digitalWrite(led, LOW);
@@ -58,15 +34,18 @@ void handleStatus() {
   message += "IP address: " + WiFi.localIP().toString();
   server.send(200, "text/plain", message);
 }
-
+/**
+ * Activation du buzzer
+ */
 void handleBuzzerOn() {
-//  isBuzzerOn = true;
   buzzer.switchOn();
   server.send(200, "application/json", "{buzzer:true}");
 }
 
+/**
+ * Désactivation du buzzer
+ */
 void handleBuzzerOff() {
-//  isBuzzerOn = false;
   buzzer.switchOff();
   server.send(200, "application/json", "{buzzer:false}");
 }
@@ -92,9 +71,6 @@ void setup(void) {
   // configuration des pins
   pinMode(led, OUTPUT);
   
-  pinMode(pinBuzzer, OUTPUT);
-
-  
   digitalWrite(led, HIGH);
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
@@ -111,6 +87,8 @@ void setup(void) {
 
   server.on("/", handleRoot);
   server.on("/status", handleStatus);
+
+  // pilotage du buzzer via les urls suivantes
   server.on("/buzzer/on", handleBuzzerOn);
   server.on("/buzzer/off", handleBuzzerOff);
 
@@ -126,5 +104,6 @@ void setup(void) {
 void loop(void) {
   server.handleClient();
   MDNS.update();
-  buzz();
+  // inclusion dans la boucle de traitement
+  buzzer.buzz();
 }
