@@ -51,7 +51,7 @@ public abstract class AbstractIotComponent<T extends AbstractIotComponent<T>> {
     protected RestTemplate restTemplate() {
         return new RestTemplateBuilder()
                 .setConnectTimeout(1000)
-                .setReadTimeout(1000)
+                .setReadTimeout(3000)
                 .build();
     }
 

@@ -14,14 +14,12 @@ public class BuzzerIotComponent extends AbstractIotComponent<BuzzerIotComponent>
 
     public boolean buzzOn(String ledTemplate) {
         return basicGet(uriBuilder -> uriBuilder
-                .path("buzzer")
-                .path("on")
+                .pathSegment("buzzer", "on")
                 .queryParam("ledTemplate", ledTemplate));
     }
 
     public boolean buzzOff() {
         return basicGet(uriBuilder -> uriBuilder
-                .path("buzzer")
-                .path("off"));
+                .pathSegment("buzzer", "off"));
     }
 }
