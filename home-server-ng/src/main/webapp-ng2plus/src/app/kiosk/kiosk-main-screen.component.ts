@@ -16,9 +16,11 @@ export class KioskMainScreenComponent implements OnInit {
 
     public displayKiosk(): void {
         this.isKiosk = true;
+        document.documentElement.requestFullscreen();
     }
 
     public hideKiosk(): void {
         this.isKiosk = false;
+        document.exitFullscreen();
     }
 }
