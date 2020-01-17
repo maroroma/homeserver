@@ -1,4 +1,5 @@
 <homeserver-page-header [subMenuItems]="subMenuItems"></homeserver-page-header>
 <div class="page-content">
     <homeserver-iot-board *ngIf="subMenuItems[0].selected"></homeserver-iot-board>
+    <homeserver-iot-management *ngIf="subMenuItems[1].selected"></homeserver-iot-management>
 </div>
