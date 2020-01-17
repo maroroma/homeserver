@@ -1,3 +1,5 @@
+#include <HomeServerClient.h>
+
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
@@ -15,8 +17,9 @@ const char* password = STAPSK;
 ESP8266WebServer server(80);
 
 // MELCHIOR
-IPAddress melchiorAddress(192,168,1,52);
-WiFiClient melchiorClient;
+//IPAddress melchiorAddress(192,168,1,52);
+//WiFiClient melchiorClient;
+
 
 // CONSTANTES
 // pin pour la led interne
@@ -26,6 +29,7 @@ const int pinBuzzer = 5;
 const String moduleName = "homeserver-iot-buzzer";
 // gestion du buzzer sonore
 Buzzer buzzer = Buzzer(pinBuzzer);
+HomeServerClient homeserverClient(moduleName);
 
 void handleRoot() {
   digitalWrite(led, LOW);
@@ -98,10 +102,11 @@ void setup(void) {
   server.begin();
 
   // inscription auprès du homeserver
-  if (melchiorClient.connect(melchiorAddress, 80)) {
-      melchiorClient.println("GET /api/iot/register?id=" + WiFi.macAddress() +"&ipAddress=" + WiFi.localIP().toString() + "&componentType=BUZZER&name=" + moduleName + " HTTP/1.0");
-      melchiorClient.println();
-  }
+//  if (melchiorClient.connect(melchiorAddress, 80)) {
+//      melchiorClient.println("GET /api/iot/register?id=" + WiFi.macAddress() +"&ipAddress=" + WiFi.localIP().toString() + "&componentType=BUZZER&name=" + moduleName + " HTTP/1.0");
+//      melchiorClient.println();
+//  }
+  homeserverClient.registerToHomeServer();
 }
 
 void loop(void) {
