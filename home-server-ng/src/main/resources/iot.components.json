@@ -1,0 +1,11 @@
+[ {
+  "id" : "test",
+  "componentType" : "BUZZER",
+  "ipAddress" : "monip",
+  "name" : "firstNamedComponent"
+}, {
+  "id" : "test2",
+  "componentType" : "BUZZER",
+  "ipAddress" : "monip",
+  "name" : "secondNamedComponent"
+} ]

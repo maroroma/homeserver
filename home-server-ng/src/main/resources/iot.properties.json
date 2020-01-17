@@ -1,0 +1,13 @@
+[ {
+  "id" : "homeserver.iot.components.store",
+  "value" : "${homeserver.config.dir}/iot.components.json",
+  "description" : "Emplacement du store pour les components iots enregistrés",
+  "readOnly" : false,
+  "moduleId" : "iot"
+}, {
+  "id" : "homeserver.iot.buzzer.buzztime",
+  "value" : "20",
+  "description" : "Durée du buzzer une fois lancée",
+  "readOnly" : false,
+  "moduleId" : "iot"
+} ]

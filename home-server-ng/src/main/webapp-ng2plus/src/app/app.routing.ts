@@ -7,6 +7,7 @@ import { AdministrationComponent } from './administration/administration.compone
 import { RouterModule, Routes } from '@angular/router';
 import { KioskMainScreenComponent } from 'app/kiosk/kiosk-main-screen.component';
 import { DirectDownloadComponent } from './filemanager/direct-download/direct-download.component';
+import { IotComponent } from './iot/iot-component';
 
 const routes: Routes = [
   //   { path: 'administration', component: StarterComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'filemanager', component: FileManagerComponent },
   { path: 'filemanager/directdownload', component: DirectDownloadComponent },
   { path: 'music', component: MusicComponent },
-  { path: 'kiosk', component: KioskMainScreenComponent }
+  { path: 'kiosk', component: KioskMainScreenComponent },
+  { path: 'iot', component: IotComponent }
 ];
 
 export const routing = RouterModule.forRoot(routes, { useHash: true });

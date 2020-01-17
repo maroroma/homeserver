@@ -13,6 +13,7 @@ import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.exceptions.Traper;
 import maroroma.homeserverng.tools.files.FileDescriptor;
 import maroroma.homeserverng.tools.files.FileDescriptorFactory;
@@ -103,14 +104,16 @@ public class MusicServiceImpl {
 		}
 
 		// recréation du descriptor pour insertion en repo
-		// et retourn direct
-		return this.albumRepo.saveAndReturn(AlbumDescriptor.builder()
+		// et retour direct
+		this.albumRepo.update(AlbumDescriptor.builder()
 				.albumName(request.getAlbumName())
 				.artistName(request.getArtistName())
 				.directoryDescriptor(workingDirFile)
 				.id(workingDirFile.getId())
 				.build()
 		);
+
+		return this.albumRepo.findByIdMandatory(workingDirFile.getId());
 
 	}
 
@@ -130,8 +133,7 @@ public class MusicServiceImpl {
 		// sauvegarde et retour
 		this.albumRepo.update(albumDescriptor);
 
-		return this.albumRepo.find(albumId);
-
+		return this.albumRepo.findByIdMandatory(albumId);
 	}
 
 	/**
@@ -190,7 +192,7 @@ public class MusicServiceImpl {
 
 		this.albumRepo.update(albumDescriptor);
 
-		return this.albumRepo.find(albumDescriptor.getId());
+		return this.albumRepo.findByIdMandatory(albumDescriptor.getId());
 
 	}
 
@@ -327,7 +329,7 @@ public class MusicServiceImpl {
 	 */
 	private AlbumDescriptor validateAndReturnAlbumDescriptor(final String albumId) throws HomeServerException {
 		Assert.hasLength(albumId, "albumId can't be null or empty");
-		return this.albumRepo.find(albumId);
+		return this.albumRepo.findByIdMandatory(albumId);
 	}
 
 	/**

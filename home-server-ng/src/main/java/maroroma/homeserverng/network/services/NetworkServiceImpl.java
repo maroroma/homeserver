@@ -8,6 +8,7 @@ import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -87,7 +88,7 @@ public class NetworkServiceImpl {
 	 * @throws HomeServerException -
 	 */
 	public boolean getServerStatus(final String id) throws HomeServerException {
-		ServerDescriptor sd = this.repository.find(id);
+		ServerDescriptor sd = this.repository.findByIdMandatory(id);
 		boolean returnValue = true;
 
 		try {

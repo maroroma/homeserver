@@ -14,10 +14,7 @@ import org.springframework.util.ReflectionUtils;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -123,11 +120,9 @@ public class NanoRepository {
 	 * @throws HomeServerException -
 	 */
 	@Synchronized(NanoRepository.NANO_LOCK_NAME)
-	private <T> List<T> getFromFile() throws HomeServerException {
+	private <T> List<T> getFromFile() throws RuntimeHomeServerException {
 		ObjectMapper serializer = new ObjectMapper();
-
 		List<T> returnValue = null;
-
 		// on test avant si le fichier existe
 		if (this.path.asFile().exists()) {
 			try {
@@ -135,7 +130,7 @@ public class NanoRepository {
 			} catch (IOException e) {
 				String msg = "Erreur rencontrée lors de la lecture du fichier " + this.path.asFile().getAbsolutePath();
 				log.warn(msg, e);
-				throw new HomeServerException(msg, e);
+				throw new RuntimeHomeServerException(e, msg);
 			}
 		} else {
 			// sinon on retourne une liste vide.
@@ -151,7 +146,7 @@ public class NanoRepository {
 	 * @param <T> type attendu
 	 * @throws HomeServerException -
 	 */
-	public <T> List<T> getAll() throws HomeServerException {
+	public <T> List<T> getAll() throws RuntimeHomeServerException {
 		return this.getFromFile();
 	}
 
@@ -161,7 +156,7 @@ public class NanoRepository {
 	 * @param <T> type attendu
 	 * @throws HomeServerException -
 	 */
-	private <T> Stream<T> getAllAsStream() throws HomeServerException {
+	private <T> Stream<T> getAllAsStream() throws RuntimeHomeServerException {
 		return this.<T>getAll().stream();
 	}
 
@@ -233,7 +228,17 @@ public class NanoRepository {
 		
 		this.save(item);
 		
-		return this.find(itemId);
+		return (T) this.findById(itemId)
+				.orElseThrow(() -> new RuntimeHomeServerException("can't find saved item"));
+	}
+
+	/**
+	 * Détermine si l'item d'id donné existe dans le repo
+	 * @param id identifiant
+	 * @return true si l'item est trouvé
+	 */
+	public boolean exists(final Object id) {
+		return this.findById(id).isPresent();
 	}
 
 	/**
@@ -269,9 +274,22 @@ public class NanoRepository {
 	 * @param <T> type de l'item.
 	 * @throws HomeServerException -
 	 */
-	public <T> T find(final Object id) throws HomeServerException {
+	public <T> Optional<T> findById(final Object id) throws RuntimeHomeServerException {
 		Assert.notNull(id, "id can't be null");
 		return this.find(item -> this.getIdValue(item).equals(id));
+	}
+
+	/**
+	 * Trouve un objet par son id, ou claque une exception
+	 * @param id identiant à rechercher
+	 * @param <T> type de l'objet
+	 * @return objet
+	 * @throws RuntimeHomeServerException -
+	 */
+	public <T> T findByIdMandatory(final Object id) throws RuntimeHomeServerException {
+		Assert.notNull(id, "id can't be null");
+		return (T) this.find(item -> this.getIdValue(item).equals(id))
+				.orElseThrow(() -> new RuntimeHomeServerException("can't find requested item " + id.toString()));
 	}
 
 	/**
@@ -281,15 +299,12 @@ public class NanoRepository {
 	 * @param <T> type de l'item.
 	 * @throws HomeServerException -
 	 */
-	public <T> T find(final Predicate<T> predicate) throws HomeServerException {
+	public <T> Optional<T> find(final Predicate<T> predicate) throws RuntimeHomeServerException {
 		Assert.notNull(predicate, "predicate can't be null");
 
 		return this.<T>getAllAsStream()
 				.filter(predicate)
-				.findFirst()
-				.orElseThrow(
-						() -> new HomeServerException("item can't be found")
-				);
+				.findFirst();
 	}
 
 	/**
@@ -373,7 +388,7 @@ public class NanoRepository {
 		int nbItems = 0;
 		try {
 			nbItems = this.getAll().size();
-		} catch (HomeServerException e) {
+		} catch (RuntimeHomeServerException e) {
 			log.warn("Impossible de récupérer le nombre d'éléménts du repo", e);
 		}
 
@@ -388,13 +403,13 @@ public class NanoRepository {
 	/**
 	 * Retourne le contenu du repo au format json.
 	 * @return -
-	 * @throws HomeServerException -
+	 * @throws RuntimeHomeServerException -
 	 */
-	public String readAsJson() throws HomeServerException {
+	public String readAsJson() throws RuntimeHomeServerException {
 		try {
 			return new ObjectMapper().writeValueAsString(this.getAll());
-		} catch (JsonProcessingException | HomeServerException e) {
-			throw new HomeServerException("Erreur de la lecture au format json");
+		} catch (JsonProcessingException | RuntimeHomeServerException e) {
+			throw new RuntimeHomeServerException("Erreur de la lecture au format json");
 		}
 	}
 

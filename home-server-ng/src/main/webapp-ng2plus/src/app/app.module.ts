@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { KioskModule } from 'app/kiosk/kiosk';
+import { IotModule } from './iot/iot';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { KioskModule } from 'app/kiosk/kiosk';
     routing,
     BrowserAnimationsModule,
     KioskModule,
-    HomeComponentModule
+    HomeComponentModule,
+    IotModule
   ],
   providers: [],
   bootstrap: [AppComponent]

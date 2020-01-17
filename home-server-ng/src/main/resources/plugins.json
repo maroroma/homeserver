@@ -1,34 +1,40 @@
 [ {
-  "id" : "music",
-  "enabled" : true
-}, {
-  "id" : "watch",
-  "enabled" : false
-}, {
   "id" : "administration",
   "enabled" : true
 }, {
   "id" : "notifyer",
   "enabled" : true
 }, {
-  "id" : "scanner",
+  "id" : "photo",
   "enabled" : false
 }, {
-  "id" : "photo",
+  "id" : "kodimanager",
+  "enabled" : true
+}, {
+  "id" : "filemanager",
+  "enabled" : true
+}, {
+  "id" : "iot",
+  "enabled" : true
+}, {
+  "id" : "network",
+  "enabled" : true
+}, {
+  "id" : "music",
+  "enabled" : true
+}, {
+  "id" : "watch",
+  "enabled" : false
+}, {
+  "id" : "scanner",
   "enabled" : false
 }, {
   "id" : "reducer",
   "enabled" : false
 }, {
-  "id" : "filemanager",
-  "enabled" : true
-}, {
   "id" : "kiosk",
   "enabled" : true
 }, {
   "id" : "seedbox",
-  "enabled" : true
-}, {
-  "id" : "network",
   "enabled" : true
 } ]
