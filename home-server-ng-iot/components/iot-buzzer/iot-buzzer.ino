@@ -14,6 +14,10 @@ const char* password = STAPSK;
 
 ESP8266WebServer server(80);
 
+// MELCHIOR
+IPAddress melchiorAddress(192,168,1,52);
+WiFiClient melchiorClient;
+
 // CONSTANTES
 // pin pour la led interne
 const int led = LED_BUILTIN;
@@ -30,10 +34,9 @@ void handleRoot() {
 }
 
 void handleStatus() {
-  String statusMessage = "{componentName:\"" + moduleName + "\",";
-  statusMessage += "ipAddress:\""+WiFi.localIP().toString()+"\",";
-  statusMessage += "buzzerStatus:";
-  statusMessage += buzzer.isOn() ? "true" : "false";
+  String statusMessage = "{\"componentName\":\"" + moduleName + "\",";
+  statusMessage += "\"ipAddress\":\""+WiFi.localIP().toString()+"\",";
+  statusMessage += "\"macAddress\":\""+WiFi.macAddress()+"\"";
   statusMessage += "}";
   server.send(200, "application/json", statusMessage);
 }
@@ -55,17 +58,8 @@ void handleBuzzerOff() {
 
 void handleNotFound() {
   digitalWrite(led, LOW);
-  String message = "File Not Found\n\n";
-  message += "URI: ";
+  String message= "this url can't be handled : ";
   message += server.uri();
-  message += "\nMethod: ";
-  message += (server.method() == HTTP_GET) ? "GET" : "POST";
-  message += "\nArguments: ";
-  message += server.args();
-  message += "\n";
-  for (uint8_t i = 0; i < server.args(); i++) {
-    message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
-  }
   server.send(404, "text/plain", message);
   digitalWrite(led, HIGH);
 }
@@ -102,6 +96,12 @@ void setup(void) {
   server.onNotFound(handleNotFound);
 
   server.begin();
+
+  // inscription auprès du homeserver
+  if (melchiorClient.connect(melchiorAddress, 80)) {
+      melchiorClient.println("GET /api/iot/register?id=" + WiFi.macAddress() +"&ipAddress=" + WiFi.localIP().toString() + "&componentType=BUZZER&name=" + moduleName + " HTTP/1.0");
+      melchiorClient.println();
+  }
 }
 
 void loop(void) {
