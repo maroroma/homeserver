@@ -1,4 +1,4 @@
-<homeserver-page-header [genericSearch]="false" [subMenuItems]="subMenuItems"></homeserver-page-header>
+<homeserver-page-header [subMenuItems]="subMenuItems"></homeserver-page-header>
 <div class="page-content">
-<h1>HELLO WORLD IOT</h1>
+    <homeserver-iot-board *ngIf="subMenuItems[0].selected"></homeserver-iot-board>
 </div>

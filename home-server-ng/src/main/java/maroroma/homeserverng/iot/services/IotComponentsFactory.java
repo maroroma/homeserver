@@ -3,7 +3,7 @@ package maroroma.homeserverng.iot.services;
 import maroroma.homeserverng.iot.model.AbstractIotComponent;
 import maroroma.homeserverng.iot.model.BuzzerIotComponent;
 import maroroma.homeserverng.iot.model.IotComponentDescriptor;
-import maroroma.homeserverng.iot.model.IotCompontentTypes;
+import maroroma.homeserverng.iot.model.IotComponentTypes;
 import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.FluentMap;
@@ -28,7 +28,7 @@ public class IotComponentsFactory {
     public IotComponentsFactory() {
         // pour l'instant on a que le buzzer
         this.constructors = FluentMap.<String, Function<IotComponentDescriptor, AbstractIotComponent<?>>>create()
-                .add(IotCompontentTypes.BUZZER, BuzzerIotComponent::new);
+                .add(IotComponentTypes.BUZZER, BuzzerIotComponent::new);
     }
 
     /**

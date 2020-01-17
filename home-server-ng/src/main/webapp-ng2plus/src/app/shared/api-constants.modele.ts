@@ -36,7 +36,10 @@ export class ApiConstants {
     public static readonly MUSIC_API = ApiConstants.ROOT_API + 'music/';
     public static readonly MUSIC_WORKING_DIR_API = ApiConstants.MUSIC_API + 'workingdirectories';
     public static readonly MUSIC_AVAILABLE_FILES_API = ApiConstants.MUSIC_API + 'availablefiles';
-
+    
+    public static readonly IOT_API = ApiConstants.ROOT_API + 'iot/';
+    public static readonly IOT_ALL_COMPONENTS_API = ApiConstants.IOT_API + 'components';
+    public static readonly IOT_BUZZ_REQUEST = ApiConstants.IOT_ALL_COMPONENTS_API + '/buzzers';
 
     public static readonly REDUCER_API = ApiConstants.ROOT_API + 'reducer/';
     public static readonly REDUCER_REDUCED_IMAGES_API = ApiConstants.REDUCER_API + 'reducedImages';

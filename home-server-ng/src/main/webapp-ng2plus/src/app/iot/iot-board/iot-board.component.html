@@ -1,0 +1,18 @@
+<div *ngFor="let oneIotComponent of iotComponents.displayList" class="iot-component-panel">
+    <div class="iot-component-panel-header">
+        <!-- <button  class="btn btn-primary btn-iot-component" title="{{oneIotComponent.item.componentDescriptor.name}}" 
+        [disabled]="!oneIotComponent.item.available"> -->
+        <button  class="btn btn-primary btn-iot-component" title="{{oneIotComponent.item.componentDescriptor.name}}" (click)="sendBuzz(oneIotComponent.item)">
+            <span class="{{oneIotComponent.item.glyphicon}}"></span>
+        </button> 
+    </div>
+    <div class="iot-component-panel-body">
+        {{oneIotComponent.item.componentDescriptor.name}}
+    </div>
+</div>
+
+<div class="edit-zone">
+    <button class="btn btn-primary" (click)="updateList()">
+        <span class="glyphicon glyphicon-refresh"></span>
+    </button>
+</div>

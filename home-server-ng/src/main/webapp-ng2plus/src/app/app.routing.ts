@@ -7,7 +7,7 @@ import { AdministrationComponent } from './administration/administration.compone
 import { RouterModule, Routes } from '@angular/router';
 import { KioskMainScreenComponent } from 'app/kiosk/kiosk-main-screen.component';
 import { DirectDownloadComponent } from './filemanager/direct-download/direct-download.component';
-import { IotComponent } from './iot/iot-component';
+import { IotComponent } from './iot/iot.component';
 
 const routes: Routes = [
   //   { path: 'administration', component: StarterComponent },

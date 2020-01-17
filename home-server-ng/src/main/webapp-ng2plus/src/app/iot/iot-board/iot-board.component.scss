@@ -1,0 +1,26 @@
+.btn-iot-component {
+    
+    padding: 0;
+    font-size: 5vw;
+    border-radius: 1vw;
+    padding-top: 1vw;
+    @media(orientation: landscape) {
+        width: 10vw;
+        height: 10vw;
+    }
+    @media(orientation: portrait) {
+        width: 20vw;
+        height: 20vw;
+    }
+}
+
+.iot-component-panel {
+    display: inline-block;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    &-body {
+        text-align: center;
+        
+    }
+}
