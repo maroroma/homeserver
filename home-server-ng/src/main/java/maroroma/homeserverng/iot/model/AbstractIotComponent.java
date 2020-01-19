@@ -1,13 +1,8 @@
 package maroroma.homeserverng.iot.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -21,6 +16,7 @@ public abstract class AbstractIotComponent<T extends AbstractIotComponent<T>> {
 
     private final IotComponentDescriptor componentDescriptor;
     private final String glyphicon;
+    private int timeout;
     private boolean available;
 
     public AbstractIotComponent(IotComponentDescriptor componentDescriptor, String glyphicon) {
@@ -50,8 +46,8 @@ public abstract class AbstractIotComponent<T extends AbstractIotComponent<T>> {
      */
     protected RestTemplate restTemplate() {
         return new RestTemplateBuilder()
-                .setConnectTimeout(1000)
-                .setReadTimeout(3000)
+                .setConnectTimeout(this.timeout)
+                .setReadTimeout(this.timeout)
                 .build();
     }
 
@@ -85,6 +81,11 @@ public abstract class AbstractIotComponent<T extends AbstractIotComponent<T>> {
         }
 
         return HttpStatus.OK.equals(restTemplate().getForEntity(builder.toUriString(), String.class).getStatusCode());
+    }
+
+    public T withTimeout(int timeout) {
+        this.timeout = timeout;
+        return returnThis();
     }
 
     /**

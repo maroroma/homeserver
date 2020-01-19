@@ -4,6 +4,8 @@ import maroroma.homeserverng.iot.model.AbstractIotComponent;
 import maroroma.homeserverng.iot.model.BuzzerIotComponent;
 import maroroma.homeserverng.iot.model.IotComponentDescriptor;
 import maroroma.homeserverng.iot.model.IotComponentTypes;
+import maroroma.homeserverng.tools.annotations.Property;
+import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.FluentMap;
@@ -18,6 +20,12 @@ import java.util.function.Function;
  */
 @Component
 public class IotComponentsFactory {
+    /**
+     * Gestion des timeout https
+     */
+    @Property("homeserver.iot.components.http.timeout")
+    HomeServerPropertyHolder httpTimeoutForComponents;
+
 
     /**
      * liste de constructeurs pour les implémentations de {@link AbstractIotComponent}
@@ -40,6 +48,7 @@ public class IotComponentsFactory {
         return Optional
                 .ofNullable(this.constructors.get(componentDescriptor.getComponentType()))
                 .map(oneConstructor -> oneConstructor.apply(componentDescriptor))
+                .map(oneComponent -> oneComponent.withTimeout(this.httpTimeoutForComponents.asInt()))
                 .orElseThrow(() -> new RuntimeHomeServerException(
                         "can't generate iotComponent for type " + componentDescriptor.getComponentType()));
     }

@@ -10,4 +10,10 @@
   "description" : "Emplacement du store pour les components iots enregistrés",
   "readOnly" : false,
   "moduleId" : "iot"
+}, {
+  "id" : "homeserver.iot.components.http.timeout",
+  "value" : "3000",
+  "description" : "Timeout max pour les acces http aux components",
+  "readOnly" : false,
+  "moduleId" : "iot"
 } ]
