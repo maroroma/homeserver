@@ -34,6 +34,8 @@ const int pinDIN = 14;
 const int pinCS = 12;
 const int pinCLK = 13;
 LedControl ledMatrix = LedControl(pinDIN, pinCLK, pinCS,1);
+
+// fixme : virer les sprites dont on ne se sert plus
 int spriteStart[] = {
   B00011000,
   B01011010,
@@ -89,10 +91,34 @@ void handleStatus() {
  * Activation du buzzer
  */
 void handleBuzzerOn() {
+
+  // FIXME : gérer ça proprement dans une fonction dédiée
+  // récupération du template de led
+  String ledTemplate = server.arg("ledTemplate");
+  Serial.println("ledTemplate complet : " + ledTemplate);
+  int finalTemplate[8];
+  int currentLine = 0;
+  int lastIndex = 0;
+  while(lastIndex != -1) {
+    int nextIndex = ledTemplate.indexOf("-", lastIndex);
+    String rawValue;
+    if (nextIndex != -1) {
+      rawValue = ledTemplate.substring(lastIndex, nextIndex);
+      lastIndex = nextIndex + 1;
+    } else {
+      rawValue = ledTemplate.substring(lastIndex);
+      lastIndex = nextIndex;
+    }
+    Serial.println("nouvel entier to decode : " + rawValue);
+    finalTemplate[currentLine] = rawValue.toInt();
+    currentLine++;
+  }
+
+  
   buzzer.switchOn();
   wakeupLedMatrix();
-  displaySprite(arrow);
-  server.send(200, "application/json", "{\"buzzer\":true}");
+  displaySprite(finalTemplate);
+  server.send(200, "application/json", "fy");
 }
 
 /**
@@ -152,6 +178,8 @@ void displaySprite(int sprite[]) {
 void setup(void) {
   // init matrix
   setupLedMatrix();
+  Serial.begin(9600);  
+  Serial.println("kikou");
 
   // ---------------------------------
   // configuration WIFI
