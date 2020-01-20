@@ -1,0 +1,63 @@
+@import '../../common-gui/styles/variables.scss';
+$square:5px;
+$default-padding:10px;
+
+.sprite-renderer {
+    // padding-top:$default-padding;
+    &-cell {
+        &-with-sprite {
+            width: 100px;
+            margin-left:$default-padding;
+            padding: 0;
+            padding-left: 15px;
+            padding-top: 10px;
+        }
+        &-with-info {
+            @media(orientation: portrait) {
+                padding-top: 10px;
+                width: 45%;
+            }
+            @media(orientation: landscape) {
+                padding-top: 10px;
+                width: 60%;
+            }
+            
+            padding: 0;
+        }
+        &-with-action {
+            width: auto;
+            button {
+                width:$menuButtonWidth;
+                height:$menuButtonWidth;
+                @media(orientation: portrait) {
+                    width:$menuButtonWidth*2;
+                    height:$menuButtonWidth*2;
+                }
+                padding-right: 1rem;
+                padding-left: 1rem;
+                border-radius: 10%;
+            }
+        }
+    }
+    
+}
+
+.mini-sprite {
+    &-matrix {
+        // border-style: dashed;
+        // border-width: thin;
+    }
+    &-line {
+        height: $square;
+    }
+    &-pixel {
+        width: $square;
+        border-style: none;
+        &-on {
+            background-color: black;
+        }
+        &-off {
+            background-color: white;
+        }
+    }
+}

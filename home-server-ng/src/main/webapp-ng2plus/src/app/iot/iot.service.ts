@@ -7,6 +7,7 @@ import { AbstractIotComponent } from "./models/abstract-iot-component.modele";
 import { ApiConstants } from "app/shared/api-constants.modele";
 import { JsonTools } from "app/shared/json-tools.service";
 import { BuzzRequest } from "./models/buzz-request.modele";
+import { MiniSprite } from "./models/mini-sprite.modele";
 
 @Injectable()
 export class IotService {
@@ -20,6 +21,50 @@ export class IotService {
             })
             .catch((err, data) => {
                 this.notifyer.showError('Une erreur est survenue lors de la récupération des iotComponents');
+                return Observable.of(null);
+            });
+    }
+
+    getAllMiniSprites():Observable<Array<MiniSprite>> {
+        return this.http.get(ApiConstants.IOT_ALL_SPRITES_API)
+            .map(res => {
+                return JsonTools.map(res.json(), MiniSprite.fromRaw);
+            })
+            .catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de la récupération des minisprites');
+                return Observable.of(null);
+            });
+    }
+
+    deleteMiniSprite(spriteToDelete:MiniSprite):Observable<Array<MiniSprite>> {
+        return this.http.delete(ApiConstants.IOT_ALL_SPRITES_API + '/' + spriteToDelete.name)
+            .map(res => {
+                return JsonTools.map(res.json(), MiniSprite.fromRaw);
+            })
+            .catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de la suppression du minisprite');
+                return Observable.of(null);
+            });
+    }
+
+    saveNewMiniSprite(newSprite:MiniSprite):Observable<Array<MiniSprite>> {
+        return this.http.post(ApiConstants.IOT_ALL_SPRITES_API, newSprite)
+            .map(res => {
+                return JsonTools.map(res.json(), MiniSprite.fromRaw);
+            })
+            .catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de la création du nouveau sprite');
+                return Observable.of(null);
+            });
+    }
+
+    updateMiniSprite(newSprite:MiniSprite):Observable<Array<MiniSprite>> {
+        return this.http.put(ApiConstants.IOT_ALL_SPRITES_API, newSprite)
+            .map(res => {
+                return JsonTools.map(res.json(), MiniSprite.fromRaw);
+            })
+            .catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de la mise à jour du sprite');
                 return Observable.of(null);
             });
     }

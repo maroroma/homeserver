@@ -39,6 +39,7 @@ export class ApiConstants {
     
     public static readonly IOT_API = ApiConstants.ROOT_API + 'iot/';
     public static readonly IOT_ALL_COMPONENTS_API = ApiConstants.IOT_API + 'components';
+    public static readonly IOT_ALL_SPRITES_API = ApiConstants.IOT_API + 'minisprites';
     public static readonly IOT_BUZZ_REQUEST = ApiConstants.IOT_ALL_COMPONENTS_API + '/buzzers';
 
     public static readonly REDUCER_API = ApiConstants.ROOT_API + 'reducer/';

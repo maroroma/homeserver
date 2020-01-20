@@ -1,0 +1,21 @@
+
+<div class="row">
+    <div class="col-md-1 sprite-renderer-cell sprite-renderer-cell-with-sprite">
+        <table class="mini-sprite-matrix">
+            <tr *ngFor="let oneLine of spriteToDisplay.item.lines" class="mini-sprite-line">
+                <td *ngFor="let onePixel of oneLine" class="mini-sprite-pixel" 
+                [ngClass]="{'mini-sprite-pixel-off': !onePixel.on, 'mini-sprite-pixel-on': onePixel.on}">
+            </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-3  sprite-renderer-cell sprite-renderer-cell-with-info">
+        <div>{{spriteToDisplay.item.name}}</div>
+        <div>{{spriteToDisplay.item.description}}</div>
+    </div>
+    <div class="col-md-3  sprite-renderer-cell sprite-renderer-cell-with-action">
+        <button class="btn btn-primary" (click)="innerEdit()" title="Editer le sprite"><span class="glyphicon glyphicon-edit"></span></button>
+        <button class="btn btn-danger" (click)="innerDelete()" title="supprimer le sprite"><span class="glyphicon glyphicon-trash"></span></button>
+    </div>
+
+</div>

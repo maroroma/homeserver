@@ -1,12 +1,11 @@
 package maroroma.homeserverng.iot.services;
 
 import maroroma.homeserverng.iot.model.AbstractIotComponent;
-import maroroma.homeserverng.iot.model.BuzzerIotComponent;
 import maroroma.homeserverng.iot.model.IotComponentDescriptor;
+import maroroma.homeserverng.iot.model.MiniSprite;
 import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
-import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
-import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.exceptions.Traper;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ import java.util.stream.Collectors;
 @Service
 public class IotServiceImpl {
 
-
     /**
      * Repository pour la gestion des IotComponents enregistrés.
      */
@@ -30,6 +28,15 @@ public class IotServiceImpl {
             persistedType = IotComponentDescriptor.class,
             idField = "id")
     private NanoRepository iotComponentsRepo;
+
+    /**
+     * Repo pour la gestion des sprites
+     */
+    @InjectNanoRepository(
+            file = @Property("homeserver.iot.sprites.store"),
+            persistedType = MiniSprite.class,
+            idField = "name")
+    private NanoRepository iotSpritesRepo;
 
     private final IotComponentsFactory iotComponentsFactory;
 
@@ -75,6 +82,45 @@ public class IotServiceImpl {
                 .parallel()
                 .map(AbstractIotComponent::updateStatus)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Retourne l'ensemble des sprites persistés dans l'application
+     * @return -
+     */
+    public List<MiniSprite> getAllSprites() {
+        return this.iotSpritesRepo.getAll();
+    }
+
+    /**
+     * Création d'un nouveau sprite
+     * @param miniSprite sprite à enregistrer
+     * @return liste de sprites à jour
+     * @throws HomeServerException -
+     */
+    public List<MiniSprite> createNewMiniSprite(MiniSprite miniSprite) throws HomeServerException {
+        this.iotSpritesRepo.save(miniSprite);
+        return this.getAllSprites();
+    }
+
+    /**
+     * Mise à jour du sprite donné en entrée
+     * @param miniSprite minisprite à mettre à jour
+     * @return liste de sprite mis à jour
+     * @throws HomeServerException -
+     */
+    public List<MiniSprite> updateMiniSprite(MiniSprite miniSprite) throws HomeServerException {
+        return this.iotSpritesRepo.update(miniSprite);
+    }
+
+    /**
+     * Suppression du sprite donné
+     * @param id identifiant du sprite à supprimer
+     * @return liste de sprites mise à jour
+     * @throws HomeServerException -
+     */
+    public List<MiniSprite> deleteSprite(String id) throws HomeServerException {
+        return this.iotSpritesRepo.delete(id);
     }
 
     /**

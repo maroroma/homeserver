@@ -11,6 +11,12 @@
   "readOnly" : false,
   "moduleId" : "iot"
 }, {
+  "id" : "homeserver.iot.sprites.store",
+  "value" : "${homeserver.config.dir}/iot.sprites.json",
+  "description" : "Emplacement du store pour mini sprites de matrices 8x8",
+  "readOnly" : false,
+  "moduleId" : "iot"
+}, {
   "id" : "homeserver.iot.components.http.timeout",
   "value" : "3000",
   "description" : "Timeout max pour les acces http aux components",
