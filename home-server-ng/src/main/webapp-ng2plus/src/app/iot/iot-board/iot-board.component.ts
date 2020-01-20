@@ -28,6 +28,8 @@ export class IotBoardComponent implements OnInit, OnDestroy {
     @ViewChild('spriteSelector')
     spriteSelector: IotSpriteSelectorComponent;
 
+    buzzerSubscription:Subscription;
+
     constructor(private iotService:IotService, private notifyer:NotifyerService, private searchService: PageHeaderSearchService) { }
 
     ngOnInit() {
@@ -57,7 +59,12 @@ export class IotBoardComponent implements OnInit, OnDestroy {
      * @param iotComponent 
      */
     displaySelectSprite(iotComponent:AbstractIotComponent) {
-        this.spriteSelector.select
+
+        if(this.buzzerSubscription) {
+            this.buzzerSubscription.unsubscribe();
+        }
+
+        this.buzzerSubscription = this.spriteSelector.select
             .flatMap(selectedSprite => {
                 this.popupSelectSprite.close();
                 const buzzRequest = new BuzzRequest();
@@ -66,7 +73,7 @@ export class IotBoardComponent implements OnInit, OnDestroy {
                 return this.iotService.sendBuzz(buzzRequest);
             }).subscribe(res => console.log(res));
 
-            this.popupSelectSprite.display();
+        this.popupSelectSprite.display();
     }
 
 }
