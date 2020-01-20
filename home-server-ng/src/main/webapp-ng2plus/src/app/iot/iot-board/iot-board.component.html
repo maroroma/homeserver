@@ -2,11 +2,12 @@
     <div class="iot-component-panel-header">
         <!-- <button  class="btn btn-primary btn-iot-component" title="{{oneIotComponent.item.componentDescriptor.name}}" 
         [disabled]="!oneIotComponent.item.available"> -->
+        <!--[disabled]="!oneIotComponent.item.available"-->
         <button class="btn btn-iot-component"
             [ngClass]="{'btn-warning': !oneIotComponent.item.available, 'btn-primary':oneIotComponent.item.available}"
             title="{{oneIotComponent.item.componentDescriptor.name}}" 
-            (click)="sendBuzz(oneIotComponent.item)"
-            [disabled]="!oneIotComponent.item.available"
+            (click)="displaySelectSprite(oneIotComponent.item)"
+            
             >
             <span class="{{oneIotComponent.item.glyphicon}}"></span>
         </button> 
@@ -21,3 +22,7 @@
         <span class="glyphicon glyphicon-refresh"></span>
     </button>
 </div>
+
+<homeserver-popup #popupSelectSprite title="Sélectionner un sprite à envoyer" [koButton]="true" [okButton]="false">
+    <homeserver-iot-sprite-selector #spriteSelector></homeserver-iot-sprite-selector>
+</homeserver-popup>

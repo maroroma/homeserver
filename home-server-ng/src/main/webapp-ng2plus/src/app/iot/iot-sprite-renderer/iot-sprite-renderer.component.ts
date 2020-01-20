@@ -14,6 +14,9 @@ export class IotSpriteRendererComponent implements OnInit {
     @Input()
     spriteToDisplay:VisualItem<MiniSprite>;
 
+    @Input()
+    displayActions=true;
+
     @Output()
     public delete = new EventEmitter<VisualItem<MiniSprite>>();
     @Output()

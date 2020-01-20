@@ -10,13 +10,15 @@ import { IotManagementComponent } from "./iot-management/iot-management.componen
 import { IotSpritesComponent } from "./iot-sprites/iot-sprites.component";
 import { IotSpriteEditorComponent } from "./iot-sprite-editor/iot-sprite-editor.component";
 import { IotSpriteRendererComponent } from "./iot-sprite-renderer/iot-sprite-renderer.component";
+import { IotSpriteSelectorComponent } from "./iot-sprite-selector/iot-sprite-selector.component";
 
 @NgModule({
     imports: [CommonGUIModule, FormsModule, CommonModule],
     exports: [IotComponent],
     declarations: [IotComponent, IotBoardComponent, 
         IotManagementComponent, IotSpritesComponent,
-        IotSpriteEditorComponent, IotSpriteRendererComponent
+        IotSpriteEditorComponent, IotSpriteRendererComponent,
+        IotSpriteSelectorComponent
     ],
     providers: [IotService, IotComponentFactory]
 })

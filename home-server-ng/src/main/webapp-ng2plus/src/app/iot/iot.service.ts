@@ -69,9 +69,7 @@ export class IotService {
             });
     }
 
-    sendBuzz(buzzerId:string) {
-        const request = new BuzzRequest();
-        request.id = buzzerId;
+    sendBuzz(request:BuzzRequest) {
         return this.http.post(ApiConstants.IOT_BUZZ_REQUEST, request)
             .map(response => {
                 this.notifyer.showSuccess('demande de buzz émise');

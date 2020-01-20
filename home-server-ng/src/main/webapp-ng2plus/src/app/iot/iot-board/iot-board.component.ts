@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { IotService } from "../iot.service";
 import { AbstractIotComponent } from "../models/abstract-iot-component.modele";
 import { VisualItemDataSource } from "app/shared/visual-item-datasource.modele";
@@ -6,6 +6,9 @@ import { NotifyerService } from "app/common-gui/notifyer/notifyer.service";
 import { PageHeaderSearchService } from "app/common-gui/page-header/page-header-search.service";
 import { Subscription } from "rxjs";
 import { FilterTools } from "app/shared/filter-tools.service";
+import { PopupComponent } from "app/common-gui/popup/popup.component";
+import { IotSpriteSelectorComponent } from "../iot-sprite-selector/iot-sprite-selector.component";
+import { BuzzRequest } from "../models/buzz-request.modele";
 
 @Component({
     selector: 'homeserver-iot-board',
@@ -18,6 +21,12 @@ export class IotBoardComponent implements OnInit, OnDestroy {
     iotComponents = new VisualItemDataSource<AbstractIotComponent>();
 
     public searchSubscription: Subscription;
+
+    @ViewChild('popupSelectSprite')
+    popupSelectSprite: PopupComponent;
+
+    @ViewChild('spriteSelector')
+    spriteSelector: IotSpriteSelectorComponent;
 
     constructor(private iotService:IotService, private notifyer:NotifyerService, private searchService: PageHeaderSearchService) { }
 
@@ -43,9 +52,21 @@ export class IotBoardComponent implements OnInit, OnDestroy {
         this.loadComponentList();
     }
 
-    sendBuzz(iotComponent:AbstractIotComponent) {
-        this.iotService.sendBuzz(iotComponent.componentDescriptor.id)
-        .subscribe(res => console.log(res));
+    /**
+     * Affiche la popup de sélection du sprite, puis utilise la sélection pour réaliser la demande de buzz
+     * @param iotComponent 
+     */
+    displaySelectSprite(iotComponent:AbstractIotComponent) {
+        this.spriteSelector.select
+            .flatMap(selectedSprite => {
+                this.popupSelectSprite.close();
+                const buzzRequest = new BuzzRequest();
+                buzzRequest.id = iotComponent.componentDescriptor.id;
+                buzzRequest.ledTemplate = selectedSprite.item.name;
+                return this.iotService.sendBuzz(buzzRequest);
+            }).subscribe(res => console.log(res));
 
+            this.popupSelectSprite.display();
     }
+
 }
