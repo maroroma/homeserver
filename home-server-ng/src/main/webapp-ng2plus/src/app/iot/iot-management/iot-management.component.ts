@@ -21,30 +21,30 @@ export class IotManagementComponent implements OnInit, OnDestroy {
     constructor(private iotService:IotService, private notifyer:NotifyerService, private searchService: PageHeaderSearchService) { }
 
     ngOnInit() {
-        this.loadComponentList();
-        this.searchSubscription = this.searchService.searchChanged
-        .subscribe(res => this.iotComponents.filterBy(FilterTools.simpleFilter(res, 'componentDescriptor.name')));
+        // this.loadComponentList();
+        // this.searchSubscription = this.searchService.searchChanged
+        // .subscribe(res => this.iotComponents.filterBy(FilterTools.simpleFilter(res, 'componentDescriptor.name')));
     }
 
-    loadComponentList() {
-        this.iotService.getAllIotComponents()
-        .subscribe(res => {
-            this.iotComponents.updateSourceList(res);
-            this.notifyer.showSuccess('liste de composants chargée');
-        });
-    }
+    // loadComponentList() {
+    //     this.iotService.getAllIotComponents()
+    //     .subscribe(res => {
+    //         this.iotComponents.updateSourceList(res);
+    //         this.notifyer.showSuccess('liste de composants chargée');
+    //     });
+    // }
 
     ngOnDestroy() {
-        this.searchSubscription.unsubscribe();
+        // this.searchSubscription.unsubscribe();
     }
 
     updateList():void {
-        this.loadComponentList();
+        // this.loadComponentList();
     }
 
     sendBuzz(iotComponent:AbstractIotComponent) {
-        this.iotService.sendBuzz(iotComponent.componentDescriptor.id)
-        .subscribe(res => console.log(res));
+        // this.iotService.sendBuzz(iotComponent.componentDescriptor.id)
+        // .subscribe(res => console.log(res));
 
     }
 }

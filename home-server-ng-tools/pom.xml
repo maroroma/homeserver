@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>maro.roma</groupId>
 		<artifactId>home-server-ng-parent</artifactId>
-		<version>0.0.30-SNAPSHOT</version>
+		<version>0.0.31-SNAPSHOT</version>
 		<relativePath>../home-server-ng-parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>home-server-ng-tools</artifactId>
