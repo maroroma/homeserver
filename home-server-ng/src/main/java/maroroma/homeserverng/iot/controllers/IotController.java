@@ -4,6 +4,7 @@ import maroroma.homeserverng.iot.IotModuleDescriptor;
 import maroroma.homeserverng.iot.model.AbstractIotComponent;
 import maroroma.homeserverng.iot.model.BuzzRequest;
 import maroroma.homeserverng.iot.model.MiniSprite;
+import maroroma.homeserverng.iot.model.UltraBasicIotComponentForRestExchange;
 import maroroma.homeserverng.iot.services.BuzzerService;
 import maroroma.homeserverng.iot.services.IotServiceImpl;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
@@ -11,7 +12,6 @@ import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
 import java.util.List;
 
 /**
@@ -50,6 +50,10 @@ public class IotController {
     public ResponseEntity<List<AbstractIotComponent<?>>> getAllIotComponents() {
         return ResponseEntity.ok(this.iotService.getAllIotComponents());
     }
+    @PutMapping("${homeserver.api.path:}/iot/components")
+    public ResponseEntity<List<AbstractIotComponent<?>>> updateComponent(@RequestBody UltraBasicIotComponentForRestExchange component) throws HomeServerException {
+        return ResponseEntity.ok(this.iotService.updateComponent(component));
+    }
 
     @PostMapping("${homeserver.api.path:}/iot/components/buzzers")
     public void buzz(@RequestBody  BuzzRequest buzzRequest) {
@@ -71,7 +75,12 @@ public class IotController {
     }
 
     @DeleteMapping("${homeserver.api.path:}/iot/minisprites/{id}")
-    public ResponseEntity<List<MiniSprite>> createNewMiniSprite(@PathVariable("id") String spriteId) throws HomeServerException {
+    public ResponseEntity<List<MiniSprite>> deleteMiniSprite(@PathVariable("id") String spriteId) throws HomeServerException {
         return ResponseEntity.ok(this.iotService.deleteSprite(spriteId));
+    }
+
+    @DeleteMapping("${homeserver.api.path:}/iot/components/{id}")
+    public ResponseEntity<List<AbstractIotComponent<?>>> deleteComponent(@PathVariable("id") String componentId) throws HomeServerException {
+        return ResponseEntity.ok(this.iotService.removeComponent(componentId));
     }
 }

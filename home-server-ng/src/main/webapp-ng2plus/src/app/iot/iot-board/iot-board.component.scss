@@ -21,6 +21,11 @@
     padding-right: 10px;
     &-body {
         text-align: center;
-        
+    }
+    @media(orientation: landscape) {
+        width: 30%;
+    }
+    @media(orientation: portrait) {
+        width: 50%;
     }
 }

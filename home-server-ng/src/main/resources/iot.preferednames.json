@@ -1,0 +1,10 @@
+[ {
+  "alreadyGivenName" : "prototype again",
+  "componentId" : "test2"
+}, {
+  "alreadyGivenName" : "renamed sdsdfsdfsdfsdf",
+  "componentId" : "test3"
+}, {
+  "alreadyGivenName" : "firstNamedComponentbutno",
+  "componentId" : "test4"
+} ]

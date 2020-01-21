@@ -1,14 +1,13 @@
 package maroroma.homeserverng.iot.services;
 
-import maroroma.homeserverng.iot.model.AbstractIotComponent;
-import maroroma.homeserverng.iot.model.BuzzerIotComponent;
-import maroroma.homeserverng.iot.model.IotComponentDescriptor;
-import maroroma.homeserverng.iot.model.IotComponentTypes;
+import maroroma.homeserverng.iot.model.*;
+import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.FluentMap;
+import maroroma.homeserverng.tools.repositories.NanoRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -25,6 +24,12 @@ public class IotComponentsFactory {
      */
     @Property("homeserver.iot.components.http.timeout")
     HomeServerPropertyHolder httpTimeoutForComponents;
+
+    @InjectNanoRepository(
+            file = @Property("homeserver.iot.preferednames.store"),
+            persistedType = PreferedName.class,
+            idField = "componentId")
+    private NanoRepository preferedNamesRepo;
 
 
     /**
@@ -74,6 +79,10 @@ public class IotComponentsFactory {
         Assert.hasLength(componentType, "componentType can't be null or empty");
         Assert.hasLength(name, "name can't be null or empty");
 
+        // on regarde si un nom n'était pas déjà associer à ce composant, histoire de pas
+        // avoir à renommer tout le temps
+        Optional<PreferedName> preferedName = this.preferedNamesRepo.findById(id);
+
         return Optional.of(componentType)
                 // détermine si le composant est générable
                 .filter(this.constructors::containsKey)
@@ -81,7 +90,8 @@ public class IotComponentsFactory {
                         .id(id)
                         .ipAddress(ipAddresss)
                         .componentType(componentType)
-                        .name(name)
+                        // on écrase potentiellement par le nom préféré
+                        .name(preferedName.map(PreferedName::getAlreadyGivenName).orElse(name))
                         .build()
                 );
 

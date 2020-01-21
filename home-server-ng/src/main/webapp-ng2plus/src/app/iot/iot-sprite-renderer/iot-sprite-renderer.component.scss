@@ -29,12 +29,13 @@ $default-padding:10px;
             button {
                 width:$menuButtonWidth;
                 height:$menuButtonWidth;
-                @media(orientation: portrait) {
-                    width:$menuButtonWidth*2;
-                    height:$menuButtonWidth*2;
-                }
                 padding-right: 1rem;
                 padding-left: 1rem;
+                @media(orientation: portrait) {
+                    width:7vw;
+                    height:7vw;
+                    padding:0;
+                }
                 border-radius: 10%;
             }
         }

@@ -47,6 +47,28 @@ export class IotService {
             });
     }
 
+    deleteComponent(componentToDelete:AbstractIotComponent):Observable<Array<AbstractIotComponent>> {
+        return this.http.delete(ApiConstants.IOT_ALL_COMPONENTS_API + '/' + componentToDelete.componentDescriptor.id)
+            .map(res => {
+                return JsonTools.map(res.json(), this.iotFactory.deserializeIotComponent.bind(this.iotFactory));
+            })
+            .catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de la suppression du component');
+                return Observable.of(null);
+            });
+    }
+
+    updateComponent(componentToUpdate:AbstractIotComponent):Observable<Array<AbstractIotComponent>> {
+        return this.http.put(ApiConstants.IOT_ALL_COMPONENTS_API, componentToUpdate)
+            .map(res => {
+                return JsonTools.map(res.json(), this.iotFactory.deserializeIotComponent.bind(this.iotFactory));
+            })
+            .catch((err, data) => {
+                this.notifyer.showError('Une erreur est survenue lors de la mise à jour du component');
+                return Observable.of(null);
+            });
+    }
+
     saveNewMiniSprite(newSprite:MiniSprite):Observable<Array<MiniSprite>> {
         return this.http.post(ApiConstants.IOT_ALL_SPRITES_API, newSprite)
             .map(res => {

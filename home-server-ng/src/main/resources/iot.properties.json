@@ -17,6 +17,12 @@
   "readOnly" : false,
   "moduleId" : "iot"
 }, {
+  "id" : "homeserver.iot.preferednames.store",
+  "value" : "${homeserver.config.dir}/iot.preferednames.json",
+  "description" : "Emplacement du store noms préférés",
+  "readOnly" : false,
+  "moduleId" : "iot"
+}, {
   "id" : "homeserver.iot.components.http.timeout",
   "value" : "3000",
   "description" : "Timeout max pour les acces http aux components",

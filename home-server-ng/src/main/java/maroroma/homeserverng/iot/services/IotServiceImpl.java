@@ -3,6 +3,7 @@ package maroroma.homeserverng.iot.services;
 import maroroma.homeserverng.iot.model.AbstractIotComponent;
 import maroroma.homeserverng.iot.model.IotComponentDescriptor;
 import maroroma.homeserverng.iot.model.MiniSprite;
+import maroroma.homeserverng.iot.model.PreferedName;
 import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
@@ -37,6 +38,12 @@ public class IotServiceImpl {
             persistedType = MiniSprite.class,
             idField = "name")
     private NanoRepository iotSpritesRepo;
+
+    @InjectNanoRepository(
+            file = @Property("homeserver.iot.preferednames.store"),
+            persistedType = PreferedName.class,
+            idField = "componentId")
+    private NanoRepository preferedNamesRepo;
 
     private final IotComponentsFactory iotComponentsFactory;
 
@@ -128,7 +135,28 @@ public class IotServiceImpl {
      * @param id identifiant du composant à supprimer
      * @return true si l'opération est un succès
      */
-    public boolean removeComponent(String id) {
-        return Traper.trapToBoolean(() -> this.iotComponentsRepo.delete(id));
+    public List<AbstractIotComponent<?>> removeComponent(String id) throws HomeServerException {
+        this.iotComponentsRepo.delete(id);
+        return this.getAllIotComponents();
+    }
+
+    /**
+     * Permet de mettre à jour le composant donné
+     * @param toUpdate composant à mettre à jour
+     * @return liste à jour
+     */
+    public List<AbstractIotComponent<?>> updateComponent(AbstractIotComponent<?> toUpdate) throws HomeServerException {
+        // mise à jour du prefered name
+        PreferedName newPreferedName = PreferedName.builder()
+                .componentId(toUpdate.getComponentDescriptor().getId())
+                .alreadyGivenName(toUpdate.getComponentDescriptor().getName())
+                .build();
+        if(this.preferedNamesRepo.exists(toUpdate.getComponentDescriptor().getId())) {
+            this.preferedNamesRepo.update(newPreferedName);
+        } else {
+            this.preferedNamesRepo.save(newPreferedName);
+        }
+        this.iotComponentsRepo.update(toUpdate.getComponentDescriptor());
+        return this.getAllIotComponents();
     }
 }
