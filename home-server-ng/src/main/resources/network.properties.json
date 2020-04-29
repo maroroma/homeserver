@@ -1,6 +1,6 @@
 [ {
   "id" : "homeserver.network.localnetwork.scan.timeout",
-  "value" : "10",
+  "value" : "11",
   "description" : "timeout en millisecondes pour le scan des adresses",
   "readOnly" : false,
   "moduleId" : "network"
@@ -8,6 +8,12 @@
   "id" : "homeserver.network.servers.store",
   "value" : "${homeserver.config.dir}/servers.json",
   "description" : "Emplacement de sauvegarde pour la liste des serveurs.",
+  "readOnly" : false,
+  "moduleId" : "network"
+}, {
+  "id" : "homeserver.network.ip",
+  "value" : "192.168.0.53",
+  "description" : "Adresse IP du serveur local",
   "readOnly" : false,
   "moduleId" : "network"
 }, {
@@ -20,12 +26,6 @@
   "id" : "homeserver.network.localnetwork.address.max",
   "value" : "127.0.0.10",
   "description" : "Adresse (préfixe) IP du réseau local pour le scan des serveurs existants",
-  "readOnly" : false,
-  "moduleId" : "network"
-}, {
-  "id" : "homeserver.network.ip",
-  "value" : "192.168.0.53",
-  "description" : "Adresse IP du serveur local",
   "readOnly" : false,
   "moduleId" : "network"
 } ]

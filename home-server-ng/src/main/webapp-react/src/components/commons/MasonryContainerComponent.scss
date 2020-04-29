@@ -1,0 +1,11 @@
+.masonry-container {
+  column-count: 4;
+  column-gap: 1em;
+  margin: 10px;
+}
+
+.masonry-item {
+  display: inline-block;
+  margin: 0 0 1em;
+  width: 100%;
+}

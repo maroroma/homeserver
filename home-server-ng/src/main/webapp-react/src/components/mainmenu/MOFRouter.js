@@ -1,20 +1,20 @@
 import React from 'react';
 
-import { useRef, useEffect } from 'react';
-
 import modulesAdapter from './ModulesAdapter';
 
+import './MOFRouter.scss';
 
 export default function MOFRouter({ selectedPath }) {
 
-    console.log("MOFRouter", selectedPath);
-
-
-    const componentToDisplay = selectedPath ? (modulesAdapter().getMenuDescriptorForPath(selectedPath).component):null;
+    const menuDescritor = selectedPath ? modulesAdapter().getMenuDescriptorForPath(selectedPath) : null;
+    const componentToDisplay = menuDescritor ? menuDescritor.component : null;
+    const dontUseDefaultPanel = menuDescritor ? menuDescritor.dontUseDefaultPanel : false;
 
     return (
         <>
-            {componentToDisplay}
+            <div className={dontUseDefaultPanel ? "" : "current-module"} >
+                {componentToDisplay}
+            </div>
         </>
     );
 }

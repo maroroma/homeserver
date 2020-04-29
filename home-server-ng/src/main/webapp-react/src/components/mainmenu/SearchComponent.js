@@ -1,7 +1,7 @@
 import React from 'react';
 import eventReactor from '../../eventReactor/EventReactor';
-import { SEARCH_EVENT } from '../../eventReactor/EventIds';
-import { useState } from 'react';
+import { SEARCH_EVENT, FORCE_CLEAR_SEARCH_EVENT } from '../../eventReactor/EventIds';
+import { useState, useEffect } from 'react';
 import IconComponent from '../commons/IconComponent';
 
 
@@ -27,6 +27,10 @@ export default function SearchComponent({ onSearchCloseHandler }) {
         }
     }
 
+    useEffect(() =>
+        eventReactor().subscribe(FORCE_CLEAR_SEARCH_EVENT, () => setSearchText('')),
+        []);
+
 
 
     return (
@@ -38,7 +42,6 @@ export default function SearchComponent({ onSearchCloseHandler }) {
                         <IconComponent icon="search"></IconComponent>
                     </label>
                     <IconComponent icon="close" onClick={innerOnSearchCloseHandler}></IconComponent>
-                    {/* <i className="material-icons" onClick={innerOnSearchCloseHandler}>close</i> */}
                 </div>
             </form>
         </li>

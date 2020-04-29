@@ -6,12 +6,15 @@ import { administrationApi } from '../../apiManagement/AdministrationApi';
 import DataGridComponent from '../commons/DataGridComponent';
 
 import eventReactor from '../../eventReactor/EventReactor';
-import { SEARCH_EVENT, DISPLAYABLE_MODULES_CHANGED } from '../../eventReactor/EventIds';
+import { SEARCH_EVENT, DISPLAYABLE_MODULES_CHANGED, FORCE_CLEAR_SEARCH_EVENT } from '../../eventReactor/EventIds';
 
+import on from '../../tools/on';
+import DisplayList from '../../tools/displayList';
 
 
 export default function PluginsComponent() {
 
+    console.log("load PluginsComponent");
 
     const [allModules, setAllModules] = useState([]);
     const [filteredModules, setFilteredModules] = useState([]);
@@ -28,10 +31,8 @@ export default function PluginsComponent() {
 
     useEffect(() => {
         return eventReactor().subscribe(SEARCH_EVENT, (data) => setFilteredModules(
-            allModules.filter(oneModule =>
-                oneModule.moduleId.toLowerCase().indexOf(data.toLowerCase()) !== -1
-            ))
-        );
+            allModules.filter(on().stringContains(data, oneModule => oneModule.moduleId))
+        ));
     }, [allModules]);
 
     const saveNewModuleStatus = (allData, updatedRows) => {
@@ -41,11 +42,13 @@ export default function PluginsComponent() {
                 setAllModules([...allModulesFromApi]);
                 setFilteredModules([...allModulesFromApi]);
 
+                eventReactor().emit(FORCE_CLEAR_SEARCH_EVENT);
+
                 eventReactor().emit(
                     DISPLAYABLE_MODULES_CHANGED,
                     allModulesFromApi.filter(oneModule => oneModule.hasClientSide && oneModule.enabled));
             });
-    }
+    };
 
     const dataGridConfiguration = {
         itemUniqueId: 'moduleId',

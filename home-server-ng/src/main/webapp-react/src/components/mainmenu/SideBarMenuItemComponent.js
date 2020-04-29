@@ -1,21 +1,28 @@
 import React from 'react';
 import dropDownUtils from '../commons/dropDownUtils'
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import './side-bar-menu-item-component.scss';
 
 export default function SideBarMenuItemComponent({ menuDescriptor, onItemClick }) {
 
-  const hasSubMenuItems = menuDescriptor.subMenu !== undefined;
+  const [hasSubMenuItems, setHasSubMenuItems] = useState(false);
+  const [dropDownDescription, setDropDownDescription] = useState({});
 
-  const dropDownDescription = hasSubMenuItems ? dropDownUtils().dropDownDescription("submenu", menuDescriptor.module) : null;
+
+  useEffect(() => {
+    const hasSubMenu = menuDescriptor.subMenu !== undefined;
+    setHasSubMenuItems(hasSubMenu);
+    setDropDownDescription(hasSubMenu ? dropDownUtils().dropDownDescription("submenu", menuDescriptor.module) : null)
+  }, [menuDescriptor]);
+
 
   useEffect(() => {
     if (hasSubMenuItems) {
       window.M.Dropdown.init(document.querySelectorAll('#' + dropDownDescription.triggerId), { coverTrigger: false });
     }
-  }, []);
+  }, [hasSubMenuItems, dropDownDescription]);
 
   const menuItem = hasSubMenuItems ? (
     <li className="no-padding">

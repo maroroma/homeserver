@@ -1,0 +1,3 @@
+[type="checkbox"] + span:not(.lever)::before, [type="checkbox"]:not(.filled-in) + span:not(.lever)::after {
+    margin-top:10px;
+}

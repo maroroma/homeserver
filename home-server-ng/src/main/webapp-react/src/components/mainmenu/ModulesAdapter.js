@@ -30,7 +30,8 @@ export default function modulesAdapter() {
         path: '/filemanager',
         icon: 'storage',
         title: 'FileManager',
-        component: (<FileManagerComponent></FileManagerComponent>)
+        component: (<FileManagerComponent></FileManagerComponent>),
+        dontUseDefaultPanel: true
     }, {
         module: 'iot',
         path: '/iot',
@@ -54,7 +55,20 @@ export default function modulesAdapter() {
         path: '/seedbox',
         icon: 'cloud_download',
         title: 'Seedbox',
-        component: (<FileManagerComponent></FileManagerComponent>)
+        subMenu: [
+            {
+                path: '/seedbox/downloads',
+                icon: 'import_export',
+                title: 'Downloads',
+                component: (<PluginsComponent></PluginsComponent>)
+            },
+            {
+                path: '/seedbox/todo',
+                icon: 'new_releases',
+                title: 'Todo',
+                component: (<PropertiesComponent></PropertiesComponent>)
+            }
+        ]
     }];
 
     const getMenuDescriptor = (module) => menuDescriptors.filter(oneDescriptor => module.moduleId === oneDescriptor.module).shift();
