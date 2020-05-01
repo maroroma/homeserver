@@ -47,12 +47,17 @@ export function administrationApi() {
             .then(response => response.json())
             .catch(er => console.error(er));
 
+    const getServerStatus = () => fetch(`${apiRoot()}/administration/server/status`)
+        .then(errorHandler("Erreur rencontrée lors de la récupération des stats du serveur"))
+        .catch(er => console.error(er));
+
 
     return {
         updateModulesStatus: updateModulesStatus,
         getAllModule: getAllModule,
         getAllEnabledModules: getAllEnabledModules,
         getAllProperties: getAllProperties,
-        updateProperties: updateProperties
+        updateProperties: updateProperties,
+        getServerStatus: getServerStatus
     }
 }

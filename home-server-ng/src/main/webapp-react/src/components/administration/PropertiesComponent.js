@@ -13,12 +13,12 @@ import eventReactor from '../../eventReactor/EventReactor';
 import { SEARCH_EVENT, FORCE_CLEAR_SEARCH_EVENT } from '../../eventReactor/EventIds';
 
 import on from '../../tools/on';
+import { useDisplayList } from '../../tools/displayList';
 
 export default function PropertiesComponent() {
 
 
-    const [allProperties, setAllProperties] = useState([]);
-    const [filteredProperties, setFilteredProperties] = useState([]);
+    const [allProperties, setAllProperties] = useDisplayList();
     const [usableFilters, setUsableFilters] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState(undefined);
     const [searchString, setSearchString] = useState('');
@@ -34,8 +34,7 @@ export default function PropertiesComponent() {
             .then(response => administrationApi().getAllProperties())
             .then(allPropertiesFromApi => {
                 toaster().plopSuccess("propriétés sauvegardées avec succès");
-                setAllProperties([...allPropertiesFromApi]);
-                setFilteredProperties([...allPropertiesFromApi]);
+                setAllProperties({ ...allProperties.update(allPropertiesFromApi) });
                 setUsableFilters(buildFilterByModule(allPropertiesFromApi));
                 eventReactor().emit(FORCE_CLEAR_SEARCH_EVENT);
             });
@@ -54,23 +53,23 @@ export default function PropertiesComponent() {
                 }).sort((filter1, filter2) => filter1.moduleId.localeCompare(filter2.moduleId))];
     };
 
-    const calculateFilteredProperties = (currentSearchString, currentFilter) => {
-        let returnValue = allProperties;
+    const onSearchStringAndSelectedModule = (currentSearchString, currentFilter) => {
+        return oneProperty => {
 
-        if (currentFilter && currentFilter.moduleId !== noneFilter.moduleId) {
-            returnValue = returnValue.filter(oneProperty => oneProperty.moduleId === currentFilter.moduleId);
+            let returnValue = true;
+
+            if (currentFilter && currentFilter.moduleId !== noneFilter.moduleId) {
+                returnValue = oneProperty.moduleId === currentFilter.moduleId;
+            }
+
+            return returnValue && on().stringContains(currentSearchString, oneModule => oneModule.id)(oneProperty);
         }
-
-        returnValue = returnValue.filter(on().stringContains(currentSearchString, oneModule => oneModule.id));
-        return returnValue;
     }
 
     useEffect(() => {
-        setFilteredProperties([...allProperties]);
         administrationApi().getAllProperties()
             .then(allPropertiesFromApi => {
-                setAllProperties([...allPropertiesFromApi]);
-                setFilteredProperties([...allPropertiesFromApi]);
+                setAllProperties({ ...allProperties.update(allPropertiesFromApi) });
                 setUsableFilters(buildFilterByModule(allPropertiesFromApi));
             })
     }, []);
@@ -78,9 +77,9 @@ export default function PropertiesComponent() {
     useEffect(() => {
         return eventReactor().subscribe(SEARCH_EVENT, (data) => {
             setSearchString(data);
-            setFilteredProperties(
-                calculateFilteredProperties(data, selectedFilter)
-            )
+            setAllProperties({
+                ...allProperties.updateFilter(onSearchStringAndSelectedModule(data, selectedFilter))
+            });
         }
         );
     }, [allProperties, selectedFilter]);
@@ -96,7 +95,9 @@ export default function PropertiesComponent() {
             });
         setUsableFilters(newFilterList);
         setSelectedFilter(filterToUpdate);
-        setFilteredProperties(calculateFilteredProperties(searchString, filterToUpdate));
+        setAllProperties({
+            ...allProperties.updateFilter(onSearchStringAndSelectedModule(searchString, filterToUpdate))
+        });
     }
 
 
@@ -144,7 +145,7 @@ export default function PropertiesComponent() {
                     )}
                 </MasonryContainerComponent>
             </CollapsibleContainerComponent>
-            <DataGridComponent configuration={dataGridConfiguration} data={filteredProperties}></DataGridComponent>
+            <DataGridComponent configuration={dataGridConfiguration} data={allProperties.displayList}></DataGridComponent>
         </>
     );
 }

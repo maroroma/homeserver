@@ -3,6 +3,7 @@ import SwitchComponent from './SwitchComponent';
 import IconComponent from './IconComponent';
 import {ModalPopupComponent} from './ModalPopupComponent';
 import { useState, useEffect } from 'react';
+import sort from '../../tools/sort';
 
 
 export default function DataGridComponent({ configuration, data }) {
@@ -15,7 +16,7 @@ export default function DataGridComponent({ configuration, data }) {
         sort: false,
         sortDirection: 1,
         sortField: undefined,
-        sortFunction: (item1, item2) => 0
+        sortFunction: sort().neutral()
     });
     const [changedRows, setChangedRows] = useState([]);
     const [popupDriver, setPopupDriver] = useState({
@@ -43,7 +44,7 @@ export default function DataGridComponent({ configuration, data }) {
             .map(oneColumnConfig => oneColumnConfig.dataField)
             .slice()[0];
 
-        let sortFunction = (item1, item2) => 0;
+        let sortFunction = sort().neutral();
         if (sortConfiguration.sort) {
             sortFunction = createSortFunction(sortConfiguration);
         }

@@ -9,38 +9,34 @@ import eventReactor from '../../eventReactor/EventReactor';
 import { SEARCH_EVENT, DISPLAYABLE_MODULES_CHANGED, FORCE_CLEAR_SEARCH_EVENT } from '../../eventReactor/EventIds';
 
 import on from '../../tools/on';
-import DisplayList from '../../tools/displayList';
+import { useDisplayList } from '../../tools/displayList';
 
 
 export default function PluginsComponent() {
 
-    console.log("load PluginsComponent");
-
-    const [allModules, setAllModules] = useState([]);
-    const [filteredModules, setFilteredModules] = useState([]);
+    const [allModules, setAllModules] = useDisplayList();
 
 
     useEffect(() => {
-        setFilteredModules([...allModules]);
         administrationApi().getAllModule()
-            .then(allModulesFromApi => {
-                setAllModules([...allModulesFromApi]);
-                setFilteredModules([...allModulesFromApi]);
-            })
+            .then(allModulesFromApi => setAllModules({ ...allModules.update(allModulesFromApi) }))
     }, []);
 
     useEffect(() => {
-        return eventReactor().subscribe(SEARCH_EVENT, (data) => setFilteredModules(
-            allModules.filter(on().stringContains(data, oneModule => oneModule.moduleId))
-        ));
+        return eventReactor()
+            .subscribe(SEARCH_EVENT, (data) => setAllModules(
+                {
+                    ...allModules
+                        .updateFilter(on().stringContains(data, oneModule => oneModule.moduleId))
+                }
+            ));
     }, [allModules]);
 
     const saveNewModuleStatus = (allData, updatedRows) => {
         administrationApi()
             .updateModulesStatus(updatedRows)
             .then(allModulesFromApi => {
-                setAllModules([...allModulesFromApi]);
-                setFilteredModules([...allModulesFromApi]);
+                setAllModules({ ...allModules.update(allModulesFromApi) })
 
                 eventReactor().emit(FORCE_CLEAR_SEARCH_EVENT);
 
@@ -76,7 +72,7 @@ export default function PluginsComponent() {
     return (
         <>
             <div>
-                <DataGridComponent configuration={dataGridConfiguration} data={filteredModules}></DataGridComponent>
+                <DataGridComponent configuration={dataGridConfiguration} data={allModules.displayList}></DataGridComponent>
             </div>
         </>
     );

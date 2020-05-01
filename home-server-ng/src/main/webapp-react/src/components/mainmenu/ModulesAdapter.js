@@ -3,6 +3,7 @@ import React from 'react';
 import FileManagerComponent from '../filemanager/FileManagerComponent';
 import PluginsComponent from '../administration/PluginsComponent';
 import PropertiesComponent from '../administration/PropertiesComponent';
+import StatusComponent from '../administration/StatusComponent';
 
 
 export default function modulesAdapter() {
@@ -23,6 +24,12 @@ export default function modulesAdapter() {
                 icon: 'toc',
                 title: 'Properties',
                 component: (<PropertiesComponent></PropertiesComponent>)
+            },
+            {
+                path: '/administration/status',
+                icon: 'info',
+                title: 'Status',
+                component: (<StatusComponent></StatusComponent>)
             }
         ]
     }, {

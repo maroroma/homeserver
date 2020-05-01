@@ -10,10 +10,15 @@ import {
     FILE_BROWSER_REQUEST_DIRECTORY_DETAIL, FILE_BROWSER_DIRECTORY_DETAIL_LOADED,
     FILE_BROWSER_CREATE_NEW_DIRECTORY,
     FILE_BROWSER_DELETE_FILES,
-    FILE_BROWSER_RENAME_ONE_FILE
+    FILE_BROWSER_RENAME_ONE_FILE,
+    SEARCH_EVENT, FORCE_CLEAR_SEARCH_EVENT
 } from '../../eventReactor/EventIds';
 
 import { when } from "../../tools/when";
+import on from '../../tools/on';
+import enhance from '../../tools/enhance';
+import sort from '../../tools/sort';
+import { DisplayList } from '../../tools/displayList';
 
 import { ModalPopupComponent, usePopupDriver } from "../commons/ModalPopupComponent";
 import YesNoModalPopupComponent from "../commons/YesNoModalPopupComponent";
@@ -28,35 +33,11 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
     // menu d'action
     const [actionMenu, setActionMenu] = useState({});
 
-
-
-
-
-    // fonction de tri pour les fichiers
-    const sortFiles = (file1, file2) => file1.name.localeCompare(file2.name);
-
-    // fonction de filtrage sur les fichiers sélectionnés
-    const onSelectedFile = oneFile => oneFile.selected;
-
-    // fonction de filtrage pour la recherche
-    // const onSearchString = oneFile => oneFile.name
-
-    // rajout d'attributs VO pour les fichiers
-    const enhanceFiles = (file) => {
-        return { ...file, selected: false }
-    };
-
-    const updateOneFileSelection = (newStatus) => {
-        return (oneFile) => {
-            oneFile.selected = newStatus;
-            return oneFile;
-        }
-    };
     const updateAllFileSelection = (newStatus) => {
         setCurrentDirectory({
             ...currentDirectory,
-            files: currentDirectory.files.map(updateOneFileSelection(newStatus)),
-            directories: currentDirectory.directories.map(updateOneFileSelection(newStatus)),
+            files: currentDirectory.files.updateItems(oneFile => oneFile.toggle(newStatus)),
+            directories: currentDirectory.directories.updateItems(oneFile => oneFile.toggle(newStatus)),
             hasSelectedFiles: newStatus,
             nbSelectedFiles: currentDirectory.files.length + currentDirectory.directories.length
         });
@@ -77,7 +58,7 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
                 renewedFile,
                 ...fileList
                     .filter(oneFile => oneFile.id !== fileIdWithStatus.fileId)
-            ].filter(oneFile => oneFile).sort(sortFiles);
+            ].filter(on().defined()).sort(sort().fileName());
         }
         return fileList;
     };
@@ -119,6 +100,8 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
             .subscribe(FILE_BROWSER_DIRECTORY_DETAIL_LOADED,
                 newDirectory => {
 
+                    eventReactor().emit(FORCE_CLEAR_SEARCH_EVENT);
+
                     let newCurrentDirectory = newDirectory.directoryToDisplay;
 
                     if (directoryStack[directoryStack.length - 1].id !== newCurrentDirectory.id) {
@@ -143,8 +126,8 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
 
                     setCurrentDirectory({
                         ...newCurrentDirectory,
-                        files: newCurrentDirectory.files?.map(enhanceFiles).sort(sortFiles),
-                        directories: newCurrentDirectory.directories?.map(enhanceFiles).sort(sortFiles),
+                        files: new DisplayList(newCurrentDirectory.files).updateItems(enhance().selectable()).updateSort(sort().fileName()),
+                        directories: new DisplayList(newCurrentDirectory.directories).updateItems(enhance().selectable()).updateSort(sort().fileName()),
                         hasSelectedFiles: false,
                         nbSelectedFiles: 0
                     });
@@ -160,8 +143,8 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
     useEffect(() => {
         setCurrentDirectory({
             ...startUpDirectory,
-            files: startUpDirectory.files?.map(enhanceFiles).sort(sortFiles),
-            directories: startUpDirectory.directories?.map(enhanceFiles).sort(sortFiles),
+            files: new DisplayList(startUpDirectory.files).updateItems(enhance().selectable()).updateSort(sort().fileName()),
+            directories: new DisplayList(startUpDirectory.directories).updateItems(enhance().selectable()).updateSort(sort().fileName()),
             hasSelectedFiles: false,
             nbSelectedFiles: 0
         });
@@ -176,16 +159,16 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
     useEffect(() => {
         const selectFileUnsubcribe = eventReactor().subscribe(FILE_BROWSER_SELECT_FILE, data => {
 
-            const updatedFiles = updateFileSelectedStatus(currentDirectory.files, data);
-            const updatedDirectories = updateFileSelectedStatus(currentDirectory.directories, data);
+            const updatedFiles = updateFileSelectedStatus(currentDirectory.files.rawList, data);
+            const updatedDirectories = updateFileSelectedStatus(currentDirectory.directories.rawList, data);
             const nbSelectedFiles = updatedFiles
                 .concat(updatedDirectories)
-                .filter(onSelectedFile).length;
+                .filter(on().selected()).length;
 
             setCurrentDirectory({
                 ...currentDirectory,
-                files: updatedFiles,
-                directories: updatedDirectories,
+                files: currentDirectory.files.update(updatedFiles),
+                directories: currentDirectory.directories.update(updatedDirectories),
                 hasSelectedFiles: nbSelectedFiles > 0,
                 nbSelectedFiles: nbSelectedFiles
             });
@@ -204,9 +187,18 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
             });
         });
 
+        const searchStringUnSubscribe = eventReactor().subscribe(SEARCH_EVENT, searchString =>
+            setCurrentDirectory({
+                ...currentDirectory,
+                files: currentDirectory.files.updateFilter(on().stringContains(searchString, oneFile => oneFile.name)),
+                directories: currentDirectory.directories.updateFilter(on().stringContains(searchString, oneFile => oneFile.name)),
+            })
+        );
+
         return () => {
             selectFileUnsubcribe();
             changeCurrentDirectoryUnSubscribe();
+            searchStringUnSubscribe();
         }
 
     }, [currentDirectory, directoryStack]);
@@ -223,7 +215,7 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
 
     // fonction de filtrage pour l'activation des boutons du menu
     const noFileOrDirectorySelected = () => !currentDirectory?.hasSelectedFiles;
-    const noFileSelected = () => currentDirectory?.files?.filter(onSelectedFile).length === 0;
+    const noFileSelected = () => currentDirectory?.files?.displayList?.filter(on().selected()).length === 0;
     const allFilesSelected = () => currentDirectory?.nbSelectedFiles === (currentDirectory?.files?.length + currentDirectory?.directories?.length);
     const moreThanOneFileSelected = () => currentDirectory.nbSelectedFiles > 1;
     const currentIsRoot = () => currentDirectory?.id === startUpDirectory.id;
@@ -269,10 +261,10 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
     });
 
     const openPopupRename = () => {
-        const selectedFileToRename = currentDirectory.files
-            .filter(onSelectedFile)
-            .concat(currentDirectory.directories.filter(onSelectedFile))
-            .filter(oneFile => oneFile !== undefined)
+        const selectedFileToRename = currentDirectory.files.rawList
+            .filter(on().selected())
+            .concat(currentDirectory.directories.rawList.filter(on().selected()))
+            .filter(on().defined())
         [0];
 
         setRenamePopupDriver({
@@ -314,8 +306,8 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
             ...yesNoPopupDriver,
             open: true,
             onOk: () => {
-                const filesToDelete = currentDirectory.files.filter(oneFile => oneFile.selected)
-                    .concat(currentDirectory.directories.filter(oneFile => oneFile.selected));
+                const filesToDelete = currentDirectory.files.rawList.filter(on().selected())
+                    .concat(currentDirectory.directories.rawList.filter(on().selected()));
                 eventReactor().emit(FILE_BROWSER_DELETE_FILES, {
                     currentDirectory: currentDirectory,
                     filesToDelete: filesToDelete
@@ -352,8 +344,8 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
 
             <ul className="collection">
                 {goToParentDirectoryComponent}
-                {currentDirectory?.directories?.map((oneDirectory, oneDirectoryIndex) => <DirectoryRenderer directory={oneDirectory} key={oneDirectoryIndex}></DirectoryRenderer>)}
-                {currentDirectory?.files?.map((oneFile, oneFileIndex) => <FileRenderer file={oneFile} key={oneFileIndex}>{oneFile.name}</FileRenderer>)}
+                {currentDirectory?.directories?.displayList.map((oneDirectory, oneDirectoryIndex) => <DirectoryRenderer directory={oneDirectory} key={oneDirectoryIndex}></DirectoryRenderer>)}
+                {currentDirectory?.files?.displayList.map((oneFile, oneFileIndex) => <FileRenderer file={oneFile} key={oneFileIndex}>{oneFile.name}</FileRenderer>)}
             </ul>
 
 
@@ -386,7 +378,7 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
 
             <ModalPopupComponent popupId="popupDownload" driver={downloadPopupDriver}>
                 <ul className="collection">
-                    {currentDirectory.files?.filter(onSelectedFile).map((oneFile, index) => (
+                    {currentDirectory.files?.displayList?.filter(on().selected()).map((oneFile, index) => (
                         <li className="collection-item" key={index}><a download={oneFile.name} href={`${downloadBaseUrl}/${oneFile.id}`}>{oneFile.name}</a></li>
                     ))}
                 </ul>

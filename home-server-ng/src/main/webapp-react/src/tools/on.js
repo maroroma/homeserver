@@ -3,8 +3,23 @@ export default function on() {
         return oneItemToTest => extractor(oneItemToTest).toLowerCase().indexOf(expectedString.toLowerCase()) !== -1
     }
 
+    const selected = () => {
+        return oneItem => oneItem.selected;
+    }
+
+    const passthrough = () => {
+        return oneItem => true;
+    }
+
+    const defined = () => {
+        return oneItem => oneItem !== undefined;
+    }
+
     return {
-        stringContains: stringContains
+        stringContains: stringContains,
+        selected: selected,
+        passthrough: passthrough,
+        defined: defined
     }
 }
 

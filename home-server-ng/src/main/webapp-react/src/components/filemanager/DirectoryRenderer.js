@@ -20,7 +20,7 @@ export default function DirectoryRenderer({ directory, disabled=false, icon="fol
     return <li className="collection-item">
         <div>
             <CheckBoxComponent disabled={disabled} dataswitch={directory.selected} onChange={onChangeSelectionEventHander}></CheckBoxComponent>
-            <a className="waves-effect waves-teal btn-flat file-item" href="#!" onClick={onDirectoryChangeEventHandler}>
+            <a className="waves-effect waves-teal btn-flat file-item truncate" href="#!" onClick={onDirectoryChangeEventHandler}>
                 <IconComponent icon={icon} classAddons="left"></IconComponent>
                 {directory.name}</a>
         </div>

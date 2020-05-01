@@ -1,6 +1,6 @@
 [ {
   "id" : "homeserver.iot.buzzer.buzztime",
-  "value" : "5001",
+  "value" : "5003",
   "description" : "Durée du buzzer une fois lancée",
   "readOnly" : false,
   "moduleId" : "iot"

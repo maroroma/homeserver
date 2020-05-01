@@ -21,7 +21,7 @@
   "enabled" : true
 }, {
   "id" : "music",
-  "enabled" : true
+  "enabled" : false
 }, {
   "id" : "watch",
   "enabled" : false
@@ -33,7 +33,7 @@
   "enabled" : false
 }, {
   "id" : "kiosk",
-  "enabled" : true
+  "enabled" : false
 }, {
   "id" : "seedbox",
   "enabled" : true
