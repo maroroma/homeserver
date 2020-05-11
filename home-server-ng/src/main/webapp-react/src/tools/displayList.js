@@ -26,13 +26,21 @@ export class DisplayList {
         this.innerApplySort = this.innerApplySort.bind(this);
         this.innerUpdateDisplayList = this.innerUpdateDisplayList.bind(this);
 
+        this.selectedItemsCount = this.selectedItemsCount.bind(this);
+        this.hasSelectedItems = this.hasSelectedItems.bind(this);
+        this.hasNoSelectedItems = this.hasNoSelectedItems.bind(this);
+        this.applySelectionMemento = this.applySelectionMemento.bind(this);
+        this.selectionMemento = this.selectionMemento.bind(this);
+        this.updateAllSelectableItems = this.updateAllSelectableItems.bind(this);
+        this.updateSelectableItems = this.updateSelectableItems.bind(this);
+        this.getSelectedItems = this.getSelectedItems.bind(this);
 
         this.currentFilter = on().passthrough();
         this.currentSort = sort().neutral();
     }
 
     update(newRawList) {
-        this.rawList = [...newRawList];
+        if (newRawList) { this.rawList = [...newRawList]; }
         return this.innerUpdateDisplayList();
     }
 
@@ -41,9 +49,63 @@ export class DisplayList {
         return this.innerUpdateDisplayList();
     }
 
+    updateSelectableItems(id, newStatus, idResolver = oneItem => oneItem.id) {
+        return this.updateItems(oneItem => {
+            return {
+                ...oneItem,
+                selected: id === idResolver(oneItem) ? newStatus : oneItem.selected
+            }
+        });
+    }
+
+    updateAllSelectableItems(newStatus) {
+        return this.updateItems(oneItem => {
+            oneItem.selected = newStatus
+            return oneItem;
+        });
+    }
+
+    selectedItemsCount() {
+        return this.getSelectedItems().length;
+    }
+
+    hasSelectedItems() {
+        return this.selectedItemsCount() > 0;
+    }
+
+    hasNoSelectedItems() {
+        return !this.hasSelectedItems();
+    }
+
+    getSelectedItems() {
+        return this.rawList.filter(on().selected());
+    }
+
+    selectionMemento(idResolver = oneItem => oneItem.id) {
+        return this.rawList.map(oneItem => {
+            return {
+                idToRestore: idResolver(oneItem),
+                selected: oneItem.selected
+            }
+        });
+    }
+
+
+    applySelectionMemento(previousSelectionStatus, idResolver = oneItem => oneItem.id) {
+        return this.updateItems(oneItem => {
+            const previousItem = previousSelectionStatus.find(onePreviousItem => idResolver(oneItem) === onePreviousItem.idToRestore);
+            const previousStatus = previousItem ? previousItem.selected : false;
+            return {
+                ...oneItem,
+                selected: previousStatus
+            }
+        });
+
+    };
+
 
     clearFilters() {
-        return this.updateFilter(oneRawList => oneRawList);
+        return this.updateFilter(on().passthrough());
     }
 
 

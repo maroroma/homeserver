@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import IconComponent from './IconComponent';
 
-export default function CollapsibleContainerComponent({ children, title = "default title" }) {
+export default function UniqueCollapsibleContainerComponent({ children, title = "default title" }) {
 
     const [expanded, setExpanded] = useState(false);
 

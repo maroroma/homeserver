@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 
 import eventReactor from '../../eventReactor/EventReactor';
 import {
-    FILE_BROWSER_REQUEST_DIRECTORY_DETAIL, FILE_BROWSER_DIRECTORY_DETAIL_LOADED,
     FILE_BROWSER_CREATE_NEW_DIRECTORY, FILE_BROWSER_DELETE_FILES,
     FILE_BROWSER_RENAME_ONE_FILE
 } from '../../eventReactor/EventIds';
@@ -12,6 +11,7 @@ import {
 
 import fileManagerApi from '../../apiManagement/FileManagerApi';
 import FileBrowserComponent from './FileBrowserComponent';
+import fileBrowserEventReactor from './fileBrowserEventReactor';
 
 export default function FileManagerComponent() {
 
@@ -33,7 +33,7 @@ export default function FileManagerComponent() {
 
         loadRootDirectories();
 
-        const unsubscribeDirectoryDetail = eventReactor().subscribe(FILE_BROWSER_REQUEST_DIRECTORY_DETAIL, data => {
+        const unsubscribeDirectoryDetail = fileBrowserEventReactor().onRequestDirectoryDetail(data => {
             if (data.requestedDirectory.id === "ROOT_DIRECTORY") {
                 loadRootDirectories();
             } else {
@@ -41,9 +41,7 @@ export default function FileManagerComponent() {
                     .getDirectoryDetails(data.requestedDirectory)
                     .then(response => {
                         if (response) {
-                            eventReactor().emit(FILE_BROWSER_DIRECTORY_DETAIL_LOADED, {
-                                directoryToDisplay: response
-                            });
+                            fileBrowserEventReactor().directoryDetailLoaded(response);
                         }
                     });
             }
@@ -52,25 +50,19 @@ export default function FileManagerComponent() {
         const unsubscribeDirectoryCreation = eventReactor().subscribe(FILE_BROWSER_CREATE_NEW_DIRECTORY, data => {
             fileManagerApi()
                 .createNewDirectory(data.currentDirectory, data.newDirectoryName)
-                .then(reponse => eventReactor().emit(FILE_BROWSER_REQUEST_DIRECTORY_DETAIL, {
-                    requestedDirectory: data.currentDirectory
-                }));
+                .then(reponse => fileBrowserEventReactor().requestDirectoryDetail(data.currentDirectory));
         });
 
         const unsubscribeDeleteDirectory = eventReactor().subscribe(FILE_BROWSER_DELETE_FILES, data => {
             fileManagerApi()
                 .deleteFiles(data.filesToDelete)
-                .then(response => eventReactor().emit(FILE_BROWSER_REQUEST_DIRECTORY_DETAIL, {
-                    requestedDirectory: data.currentDirectory
-                }));
+                .then(reponse => fileBrowserEventReactor().requestDirectoryDetail(data.currentDirectory));
         });
 
         const unsubscribeRenameFile = eventReactor().subscribe(FILE_BROWSER_RENAME_ONE_FILE, data => {
             fileManagerApi()
                 .renameFile(data.fileToRename, data.fileNewName)
-                .then(response => eventReactor().emit(FILE_BROWSER_REQUEST_DIRECTORY_DETAIL, {
-                    requestedDirectory: data.currentDirectory
-                }));
+                .then(reponse => fileBrowserEventReactor().requestDirectoryDetail(data.currentDirectory));
         });
 
         return () => {

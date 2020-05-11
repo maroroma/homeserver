@@ -1,12 +1,12 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { administrationApi } from '../../apiManagement/AdministrationApi';
 
 import DataGridComponent from '../commons/DataGridComponent';
 
 import eventReactor from '../../eventReactor/EventReactor';
-import { SEARCH_EVENT, DISPLAYABLE_MODULES_CHANGED, FORCE_CLEAR_SEARCH_EVENT } from '../../eventReactor/EventIds';
+import { DISPLAYABLE_MODULES_CHANGED, FORCE_CLEAR_SEARCH_EVENT } from '../../eventReactor/EventIds';
 
 import on from '../../tools/on';
 import { useDisplayList } from '../../tools/displayList';
@@ -23,8 +23,7 @@ export default function PluginsComponent() {
     }, []);
 
     useEffect(() => {
-        return eventReactor()
-            .subscribe(SEARCH_EVENT, (data) => setAllModules(
+        return eventReactor().shortcuts().onSearchEvent((data) => setAllModules(
                 {
                     ...allModules
                         .updateFilter(on().stringContains(data, oneModule => oneModule.moduleId))

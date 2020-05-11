@@ -2,15 +2,14 @@ import React from 'react';
 import IconComponent from '../commons/IconComponent';
 import CheckBoxComponent from '../commons/CheckBoxComponent';
 import eventReactor from '../../eventReactor/EventReactor';
-import { FILE_BROWSER_SELECT_FILE, FILE_BROWSER_CHANGE_CURRENT_DIRECTORY } from '../../eventReactor/EventIds';
+import { FILE_BROWSER_CHANGE_CURRENT_DIRECTORY } from '../../eventReactor/EventIds';
+import { when } from '../../tools/when';
+import { defaultDirectoryIconResolver } from './FileIconResolver';
 
-export default function DirectoryRenderer({ directory, disabled=false, icon="folder" }) {
+export default function DirectoryRenderer({ directory, disabled = false, iconResolver = defaultDirectoryIconResolver }) {
 
     const onChangeSelectionEventHander = (newStatus) => {
-        eventReactor().emit(FILE_BROWSER_SELECT_FILE, {
-            fileId: directory.id,
-            newStatus: newStatus
-        });
+        eventReactor().shortcuts().selectItem(directory.id, newStatus);
     }
 
     const onDirectoryChangeEventHandler = () => {
@@ -21,7 +20,7 @@ export default function DirectoryRenderer({ directory, disabled=false, icon="fol
         <div>
             <CheckBoxComponent disabled={disabled} dataswitch={directory.selected} onChange={onChangeSelectionEventHander}></CheckBoxComponent>
             <a className="waves-effect waves-teal btn-flat file-item truncate" href="#!" onClick={onDirectoryChangeEventHandler}>
-                <IconComponent icon={icon} classAddons="left"></IconComponent>
+                <IconComponent icon={iconResolver(directory)} classAddons={when(directory.selected).thenPlopSelectedItem("left")}></IconComponent>
                 {directory.name}</a>
         </div>
     </li>;

@@ -19,7 +19,6 @@ export default function YesNoModalPopupComponent({ driver }) {
     });
 
     useEffect(() => {
-        console.log('yesno!!!!');
         setPopupDriver({
             ...popupDriver,
             open: driver.open,

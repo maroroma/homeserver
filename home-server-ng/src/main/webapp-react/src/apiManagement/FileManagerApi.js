@@ -1,4 +1,4 @@
-import { defaultJsonHeaders, errorHandler,apiRoot } from './HttpUtils';
+import { defaultJsonHeaders, errorHandler, apiRoot } from './HttpUtils';
 
 
 export default function fileManagerApi() {
@@ -16,8 +16,9 @@ export default function fileManagerApi() {
             .catch(er => console.error(er));
 
     const createNewDirectory = (currentDirectory, newDirectoryName) => {
+
         const request = {
-            parentDirectory: currentDirectory,
+            parentDirectory: { id: currentDirectory.id },
             directoryName: newDirectoryName
         };
 
@@ -73,7 +74,7 @@ export default function fileManagerApi() {
         createNewDirectory: createNewDirectory,
         deleteFiles: deleteFiles,
         renameFile: renameFile,
-        downloadBaseUrl:downloadBaseUrl
+        downloadBaseUrl: downloadBaseUrl
     };
 
 }

@@ -10,7 +10,7 @@ export function range(start, end = 100, colorScheme = "green") {
 }
 
 export function ProgressBarComponent({ driver }) {
-    let colorScheme = "green";
+    let colorScheme = driver.colorScheme ? driver.colorScheme : "green" ;
     if (driver.ranges) {
         colorScheme = driver.ranges
             .filter(oneRange => oneRange.start <= driver.currentValue && oneRange.end > driver.currentValue)
@@ -22,7 +22,7 @@ export function ProgressBarComponent({ driver }) {
     }
 
 
-    return <div className={`progress ${colorScheme} lighten-3`} style={{ height: 20 + 'px' }}>
+    return <div className={`progress ${colorScheme} lighten-3 progress-bar-component`}>
         <div className={`determinate center-align ${colorScheme} progress-bar-component-text`} style={{ width: driver.currentValue + '%' }}>{displayLabel}</div>
     </div>
 }

@@ -7,10 +7,10 @@ import toaster from '../commons/Toaster';
 import DataGridComponent from '../commons/DataGridComponent';
 import RadioButtonComponent from '../commons/RadioButtonComponent';
 import MasonryContainerComponent from '../commons/MasonryContainerComponent';
-import CollapsibleContainerComponent from '../commons/CollapsibleContainerComponent';
+import UniqueCollapsibleContainerComponent from '../commons/UniqueCollapsibleContainerComponent';
 
 import eventReactor from '../../eventReactor/EventReactor';
-import { SEARCH_EVENT, FORCE_CLEAR_SEARCH_EVENT } from '../../eventReactor/EventIds';
+import { FORCE_CLEAR_SEARCH_EVENT } from '../../eventReactor/EventIds';
 
 import on from '../../tools/on';
 import { useDisplayList } from '../../tools/displayList';
@@ -75,13 +75,12 @@ export default function PropertiesComponent() {
     }, []);
 
     useEffect(() => {
-        return eventReactor().subscribe(SEARCH_EVENT, (data) => {
+        return eventReactor().shortcuts().onSearchEvent((data) => {
             setSearchString(data);
             setAllProperties({
                 ...allProperties.updateFilter(onSearchStringAndSelectedModule(data, selectedFilter))
             });
-        }
-        );
+        });
     }, [allProperties, selectedFilter]);
 
 
@@ -131,7 +130,7 @@ export default function PropertiesComponent() {
 
     return (
         <>
-            <CollapsibleContainerComponent title={`Filtrer${filterPanelTitle}`}>
+            <UniqueCollapsibleContainerComponent title={`Filtrer${filterPanelTitle}`}>
                 <MasonryContainerComponent>
                     {usableFilters.map((oneFilter, filterIndex) => (
                         <div className="masonry-item" key={filterIndex}>
@@ -144,7 +143,7 @@ export default function PropertiesComponent() {
                     )
                     )}
                 </MasonryContainerComponent>
-            </CollapsibleContainerComponent>
+            </UniqueCollapsibleContainerComponent>
             <DataGridComponent configuration={dataGridConfiguration} data={allProperties.displayList}></DataGridComponent>
         </>
     );

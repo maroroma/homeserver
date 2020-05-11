@@ -1,15 +1,24 @@
-export function when(firstPredicate) {
-    return new When(firstPredicate);
+export function when(condition) {
+    if (typeof condition === "boolean") 
+    {
+        return new When(input => condition);
+    }
+    return new When(condition);
 }
 
 export class When {
 
-    constructor(firstPredicate) {
+    constructor(firstPredicate = () => true) {
         this.predicates = [(previousResult) => previousResult && firstPredicate()];
         this.and = this.and.bind(this);
         this.then = this.then.bind(this);
         this.thenHideElement = this.thenHideElement.bind(this);
         this.thenDisableElement = this.thenDisableElement.bind(this);
+        this.selected = this.selected.bind(this);
+    }
+
+    selected(oneSelectableItem) {
+        return this.and(() => oneSelectableItem.selected);
     }
 
     and(otherPredicate) {
@@ -33,12 +42,28 @@ export class When {
         return producer(previousResult);
     }
 
-    thenHideElement(initialClassName = "") {
-        return this.then((condition) => condition ? (initialClassName + " none") : initialClassName);
+
+    // spécialisation css
+    css(classNameToAdd, initialClassName = "") {
+        return this.then(condition => condition ? (`${initialClassName} ${classNameToAdd}`) : initialClassName);
     }
 
+
+    thenHideElement(initialClassName = "") {
+        return this.css("none", initialClassName);
+    }
+    
+    // spécialisation css
     thenDisableElement(initialClassName = "") {
-        return this.then((condition) => condition ? (initialClassName + " disabled") : initialClassName);
+        return this.css("disabled", initialClassName);
+    }
+
+    thenDefaultSelectColor(initialClassName = "") {
+        return this.css("light-blue lighten-4", initialClassName);
+    }
+
+    thenPlopSelectedItem(initialClassName = "") {
+        return this.css("green-font jello-horizontal", initialClassName);
     }
 
 }

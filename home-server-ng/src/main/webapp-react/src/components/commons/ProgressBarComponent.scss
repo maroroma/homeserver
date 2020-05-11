@@ -1,5 +1,10 @@
 .progress-bar-component {
+  height: 24px;
+
   &-text {
     color: white;
+    min-width: fit-content;
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }

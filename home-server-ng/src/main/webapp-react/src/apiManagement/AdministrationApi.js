@@ -51,6 +51,10 @@ export function administrationApi() {
         .then(errorHandler("Erreur rencontrée lors de la récupération des stats du serveur"))
         .catch(er => console.error(er));
 
+    const getOneProperty = (propertyName) => fetch(`${apiRoot()}/administration/configs/${propertyName}`)
+        .then(errorHandler(`Erreur rencontrée lors de la récupération de la propriété ${propertyName}`))
+        .catch(er => console.error(er));
+
 
     return {
         updateModulesStatus: updateModulesStatus,
@@ -58,6 +62,7 @@ export function administrationApi() {
         getAllEnabledModules: getAllEnabledModules,
         getAllProperties: getAllProperties,
         updateProperties: updateProperties,
-        getServerStatus: getServerStatus
+        getServerStatus: getServerStatus,
+        getOneProperty: getOneProperty
     }
 }

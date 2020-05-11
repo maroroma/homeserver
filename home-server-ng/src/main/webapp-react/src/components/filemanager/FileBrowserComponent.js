@@ -5,13 +5,13 @@ import FileRenderer from "./FileRenderer"
 import "./FileBrowserComponent.scss"
 import "../commons/Common.scss"
 import eventReactor from '../../eventReactor/EventReactor';
+import { ActionMenuComponent, actionMenu } from '../commons/ActionMenuComponent';
 import {
-    FILE_BROWSER_SELECT_FILE, FILE_BROWSER_CHANGE_CURRENT_DIRECTORY,
-    FILE_BROWSER_REQUEST_DIRECTORY_DETAIL, FILE_BROWSER_DIRECTORY_DETAIL_LOADED,
+    SELECT_ITEM, FILE_BROWSER_CHANGE_CURRENT_DIRECTORY,
     FILE_BROWSER_CREATE_NEW_DIRECTORY,
     FILE_BROWSER_DELETE_FILES,
     FILE_BROWSER_RENAME_ONE_FILE,
-    SEARCH_EVENT, FORCE_CLEAR_SEARCH_EVENT
+    FORCE_CLEAR_SEARCH_EVENT
 } from '../../eventReactor/EventIds';
 
 import { when } from "../../tools/when";
@@ -22,82 +22,47 @@ import { DisplayList } from '../../tools/displayList';
 
 import { ModalPopupComponent, usePopupDriver } from "../commons/ModalPopupComponent";
 import YesNoModalPopupComponent from "../commons/YesNoModalPopupComponent";
+import { fixedIconResolver, defaultDirectoryIconResolver, fileIconResolver } from './FileIconResolver';
+import fileBrowserEventReactor from './fileBrowserEventReactor';
 
 
-export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl }) {
+export default function FileBrowserComponent({ startUpDirectory, options = {} }) {
 
     // répertoire à afficher
     const [currentDirectory, setCurrentDirectory] = useState({});
     // liste des répertoire dans la navbar
     const [directoryStack, setDirectoryStack] = useState([]);
-    // menu d'action
-    const [actionMenu, setActionMenu] = useState({});
+
+    const computedOptions = {
+        downloadBaseUrl: options.downloadBaseUrl ? options.downloadBaseUrl : "",
+        displayActionMenu: options.displayActionMenu !== undefined ? options.displayActionMenu : true,
+        disableCheckBoxSelection: options.disableCheckBoxSelection !== undefined ? options.disableCheckBoxSelection : false,
+        directoryIconResolver: options.directoryIconResolver ? options.directoryIconResolver : defaultDirectoryIconResolver,
+        fileIconResolver: options.fileIconResolver ? options.fileIconResolver : fileIconResolver
+    }
 
     const updateAllFileSelection = (newStatus) => {
         setCurrentDirectory({
             ...currentDirectory,
-            files: currentDirectory.files.updateItems(oneFile => oneFile.toggle(newStatus)),
-            directories: currentDirectory.directories.updateItems(oneFile => oneFile.toggle(newStatus)),
+            files: currentDirectory.files.updateAllSelectableItems(newStatus),
+            directories: currentDirectory.directories.updateAllSelectableItems(newStatus),
             hasSelectedFiles: newStatus,
             nbSelectedFiles: currentDirectory.files.length + currentDirectory.directories.length
         });
     };
 
-    const updateFileSelectedStatus = (fileList, fileIdWithStatus) => {
-        if (fileList) {
-            const renewedFile = fileList
-                .filter(oneFile => oneFile.id === fileIdWithStatus.fileId)
-                .map(oneFile => {
-                    return {
-                        ...oneFile,
-                        selected: fileIdWithStatus.newStatus
-                    }
-                })[0];
-
-            return [
-                renewedFile,
-                ...fileList
-                    .filter(oneFile => oneFile.id !== fileIdWithStatus.fileId)
-            ].filter(on().defined()).sort(sort().fileName());
-        }
-        return fileList;
-    };
-
-
     const onDirectoryStackClickHandler = (directorySelected) => {
         eventReactor().emit(FILE_BROWSER_CHANGE_CURRENT_DIRECTORY, directorySelected);
     };
 
-    const onDirectoryUpdateHandler = (directoryToRefresh) => {
-        eventReactor().emit(FILE_BROWSER_REQUEST_DIRECTORY_DETAIL, {
-            requestedDirectory: directoryToRefresh
-        });
-    }
-
-    /**
-     * Gestion du menu
-     */
-    useEffect(() => {
-        var elems = document.querySelectorAll('.fixed-action-btn');
-        var instances = window.M.FloatingActionButton.init(elems, {
-            direction: 'left',
-            hoverEnabled: false
-        });
-
-        setActionMenu(instances);
-
-        return () => {
-            instances.forEach(oneInstance => oneInstance.destroy());
-        }
-
-    }, []);
+    const onDirectoryUpdateHandler = (directoryToRefresh) => fileBrowserEventReactor().requestDirectoryDetail(directoryToRefresh);
 
     /**
      * Gestion du chargement du nouveau répertoire sélectionné (sur event)
      */
     useEffect(() =>
-        eventReactor()
-            .subscribe(FILE_BROWSER_DIRECTORY_DETAIL_LOADED,
+        fileBrowserEventReactor()
+            .onDirectoryDetailLoaded(
                 newDirectory => {
 
                     eventReactor().emit(FORCE_CLEAR_SEARCH_EVENT);
@@ -157,37 +122,32 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
      * Gestion des events selection et nouveau directory à afficher
      */
     useEffect(() => {
-        const selectFileUnsubcribe = eventReactor().subscribe(FILE_BROWSER_SELECT_FILE, data => {
+        const selectFileUnsubcribe = eventReactor().subscribe(SELECT_ITEM, data => {
 
-            const updatedFiles = updateFileSelectedStatus(currentDirectory.files.rawList, data);
-            const updatedDirectories = updateFileSelectedStatus(currentDirectory.directories.rawList, data);
-            const nbSelectedFiles = updatedFiles
-                .concat(updatedDirectories)
-                .filter(on().selected()).length;
+            const updatedFiles = currentDirectory.files.updateSelectableItems(data.itemId, data.newStatus);
+            const updatedDirectories = currentDirectory.directories.updateSelectableItems(data.itemId, data.newStatus);
+            const nbSelectedFiles = updatedFiles.selectedItemsCount() + updatedDirectories.selectedItemsCount();
 
             setCurrentDirectory({
                 ...currentDirectory,
-                files: currentDirectory.files.update(updatedFiles),
-                directories: currentDirectory.directories.update(updatedDirectories),
+                files: updatedFiles,
+                directories: updatedDirectories,
                 hasSelectedFiles: nbSelectedFiles > 0,
                 nbSelectedFiles: nbSelectedFiles
             });
 
             if (nbSelectedFiles > 0) {
-                console.log("should open menu");
-                actionMenu.forEach(oneMenu => oneMenu.open());
+                actionMenu().open();
             } else {
-                actionMenu.forEach(oneMenu => oneMenu.close());
+                actionMenu().close()
             }
         });
 
         const changeCurrentDirectoryUnSubscribe = eventReactor().subscribe(FILE_BROWSER_CHANGE_CURRENT_DIRECTORY, data => {
-            eventReactor().emit(FILE_BROWSER_REQUEST_DIRECTORY_DETAIL, {
-                requestedDirectory: data
-            });
+            fileBrowserEventReactor().requestDirectoryDetail(data);
         });
 
-        const searchStringUnSubscribe = eventReactor().subscribe(SEARCH_EVENT, searchString =>
+        const searchStringUnSubscribe = eventReactor().shortcuts().onSearchEvent(searchString =>
             setCurrentDirectory({
                 ...currentDirectory,
                 files: currentDirectory.files.updateFilter(on().stringContains(searchString, oneFile => oneFile.name)),
@@ -210,12 +170,13 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
     } : undefined;
 
     // composant graphique correspondant
-    const goToParentDirectoryComponent = parentDirectory ? <DirectoryRenderer directory={parentDirectory} disabled={true} icon="keyboard_return"></DirectoryRenderer> : undefined;
+    const goToParentDirectoryComponent = parentDirectory ? <DirectoryRenderer directory={parentDirectory} disabled={true} iconResolver={fixedIconResolver("keyboard_return")}></DirectoryRenderer> : undefined;
 
 
     // fonction de filtrage pour l'activation des boutons du menu
     const noFileOrDirectorySelected = () => !currentDirectory?.hasSelectedFiles;
-    const noFileSelected = () => currentDirectory?.files?.displayList?.filter(on().selected()).length === 0;
+    const noFileSelected = () => currentDirectory?.files?.hasNoSelectedItems();
+    // const noFileSelected = () => currentDirectory?.files?.displayList?.filter(on().selected()).length === 0;
     const allFilesSelected = () => currentDirectory?.nbSelectedFiles === (currentDirectory?.files?.length + currentDirectory?.directories?.length);
     const moreThanOneFileSelected = () => currentDirectory.nbSelectedFiles > 1;
     const currentIsRoot = () => currentDirectory?.id === startUpDirectory.id;
@@ -327,6 +288,17 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
         setDownloadPopupDriver({ ...downloadPopupDriver, open: true });
     }
 
+    // le menu d'action n'est pas forcément affiché
+    const actionMenuComponent = !computedOptions.displayActionMenu ? null :
+        (<ActionMenuComponent>
+            <li className={when(noFileOrDirectorySelected).or(currentIsRoot).thenHideElement()}><a href="#!" className="btn-floating btn-small red" onClick={openDeleteFilePopup}><i className="material-icons">delete</i></a></li>
+            <li className={when(noFileOrDirectorySelected).or(currentIsRoot).or(moreThanOneFileSelected).thenHideElement()}><a href="#!" className="btn-floating btn-small green" onClick={openPopupRename}><i className="material-icons">edit</i></a></li>
+            <li><a href="#!" className={when(currentIsRoot).thenDisableElement("btn-floating btn-small green")} onClick={() => openPopupForCreateFolder(currentDirectory)}><i className="material-icons">create_new_folder</i></a></li>
+            <li><a href="#!" className={when(currentIsRoot).or(noFileSelected).thenDisableElement("btn-floating btn-small green")} onClick={() => openPopupDownload()}><i className="material-icons">file_download</i></a></li>
+            <li><a href="#!" className={when(currentIsRoot).thenDisableElement("btn-floating btn-small green")} onClick={() => openPopupForCreateFolder(currentDirectory)}><i className="material-icons">file_upload</i></a></li>
+            <li className={when(allFilesSelected).thenHideElement()}><a href="#!" className="btn-floating btn-small blue" onClick={() => updateAllFileSelection(true)}><i className="material-icons">check_box</i></a></li>
+            <li><a href="#!" className="btn-floating btn-small blue" onClick={() => onDirectoryUpdateHandler(currentDirectory)}><i className="material-icons">sync</i></a></li>
+        </ActionMenuComponent>);
 
     return (
         <div>
@@ -344,25 +316,12 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
 
             <ul className="collection">
                 {goToParentDirectoryComponent}
-                {currentDirectory?.directories?.displayList.map((oneDirectory, oneDirectoryIndex) => <DirectoryRenderer directory={oneDirectory} key={oneDirectoryIndex}></DirectoryRenderer>)}
-                {currentDirectory?.files?.displayList.map((oneFile, oneFileIndex) => <FileRenderer file={oneFile} key={oneFileIndex}>{oneFile.name}</FileRenderer>)}
+                {currentDirectory?.directories?.displayList.map((oneDirectory, oneDirectoryIndex) => <DirectoryRenderer directory={oneDirectory} key={oneDirectoryIndex} disabled={computedOptions.disableCheckBoxSelection} iconResolver={computedOptions.directoryIconResolver}></DirectoryRenderer>)}
+                {currentDirectory?.files?.displayList.map((oneFile, oneFileIndex) => <FileRenderer file={oneFile} key={oneFileIndex} disabled={computedOptions.disableCheckBoxSelection} iconResolver={computedOptions.fileIconResolver}>{oneFile.name}</FileRenderer>)}
             </ul>
 
 
-            <div className="fixed-action-btn">
-                <a href="#!" className="btn-floating btn-large red">
-                    <i className="large material-icons">menu</i>
-                </a>
-                <ul>
-                    <li className={when(noFileOrDirectorySelected).or(currentIsRoot).thenHideElement()}><a href="#!" className="btn-floating btn-small red" onClick={openDeleteFilePopup}><i className="material-icons">delete</i></a></li>
-                    <li className={when(noFileOrDirectorySelected).or(currentIsRoot).or(moreThanOneFileSelected).thenHideElement()}><a href="#!" className="btn-floating btn-small green" onClick={openPopupRename}><i className="material-icons">edit</i></a></li>
-                    <li><a href="#!" className={when(currentIsRoot).thenDisableElement("btn-floating btn-small green")} onClick={() => openPopupForCreateFolder(currentDirectory)}><i className="material-icons">create_new_folder</i></a></li>
-                    <li><a href="#!" className={when(currentIsRoot).or(noFileSelected).thenDisableElement("btn-floating btn-small green")} onClick={() => openPopupDownload()}><i className="material-icons">file_download</i></a></li>
-                    <li><a href="#!" className={when(currentIsRoot).thenDisableElement("btn-floating btn-small green")} onClick={() => openPopupForCreateFolder(currentDirectory)}><i className="material-icons">file_upload</i></a></li>
-                    <li className={when(allFilesSelected).thenHideElement()}><a href="#!" className="btn-floating btn-small blue" onClick={() => updateAllFileSelection(true)}><i className="material-icons">check_box</i></a></li>
-                    <li><a href="#!" className="btn-floating btn-small blue" onClick={() => onDirectoryUpdateHandler(currentDirectory)}><i className="material-icons">sync</i></a></li>
-                </ul>
-            </div>
+            {actionMenuComponent}
 
             <ModalPopupComponent popupId="popupCreateFolder" driver={popupDriver}>
                 <div className="input-field">
@@ -379,7 +338,7 @@ export default function FileBrowserComponent({ startUpDirectory, downloadBaseUrl
             <ModalPopupComponent popupId="popupDownload" driver={downloadPopupDriver}>
                 <ul className="collection">
                     {currentDirectory.files?.displayList?.filter(on().selected()).map((oneFile, index) => (
-                        <li className="collection-item" key={index}><a download={oneFile.name} href={`${downloadBaseUrl}/${oneFile.id}`}>{oneFile.name}</a></li>
+                        <li className="collection-item" key={index}><a download={oneFile.name} href={`${computedOptions.downloadBaseUrl}/${oneFile.id}`}>{oneFile.name}</a></li>
                     ))}
                 </ul>
             </ModalPopupComponent>

@@ -18,10 +18,11 @@ export default function formatters() {
 
 
         let selectedConverter = converters.find(oneConverter => dataToFormat > oneConverter.value)
+
+        
         selectedConverter = selectedConverter ? selectedConverter : {
             value: 1, unit: 'o'
         };
-
         return Math.ceil(dataToFormat / selectedConverter.value) + ' ' + selectedConverter.unit;
 
     }

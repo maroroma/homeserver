@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 
 import { when } from '../../tools/when';
 
+import './ModalPopupComponent.scss';
+import eventReactor from '../../eventReactor/EventReactor';
+
 export function ModalPopupComponent({ children, driver }) {
 
     const [innerPopupInstance, setInnerPopupInstance] = useState(undefined);
@@ -10,7 +13,7 @@ export function ModalPopupComponent({ children, driver }) {
     useEffect(() => {
         if (!innerPopupInstance) {
             var elems = document.querySelectorAll('#' + driver.id);
-            var instance = window.M.Modal.init(elems, {})[0];
+            var instance = window.M.Modal.init(elems, { onCloseEnd: innerClose })[0];
             setInnerPopupInstance(instance);
         }
     }, [innerPopupInstance, driver]);
@@ -29,13 +32,20 @@ export function ModalPopupComponent({ children, driver }) {
 
     const innerClose = () => {
         driver.open = false;
-        innerPopupInstance.close();
+        eventReactor().shortcuts().modalClose(driver);
+        if (innerPopupInstance) {
+            innerPopupInstance.close();
+        }
     }
 
 
     const innerOkClickHander = () => {
         driver.onOk(driver)
-        innerClose();
+        driver.open = false;
+        eventReactor().shortcuts().modalOk(driver);
+        if (innerPopupInstance) {
+            innerPopupInstance.close();
+        }
     };
     const innerCancelClickHandler = () => innerClose();
 
@@ -48,7 +58,7 @@ export function ModalPopupComponent({ children, driver }) {
                 {children}
             </div>
             <div className="modal-footer">
-                <button className="btn waves-effect waves-green" onClick={innerOkClickHander}>{driver.okLabel}</button>
+                <button className={when(driver.disableOkButton).thenDisableElement("btn waves-effect waves-green")} onClick={innerOkClickHander}>{driver.okLabel}</button>
                 <button className={when(hideCancelButton).thenHideElement("btn waves-effect waves-red red")} onClick={innerCancelClickHandler}>{driver.cancelLabel}</button>
             </div>
         </div>
@@ -66,6 +76,7 @@ export function usePopupDriver(popupStartConfig) {
         okLabel: orElse(popupStartConfig.okLabel, 'Ok'),
         cancelLabel: orElse(popupStartConfig.cancelLabel, 'Annuler'),
         noCancelButton: orElse(popupStartConfig.noCancelButton, false),
+        disableOkButton: orElse(popupStartConfig.disableOkButton, false),
         open: false,
         updateData: () => { },
         onOk: () => { },

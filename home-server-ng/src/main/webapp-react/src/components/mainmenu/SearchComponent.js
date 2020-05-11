@@ -28,7 +28,7 @@ export default function SearchComponent({ onSearchCloseHandler }) {
     }
 
     useEffect(() =>
-        eventReactor().subscribe(FORCE_CLEAR_SEARCH_EVENT, () => setSearchText('')),
+        eventReactor().subscribe(FORCE_CLEAR_SEARCH_EVENT, () => innerOnSearchCloseHandler()),
         []);
 
 

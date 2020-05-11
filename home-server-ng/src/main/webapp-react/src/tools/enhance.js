@@ -1,5 +1,29 @@
 export default function enhance() {
 
+    const disablable = () => {
+        return oneItem => {
+            const disableItem = {
+                ...oneItem,
+                disabled: false
+            };
+
+            const enable = () => {
+                disableItem.disabled = false;
+                return disableItem;
+            }
+
+            const disable = () => {
+                disableItem.disabled = true;
+                return disableItem;
+            }
+
+            disableItem.enable = enable;
+            disableItem.disable = disable;
+            return disableItem;
+        }
+    }
+
+
     const selectable = () => {
         return oneItem => {
             const selectableItem = {
@@ -15,15 +39,25 @@ export default function enhance() {
                 }
                 return selectableItem;
             };
-            
+
             selectableItem.toggle = toggle;
 
             return selectableItem;
         };
     }
 
+    const indexed = () => {
+        return (oneItem, index) => {
+            return {
+                ...oneItem,
+                index: index
+            }
+        }
+    }
 
     return {
-        selectable: selectable
+        selectable: selectable,
+        disablable: disablable,
+        indexed: indexed
     };
 }

@@ -4,6 +4,8 @@ import FileManagerComponent from '../filemanager/FileManagerComponent';
 import PluginsComponent from '../administration/PluginsComponent';
 import PropertiesComponent from '../administration/PropertiesComponent';
 import StatusComponent from '../administration/StatusComponent';
+import SeedboxDownloadsComponents from '../seedbox/SeedboxDownloadsComponents';
+import TodoComponent from '../seedbox/todo/TodoComponent';
 
 
 export default function modulesAdapter() {
@@ -67,13 +69,14 @@ export default function modulesAdapter() {
                 path: '/seedbox/downloads',
                 icon: 'import_export',
                 title: 'Downloads',
-                component: (<PluginsComponent></PluginsComponent>)
+                component: (<SeedboxDownloadsComponents></SeedboxDownloadsComponents>)
             },
             {
                 path: '/seedbox/todo',
                 icon: 'new_releases',
                 title: 'Todo',
-                component: (<PropertiesComponent></PropertiesComponent>)
+                component: (<TodoComponent></TodoComponent>),
+                dontUseDefaultPanel: true
             }
         ]
     }];
