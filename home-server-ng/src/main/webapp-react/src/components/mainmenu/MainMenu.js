@@ -9,7 +9,7 @@ import MainMenuItemComponent from './MainMenuItemComponent';
 import SideBarMenuItemComponent from './SideBarMenuItemComponent';
 import mofRouterEventReactor from './MOFRouterEventReactor';
 
-export default function MainMenu({ onMenuItemSelected }) {
+export default function MainMenu() {
     const [selectedModule, setSelectedModule] = useState({
         selectedMenuDescriptor: modulesAdapter().homeMenuDescriptor(),
         sideBarEnabled: undefined
@@ -52,7 +52,6 @@ export default function MainMenu({ onMenuItemSelected }) {
     const onSearchCloseClickHandler = () => setDisplaySearchNavBar(false);
     const updateSelectedModule = (newSelectedModuleDescriptor) => {
         setSelectedModule({ ...selectedModule, selectedMenuDescriptor: newSelectedModuleDescriptor })
-        onMenuItemSelected(newSelectedModuleDescriptor);
     };
 
     // gestion de l'affichage spécifique pour le mobile

@@ -1,24 +1,39 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
+
 
 import modulesAdapter from './ModulesAdapter';
 
 import './MOFRouter.scss';
+import mofRouterEventReactor from './MOFRouterEventReactor';
 
-export default function MOFRouter({ selectedPath }) {
+export default function MOFRouter() {
 
-    const menuDescritor = selectedPath ? modulesAdapter().getMenuDescriptorForPath(selectedPath) : null;
-    const componentToDisplay = menuDescritor ? menuDescritor.component : null;
-    const dontUseDefaultPanel = menuDescritor ? menuDescritor.dontUseDefaultPanel : false;
+    const [selectedModule, setSelectedModule] = useState(modulesAdapter().homeMenuDescriptor())
 
-    if (menuDescritor) {
-        window.location.hash = menuDescritor.path;
-    }
 
+    useEffect(() => {
+        const selectedModuleFromPath = modulesAdapter().getMenuDescriptorForPath(window.location.hash.replace("#", ""));
+        if (selectedModuleFromPath) {
+            setSelectedModule(selectedModuleFromPath);
+        }
+
+        const unsubscribeOnSelectedModuleChange = mofRouterEventReactor().onSelectedModuleChange(newSelectedModule => {
+            window.location.hash = newSelectedModule.path;
+            setSelectedModule(newSelectedModule);
+        });
+
+        return () => {
+            unsubscribeOnSelectedModuleChange();
+        }
+
+
+    }, []);
 
     return (
         <>
-            <div className={dontUseDefaultPanel ? "" : "current-module"} >
-                {componentToDisplay}
+            <div className={selectedModule.dontUseDefaultPanel ? "" : "current-module"} >
+                {selectedModule.component}
             </div>
         </>
     );
