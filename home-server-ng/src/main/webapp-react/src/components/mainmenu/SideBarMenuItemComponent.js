@@ -4,8 +4,9 @@ import dropDownUtils from '../commons/dropDownUtils'
 import { useEffect, useState } from 'react';
 
 import './side-bar-menu-item-component.scss';
+import mofRouterEventReactor from './MOFRouterEventReactor';
 
-export default function SideBarMenuItemComponent({ menuDescriptor, onItemClick }) {
+export default function SideBarMenuItemComponent({ menuDescriptor }) {
 
   const [hasSubMenuItems, setHasSubMenuItems] = useState(false);
   const [dropDownDescription, setDropDownDescription] = useState({});
@@ -24,18 +25,20 @@ export default function SideBarMenuItemComponent({ menuDescriptor, onItemClick }
     }
   }, [hasSubMenuItems, dropDownDescription]);
 
+  const innerItemClick = (selectedModule) => mofRouterEventReactor().selectedModuleChange(selectedModule);
+
   const menuItem = hasSubMenuItems ? (
     <li className="no-padding">
       <ul className="collapsible collapsible-accordion">
         <li>
           <a data-target={dropDownDescription.targetId} id={dropDownDescription.triggerId} href="#!"><i className="material-icons left">{menuDescriptor.icon}</i>{menuDescriptor.title}</a>
           <div id={dropDownDescription.targetId}>
-            {/* <div className="collapsible-body dropdown-content" id={dropDownDescription.targetId}> */}
             <ul className="submenu-list">
               {
                 menuDescriptor.subMenu
-                  .map((oneSubMenuItem, index) => <li key={index} onClick={() => {
-                    onItemClick(oneSubMenuItem)
+                  .map((oneSubMenuItem, index) => <li key={index} onClick={(event) => {
+                    event.preventDefault();
+                    innerItemClick(oneSubMenuItem)
                   }}>
                     <a href={"#!" + oneSubMenuItem.title} className="sidenav-close">
                       <i className="material-icons left">{oneSubMenuItem.icon}</i>{oneSubMenuItem.title}
@@ -48,7 +51,10 @@ export default function SideBarMenuItemComponent({ menuDescriptor, onItemClick }
     </li>
   ) : (
       <li>
-        <a href="#!" className="sidenav-close" onClick={() => onItemClick(menuDescriptor)}>
+        <a href="#!" className="sidenav-close" onClick={(event) => {
+          event.preventDefault();
+          innerItemClick(menuDescriptor)
+        }}>
           <i className="material-icons left">{menuDescriptor.icon}</i>{menuDescriptor.title}
         </a>
       </li >

@@ -30,8 +30,8 @@ export default function StatusComponent() {
         </li>
         <li className="collection-item avatar">
             <i className="material-icons circle blue">data_usage</i>
-            {status.drives?.map(oneDrive => {
-                return <div>
+            {status.drives?.map((oneDrive, index) => {
+                return <div key={index}>
                     <p className="title">{oneDrive.name}</p>
                     <ProgressBarComponent driver={{
                         currentValue: oneDrive.percentageUsed,

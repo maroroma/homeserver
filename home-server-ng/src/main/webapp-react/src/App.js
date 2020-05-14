@@ -19,6 +19,13 @@ function App() {
     administrationApi().getAllEnabledModules()
       .then(allEnabledModules => allEnabledModules.filter(oneModule => oneModule.hasClientSide))
       .then(allDisplayableModules => eventReactor().emit(DISPLAYABLE_MODULES_CHANGED, allDisplayableModules));
+
+
+    const selectedModuleFromPath = modulesAdapter().getMenuDescriptorForPath(window.location.hash.replace("#", ""));
+    if (selectedModuleFromPath) {
+      setSelectedModule(selectedModuleFromPath);
+    }
+
   }, []);
 
   return (

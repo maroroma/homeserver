@@ -7,6 +7,7 @@ import SearchComponent from './SearchComponent';
 import BrandLogoComponent from './BrandLogoComponent';
 import MainMenuItemComponent from './MainMenuItemComponent';
 import SideBarMenuItemComponent from './SideBarMenuItemComponent';
+import mofRouterEventReactor from './MOFRouterEventReactor';
 
 export default function MainMenu({ onMenuItemSelected }) {
     const [selectedModule, setSelectedModule] = useState({
@@ -24,9 +25,16 @@ export default function MainMenu({ onMenuItemSelected }) {
             window.M.Sidenav.init(document.querySelectorAll('.sidenav'));
         });
 
-        return eventReactor().subscribe(DISPLAYABLE_MODULES_CHANGED, (displayableModules) => {
+        const unsubscribeDiplayableModulesChange = eventReactor().subscribe(DISPLAYABLE_MODULES_CHANGED, (displayableModules) => {
             setMenuDescriptors(displayableModules.map(oneDisplayableModule => modulesAdapter().getMenuDescriptor(oneDisplayableModule)));
         });
+
+        const unsubscribeSelectedModuleChange = mofRouterEventReactor().onSelectedModuleChange(newSelectedModule => updateSelectedModule(newSelectedModule));
+
+        return () => {
+            unsubscribeDiplayableModulesChange();
+            unsubscribeSelectedModuleChange();
+        }
     }, []);
 
     const updateDisplayModuleNameStatus = (input) => {
@@ -73,7 +81,7 @@ export default function MainMenu({ onMenuItemSelected }) {
                 {
                     menuDescriptors.map((oneMenuDescriptor, index) => {
                         return (
-                            <MainMenuItemComponent key={"MainMenuItemComponent_" + oneMenuDescriptor.title} menuDescriptor={oneMenuDescriptor} currentModule={selectedModule.selectedMenuDescriptor} onItemClick={updateSelectedModule}></MainMenuItemComponent>
+                            <MainMenuItemComponent key={"MainMenuItemComponent_" + oneMenuDescriptor.title} menuDescriptor={oneMenuDescriptor} currentModule={selectedModule.selectedMenuDescriptor}></MainMenuItemComponent>
                         );
                     })
                 }
@@ -99,7 +107,7 @@ export default function MainMenu({ onMenuItemSelected }) {
             {
                 menuDescriptors.map((oneMenuDescriptor, index) => {
                     return (
-                        <SideBarMenuItemComponent key={"SideBarMenuItemComponent_" + oneMenuDescriptor.title} menuDescriptor={oneMenuDescriptor} onItemClick={updateSelectedModule}></SideBarMenuItemComponent>
+                        <SideBarMenuItemComponent key={"SideBarMenuItemComponent_" + oneMenuDescriptor.title} menuDescriptor={oneMenuDescriptor}></SideBarMenuItemComponent>
                     );
                 })
             }
