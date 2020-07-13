@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModalPopupComponent } from './ModalPopupComponent';
+import { ModalPopupComponent, usePopupDriver } from './ModalPopupComponent';
 import { useState, useEffect } from 'react';
 
 
@@ -7,15 +7,13 @@ import { useState, useEffect } from 'react';
 export default function YesNoModalPopupComponent({ driver }) {
 
     // pilotage d'une popup
-    const [popupDriver, setPopupDriver] = useState({
+    const [popupDriver, setPopupDriver] = usePopupDriver({
         id: 'popup',
         open: driver.open,
         title: driver.title,
         okLabel: driver.okLabel ? driver.okLabel : 'Ok',
         cancelLabel: driver.cancelLabel ? driver.cancelLabel : 'Annuler',
-        updateData: () => { },
         onOk: driver.onOk,
-        data: {}
     });
 
     useEffect(() => {

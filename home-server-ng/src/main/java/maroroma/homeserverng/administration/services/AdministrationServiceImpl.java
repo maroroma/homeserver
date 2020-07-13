@@ -49,11 +49,11 @@ public class AdministrationServiceImpl implements AdministrationService {
 	@Autowired
 	private ServerStatusHolder statusHolder;
 
-	/**
-	 * Service pour la programmation du redémarrage du server.
-	 */
-	@Autowired
-	private RestarterService restarter;
+//	/**
+//	 * Service pour la programmation du redémarrage du server.
+//	 */
+//	@Autowired
+//	private RestarterService restarter;
 	
 	/**
 	 * Helper pour la gestion des modules.
@@ -133,7 +133,7 @@ public class AdministrationServiceImpl implements AdministrationService {
 	 */
 	private HomeServerStatus stopServer() throws HomeServerException {
 		this.statusHolder.setStatus(HomeServerRunningStatus.STOPPING);
-		this.restarter.scheduleStop();
+//		this.restarter.scheduleStop();
 		return this.statusHolder.getStatus();
 	}
 
@@ -210,7 +210,6 @@ public class AdministrationServiceImpl implements AdministrationService {
 
 	/**
 	 * {@inheritDoc}
-	 * @throws HomeServerException 
 	 */
 	@Override
 	public HomeServerStatus stop() throws HomeServerException {

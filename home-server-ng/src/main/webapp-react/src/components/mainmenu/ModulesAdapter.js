@@ -6,6 +6,8 @@ import PropertiesComponent from '../administration/PropertiesComponent';
 import StatusComponent from '../administration/StatusComponent';
 import SeedboxDownloadsComponents from '../seedbox/SeedboxDownloadsComponents';
 import TodoComponent from '../seedbox/todo/TodoComponent';
+import IotBoardComponent from '../iot/board/IotBoardComponent';
+import SpriteListComponent from '../iot/sprites/SpriteListComponent';
 
 
 export default function modulesAdapter() {
@@ -46,7 +48,20 @@ export default function modulesAdapter() {
         path: '/iot',
         icon: 'settings_remote',
         title: 'IOT',
-        component: (<FileManagerComponent></FileManagerComponent>)
+        subMenu: [
+            {
+                path: '/iot/board',
+                icon: 'dashboard',
+                title: 'Board',
+                component: (<IotBoardComponent></IotBoardComponent>)
+            },
+            {
+                path: '/iot/sprites',
+                icon: 'brush',
+                title: 'Sprites',
+                component: (<SpriteListComponent></SpriteListComponent>)
+            }
+        ]
     }, {
         module: 'music',
         path: '/music',

@@ -1,11 +1,16 @@
 [ {
   "id" : "test2",
   "componentType" : "BUZZER",
-  "ipAddress" : "monip",
+  "ipAddress" : "192.168.1.100",
   "name" : "prototype again"
 }, {
   "id" : "test3",
   "componentType" : "BUZZER",
   "ipAddress" : "monip3",
   "name" : "renamed sdsdfsdfsdfsdf"
+}, {
+  "id" : "test42",
+  "componentType" : "TRIGGER",
+  "ipAddress" : "monip",
+  "name" : "firstBuzzer"
 } ]

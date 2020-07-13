@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { DisplayList } from '../../../tools/displayList';
+import { useDisplayList } from '../../../tools/displayList';
 import seedboxApi from '../../../apiManagement/SeedboxApi';
 import {fileIconResolver} from '../../filemanager/FileIconResolver';
 import { when } from '../../../tools/when';
@@ -12,7 +12,7 @@ import on from '../../../tools/on';
 export default function FilesToBeSortedComponent() {
 
 
-    const [completedTorrents, setCompletedTorrents] = useState(new DisplayList());
+    const [completedTorrents, setCompletedTorrents] = useDisplayList();
 
     useEffect(() => {
 

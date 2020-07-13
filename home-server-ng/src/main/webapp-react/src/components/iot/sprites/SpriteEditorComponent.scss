@@ -1,0 +1,32 @@
+$sprite-editor-pixel-size: 25px;
+
+.sprite-editor {
+  border-style: solid;
+  border-width: 1px;
+  height: $sprite-editor-pixel-size * 8;
+  width: $sprite-editor-pixel-size * 8;
+
+  &-line {
+    border-style: solid;
+    border-width: 1px;
+  }
+
+  &-pixel {
+    width: $sprite-editor-pixel-size;
+    height: $sprite-editor-pixel-size;
+    border-style: solid;
+    border-width: 1px;
+    border-color:black;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+
+    &-on {
+      background-color: blueviolet !important;;
+    }
+
+    &-off {
+      background-color: white;
+    }
+  }
+}

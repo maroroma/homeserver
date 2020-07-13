@@ -2,6 +2,7 @@ package maroroma.homeserverng.iot.services;
 
 import maroroma.homeserverng.iot.model.BuzzRequest;
 import maroroma.homeserverng.iot.model.BuzzerIotComponent;
+import maroroma.homeserverng.iot.model.IotComponentTypes;
 import maroroma.homeserverng.iot.model.MiniSprite;
 import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
@@ -10,7 +11,6 @@ import maroroma.homeserverng.tools.repositories.NanoRepository;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,7 +29,7 @@ public class BuzzerService extends AbstractIotDedicatedService<BuzzerIotComponen
     private NanoRepository iotSpritesRepo;
 
     public BuzzerService(IotComponentsFactory iotComponentsFactory) {
-        super(BuzzerIotComponent.class, iotComponentsFactory);
+        super(BuzzerIotComponent.class, iotComponentsFactory, IotComponentTypes.BUZZER);
     }
 
     @Async

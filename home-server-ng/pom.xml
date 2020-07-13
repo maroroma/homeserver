@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>maro.roma</groupId>
 		<artifactId>home-server-ng-parent</artifactId>
-		<version>0.0.32-SNAPSHOT</version>
+		<version>0.0.33-SNAPSHOT</version>
 		<relativePath>../home-server-ng-parent/pom.xml</relativePath>
 	</parent>
 
@@ -191,10 +191,22 @@
 									resultproperty="cmdresult">
 									<arg line="/c ng build --environment=prod" />
 								</exec>
-								<!-- <loadfile property="grunt.status" srcFile="grunt.status" /> 
-									<echo>${grunt.status}</echo> <delete file="grunt.status" quiet="true" /> 
-									<condition property="cmdsuccess"> <equals arg1="${cmdresult}" arg2="0" /> 
-									</condition> <fail unless="cmdsuccess" /> -->
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>build-react</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<target name="building">
+								<exec executable="cmd"
+									  dir="${project.basedir}/src/main/webapp-react" osfamily="windows"
+									  resultproperty="cmdresult">
+									<arg line="/c npm run build" />
+								</exec>
 							</target>
 						</configuration>
 						<goals>

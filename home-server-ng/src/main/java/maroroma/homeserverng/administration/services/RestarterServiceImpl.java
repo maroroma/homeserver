@@ -19,7 +19,7 @@ import maroroma.homeserverng.tools.notifications.NotifyerContainer;
  * @author rlevexie
  *
  */
-@Service
+//@Service
 @Log4j2
 public class RestarterServiceImpl implements RestarterService {
 

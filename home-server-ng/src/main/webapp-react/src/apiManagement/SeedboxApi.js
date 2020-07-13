@@ -31,17 +31,32 @@ export default function seedboxApi() {
     const addTorrent = (magnetLinks) => {
 
         const addRequest = {
-            magnetLinks:magnetLinks
+            magnetLinks: magnetLinks
         }
 
         return fetch(`${apiRoot()}/seedbox/torrents`,
-        {
-            method: 'POST',
-            headers: defaultJsonHeaders(),
-            body: JSON.stringify(addRequest)
-        })
-        .then(errorHandler("Erreur rencontrée lors de la demande d'ajout de torrent", "Demande d'ajout de torrent émise"))
-        .catch(er => console.error(er));
+            {
+                method: 'POST',
+                headers: defaultJsonHeaders(),
+                body: JSON.stringify(addRequest)
+            })
+            .then(errorHandler("Erreur rencontrée lors de la demande d'ajout de torrent", "Demande d'ajout de torrent émise"))
+            .catch(er => console.error(er));
+    }
+
+    const removeTorrents = (torrentList) => {
+        const removeRequest = {
+            idsToDelete: torrentList.map(oneTorrent => oneTorrent.id)
+        }
+
+        return fetch(`${apiRoot()}/seedbox/torrents`,
+            {
+                method: 'DELETE',
+                headers: defaultJsonHeaders(),
+                body: JSON.stringify(removeRequest)
+            })
+            .then(errorHandler("Erreur rencontrée lors de la demande de suppression de torrent", "Demande de suppression de torrent émise"))
+            .catch(er => console.error(er));
     }
 
 
@@ -51,6 +66,7 @@ export default function seedboxApi() {
         getTargetDirectories: getTargetDirectories,
         getSubFolderContent: getSubFolderContent,
         moveFiles: moveFiles,
-        addTorrent: addTorrent
+        addTorrent: addTorrent,
+        removeTorrents: removeTorrents
     };
 }

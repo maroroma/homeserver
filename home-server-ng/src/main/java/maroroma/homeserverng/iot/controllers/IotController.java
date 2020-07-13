@@ -1,12 +1,10 @@
 package maroroma.homeserverng.iot.controllers;
 
 import maroroma.homeserverng.iot.IotModuleDescriptor;
-import maroroma.homeserverng.iot.model.AbstractIotComponent;
-import maroroma.homeserverng.iot.model.BuzzRequest;
-import maroroma.homeserverng.iot.model.MiniSprite;
-import maroroma.homeserverng.iot.model.UltraBasicIotComponentForRestExchange;
+import maroroma.homeserverng.iot.model.*;
 import maroroma.homeserverng.iot.services.BuzzerService;
 import maroroma.homeserverng.iot.services.IotServiceImpl;
+import maroroma.homeserverng.iot.services.TriggerService;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +20,12 @@ public class IotController {
 
     private final IotServiceImpl iotService;
     private final BuzzerService buzzerService;
+    private final TriggerService triggerService;
 
-    public IotController(IotServiceImpl iotService, BuzzerService buzzerService) {
+    public IotController(IotServiceImpl iotService, BuzzerService buzzerService, TriggerService triggerService) {
         this.iotService = iotService;
         this.buzzerService = buzzerService;
+        this.triggerService = triggerService;
     }
 
     /**
@@ -53,6 +53,11 @@ public class IotController {
     @PutMapping("${homeserver.api.path:}/iot/components")
     public ResponseEntity<List<AbstractIotComponent<?>>> updateComponent(@RequestBody UltraBasicIotComponentForRestExchange component) throws HomeServerException {
         return ResponseEntity.ok(this.iotService.updateComponent(component));
+    }
+
+    @PutMapping("${homeserver.api.path:}/iot/components/triggers/{triggerId}")
+    public void triggers(@PathVariable("triggerId") String triggerID, @RequestBody TriggeringDescription triggeringDescription) throws HomeServerException {
+        this.triggerService.triggers(triggerID, triggeringDescription);
     }
 
     @PostMapping("${homeserver.api.path:}/iot/components/buzzers")

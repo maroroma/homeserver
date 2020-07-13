@@ -41,6 +41,8 @@ public class IotComponentsFactory {
     public IotComponentsFactory() {
         // pour l'instant on a que le buzzer
         this.constructors = FluentMap.<String, Function<IotComponentDescriptor, AbstractIotComponent<?>>>create()
+                .add(IotComponentTypes.TRIGGER, TriggerIotComponent::new)
+                .add(IotComponentTypes.SIREN, SirenIotComponent::new)
                 .add(IotComponentTypes.BUZZER, BuzzerIotComponent::new);
     }
 

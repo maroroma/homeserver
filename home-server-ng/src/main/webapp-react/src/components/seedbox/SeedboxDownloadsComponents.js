@@ -62,13 +62,13 @@ export default function SeedboxDownloadsComponents() {
         });
 
         const unsubscribePopupClose = eventReactor().shortcuts().onModalClose(driver => {
-            setTorrentPopupDriver({...driver});
+            setTorrentPopupDriver({ ...driver });
             setMagnetLinksToAdd([]);
             setCurrentMagnetLinkToAdd("");
         });
 
         const unsubscribePopupOk = eventReactor().shortcuts().onModalOk(driver => {
-            setTorrentPopupDriver({...driver});
+            setTorrentPopupDriver({ ...driver });
             sendAddMagnetRequest();
         })
 
@@ -81,7 +81,7 @@ export default function SeedboxDownloadsComponents() {
     }, []);
 
     useEffect(() => {
-        
+
         const keyEventHandler = (event) => {
             console.log(event.keyCode)
             if (event.ctrlKey && event.keyCode === 13 && addTorrentPopupDriver.open === false) {
@@ -122,6 +122,18 @@ export default function SeedboxDownloadsComponents() {
         seedboxApi().addTorrent(magnetLinksToAdd);
     }
 
+    const sendDeleteRequest = () => {
+        seedboxApi()
+            .removeTorrents(allTorrents.getSelectedItems())
+            .then(response => seedboxApi().getRunningTorrents())
+            .then(response => setAllTorrents({
+                ...allTorrents
+                    .update(response)
+                    .updateItems(enhance().selectable())
+            }));
+
+    }
+
 
     // une la fréquence de rafraichissement récupérée, on lance l'appel récurrent
     useEffect(() => {
@@ -151,8 +163,17 @@ export default function SeedboxDownloadsComponents() {
             {allTorrents.displayList.map((oneTorrent, torrentIndex) => <TorrentRendererComponent torrent={oneTorrent} key={torrentIndex}></TorrentRendererComponent>)}
         </ul>
         <ActionMenuComponent>
-            <li><a href="#!" className={when(allTorrents.hasNoSelectedItems).thenDisableElement("btn-floating btn-small red")}><i className="material-icons">delete</i></a></li>
-            <li><a href="#!" className="btn-floating btn-small green" onClick={() => openAddTorrentPopup()}><i className="material-icons">add</i></a></li>
+            <li>
+                <a href="#!" className={when(allTorrents.hasNoSelectedItems).thenDisableElement("btn-floating btn-small red")}
+                    onClick={() => sendDeleteRequest()}>
+                    <i className="material-icons">delete</i>
+                </a>
+            </li>
+            <li>
+                <a href="#!" className="btn-floating btn-small green" onClick={() => openAddTorrentPopup()}>
+                    <i className="material-icons">add</i>
+                </a>
+            </li>
         </ActionMenuComponent>
 
         <ModalPopupComponent driver={addTorrentPopupDriver}>

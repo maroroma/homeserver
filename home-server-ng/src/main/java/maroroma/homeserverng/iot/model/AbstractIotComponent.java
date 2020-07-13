@@ -4,10 +4,17 @@ import lombok.Data;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Définit les composants de base d'un IotComponent
@@ -43,6 +50,7 @@ public abstract class AbstractIotComponent<T extends AbstractIotComponent<T>> {
 
     /**
      * Génère le restTemplate par défaut pour les appels https aux iotComponents
+     *
      * @return -
      */
     protected RestTemplate restTemplate() {
@@ -59,6 +67,7 @@ public abstract class AbstractIotComponent<T extends AbstractIotComponent<T>> {
     /**
      * Permet de pinger le component sur son url de base
      * Si un status 200 est renvoyé, on considère que le composant est utilisable
+     *
      * @return this
      */
     public T updateStatus() {
@@ -69,6 +78,7 @@ public abstract class AbstractIotComponent<T extends AbstractIotComponent<T>> {
         }
         return returnThis();
     }
+
     protected boolean basicGet() {
         return basicGet(null);
     }
@@ -77,7 +87,7 @@ public abstract class AbstractIotComponent<T extends AbstractIotComponent<T>> {
         UriComponentsBuilder builder = UriComponentsBuilder
                 .fromHttpUrl(url());
 
-        if(updatesOnUriBuilder != null) {
+        if (updatesOnUriBuilder != null) {
             updatesOnUriBuilder.accept(builder);
         }
 
@@ -89,8 +99,29 @@ public abstract class AbstractIotComponent<T extends AbstractIotComponent<T>> {
         return returnThis();
     }
 
+    public T withProperty(String propertyName, String propertyValue) {
+
+        this.componentDescriptor.withProperty(propertyName, propertyValue);
+
+        return returnThis();
+    }
+
+    public T withPropertyList(String propertyName, String valueToAdd) {
+        this.componentDescriptor.withPropertyList(propertyName, valueToAdd);
+        return returnThis();
+    }
+
+    public Optional<String> property(String propertyName) {
+        return this.componentDescriptor.property(propertyName);
+    }
+
+    public Optional<List<String>> propertyList(String propertyName) {
+        return this.componentDescriptor.propertyList(propertyName);
+    }
+
     /**
      * Retourne l'instance castée dans l'implementation qui va bien
+     *
      * @return this
      */
     @SuppressWarnings("unchecked")
