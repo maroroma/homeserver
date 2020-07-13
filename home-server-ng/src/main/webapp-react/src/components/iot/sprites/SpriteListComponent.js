@@ -11,10 +11,9 @@ import sort from '../../../tools/sort';
 import eventReactor from '../../../eventReactor/EventReactor';
 import { SELECT_ITEM } from '../../../eventReactor/EventIds';
 import { when } from '../../../tools/when';
-import { createPortal } from 'react-dom';
 
 
-export default function SpriteListComponent() {
+export default function SpriteListComponent({ onlyDisplay = false }) {
 
 
     const [spriteList, setSpriteList] = useDisplayList();
@@ -23,6 +22,7 @@ export default function SpriteListComponent() {
         title: "Editer un sprite"
     });
     const [isEditMode, setEditMode] = useState(true);
+
 
     const [spriteToEdit, setSpriteToEdit] = useState({});
 
@@ -102,10 +102,10 @@ export default function SpriteListComponent() {
 
     const sendDeleteRequest = () => {
         iotApi().deleteSprites(spriteList.getSelectedItems())
-        .then(() => iotApi().getAllSprites())
-        .then(response => setSpriteList({
-            ...spriteList.update(response)
-        }));
+            .then(() => iotApi().getAllSprites())
+            .then(response => setSpriteList({
+                ...spriteList.update(response)
+            }));
     };
 
     const openAddNewSprite = () => {
@@ -117,12 +117,25 @@ export default function SpriteListComponent() {
             title: "Créer un nouveau sprite"
         });
     }
+    const actionMenuComponent = onlyDisplay ? null : <ActionMenuComponent>
+        <li>
+            <a href="#!" className={when(spriteList.hasNoSelectedItems).thenDisableElement("btn-floating btn-small red")}
+                onClick={() => sendDeleteRequest()}>
+                <i className="material-icons">delete</i>
+            </a>
+        </li>
+        <li>
+            <a href="#!" className="btn-floating btn-small green" onClick={() => openAddNewSprite()}>
+                <i className="material-icons">add</i>
+            </a>
+        </li>
+    </ActionMenuComponent>;
 
 
     return <div>
         <ul className="collection">
             {spriteList.displayList.map((oneSprite, index) =>
-                <SpriteRendererComponent sprite={oneSprite} editMode="true" key={index}></SpriteRendererComponent>
+                <SpriteRendererComponent sprite={oneSprite} editMode={!onlyDisplay} key={index}></SpriteRendererComponent>
             )}
         </ul>
 
@@ -130,18 +143,8 @@ export default function SpriteListComponent() {
             <SpriteEditorComponent spriteToEdit={spriteToEdit} popupDriver={spriteEditorPopupDriver} newSprite={!isEditMode}></SpriteEditorComponent>
         </ModalPopupComponent>
 
-        <ActionMenuComponent>
-            <li>
-                <a href="#!" className={when(spriteList.hasNoSelectedItems).thenDisableElement("btn-floating btn-small red")}
-                    onClick={() => sendDeleteRequest()}>
-                    <i className="material-icons">delete</i>
-                </a>
-            </li>
-            <li>
-                <a href="#!" className="btn-floating btn-small green" onClick={() => openAddNewSprite()}>
-                    <i className="material-icons">add</i>
-                </a>
-            </li>
-        </ActionMenuComponent>
+        {actionMenuComponent}
+
+
     </div>
 }

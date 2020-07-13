@@ -9,26 +9,29 @@ import eventReactor from '../../../eventReactor/EventReactor';
 
 
 
-export default function SpriteRendererComponent({ sprite, editMode }) {
+export default function SpriteRendererComponent({ sprite, editMode = true}) {
 
+    const spriteCellClassName = editMode ? "col m1 s2" : "col m1 s3";
 
     return <li
-        onClick={() => eventReactor().shortcuts().selectItem(sprite.name, !sprite.selected)}
+        onClick={() => eventReactor().shortcuts().selectItem(sprite.name, !sprite.selected, "SPRITE_SELECTION")}
         className={
             when()
                 .selected(sprite)
                 .thenDefaultSelectColor("collection-item  selectable-sprite-item waves-effect waves-teal")}
     >
         <div className="row">
-            <div className="col m1 s2">
+            <div className={spriteCellClassName}>
                 <table className="sprite-renderer">
-                    {
-                        sprite.lines.map((oneLine, lineIndex) =>
-                            <tr key={lineIndex} className="sprite-renderer-line">
-                                {oneLine.map((oneCell, cellIndex) =>
-                                    <td key={cellIndex} className={when(oneCell.on).css("sprite-renderer-pixel-on", "sprite-renderer-pixel sprite-renderer-pixel-off")}></td>
-                                )}
-                            </tr>)}
+                    <tbody>
+                        {
+                            sprite.lines.map((oneLine, lineIndex) =>
+                                <tr key={lineIndex} className="sprite-renderer-line">
+                                    {oneLine.map((oneCell, cellIndex) =>
+                                        <td key={cellIndex} className={when(oneCell.on).css("sprite-renderer-pixel-on", "sprite-renderer-pixel sprite-renderer-pixel-off")}></td>
+                                    )}
+                                </tr>)}
+                    </tbody>
                 </table>
             </div>
             <div className="col m10 s8">
@@ -36,7 +39,7 @@ export default function SpriteRendererComponent({ sprite, editMode }) {
                 <div>{sprite.description}</div>
             </div>
             <div className={when(!editMode).thenHideElement("col m1 s2 right-align")}>
-                <btn className="btn-floating" onClick={() => iotSubEventReactor().editSprite(sprite)}><IconComponent icon="edit"></IconComponent></btn>
+                <button className="btn-floating" onClick={() => iotSubEventReactor().editSprite(sprite)}><IconComponent icon="edit"></IconComponent></button>
             </div>
         </div>
     </li>;

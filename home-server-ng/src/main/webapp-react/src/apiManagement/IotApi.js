@@ -30,6 +30,23 @@ export default function iotApi() {
         .then(errorHandler("Erreur rencontrée lors de la création du sprite", "Sprite sauvegardé avec succès"))
         .catch(er => console.error(er));
 
+    const sendBuzz = (buzzer, spriteId) => {
+        console.log(spriteId);
+        const request = {
+            id: buzzer.componentDescriptor.id,
+            ledTemplate: spriteId
+        };
+        return fetch(`${apiRoot()}/iot/components/buzzers`,
+            {
+                method: 'POST',
+                headers: defaultJsonHeaders(),
+                body: JSON.stringify(request)
+            })
+            .then(errorHandler("Erreur rencontrée lors de l'émission du buzz'", "Buzz émis"))
+            .catch(er => console.error(er));
+    }
+
+
 
     const deleteSprites = (spritesToDelete) => {
         const allDeletePromises = spritesToDelete.map(oneSpriteToDelete =>
@@ -48,6 +65,7 @@ export default function iotApi() {
         getAllSprites: getAllSprites,
         updateSprite: updateSprite,
         createSprite: createSprite,
-        deleteSprites: deleteSprites
+        deleteSprites: deleteSprites,
+        sendBuzz: sendBuzz
     };
 }

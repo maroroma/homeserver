@@ -78,5 +78,5 @@ export default function FileManagerComponent() {
     }, []);
 
 
-    return <FileBrowserComponent startUpDirectory={rootDirectory} downloadBaseUrl={fileManagerApi().downloadBaseUrl()}></FileBrowserComponent>;
+    return <FileBrowserComponent startUpDirectory={rootDirectory} options={{downloadBaseUrl:fileManagerApi().downloadBaseUrl()}}></FileBrowserComponent>;
 }

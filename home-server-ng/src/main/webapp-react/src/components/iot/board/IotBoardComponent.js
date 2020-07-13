@@ -8,12 +8,23 @@ import MasonryContainerComponent from '../../commons/MasonryContainerComponent';
 import IotComponentRenderer from './IotComponentRenderer';
 import iotSubEventReactor from '../iotSubEventReactor';
 import eventReactor from '../../../eventReactor/EventReactor';
+import { SELECT_ITEM } from '../../../eventReactor/EventIds';
+import { usePopupDriver, ModalPopupComponent } from '../../commons/ModalPopupComponent';
+import SpriteListComponent from '../sprites/SpriteListComponent';
 
 
 export default function IotBoardComponent() {
 
 
     const [allIotComponents, setAllIotComponents] = useDisplayList();
+    const [selectedIotComponent, setSelectedIotComponent] = useState({});
+
+    const [popupSelectSpriteDriver, setPopupSelectSpriteDriver] = usePopupDriver({
+        id: "popupSelectSprite",
+        title: "choisir un sprite",
+        okLabel: "Annuler",
+        noCancelButton: true
+    })
 
     useEffect(() => {
 
@@ -23,8 +34,8 @@ export default function IotBoardComponent() {
 
 
         const unsubscribeSendActionRequest = iotSubEventReactor().onSendActionRequest(iotComponent => {
-            console.log(iotComponent)
-
+            setSelectedIotComponent(iotComponent);
+            setPopupSelectSpriteDriver({ ...popupSelectSpriteDriver, open: true });
         });
 
         const unsubscribeSearch = eventReactor().shortcuts().onSearchEvent(searchString => setAllIotComponents({
@@ -41,8 +52,27 @@ export default function IotBoardComponent() {
 
     }, []);
 
+    useEffect(() => {
+        const unsubscribeSelect = eventReactor().subscribe(SELECT_ITEM, data => {
+            if (data.source === "SPRITE_SELECTION") {
+                iotApi().sendBuzz(selectedIotComponent, data.itemId)
+                .then(() => setPopupSelectSpriteDriver({ ...popupSelectSpriteDriver, open: false }));
+            }
+        });
 
-    return <MasonryContainerComponent>
+        return () => {
+            unsubscribeSelect();
+        }
+    }, [selectedIotComponent]);
+
+
+    return <div><MasonryContainerComponent>
         {allIotComponents.displayList.map((oneComponent, index) => <IotComponentRenderer key={index} iotComponent={oneComponent}></IotComponentRenderer>)}
     </MasonryContainerComponent>
+
+        <ModalPopupComponent driver={popupSelectSpriteDriver}>
+            <SpriteListComponent onlyDisplay={true}></SpriteListComponent>
+        </ModalPopupComponent>
+
+    </div>
 }

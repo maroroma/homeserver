@@ -16,9 +16,10 @@ export default function eventReactor() {
     }
 
     const shortcuts = () => {
-        const selectItem = (id, status) => emit(SELECT_ITEM, {
+        const selectItem = (id, status, source) => emit(SELECT_ITEM, {
             itemId: id,
-            newStatus: status
+            newStatus: status,
+            source: source
         });
 
         const onSearchEvent = (onSearchHandler) => subscribe(SEARCH_EVENT, onSearchHandler);
