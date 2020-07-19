@@ -22,7 +22,7 @@
 
 	<groupId>maro.roma</groupId>
 	<artifactId>home-server-ng-parent</artifactId>
-	<version>0.0.33-SNAPSHOT</version>
+	<version>0.0.34-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<dependencyManagement>

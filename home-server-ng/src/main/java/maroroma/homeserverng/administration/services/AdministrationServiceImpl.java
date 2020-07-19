@@ -47,7 +47,7 @@ public class AdministrationServiceImpl implements AdministrationService {
 	 * Service pour la gestion du status du server.
 	 */
 	@Autowired
-	private ServerStatusHolder statusHolder;
+	private ServerStatusHolderImpl statusHolder;
 
 //	/**
 //	 * Service pour la programmation du redémarrage du server.

@@ -65,6 +65,11 @@ public class IotController {
         this.buzzerService.buzz(buzzRequest);
     }
 
+    @GetMapping("${homeserver.api.path:}/iot/components/triggers")
+    public ResponseEntity<List<TriggerIotComponent>> getAllTriggers() {
+        return ResponseEntity.ok(this.triggerService.getAllComponents());
+    }
+
     @GetMapping("${homeserver.api.path:}/iot/minisprites")
     public ResponseEntity<List<MiniSprite>> getAllSprites() {
         return ResponseEntity.ok(this.iotService.getAllSprites());

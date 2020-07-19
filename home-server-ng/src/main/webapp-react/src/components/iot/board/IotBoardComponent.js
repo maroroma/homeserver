@@ -11,6 +11,7 @@ import eventReactor from '../../../eventReactor/EventReactor';
 import { SELECT_ITEM } from '../../../eventReactor/EventIds';
 import { usePopupDriver, ModalPopupComponent } from '../../commons/ModalPopupComponent';
 import SpriteListComponent from '../sprites/SpriteListComponent';
+import toaster from '../../commons/Toaster';
 
 
 export default function IotBoardComponent() {
@@ -28,9 +29,10 @@ export default function IotBoardComponent() {
 
     useEffect(() => {
 
-        iotApi().getAllIotComponents().then(response => setAllIotComponents({
-            ...allIotComponents.update(response).updateSort(sort().basic(oneComponent => oneComponent.componentDescriptor.name))
-        }))
+        toaster().plopAndWait(() => iotApi().getAllIotComponents(), "Chargement des composants...")
+            .then(response => setAllIotComponents({
+                ...allIotComponents.update(response).updateSort(sort().basic(oneComponent => oneComponent.componentDescriptor.name))
+            }));
 
 
         const unsubscribeSendActionRequest = iotSubEventReactor().onSendActionRequest(iotComponent => {
@@ -56,7 +58,7 @@ export default function IotBoardComponent() {
         const unsubscribeSelect = eventReactor().subscribe(SELECT_ITEM, data => {
             if (data.source === "SPRITE_SELECTION") {
                 iotApi().sendBuzz(selectedIotComponent, data.itemId)
-                .then(() => setPopupSelectSpriteDriver({ ...popupSelectSpriteDriver, open: false }));
+                    .then(() => setPopupSelectSpriteDriver({ ...popupSelectSpriteDriver, open: false }));
             }
         });
 

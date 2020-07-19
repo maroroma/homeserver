@@ -8,6 +8,8 @@ import SeedboxDownloadsComponents from '../seedbox/SeedboxDownloadsComponents';
 import TodoComponent from '../seedbox/todo/TodoComponent';
 import IotBoardComponent from '../iot/board/IotBoardComponent';
 import SpriteListComponent from '../iot/sprites/SpriteListComponent';
+import ManageIotComponent from '../iot/manage/ManageIotComponent';
+import TriggersManagerComponent from '../iot/triggers/TriggersManagerComponent';
 
 
 export default function modulesAdapter() {
@@ -60,6 +62,18 @@ export default function modulesAdapter() {
                 icon: 'brush',
                 title: 'Sprites',
                 component: (<SpriteListComponent></SpriteListComponent>)
+            },
+            {
+                path: '/iot/manageiotcomponent',
+                icon: 'build',
+                title: 'Manage',
+                component: (<ManageIotComponent></ManageIotComponent>)
+            },
+            {
+                path: '/iot/triggers',
+                icon: 'call_merge',
+                title: 'Triggers',
+                component: (<TriggersManagerComponent></TriggersManagerComponent>)
             }
         ]
     }, {

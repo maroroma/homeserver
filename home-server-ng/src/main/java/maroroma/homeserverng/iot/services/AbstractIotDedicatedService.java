@@ -8,8 +8,10 @@ import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
 
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public abstract class AbstractIotDedicatedService<T extends AbstractIotComponent<T>> {
 
@@ -38,6 +40,16 @@ public abstract class AbstractIotDedicatedService<T extends AbstractIotComponent
                 .map(oneCandidate -> this.iotComponentsFactory.<T>createIotComponent(oneCandidate, iotComponentClazz))
                 .orElseThrow(() -> new RuntimeHomeServerException(""));
     }
+
+    public List<T> getAllComponents() {
+        return this.iotComponentsRepo.<IotComponentDescriptor>getAll()
+                .stream()
+                .filter(this::typeMatch)
+                .map(oneCandidate -> this.iotComponentsFactory.<T>createIotComponent(oneCandidate, iotComponentClazz))
+                .collect(Collectors.toList());
+
+    }
+
 
     protected boolean containsAndMatch(String id) {
         return this.iotComponentsRepo.<IotComponentDescriptor>findById(id)

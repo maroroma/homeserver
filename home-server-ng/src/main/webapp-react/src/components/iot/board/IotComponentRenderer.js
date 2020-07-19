@@ -1,20 +1,12 @@
 import React from 'react';
 import iotSubEventReactor from '../iotSubEventReactor';
 import { when } from '../../../tools/when';
+import {iotResolver} from '../IotRendererResolver';
 
 export default function IotComponentRenderer({ iotComponent }) {
 
 
-    const iconsMapper = {
-        BUZZER: {
-            icon: "record_voice_over",
-            title: "Cliquer pour envoyer le buzz"
-        },
-        TRIGGER: {
-            icon: "call_merge",
-            title: "Cliquer pour controller le status"
-        }
-    }
+
 
 
     return <div className="masonry-item center-align">
@@ -22,9 +14,9 @@ export default function IotComponentRenderer({ iotComponent }) {
         <a href="#!"
             className={when(!iotComponent.available).thenDisableElement("btn-floating waves-effect waves-light blue")}
             onClick={() => iotSubEventReactor().sendActionRequest(iotComponent)}
-            title={iconsMapper[iotComponent.componentDescriptor.componentType].title}
+            title={iotResolver().resolveRender(iotComponent.componentDescriptor.componentType).title}
         >
-            <i className="material-icons large">{iconsMapper[iotComponent.componentDescriptor.componentType].icon}</i>
+            <i className="material-icons large">{iotResolver().resolveRender(iotComponent.componentDescriptor.componentType).icon}</i>
         </a>
         <div>
             {iotComponent.componentDescriptor.name}

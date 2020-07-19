@@ -67,18 +67,26 @@ export default function SeedboxDownloadsComponents() {
             setCurrentMagnetLinkToAdd("");
         });
 
+       
+
+        return () => {
+            unsubscribeSelectItem();
+            unsubscribePopupClose();
+        };
+
+    }, []);
+
+    useEffect(() => {
         const unsubscribePopupOk = eventReactor().shortcuts().onModalOk(driver => {
             setTorrentPopupDriver({ ...driver });
             sendAddMagnetRequest();
         })
 
+
         return () => {
-            unsubscribeSelectItem();
-            unsubscribePopupClose();
             unsubscribePopupOk();
         };
-
-    }, []);
+    }, [magnetLinksToAdd])
 
     useEffect(() => {
 

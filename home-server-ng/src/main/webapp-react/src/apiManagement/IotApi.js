@@ -6,10 +6,26 @@ export default function iotApi() {
         .then(errorHandler("Erreur rencontrée lors de la récupération des iotComponents"))
         .catch(er => console.error(er));
 
+    const getTriggersComponent = () => fetch(`${apiRoot()}/iot/components/triggers`)
+        .then(errorHandler("Erreur rencontrée lors de la récupération des triggers"))
+        .catch(er => console.error(er));
+
     const getAllSprites = () => fetch(`${apiRoot()}/iot/minisprites`)
         .then(errorHandler("Erreur rencontrée lors de la récupération des sprites"))
         .catch(er => console.error(er));
 
+    const updateIotComponents = (componentsToUpdate) => {
+        const allUpdatePromises = componentsToUpdate.map(oneComponentToUpdate =>
+            fetch(`${apiRoot()}/iot/components`, {
+                method: 'PUT',
+                headers: defaultJsonHeaders(),
+                body: JSON.stringify(oneComponentToUpdate)
+            }));
+
+        return Promise.all(allUpdatePromises)
+            .then(errorHandler("Erreur rencontrées lors de la mise à jour des composants", "Composants mis à jour"))
+            .catch(er => console.error(er));
+    }
 
 
     const updateSprite = (spriteToSave) => fetch(`${apiRoot()}/iot/minisprites`,
@@ -66,6 +82,8 @@ export default function iotApi() {
         updateSprite: updateSprite,
         createSprite: createSprite,
         deleteSprites: deleteSprites,
-        sendBuzz: sendBuzz
+        sendBuzz: sendBuzz,
+        updateIotComponents: updateIotComponents,
+        getTriggersComponent: getTriggersComponent
     };
 }

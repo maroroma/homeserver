@@ -8,7 +8,7 @@ import maroroma.homeserverng.administration.AdministrationModuleDescriptor;
 import maroroma.homeserverng.administration.model.HomeServerStatus;
 import maroroma.homeserverng.administration.model.UploadPropertiesResponse;
 import maroroma.homeserverng.administration.services.AdministrationService;
-import maroroma.homeserverng.administration.services.ServerStatusHolder;
+import maroroma.homeserverng.administration.services.ServerStatusHolderImpl;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.cache.CacheDescriptor;
 import maroroma.homeserverng.tools.cache.CacheKeyDescriptor;
@@ -45,7 +45,7 @@ public class AdministrationController {
 	 * Service pour la gestion du status du server.
 	 */
 	@Autowired
-	private ServerStatusHolder statusHolder;
+	private ServerStatusHolderImpl statusHolder;
 	
 	/**
 	 * Retourne les modules applicatifs activés.

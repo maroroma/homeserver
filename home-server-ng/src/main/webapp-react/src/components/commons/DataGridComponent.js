@@ -150,6 +150,9 @@ export default function DataGridComponent({ configuration, data }) {
                 <input type="text" className="validate" value={dataForCell} onChange={(event) => updateData(event.target.value)} disabled={readOnly}></input>
             </div>);
         }
+        if (columnConfiguration.renderer === 'custom') {
+            cellContent = columnConfiguration.customRenderer(row, dataForCell);
+        }
 
         const cellClassName = resolveColumnClass(columnConfiguration);
 

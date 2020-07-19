@@ -2,15 +2,24 @@
   "id" : "test2",
   "componentType" : "BUZZER",
   "ipAddress" : "192.168.1.100",
-  "name" : "prototype again"
+  "name" : "prototype again",
+  "properties" : null
 }, {
   "id" : "test3",
   "componentType" : "BUZZER",
   "ipAddress" : "monip3",
-  "name" : "renamed sdsdfsdfsdfsdf"
+  "name" : "renamed tout court",
+  "properties" : null
 }, {
   "id" : "test42",
   "componentType" : "TRIGGER",
   "ipAddress" : "monip",
-  "name" : "firstBuzzer"
+  "name" : "firstBuzzerButNotYet",
+  "properties" : null
+}, {
+  "id" : "sireneuh",
+  "componentType" : "SIREN",
+  "ipAddress" : "monipdesiren",
+  "name" : "theSiren",
+  "properties" : null
 } ]
