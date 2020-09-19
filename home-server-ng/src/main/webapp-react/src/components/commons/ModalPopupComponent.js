@@ -5,6 +5,7 @@ import { when } from '../../tools/when';
 
 import './ModalPopupComponent.scss';
 import eventReactor from '../../eventReactor/EventReactor';
+import orElse from '../../tools/orElse';
 
 export function ModalPopupComponent({ children, driver }) {
 
@@ -67,7 +68,7 @@ export function ModalPopupComponent({ children, driver }) {
 
 export function usePopupDriver(popupStartConfig) {
 
-    const orElse = (optionalValue, defaultValue) => optionalValue ? optionalValue : defaultValue;
+    // const orElse = (optionalValue, defaultValue) => optionalValue ? optionalValue : defaultValue;
 
 
     return useState({

@@ -49,7 +49,7 @@ export function ActionMenuComponent({ children, alreadyOpen = false, alwaysOpen 
     useEffect(() => {
         return eventReactor().subscribe(OPEN_OR_CLOSE_ACTION_MENU, data => {
             if (actionMenuInstances) {
-                if (data && data == true) {
+                if (data && data === true) {
                     actionMenuInstances.forEach(oneActionMenu => oneActionMenu.open());
                 } else {
                     actionMenuInstances.forEach(oneActionMenu => oneActionMenu.close());

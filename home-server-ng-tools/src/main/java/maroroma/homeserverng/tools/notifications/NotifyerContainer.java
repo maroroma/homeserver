@@ -3,7 +3,9 @@ package maroroma.homeserverng.tools.notifications;
 import lombok.extern.log4j.Log4j2;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ import java.util.List;
  */
 @Component
 @Log4j2
-public class NotifyerContainer implements Notifyer {
+public class NotifyerContainer {
 
 	
 	/**
@@ -28,15 +30,15 @@ public class NotifyerContainer implements Notifyer {
 	 * <br /> Dans cette implémentation, permet d'émettre la notification vers l'ensemble des
 	 * {@link Notifyer} trouvés dans le contexte.
 	 */
-	@Override
-	public void notify(final NotificationEvent notification) throws HomeServerException {
+	@Async
+	public void notify(final NotificationEvent notification){
 		
 		// validation de la notification
 		NotificationValidator.validate(notification);
 		
 		// pour chacun des notifiers, si présents
-		if (notifiers != null && !notifiers.isEmpty()) {
-			notifiers.forEach(oneNotifyer -> {
+		if (!CollectionUtils.isEmpty(this.notifiers)) {
+			notifiers.parallelStream().forEach(oneNotifyer -> {
 				try {
 					oneNotifyer.notify(notification);
 				} catch (Exception e) {

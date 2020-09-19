@@ -24,8 +24,20 @@
   "moduleId" : "iot"
 }, {
   "id" : "homeserver.iot.components.http.timeout",
-  "value" : "3000",
+  "value" : "3005",
   "description" : "Timeout max pour les acces http aux components",
+  "readOnly" : false,
+  "moduleId" : "iot"
+}, {
+  "id" : "homeserver.iot.alarm.code",
+  "value" : "1234",
+  "description" : "code pour la désactivation de l'alarme",
+  "readOnly" : false,
+  "moduleId" : "iot"
+}, {
+  "id" : "homeserver.iot.alarm.siren.delay",
+  "value" : "30000",
+  "description" : "délai avant le déclenchement de la sirène d'alarme",
   "readOnly" : false,
   "moduleId" : "iot"
 } ]

@@ -1,5 +1,6 @@
 package maroroma.homeserverng.tools.notifications;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 import maroroma.homeserverng.tools.helpers.StringUtils;
@@ -37,6 +38,7 @@ public class NotificationEvent {
 	 * Détermine si un message complexe est renseigné.
 	 * @return -
 	 */
+	@JsonIgnore
 	public boolean hasComplexMessage() {
 		return StringUtils.hasLength(this.complexMessage);
 	}

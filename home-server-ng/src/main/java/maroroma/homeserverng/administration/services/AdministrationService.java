@@ -1,5 +1,6 @@
 package maroroma.homeserverng.administration.services;
 
+import maroroma.homeserverng.administration.model.AllLogEvents;
 import maroroma.homeserverng.administration.model.HomeServerStatus;
 import maroroma.homeserverng.administration.model.UploadPropertiesResponse;
 import maroroma.homeserverng.tools.annotations.HomeServerModuleDescriptor;
@@ -153,5 +154,5 @@ public interface AdministrationService extends HomeServerModuleManager {
 	 * @throws HomeServerException -
 	 */
 	List<CacheKeyDescriptor> clearCache(String cacheName) throws HomeServerException;
-	
+
 }

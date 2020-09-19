@@ -5,10 +5,12 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import maroroma.homeserverng.administration.AdministrationModuleDescriptor;
+import maroroma.homeserverng.administration.model.AllLogEvents;
 import maroroma.homeserverng.administration.model.HomeServerStatus;
 import maroroma.homeserverng.administration.model.UploadPropertiesResponse;
 import maroroma.homeserverng.administration.services.AdministrationService;
 import maroroma.homeserverng.administration.services.ServerStatusHolderImpl;
+import maroroma.homeserverng.notifyer.services.LogEventsNotifyer;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.cache.CacheDescriptor;
 import maroroma.homeserverng.tools.cache.CacheKeyDescriptor;
@@ -40,6 +42,9 @@ public class AdministrationController {
 	 */
 	@Autowired
 	private AdministrationService serviceAdministration;
+
+	@Autowired
+	private LogEventsNotifyer logEventsNotifyer;
 	
 	/**
 	 * Service pour la gestion du status du server.
@@ -277,6 +282,15 @@ public class AdministrationController {
 	@RequestMapping(path = "${homeserver.api.path:}/administration/caches/{cacheName}/keys", method = {RequestMethod.DELETE})
 	public ResponseEntity<List<CacheKeyDescriptor>> clearCache(final @PathVariable("cacheName") String cacheName) throws HomeServerException {
 		return ResponseEntity.ok(this.serviceAdministration.clearCache(cacheName));
+	}
+
+	/**
+	 * Retourne l'ensembles des logs de notifications portés par l'application
+	 * @return -
+	 */
+	@GetMapping(path="${homeserver.api.path:}/administration/logEvents")
+	public ResponseEntity<AllLogEvents> getAllLogEvents() {
+		return ResponseEntity.ok(this.logEventsNotifyer.getAllLogEvents());
 	}
 	
 	

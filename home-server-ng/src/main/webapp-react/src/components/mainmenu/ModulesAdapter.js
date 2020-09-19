@@ -10,6 +10,8 @@ import IotBoardComponent from '../iot/board/IotBoardComponent';
 import SpriteListComponent from '../iot/sprites/SpriteListComponent';
 import ManageIotComponent from '../iot/manage/ManageIotComponent';
 import TriggersManagerComponent from '../iot/triggers/TriggersManagerComponent';
+import AlarmComponent from '../iot/alarm/AlarmComponent';
+import LogEventComponent from '../administration/LogEventsComponent';
 
 
 export default function modulesAdapter() {
@@ -36,6 +38,12 @@ export default function modulesAdapter() {
                 icon: 'info',
                 title: 'Status',
                 component: (<StatusComponent></StatusComponent>)
+            },
+            {
+                path: '/administration/logEvents',
+                icon: 'notifications',
+                title: 'Logs Events',
+                component: (<LogEventComponent></LogEventComponent>)
             }
         ]
     }, {
@@ -70,11 +78,18 @@ export default function modulesAdapter() {
                 component: (<ManageIotComponent></ManageIotComponent>)
             },
             {
-                path: '/iot/triggers',
-                icon: 'call_merge',
-                title: 'Triggers',
-                component: (<TriggersManagerComponent></TriggersManagerComponent>)
+                path: '/iot/alarm',
+                icon: 'alarm',
+                title: 'Alarm',
+                component: (<AlarmComponent></AlarmComponent>)
             }
+            // },
+            // {
+            //     path: '/iot/triggers',
+            //     icon: 'call_merge',
+            //     title: 'Triggers',
+            //     component: (<TriggersManagerComponent></TriggersManagerComponent>)
+            // }
         ]
     }, {
         module: 'music',

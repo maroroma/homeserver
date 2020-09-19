@@ -105,14 +105,10 @@ public class ServerStatusHolderImpl {
         this.startupTime = LocalDateTime.now();
 
         // émission de notification
-        try {
-            this.notificationContainer.notify(NotificationEvent.builder()
-                    .creationDate(new Date())
-                    .title("Démarrage du serveur")
-                    .message("Le serveur homeserver vient de démarrer")
-                    .build());
-        } catch (HomeServerException e) {
-            log.warn("L'émission des notifications de démarrage a échoué");
-        }
+        this.notificationContainer.notify(NotificationEvent.builder()
+                .creationDate(new Date())
+                .title("Démarrage du serveur")
+                .message("Le serveur homeserver vient de démarrer")
+                .build());
     }
 }

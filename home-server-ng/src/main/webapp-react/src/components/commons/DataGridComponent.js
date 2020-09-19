@@ -1,9 +1,12 @@
 import React from 'react';
 import SwitchComponent from './SwitchComponent';
 import IconComponent from './IconComponent';
-import {ModalPopupComponent} from './ModalPopupComponent';
+import { ModalPopupComponent } from './ModalPopupComponent';
 import { useState, useEffect } from 'react';
 import sort from '../../tools/sort';
+import orElse from '../../tools/orElse';
+import { when } from '../../tools/when';
+import eventReactor from '../../eventReactor/EventReactor';
 
 
 export default function DataGridComponent({ configuration, data }) {
@@ -11,7 +14,13 @@ export default function DataGridComponent({ configuration, data }) {
 
     console.log("load datagrid");
 
+    const [actionButtonsConfiguration, setActionButtonsConfiguration] = useState({
+        displaySaveButton: true,
+        displayDeleteAllButton: false
+    });
+
     const [dataToDisplay, setDataToDisplay] = useState([]);
+
     const [sortConfiguration, setSortConfiguration] = useState({
         sort: false,
         sortDirection: 1,
@@ -56,9 +65,18 @@ export default function DataGridComponent({ configuration, data }) {
             sortFunction: sortFunction
         });
 
+        setActionButtonsConfiguration({
+            ...actionButtonsConfiguration,
+            displaySaveButton: orElse(configuration.displaySaveButton, true),
+            displayDeleteAllButton: orElse(configuration.displayDeleteAllButton, false)
+        });
 
         setDataToDisplay(data.sort(sortFunction));
+
         setChangedRows([]);
+
+
+
     }, [data, configuration]);
 
 
@@ -119,7 +137,7 @@ export default function DataGridComponent({ configuration, data }) {
                 dataToEdit: row[columnToEdit.dataField]
             },
             updateData: updatePopupData,
-            onOk:applyDataModificationOnClose
+            onOk: applyDataModificationOnClose
         });
     };
 
@@ -183,7 +201,12 @@ export default function DataGridComponent({ configuration, data }) {
         }
     }
 
+    const onDeleteClickHandler = () => {
+        eventReactor().shortcuts().dataGridDeleteAll();
+    }
+
     const btnSaveClass = changedRows.length > 0 ? 'blue pulse' : 'disabled';
+
 
     return (
         <>
@@ -209,8 +232,11 @@ export default function DataGridComponent({ configuration, data }) {
 
 
             <div className="fixed-action-btn">
-                <a className={`btn-floating btn-large ${btnSaveClass}`} onClick={onSaveClickHandler}>
+                <a className={when(!actionButtonsConfiguration.displaySaveButton).thenHideElement(`btn-floating btn-large ${btnSaveClass}`)} onClick={onSaveClickHandler}>
                     <IconComponent icon="save" classAddons="large"></IconComponent>
+                </a>
+                <a className={when(!actionButtonsConfiguration.displayDeleteAllButton).thenHideElement(`btn-floating btn-large red`)} onClick={onDeleteClickHandler}>
+                    <IconComponent icon="delete" classAddons="large"></IconComponent>
                 </a>
             </div>
 

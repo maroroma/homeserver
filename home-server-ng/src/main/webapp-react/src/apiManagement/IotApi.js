@@ -14,6 +14,25 @@ export default function iotApi() {
         .then(errorHandler("Erreur rencontrée lors de la récupération des sprites"))
         .catch(er => console.error(er));
 
+    const getAlarmStatus = () => fetch(`${apiRoot()}/iot/alarm/status`)
+        .then(errorHandler("Erreur rencontrée lors de la récupération du status d'activation de l'alarme"))
+        .catch(er => console.error(er));
+
+    const updateAlarmStatus = (code) => {
+
+        const alarmUpdateRequest = {
+            enable: code === undefined,
+            code: code
+        }
+
+        return fetch(`${apiRoot()}/iot/alarm`, {
+            method: 'PUT',
+            headers: defaultJsonHeaders(),
+            body: JSON.stringify(alarmUpdateRequest)
+        }).then(errorHandler("mise à jour du status de l'alarme impossible"))
+            .catch(er => console.error(er));
+    };
+
     const updateIotComponents = (componentsToUpdate) => {
         const allUpdatePromises = componentsToUpdate.map(oneComponentToUpdate =>
             fetch(`${apiRoot()}/iot/components`, {
@@ -84,6 +103,8 @@ export default function iotApi() {
         deleteSprites: deleteSprites,
         sendBuzz: sendBuzz,
         updateIotComponents: updateIotComponents,
-        getTriggersComponent: getTriggersComponent
+        getTriggersComponent: getTriggersComponent,
+        getAlarmStatus: getAlarmStatus,
+        updateAlarmStatus: updateAlarmStatus
     };
 }

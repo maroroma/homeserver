@@ -1,4 +1,4 @@
-import { SELECT_ITEM, SEARCH_EVENT, FORCE_CLEAR_SEARCH_EVENT, MODAL_POPUP_CLOSE, MODAL_POPUP_OK } from './EventIds';
+import { SELECT_ITEM, SEARCH_EVENT, FORCE_CLEAR_SEARCH_EVENT, MODAL_POPUP_CLOSE, MODAL_POPUP_OK, ALARM_STATUS_CHANGED, DATAGRID_DELETE_ALL } from './EventIds';
 
 const eventReactorSubscription = {};
 
@@ -30,6 +30,12 @@ export default function eventReactor() {
         const modalOk = (driver) => emit(MODAL_POPUP_OK, driver);
         const onModalOk = (eventListener) => subscribe(MODAL_POPUP_OK, eventListener);
 
+        const alarmStatusChanged = (newAlarmStatus) => emit(ALARM_STATUS_CHANGED, newAlarmStatus);
+        const onAlarmStatusChanged = (eventListener) => subscribe(ALARM_STATUS_CHANGED, eventListener);
+
+        const dataGridDeleteAll = () => emit(DATAGRID_DELETE_ALL);
+        const onDataGridDeleteAll = (eventListener) => subscribe(DATAGRID_DELETE_ALL, eventListener);
+
         return {
             selectItem: selectItem,
             onSearchEvent: onSearchEvent,
@@ -37,7 +43,11 @@ export default function eventReactor() {
             modalClose: modalClose,
             onModalClose: onModalClose,
             modalOk: modalOk,
-            onModalOk: onModalOk
+            onModalOk: onModalOk,
+            alarmStatusChanged: alarmStatusChanged,
+            onAlarmStatusChanged: onAlarmStatusChanged,
+            dataGridDeleteAll: dataGridDeleteAll,
+            onDataGridDeleteAll: onDataGridDeleteAll
         }
     }
 

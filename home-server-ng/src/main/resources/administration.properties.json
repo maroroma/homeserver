@@ -10,4 +10,10 @@
   "description" : "user samba",
   "readOnly" : false,
   "moduleId" : "administration"
+}, {
+  "id" : "homeserver.administration.logevents.store",
+  "value" : "${homeserver.config.dir}/administration.logevents.json",
+  "description" : "Emplacement du store pour l'archivage des notifications",
+  "readOnly" : false,
+  "moduleId" : "administration"
 }]

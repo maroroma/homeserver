@@ -38,6 +38,17 @@ export function administrationApi() {
             .then(errorHandler("Erreur rencontrée lors de la récupération des modules"))
             .catch(er => console.error(er));
 
+    const getAllLogEvents = () => fetch(`${apiRoot()}/administration/logEvents`)
+        .then(errorHandler("Erreur rencontrée lors de la récupération des logEvents"))
+        .catch(er => console.error(er));
+
+    const deleteRepo = (repoId) => fetch(`${apiRoot()}/administration/repo/${repoId}`, {
+        method: 'DELETE',
+        headers: defaultJsonHeaders()
+    })
+        .then(errorHandler("Erreur rencontrée lors de la purge des logsEvents", "Tous les logs ont été supprimés"))
+        .catch(er => console.error(er));
+
     const getAllEnabledModules = () => fetch(`${apiRoot()}/administration/enabledmodules`)
         .then(response => response.json())
         .catch(er => console.error(er));
@@ -63,6 +74,8 @@ export function administrationApi() {
         getAllProperties: getAllProperties,
         updateProperties: updateProperties,
         getServerStatus: getServerStatus,
-        getOneProperty: getOneProperty
+        getOneProperty: getOneProperty,
+        getAllLogEvents: getAllLogEvents,
+        deleteRepo: deleteRepo
     }
 }
