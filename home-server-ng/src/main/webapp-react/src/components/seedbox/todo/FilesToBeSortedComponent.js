@@ -8,6 +8,7 @@ import enhance from '../../../tools/enhance';
 import { todoSubEventReactor } from './TodoSubEventReactor';
 import eventReactor from '../../../eventReactor/EventReactor';
 import on from '../../../tools/on';
+import { searchSubReactor } from '../../mainmenu/SearchBarComponent';
 
 export default function FilesToBeSortedComponent() {
 
@@ -22,7 +23,7 @@ export default function FilesToBeSortedComponent() {
         const unsubscriveOnCompleted = todoSubEventReactor().onMoveRequestSuccessFull(() => loadCompletedTorrent());
 
 
-        const unsubscribeSearchEvent = eventReactor().shortcuts().onSearchEvent(searchString => {
+        const unsubscribeSearchEvent = searchSubReactor().onSearchEvent(searchString => {
             setCompletedTorrents({...completedTorrents.updateFilter(on().stringContains(searchString, oneFile => oneFile.name))})
         });
 

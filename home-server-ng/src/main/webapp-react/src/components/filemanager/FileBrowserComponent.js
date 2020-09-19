@@ -10,8 +10,7 @@ import {
     SELECT_ITEM, FILE_BROWSER_CHANGE_CURRENT_DIRECTORY,
     FILE_BROWSER_CREATE_NEW_DIRECTORY,
     FILE_BROWSER_DELETE_FILES,
-    FILE_BROWSER_RENAME_ONE_FILE,
-    FORCE_CLEAR_SEARCH_EVENT
+    FILE_BROWSER_RENAME_ONE_FILE
 } from '../../eventReactor/EventIds';
 
 import { when } from "../../tools/when";
@@ -24,6 +23,7 @@ import { ModalPopupComponent, usePopupDriver } from "../commons/ModalPopupCompon
 import YesNoModalPopupComponent from "../commons/YesNoModalPopupComponent";
 import { fixedIconResolver, defaultDirectoryIconResolver, fileIconResolver } from './FileIconResolver';
 import fileBrowserEventReactor from './fileBrowserEventReactor';
+import { searchSubReactor } from '../mainmenu/SearchBarComponent';
 
 
 export default function FileBrowserComponent({ startUpDirectory, options = {} }) {
@@ -65,7 +65,7 @@ export default function FileBrowserComponent({ startUpDirectory, options = {} })
             .onDirectoryDetailLoaded(
                 newDirectory => {
 
-                    eventReactor().emit(FORCE_CLEAR_SEARCH_EVENT);
+                   searchSubReactor().clearSearchBar();
 
                     let newCurrentDirectory = newDirectory.directoryToDisplay;
 
@@ -147,7 +147,7 @@ export default function FileBrowserComponent({ startUpDirectory, options = {} })
             fileBrowserEventReactor().requestDirectoryDetail(data);
         });
 
-        const searchStringUnSubscribe = eventReactor().shortcuts().onSearchEvent(searchString =>
+        const searchStringUnSubscribe = searchSubReactor().onSearchEvent(searchString =>
             setCurrentDirectory({
                 ...currentDirectory,
                 files: currentDirectory.files.updateFilter(on().stringContains(searchString, oneFile => oneFile.name)),

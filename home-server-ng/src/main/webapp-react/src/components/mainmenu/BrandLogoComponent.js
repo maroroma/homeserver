@@ -1,9 +1,10 @@
 import React from 'react';
+import { SearchDisplayButtonComponent } from './SearchBarComponent';
 
 export default function BrandLogoComponent({ selectedModule, onSearchClick }) {
 
     const dynamicLogo = selectedModule.sideBarEnabled ?
-        (<i className="material-icons" onClick={onSearchClick}>search</i>)
+        <SearchDisplayButtonComponent></SearchDisplayButtonComponent>
         : (<i className="material-icons">home</i>);
 
         return (

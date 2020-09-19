@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react';
 import eventReactor from '../../eventReactor/EventReactor';
 import { DISPLAYABLE_MODULES_CHANGED } from '../../eventReactor/EventIds';
 import modulesAdapter from './ModulesAdapter';
-import SearchComponent from './SearchComponent';
 import BrandLogoComponent from './BrandLogoComponent';
 import MainMenuItemComponent from './MainMenuItemComponent';
 import SideBarMenuItemComponent from './SideBarMenuItemComponent';
 import mofRouterEventReactor from './MOFRouterEventReactor';
+import { SearchDisplayButtonComponent } from './SearchBarComponent';
 
 export default function MainMenu() {
     const [selectedModule, setSelectedModule] = useState({
@@ -15,9 +15,6 @@ export default function MainMenu() {
         sideBarEnabled: undefined
     });
     const [menuDescriptors, setMenuDescriptors] = useState([]);
-    const [displaySearchNavBar, setDisplaySearchNavBar] = useState(false);
-
-
 
     // init materialize pour le sidenav
     useEffect(() => {
@@ -48,8 +45,6 @@ export default function MainMenu() {
     };
 
 
-    const onSearchClickHandler = () => setDisplaySearchNavBar(true);
-    const onSearchCloseClickHandler = () => setDisplaySearchNavBar(false);
     const updateSelectedModule = (newSelectedModuleDescriptor) => {
         setSelectedModule({ ...selectedModule, selectedMenuDescriptor: newSelectedModuleDescriptor })
     };
@@ -63,15 +58,10 @@ export default function MainMenu() {
         };
     }
 
-    const searchComponent = (<SearchComponent onSearchCloseHandler={onSearchCloseClickHandler}></SearchComponent>);
-
     let mainNavBarContent = null;
-    if (displaySearchNavBar) {
-        mainNavBarContent = (<ul>{searchComponent}</ul>);
-    } else {
         mainNavBarContent = (<>
             {specificDisplayForSideBar.title}
-            <BrandLogoComponent selectedModule={selectedModule} onSearchClick={onSearchClickHandler}></BrandLogoComponent>
+            <BrandLogoComponent selectedModule={selectedModule}></BrandLogoComponent>
             <a href="#!" data-target="mobile-demo" className="sidenav-trigger" ref={updateDisplayModuleNameStatus}>
                 <i className="material-icons left">menu</i>
                 {specificDisplayForSideBar.icon}
@@ -84,12 +74,10 @@ export default function MainMenu() {
                         );
                     })
                 }
-                {searchComponent}
+                <li><SearchDisplayButtonComponent></SearchDisplayButtonComponent></li>
             </ul>
         </>
         );
-    }
-
 
     return (<>
         {/* Menu principal (pc) */}

@@ -7,6 +7,7 @@ import enhance from '../../tools/enhance';
 import on from '../../tools/on';
 import { DisplayList } from '../../tools/displayList';
 import { ActionMenuComponent } from './ActionMenuComponent';
+import { searchSubReactor } from '../mainmenu/SearchBarComponent';
 
 export const StepperDriverEvents = {
     DRIVER_UPDATED: 'DRIVER_UPDATED',
@@ -83,7 +84,7 @@ export class StepperDriver {
         }
 
         if (previousIndex !== -1 && index !== previousIndex) {
-            eventReactor().shortcuts().forceClearSearch();
+            searchSubReactor().clearSearchBar();
         }
 
         return this;

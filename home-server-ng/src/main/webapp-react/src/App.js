@@ -7,10 +7,10 @@ import eventReactor from './eventReactor/EventReactor';
 import { DISPLAYABLE_MODULES_CHANGED } from './eventReactor/EventIds';
 
 import { administrationApi } from './apiManagement/AdministrationApi';
-import AlarmComponent from './components/iot/alarm/AlarmComponent';
 import iotApi from './apiManagement/IotApi';
 import { when } from './tools/when';
 import AlarmPadComponent from './components/iot/alarm/AlarmPadComponent';
+import {SearchBarComponent} from './components/mainmenu/SearchBarComponent';
 
 function App() {
   // gestion du status de l'alarme : tout est bloqué si l'alarme est active
@@ -42,6 +42,7 @@ function App() {
   return <div>
     <div className={when(alarmStatus).thenHideElement()}>
       <MainMenu></MainMenu>
+      <SearchBarComponent></SearchBarComponent>
       <MOFRouter></MOFRouter>
     </div>
     <div className={when(!alarmStatus).thenHideElement("alarmEnabledContainer center-align")}>

@@ -10,10 +10,10 @@ import MasonryContainerComponent from '../commons/MasonryContainerComponent';
 import UniqueCollapsibleContainerComponent from '../commons/UniqueCollapsibleContainerComponent';
 
 import eventReactor from '../../eventReactor/EventReactor';
-import { FORCE_CLEAR_SEARCH_EVENT } from '../../eventReactor/EventIds';
 
 import on from '../../tools/on';
 import { useDisplayList } from '../../tools/displayList';
+import { searchSubReactor } from '../mainmenu/SearchBarComponent';
 
 export default function PropertiesComponent() {
 
@@ -36,7 +36,7 @@ export default function PropertiesComponent() {
                 toaster().plopSuccess("propriétés sauvegardées avec succès");
                 setAllProperties({ ...allProperties.update(allPropertiesFromApi) });
                 setUsableFilters(buildFilterByModule(allPropertiesFromApi));
-                eventReactor().emit(FORCE_CLEAR_SEARCH_EVENT);
+                searchSubReactor().clearSearchBar();
             });
     }
 
@@ -75,7 +75,7 @@ export default function PropertiesComponent() {
     }, []);
 
     useEffect(() => {
-        return eventReactor().shortcuts().onSearchEvent((data) => {
+        return searchSubReactor().onSearchEvent((data) => {
             setSearchString(data);
             setAllProperties({
                 ...allProperties.updateFilter(onSearchStringAndSelectedModule(data, selectedFilter))

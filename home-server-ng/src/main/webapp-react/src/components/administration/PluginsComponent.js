@@ -6,10 +6,11 @@ import { administrationApi } from '../../apiManagement/AdministrationApi';
 import DataGridComponent from '../commons/DataGridComponent';
 
 import eventReactor from '../../eventReactor/EventReactor';
-import { DISPLAYABLE_MODULES_CHANGED, FORCE_CLEAR_SEARCH_EVENT } from '../../eventReactor/EventIds';
+import { DISPLAYABLE_MODULES_CHANGED } from '../../eventReactor/EventIds';
 
 import on from '../../tools/on';
 import { useDisplayList } from '../../tools/displayList';
+import { searchSubReactor } from '../mainmenu/SearchBarComponent';
 
 
 export default function PluginsComponent() {
@@ -23,7 +24,7 @@ export default function PluginsComponent() {
     }, []);
 
     useEffect(() => {
-        return eventReactor().shortcuts().onSearchEvent((data) => setAllModules(
+        return searchSubReactor().onSearchEvent((data) => setAllModules(
                 {
                     ...allModules
                         .updateFilter(on().stringContains(data, oneModule => oneModule.moduleId))
@@ -37,7 +38,7 @@ export default function PluginsComponent() {
             .then(allModulesFromApi => {
                 setAllModules({ ...allModules.update(allModulesFromApi) })
 
-                eventReactor().emit(FORCE_CLEAR_SEARCH_EVENT);
+                searchSubReactor().clearSearchBar();
 
                 eventReactor().emit(
                     DISPLAYABLE_MODULES_CHANGED,

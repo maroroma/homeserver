@@ -22,9 +22,6 @@ export default function eventReactor() {
             source: source
         });
 
-        const onSearchEvent = (onSearchHandler) => subscribe(SEARCH_EVENT, onSearchHandler);
-        const forceClearSearch = () => emit(FORCE_CLEAR_SEARCH_EVENT);
-
         const modalClose = (driver) => emit(MODAL_POPUP_CLOSE, driver);
         const onModalClose = (eventListener) => subscribe(MODAL_POPUP_CLOSE, eventListener);
         const modalOk = (driver) => emit(MODAL_POPUP_OK, driver);
@@ -38,8 +35,6 @@ export default function eventReactor() {
 
         return {
             selectItem: selectItem,
-            onSearchEvent: onSearchEvent,
-            forceClearSearch: forceClearSearch,
             modalClose: modalClose,
             onModalClose: onModalClose,
             modalOk: modalOk,

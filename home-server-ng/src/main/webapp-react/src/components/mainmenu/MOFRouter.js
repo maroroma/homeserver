@@ -6,6 +6,7 @@ import modulesAdapter from './ModulesAdapter';
 
 import './MOFRouter.scss';
 import mofRouterEventReactor from './MOFRouterEventReactor';
+import { searchSubReactor } from './SearchBarComponent';
 
 export default function MOFRouter() {
 
@@ -21,6 +22,7 @@ export default function MOFRouter() {
         const unsubscribeOnSelectedModuleChange = mofRouterEventReactor().onSelectedModuleChange(newSelectedModule => {
             window.location.hash = newSelectedModule.path;
             setSelectedModule(newSelectedModule);
+            searchSubReactor().clearSearchBar();
         });
 
         return () => {

@@ -12,6 +12,7 @@ import { SELECT_ITEM } from '../../../eventReactor/EventIds';
 import { usePopupDriver, ModalPopupComponent } from '../../commons/ModalPopupComponent';
 import SpriteListComponent from '../sprites/SpriteListComponent';
 import toaster from '../../commons/Toaster';
+import { searchSubReactor } from '../../mainmenu/SearchBarComponent';
 
 
 export default function IotBoardComponent() {
@@ -40,7 +41,7 @@ export default function IotBoardComponent() {
             setPopupSelectSpriteDriver({ ...popupSelectSpriteDriver, open: true });
         });
 
-        const unsubscribeSearch = eventReactor().shortcuts().onSearchEvent(searchString => setAllIotComponents({
+        const unsubscribeSearch = searchSubReactor().onSearchEvent(searchString => setAllIotComponents({
             ...allIotComponents.updateFilter(on().stringContains(searchString, oneComponent => oneComponent.componentDescriptor.name))
         }));
 

@@ -8,6 +8,7 @@ import eventReactor from '../../../eventReactor/EventReactor';
 import on from '../../../tools/on';
 import DataGridComponent from '../../commons/DataGridComponent';
 import {iotResolver} from '../IotRendererResolver';
+import { searchSubReactor } from '../../mainmenu/SearchBarComponent';
 
 export default function ManageIotComponent() {
 
@@ -83,8 +84,8 @@ export default function ManageIotComponent() {
             }));
 
 
-        const unsubscribeSearch = eventReactor().shortcuts().onSearchEvent(searchString => setAllIotComponents({
-            ...allIotComponents.updateFilter(on().stringContains(searchString, oneComponent => oneComponent.componentDescriptor.name))
+        const unsubscribeSearch = searchSubReactor().onSearchEvent(searchString => setAllIotComponents({
+            ...allIotComponents.updateFilter(on().stringContains(searchString, oneComponent => oneComponent.name))
         }));
 
 
