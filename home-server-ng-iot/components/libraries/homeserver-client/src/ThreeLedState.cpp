@@ -102,3 +102,29 @@ ThreeLedState::ThreeLedState(int redPin, int yellowPin, int greenPin)
 	delay(durationMillis);
 	// return this;
   }
+  
+  ThreeLedState ThreeLedState::redOn() {
+	  return this->on(this->redPin);
+  }
+  ThreeLedState ThreeLedState::redOff() {
+	  return this->off(this->redPin);
+  }
+  
+  
+  ThreeLedState ThreeLedState::yellowOn() {
+	  return this->on(this->yellowPin);
+  }
+  ThreeLedState ThreeLedState::yellowOff() {
+	  return this->off(this->yellowPin);
+  }
+  
+  
+  ThreeLedState ThreeLedState::greenOn() {
+	  return this->on(this->greenPin);
+  }
+  ThreeLedState ThreeLedState::greenOff() {
+	  return this->off(this->greenPin);
+  }
+  
+  
+  

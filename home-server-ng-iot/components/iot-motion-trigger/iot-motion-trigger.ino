@@ -9,7 +9,7 @@
 
 #ifndef STASSID
 #define STASSID "SFR_B020"
-#define STAPSK  "***********"
+#define STAPSK  "unnefhekhacunhaufad3"
 #endif
 
 const char* ssid = STASSID;
@@ -30,21 +30,24 @@ HomeServerClient homeserverClient(moduleName, "TRIGGER");
 
 ThreeLedState threeLedState = ThreeLedState(pinRedLed, pinYellowLed, pinGreenLed);
 
-//ICACHE_RAM_ATTR void detectsMovement() {
-//  Serial.println("MOTION DETECTED!!!");
-//  threeLedState.blinkGreen().blinkGreen();
-//}
-
 int val = 0;
 int pirState = LOW;
+
+
+void handleStatus() {
+  String statusMessage = "{\"componentName\":\"" + moduleName + "\",";
+  statusMessage += "\"ipAddress\":\""+WiFi.localIP().toString()+"\",";
+  statusMessage += "\"macAddress\":\""+WiFi.macAddress()+"\"";
+  statusMessage += "}";
+  server.send(200, "application/json", statusMessage);
+}
+
+
 
 void setup() {
 
   Serial.begin(9600);  
   Serial.println("kikou");
-
-  //pinMode(pinMotionSensor, INPUT_PULLUP);
-  //attachInterrupt(digitalPinToInterrupt(pinMotionSensor), detectsMovement, RISING);
 
   threeLedState.warmup().powered();
 
@@ -70,18 +73,30 @@ void setup() {
   homeserverClient.registerToHomeServer();
   threeLedState.registred();
 
+  server.on("/", handleStatus);
+  server.on("/status", handleStatus);
+  server.begin();
+
   pinMode(pinMotionSensor, INPUT);
 
   
 }
 
+// FIXME : 
+// mis en place du healtcheck / status
+// mis en place d'un composant dédié pour la gestion du PIR
+// mis en place de l'appel au homeserver lorsqu'un mouvement est détecté
+
 void loop() {
+
+  server.handleClient();
   
   MDNS.update();
+  
 
   val = digitalRead(pinMotionSensor);  // read input value
   if (val == HIGH) {            // check if the input is HIGH
-    threeLedState.blinkGreen();  // turn LED ON
+    threeLedState.greenOn();  // turn LED ON
     if (pirState == LOW) {
       // we have just turned on
       Serial.println("Motion detected!");
@@ -89,7 +104,7 @@ void loop() {
       pirState = HIGH;
     }
   } else {
-    //digitalWrite(ledPin, LOW); // turn LED OFF
+    threeLedState.greenOff(); // turn LED OFF
     if (pirState == HIGH){
       // we have just turned of
       Serial.println("Motion ended!");

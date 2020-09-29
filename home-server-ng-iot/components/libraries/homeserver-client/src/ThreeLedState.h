@@ -68,7 +68,17 @@ public:
    * Attente en ms
    */
   ThreeLedState wait(int durationMillis);
-
+  
+  
+  ThreeLedState redOn();
+  ThreeLedState redOff();
+  
+  ThreeLedState yellowOn();
+  ThreeLedState yellowOff();
+  
+  ThreeLedState greenOn();
+  ThreeLedState greenOff();
+  
 private:
   /**
    * pin pour la led rouge

@@ -21,6 +21,17 @@ const int HOMESERVER_PORT = 80;
 HomeServerClient::HomeServerClient(String name)
 {
     moduleName = name;
+	moduleType = "BUZZER";
+}
+
+
+/**
+ * Instancie un nouveau client avec le nom de composant donné et son type
+ */
+HomeServerClient::HomeServerClient(String name, String theType)
+{
+    moduleName = name;
+	moduleType = theType;
 }
 
 /**
@@ -33,7 +44,12 @@ HomeServerClient HomeServerClient::registerToHomeServer()
     WiFiClient wifiClient;
     if (wifiClient.connect(homeserverAddress, HOMESERVER_PORT))
     {
-        wifiClient.println("GET /api/iot/register?id=" + WiFi.macAddress() + "&ipAddress=" + WiFi.localIP().toString() + "&componentType=BUZZER&name=" + moduleName + " HTTP/1.0");
+		Serial.println("connected to homeserver");
+		String registerRequest = "GET /api/iot/register?id=" + WiFi.macAddress() + "&ipAddress=" + WiFi.localIP().toString() + "&componentType=" + moduleType + "&name=" + moduleName + " HTTP/1.0";
+        wifiClient.println(registerRequest);
         wifiClient.println();
-    }
+		Serial.println("registred to homeserver with Request : " + registerRequest);
+    } else {
+		Serial.println("cant connect to homeserver");
+	}
 }
