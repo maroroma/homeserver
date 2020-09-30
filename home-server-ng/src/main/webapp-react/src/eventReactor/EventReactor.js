@@ -1,4 +1,4 @@
-import { SELECT_ITEM, SEARCH_EVENT, FORCE_CLEAR_SEARCH_EVENT, MODAL_POPUP_CLOSE, MODAL_POPUP_OK, ALARM_STATUS_CHANGED, DATAGRID_DELETE_ALL } from './EventIds';
+import { SELECT_ITEM, SEARCH_EVENT, FORCE_CLEAR_SEARCH_EVENT, MODAL_POPUP_CLOSE, MODAL_POPUP_OK, ALARM_STATUS_CHANGED, DATAGRID_DELETE_ALL, DATAGRID_REFRESH_ALL, DATAGRID_DELETE_ONE } from './EventIds';
 
 const eventReactorSubscription = {};
 
@@ -33,6 +33,12 @@ export default function eventReactor() {
         const dataGridDeleteAll = () => emit(DATAGRID_DELETE_ALL);
         const onDataGridDeleteAll = (eventListener) => subscribe(DATAGRID_DELETE_ALL, eventListener);
 
+        const dataGridDeleteOne = (oneRowOfData) => emit(DATAGRID_DELETE_ONE, oneRowOfData);
+        const onDataGridDeleteOne = (eventListener) => subscribe(DATAGRID_DELETE_ONE, eventListener);
+
+        const dataGridRefreshAll = () => emit(DATAGRID_REFRESH_ALL);
+        const onDataGridRefreshAll = (eventListener) => subscribe(DATAGRID_REFRESH_ALL, eventListener);
+
         return {
             selectItem: selectItem,
             modalClose: modalClose,
@@ -42,7 +48,11 @@ export default function eventReactor() {
             alarmStatusChanged: alarmStatusChanged,
             onAlarmStatusChanged: onAlarmStatusChanged,
             dataGridDeleteAll: dataGridDeleteAll,
-            onDataGridDeleteAll: onDataGridDeleteAll
+            onDataGridDeleteAll: onDataGridDeleteAll,
+            dataGridRefreshAll: dataGridRefreshAll,
+            onDataGridRefreshAll: onDataGridRefreshAll,
+            dataGridDeleteOne: dataGridDeleteOne,
+            onDataGridDeleteOne: onDataGridDeleteOne
         }
     }
 

@@ -14,6 +14,13 @@ export default function LogEventComponent() {
             setRepoId(response.repoId);
             setAllLogs({ ...allLogs.update(response.persistantNotifications) })
         });
+
+        return eventReactor().shortcuts().onDataGridRefreshAll(() => administrationApi().getAllLogEvents().then(response => {
+            setRepoId(response.repoId);
+            setAllLogs({ ...allLogs.update(response.persistantNotifications) })
+        }));
+
+        
     }, []);
 
     useEffect(() => {
@@ -33,12 +40,13 @@ export default function LogEventComponent() {
         itemUniqueId: 'id',
         displaySaveButton: false,
         displayDeleteAllButton: true,
-        // onSaveHandler: saveNewModuleStatus,
+        displayRefreshButton: true,
         columns: [
             {
                 header: 'Date',
                 dataField: 'creationDate',
-                defaultSort: true
+                defaultSort: true,
+                defaultSortInverted: true
             },
             {
                 header: 'Titre',

@@ -48,7 +48,7 @@ export default function AlarmPadComponent() {
             </table>
         </div>
         <div>
-            <button className={when(alarmCode === "").thenDisableElement("btn btn-large red waves-effect waves-green")} onClick={() => disarmAlarm()}><i class="material-icons right">alarm_off</i>DESACTIVER ALARME</button>
+            <button className={when(alarmCode === "").thenDisableElement("btn btn-large red waves-effect waves-green")} onClick={() => disarmAlarm()}><i className="material-icons right">alarm_off</i>DESACTIVER ALARME</button>
         </div>
     </div>
 }

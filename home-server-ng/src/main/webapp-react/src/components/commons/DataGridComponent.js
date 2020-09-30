@@ -8,15 +8,15 @@ import orElse from '../../tools/orElse';
 import { when } from '../../tools/when';
 import eventReactor from '../../eventReactor/EventReactor';
 
+import "./DataGridComponent.scss";
+
 
 export default function DataGridComponent({ configuration, data }) {
 
-
-    console.log("load datagrid");
-
     const [actionButtonsConfiguration, setActionButtonsConfiguration] = useState({
         displaySaveButton: true,
-        displayDeleteAllButton: false
+        displayDeleteAllButton: false,
+        displayRefreshButton: false
     });
 
     const [dataToDisplay, setDataToDisplay] = useState([]);
@@ -48,10 +48,13 @@ export default function DataGridComponent({ configuration, data }) {
 
     useEffect(() => {
 
-        const sortField = configuration.columns
+
+        const columWithDefaultSortConfiguration = configuration.columns
             .filter(oneColumnConfig => oneColumnConfig.defaultSort)
-            .map(oneColumnConfig => oneColumnConfig.dataField)
             .slice()[0];
+
+        const sortField = columWithDefaultSortConfiguration?.dataField;
+        const sortDirection = columWithDefaultSortConfiguration?.defaultSortInverted ? -1 : 1
 
         let sortFunction = sort().neutral();
         if (sortConfiguration.sort) {
@@ -62,13 +65,15 @@ export default function DataGridComponent({ configuration, data }) {
             ...sortConfiguration,
             sort: sortField !== undefined,
             sortField: sortField,
+            sortDirection: sortDirection,
             sortFunction: sortFunction
         });
 
         setActionButtonsConfiguration({
             ...actionButtonsConfiguration,
             displaySaveButton: orElse(configuration.displaySaveButton, true),
-            displayDeleteAllButton: orElse(configuration.displayDeleteAllButton, false)
+            displayDeleteAllButton: orElse(configuration.displayDeleteAllButton, false),
+            displayRefreshButton: orElse(configuration.displayRefreshButton, false)
         });
 
         setDataToDisplay(data.sort(sortFunction));
@@ -142,6 +147,17 @@ export default function DataGridComponent({ configuration, data }) {
     };
 
     const buildCell = (columnConfiguration, row, rowIndex, columnIndex) => {
+
+        // si bouton de suppression, rien
+        if (columnConfiguration.isDeleteButton === true) {
+            return <td key={`${rowIndex}_${columnIndex}`} onClick={() => eventReactor().shortcuts().dataGridDeleteOne(row)}>
+                <button className="btn-floating btn-small red">
+                    <IconComponent icon="delete"></IconComponent>
+                </button>
+            </td>
+        }
+
+
         const dataForCell = row[columnConfiguration.dataField];
         const readOnly = columnConfiguration.readOnlyFieldCondition !== undefined ?
             row[columnConfiguration.readOnlyFieldCondition] : false;
@@ -178,6 +194,13 @@ export default function DataGridComponent({ configuration, data }) {
     }
 
     const buildHeader = (oneColumnConfig, index) => {
+
+        // si bouton de suppression, rien
+        if (oneColumnConfig.isDeleteButton === true) {
+            return <th key={index}></th>
+        }
+
+
         const isSortField = sortConfiguration.sortField === oneColumnConfig.dataField;
         let sortArrow = null;
         if (isSortField) {
@@ -203,6 +226,10 @@ export default function DataGridComponent({ configuration, data }) {
 
     const onDeleteClickHandler = () => {
         eventReactor().shortcuts().dataGridDeleteAll();
+    }
+
+    const onRefreshClickHandler = () => {
+        eventReactor().shortcuts().dataGridRefreshAll();
     }
 
     const btnSaveClass = changedRows.length > 0 ? 'blue pulse' : 'disabled';
@@ -232,6 +259,9 @@ export default function DataGridComponent({ configuration, data }) {
 
 
             <div className="fixed-action-btn">
+                <a className={when(!actionButtonsConfiguration.displayRefreshButton).thenHideElement(`btn-floating btn-medium blue btn-with-siblings`)} onClick={onRefreshClickHandler}>
+                    <IconComponent icon="sync" classAddons="large"></IconComponent>
+                </a>
                 <a className={when(!actionButtonsConfiguration.displaySaveButton).thenHideElement(`btn-floating btn-large ${btnSaveClass}`)} onClick={onSaveClickHandler}>
                     <IconComponent icon="save" classAddons="large"></IconComponent>
                 </a>

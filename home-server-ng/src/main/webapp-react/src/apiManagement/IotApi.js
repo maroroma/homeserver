@@ -95,6 +95,14 @@ export default function iotApi() {
             .catch(er => console.error(er));
     };
 
+    const deleteOneComponent = (componentToDelete) => {
+        return fetch(`${apiRoot()}/iot/components/${componentToDelete.id}`, {
+            method: 'DELETE',
+            headers: defaultJsonHeaders()
+        }).then(errorHandler("Erreur rencontrée lors de la suppression du composant"))
+        .catch(er => console.error(er));
+    }
+
     return {
         getAllIotComponents: getAllIotComponents,
         getAllSprites: getAllSprites,
@@ -105,6 +113,7 @@ export default function iotApi() {
         updateIotComponents: updateIotComponents,
         getTriggersComponent: getTriggersComponent,
         getAlarmStatus: getAlarmStatus,
-        updateAlarmStatus: updateAlarmStatus
+        updateAlarmStatus: updateAlarmStatus,
+        deleteOneComponent: deleteOneComponent
     };
 }

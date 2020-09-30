@@ -39,7 +39,7 @@ export function administrationApi() {
             .catch(er => console.error(er));
 
     const getAllLogEvents = () => fetch(`${apiRoot()}/administration/logEvents`)
-        .then(errorHandler("Erreur rencontrée lors de la récupération des logEvents"))
+        .then(errorHandler("Erreur rencontrée lors de la récupération des logEvents", "logEvents récupérés"))
         .catch(er => console.error(er));
 
     const deleteRepo = (repoId) => fetch(`${apiRoot()}/administration/repo/${repoId}`, {

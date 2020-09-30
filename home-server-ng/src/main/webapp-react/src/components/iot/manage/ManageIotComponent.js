@@ -7,7 +7,7 @@ import sort from '../../../tools/sort';
 import eventReactor from '../../../eventReactor/EventReactor';
 import on from '../../../tools/on';
 import DataGridComponent from '../../commons/DataGridComponent';
-import {iotResolver} from '../IotRendererResolver';
+import { iotResolver } from '../IotRendererResolver';
 import { searchSubReactor } from '../../mainmenu/SearchBarComponent';
 
 export default function ManageIotComponent() {
@@ -38,6 +38,7 @@ export default function ManageIotComponent() {
     const dataGridConfiguration = {
         itemUniqueId: 'id',
         onSaveHandler: saveIotComponent,
+        displayRefreshButton: true,
         columns: [
             {
                 header: 'Type',
@@ -70,6 +71,9 @@ export default function ManageIotComponent() {
                 dataField: 'available',
                 readOnlyFieldCondition: 'readOnly',
                 hideOnSmallDevice: true
+            },
+            {
+                isDeleteButton: true
             }
         ]
     };
@@ -88,9 +92,28 @@ export default function ManageIotComponent() {
             ...allIotComponents.updateFilter(on().stringContains(searchString, oneComponent => oneComponent.name))
         }));
 
+        const unsubscribeRefreshData = eventReactor().shortcuts().onDataGridRefreshAll(() => {
+            toaster().plopAndWait(() => iotApi().getAllIotComponents(), "Rechargement des composants...")
+                .then(response => response.map(flattenIotComponent))
+                .then(response => setAllIotComponents({
+                    ...allIotComponents.update(response).updateSort(sort().basic(oneComponent => oneComponent.id))
+                }));
+        });
+
+        const unsubcribeDeleteOne = eventReactor().shortcuts().onDataGridDeleteOne((oneComponentToDelete) => {
+            toaster().plopAndWait(() => iotApi().deleteOneComponent(oneComponentToDelete)
+                .then(() => iotApi().getAllIotComponents()), "Suppression d'un composant et rechargement...")
+                .then(response => response.map(flattenIotComponent))
+                .then(response => setAllIotComponents({
+                    ...allIotComponents.update(response).updateSort(sort().basic(oneComponent => oneComponent.id))
+                }));
+        });
+
 
         return () => {
             unsubscribeSearch();
+            unsubscribeRefreshData();
+            unsubcribeDeleteOne();
         }
 
 

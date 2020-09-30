@@ -55,7 +55,7 @@ export function SearchBarComponent() {
                 >
 
                 </input>
-                <label className="label-icon" for="search"><i className="material-icons">search</i></label>
+                <label className="label-icon" htmlFor="search"><i className="material-icons">search</i></label>
                 <i className="material-icons" onClick={() => searchSubReactor().clearSearchBar()}>close</i>
             </div>
         </form>
