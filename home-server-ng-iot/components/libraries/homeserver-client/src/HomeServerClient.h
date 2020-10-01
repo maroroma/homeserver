@@ -24,7 +24,12 @@ public:
   /**
    * Enregistre le component au homeserveur
    */
-  HomeServerClient registerToHomeServer();
+  void registerToHomeServer();
+  
+  /**
+   * Notifie le homeserver pour le trigger donne
+   */
+  void triggered();
 
 private:
   /**

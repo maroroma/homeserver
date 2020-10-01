@@ -37,7 +37,7 @@ HomeServerClient::HomeServerClient(String name, String theType)
 /**
  * Enregistre le component au homeserveur
 */
-HomeServerClient HomeServerClient::registerToHomeServer()
+void HomeServerClient::registerToHomeServer()
 {
     IPAddress homeserverAddress;
     homeserverAddress.fromString(HOMESERVER_IP);
@@ -45,11 +45,27 @@ HomeServerClient HomeServerClient::registerToHomeServer()
     if (wifiClient.connect(homeserverAddress, HOMESERVER_PORT))
     {
 		Serial.println("connected to homeserver");
-		String registerRequest = "GET /api/iot/register?id=" + WiFi.macAddress() + "&ipAddress=" + WiFi.localIP().toString() + "&componentType=" + moduleType + "&name=" + moduleName + " HTTP/1.0";
-        wifiClient.println(registerRequest);
+		// String registerRequest = "GET /api/iot/register?id=" + WiFi.macAddress() + "&ipAddress=" + WiFi.localIP().toString() + "&componentType=" + moduleType + "&name=" + moduleName + " HTTP/1.0";
+        wifiClient.println("GET /api/iot/register?id=" + WiFi.macAddress() + "&ipAddress=" + WiFi.localIP().toString() + "&componentType=" + moduleType + "&name=" + moduleName + " HTTP/1.0");
         wifiClient.println();
-		Serial.println("registred to homeserver with Request : " + registerRequest);
+		Serial.println("registred");
     } else {
 		Serial.println("cant connect to homeserver");
 	}
 }
+
+void HomeServerClient::triggered() {
+	IPAddress homeserverAddress;
+    homeserverAddress.fromString(HOMESERVER_IP);
+    WiFiClient wifiClient;
+    if (wifiClient.connect(homeserverAddress, HOMESERVER_PORT))
+    {
+		Serial.println("connected to homeserver");
+		String triggeredRequest = "GET /api/iot/components/triggered/" + WiFi.macAddress() + " HTTP/1.0";
+        wifiClient.println(triggeredRequest);
+        wifiClient.println();
+		Serial.println("trigger signal send to homeserver with Request : " + triggeredRequest);
+    } else {
+		Serial.println("cant connect to homeserver for trigger");
+	}
+ }

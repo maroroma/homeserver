@@ -9,7 +9,7 @@
 
 #ifndef STASSID
 #define STASSID "SFR_B020"
-#define STAPSK  "unnefhekhacunhaufad3"
+#define STAPSK  "anhefek5dafuk6"
 #endif
 
 const char* ssid = STASSID;
@@ -41,8 +41,6 @@ void handleStatus() {
   statusMessage += "}";
   server.send(200, "application/json", statusMessage);
 }
-
-
 
 void setup() {
 
@@ -83,9 +81,7 @@ void setup() {
 }
 
 // FIXME : 
-// mis en place du healtcheck / status
 // mis en place d'un composant dédié pour la gestion du PIR
-// mis en place de l'appel au homeserver lorsqu'un mouvement est détecté
 
 void loop() {
 
@@ -100,6 +96,8 @@ void loop() {
     if (pirState == LOW) {
       // we have just turned on
       Serial.println("Motion detected!");
+      homeserverClient.triggered();
+
       // We only want to print on the output change, not state
       pirState = HIGH;
     }
