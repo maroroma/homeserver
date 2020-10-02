@@ -10,11 +10,13 @@ import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Composant dédié à la gestion de l'alarme
@@ -42,7 +44,15 @@ public class AlarmManager extends AbstractIotDedicatedService<SirenIotComponent>
     @Property("homeserver.iot.alarm.siren.delay")
     HomeServerPropertyHolder sirenDelay;
 
+    /**
+     * Tache schédulée pour le déclenchement de la sirène
+     */
     ScheduledFuture<?> scheduledSiren;
+
+    /**
+     * Tache schédulée pour l'arrêt des sirènes en phase de test
+     */
+    ScheduledFuture<?> scheduledSirenOff;
 
     private final SimpleDateFormat sdf;
 
@@ -53,10 +63,13 @@ public class AlarmManager extends AbstractIotDedicatedService<SirenIotComponent>
 
     private final ThreadPoolTaskScheduler iotTaskScheduler;
 
-    public AlarmManager(NotifyerContainer notifyerContainer, ThreadPoolTaskScheduler iotTaskScheduler, IotComponentsFactory iotComponentsFactory) {
+    private final AbstractIotDedicatedService<TriggerIotComponent> simplerTriggerIotServive;
+
+    public AlarmManager(NotifyerContainer notifyerContainer, ThreadPoolTaskScheduler iotTaskScheduler, IotComponentsFactory iotComponentsFactory, AbstractIotDedicatedService<TriggerIotComponent> simplerTriggerIotServive) {
         super(SirenIotComponent.class, iotComponentsFactory, IotComponentTypes.SIREN);
         this.notifyerContainer = notifyerContainer;
         this.iotTaskScheduler = iotTaskScheduler;
+        this.simplerTriggerIotServive = simplerTriggerIotServive;
         this.sdf = new SimpleDateFormat("kk:mm:ss dd/MM/yyyy");
     }
 
@@ -165,6 +178,59 @@ public class AlarmManager extends AbstractIotDedicatedService<SirenIotComponent>
             // du coup le scheduled peut être annulé au niveau désactivation de l'alarme
             this.scheduledSiren = this.iotTaskScheduler.schedule(this::makeSirensCry, Instant.now().plusMillis(this.sirenDelay.asInt()));
         }
+    }
+
+    /**
+     * Teste tous les composants participant au système d'alarme, et renvoi leur status dans un rapport complet
+     * <br />
+     * Attention, va déclencher les sirènes
+     * @return rapport
+     */
+    public TestAlarmResults testAlarmSystem() {
+
+
+        // récupération de l'ensemble des status de tous les composants de la chaine
+        // ça permet de paralléliser en oneshot l'ensemble du contrôle des status
+        List<AbstractIotComponent<?>> allComponentForAlarmSystemWithStatus = Stream.concat(this.getAllComponents().stream(),
+                this.simplerTriggerIotServive.getAllComponents().stream())
+                .parallel()
+                .map(AbstractIotComponent::updateStatus)
+                .collect(Collectors.toList());
+
+        List<SirenIotComponent> allSirensWithStatus = allComponentForAlarmSystemWithStatus.stream()
+                .filter(IotComponentTypes.isComponentSiren())
+                .map(SirenIotComponent.class::cast)
+                .collect(Collectors.toList());
+
+        List<TriggerIotComponent> allTriggersWithStatus = allComponentForAlarmSystemWithStatus.stream()
+                .filter(IotComponentTypes.isComponentTrigger())
+                .map(TriggerIotComponent.class::cast)
+                .collect(Collectors.toList());
+
+        // on ne garde que les sirènes dispo pour tenter un beep de test
+        List<SirenIotComponent> availableSirens = allSirensWithStatus.stream()
+                .filter(SirenIotComponent::isAvailable)
+                .collect(Collectors.toList());
+
+        List<BeepResult> beepResults = new ArrayList<>();
+
+        // si des sirènes sont dispobles, on fait beeper et on schedule l'arret
+        if (!availableSirens.isEmpty()) {
+            beepResults.addAll(availableSirens.parallelStream().map(SirenIotComponent::beeeeeeep).collect(Collectors.toList()));
+            this.scheduledSirenOff = this.iotTaskScheduler.schedule(() -> this.stopSirens(availableSirens), Instant.now().plusMillis(2000));
+        }
+
+        return TestAlarmResults.builder()
+                .triggerIotComponentsWithStatus(allTriggersWithStatus)
+                .sirenIotComponentsWithStatus(allSirensWithStatus)
+                .beepResults(beepResults)
+                .build()
+                .resolveStatus();
+
+    }
+
+    private void stopSirens(List<SirenIotComponent> availableSirents) {
+        availableSirents.parallelStream().forEach(SirenIotComponent::unbeeeeeeep);
     }
 
     private void makeSirensCry() {

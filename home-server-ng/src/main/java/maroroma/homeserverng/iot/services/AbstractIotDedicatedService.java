@@ -2,6 +2,7 @@ package maroroma.homeserverng.iot.services;
 
 import maroroma.homeserverng.iot.model.AbstractIotComponent;
 import maroroma.homeserverng.iot.model.IotComponentDescriptor;
+import maroroma.homeserverng.iot.model.IotComponentTypes;
 import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
@@ -26,17 +27,17 @@ public abstract class AbstractIotDedicatedService<T extends AbstractIotComponent
 
     private final Class<T> iotComponentClazz;
     private final IotComponentsFactory iotComponentsFactory;
-    private final String componentType;
+    private final Predicate<IotComponentDescriptor> componentTypePredicate;
 
     protected AbstractIotDedicatedService(Class<T> iotComponentClazz, IotComponentsFactory iotComponentsFactory, String componentType) {
         this.iotComponentClazz = iotComponentClazz;
         this.iotComponentsFactory = iotComponentsFactory;
-        this.componentType = componentType;
+        this.componentTypePredicate = IotComponentTypes.isDescriptorOfType(componentType);
     }
 
     protected T getComponentAs(String id) {
         return this.iotComponentsRepo.<IotComponentDescriptor>findById(id)
-                .filter(this::typeMatch)
+                .filter(this.componentTypePredicate)
                 .map(oneCandidate -> this.iotComponentsFactory.<T>createIotComponent(oneCandidate, iotComponentClazz))
                 .orElseThrow(() -> new RuntimeHomeServerException(""));
     }
@@ -44,7 +45,7 @@ public abstract class AbstractIotDedicatedService<T extends AbstractIotComponent
     public List<T> getAllComponents() {
         return this.iotComponentsRepo.<IotComponentDescriptor>getAll()
                 .stream()
-                .filter(this::typeMatch)
+                .filter(this.componentTypePredicate)
                 .map(oneCandidate -> this.iotComponentsFactory.<T>createIotComponent(oneCandidate, iotComponentClazz))
                 .collect(Collectors.toList());
 
@@ -53,13 +54,7 @@ public abstract class AbstractIotDedicatedService<T extends AbstractIotComponent
 
     protected boolean containsAndMatch(String id) {
         return this.iotComponentsRepo.<IotComponentDescriptor>findById(id)
-                .filter(this::typeMatch)
-                .map(finded -> true)
-                .orElse(false);
-    }
-
-    private boolean typeMatch(IotComponentDescriptor iotComponentDescriptor) {
-        return  componentType.equals(iotComponentDescriptor.getComponentType());
+                .filter(this.componentTypePredicate).isPresent();
     }
 
     protected void saveComponent(AbstractIotComponent<T> toBeSaved) throws HomeServerException {

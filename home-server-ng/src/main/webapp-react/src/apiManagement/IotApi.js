@@ -18,6 +18,10 @@ export default function iotApi() {
         .then(errorHandler("Erreur rencontrée lors de la récupération du status d'activation de l'alarme"))
         .catch(er => console.error(er));
 
+    const getAlarmTestReport = () => fetch(`${apiRoot()}/iot/alarm/testResults`)
+        .then(errorHandler("Erreur rencontrée lors de la récupération du l'état du système d'alarme"))
+        .catch(er => console.error(er));
+
     const updateAlarmStatus = (code) => {
 
         const alarmUpdateRequest = {
@@ -100,7 +104,7 @@ export default function iotApi() {
             method: 'DELETE',
             headers: defaultJsonHeaders()
         }).then(errorHandler("Erreur rencontrée lors de la suppression du composant"))
-        .catch(er => console.error(er));
+            .catch(er => console.error(er));
     }
 
     return {
@@ -114,6 +118,7 @@ export default function iotApi() {
         getTriggersComponent: getTriggersComponent,
         getAlarmStatus: getAlarmStatus,
         updateAlarmStatus: updateAlarmStatus,
-        deleteOneComponent: deleteOneComponent
+        deleteOneComponent: deleteOneComponent,
+        getAlarmTestReport: getAlarmTestReport
     };
 }

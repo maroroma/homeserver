@@ -46,10 +46,5 @@ public class TriggerService extends AbstractIotDedicatedService<TriggerIotCompon
     public void triggered(String triggerId) {
         TriggerIotComponent triggerIotComponent = this.getComponentAs(triggerId);
         this.alarmManager.triggered(triggerIotComponent);
-//        triggerIotComponent.triggeringDescription().ifPresent(triggeringDescriptions -> triggeringDescriptions
-//                .forEach(oneDescription -> this.subServices
-//                        .stream()
-//                        .filter(oneSubService -> oneSubService.containsAndMatch(oneDescription.getTarget()))
-//                        .forEach(oneTriggerable -> oneTriggerable.trigger(oneDescription.getTarget()))));
     }
 }

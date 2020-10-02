@@ -8,6 +8,7 @@ import maroroma.homeserverng.iot.services.IotServiceImpl;
 import maroroma.homeserverng.iot.services.TriggerService;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import org.aspectj.weaver.ast.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -161,6 +162,15 @@ public class IotController {
     @GetMapping("${homeserver.api.path:}/iot/alarm/status")
     public ResponseEntity<Boolean> alarmStatus() {
         return ResponseEntity.ok(this.alarmManager.isArmed());
+    }
+
+    /**
+     * Produit un rapport avec les status des sirènes (les fait biper) et des triggers
+     * @return -
+     */
+    @GetMapping("${homeserver.api.path:}/iot/alarm/testResults")
+    public ResponseEntity<TestAlarmResults> testAlarmSystem() {
+        return ResponseEntity.ok(this.alarmManager.testAlarmSystem());
     }
 
     /**
