@@ -19,37 +19,38 @@ ThreeLedState::ThreeLedState(int redPin, int yellowPin, int greenPin)
    * Allume brièvement les 3 leds pour s'assurer qu'elles fonctionnent
    */
   ThreeLedState ThreeLedState::warmup(){
-	  return this->on(this->redPin)
-	  .on(this->yellowPin)
-	  .on(this->greenPin)
+	  return this->redOn()
+	  .yellowOn()
+	  .greenOn()
 	  .wait(1000)
-	  .off(this->redPin)
-	  .off(this->yellowPin)
-	  .off(this->greenPin);	  
+	  .redOff()
+	  .yellowOff()
+	  .greenOff();	  
   }
   
   /**
    * Allume la led rouge dans la séquence de démarrage
    */
   ThreeLedState ThreeLedState::powered() {
-	  return this->on(this->redPin);	 
+	  return this->redOn();	 
   }
   
   /**
    * Eteint la led rouge et allume la led jaune
    */
   ThreeLedState ThreeLedState::wifiConnected() {
-	  return this->off(this->redPin).on(this->yellowPin);
+	  return this->yellowOn();
   }
   
   /**
    * Eteint la led jaune et allume brievement la led verte
    */
   ThreeLedState ThreeLedState::registred(){
-	  return this->off(this->yellowPin)
-	  .on(this->greenPin)
+	  return this->greenOn()
 	  .wait(1000)
-	  .off(this->greenPin);
+	  .off(this->greenPin)
+	  .off(this->redPin)
+	  .off(this->yellowPin);
   }
   
   /**
@@ -57,6 +58,7 @@ ThreeLedState::ThreeLedState(int redPin, int yellowPin, int greenPin)
    */
   ThreeLedState ThreeLedState::on(int pin){
 	  digitalWrite(pin, HIGH);
+	  
 	  // return this;	 
   }
   /**

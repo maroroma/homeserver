@@ -6,6 +6,7 @@
 #include <WiFiClient.h>
 #include <String.h>
 #include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
 
 /**
  * Définition d'une classe pour la communication avec le homeserver
@@ -30,6 +31,12 @@ public:
    * Notifie le homeserver pour le trigger donne
    */
   void triggered();
+  
+  /**
+   * produit la chaine standard à renvoyer pour une sollicitation de status
+   */
+  void handleStatus(ESP8266WebServer &webserver);
+
 
 private:
   /**

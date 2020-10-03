@@ -9,7 +9,7 @@
 
 #ifndef STASSID
 #define STASSID "SFR_B020"
-#define STAPSK  "anhefek5dafuk6"
+#define STAPSK  "myFunnypassw0rd"
 #endif
 
 const char* ssid = STASSID;
@@ -35,11 +35,8 @@ int pirState = LOW;
 
 
 void handleStatus() {
-  String statusMessage = "{\"componentName\":\"" + moduleName + "\",";
-  statusMessage += "\"ipAddress\":\""+WiFi.localIP().toString()+"\",";
-  statusMessage += "\"macAddress\":\""+WiFi.macAddress()+"\"";
-  statusMessage += "}";
-  server.send(200, "application/json", statusMessage);
+  homeserverClient.handleStatus(server);
+  threeLedState.blinkYellow();
 }
 
 void setup() {
@@ -79,9 +76,6 @@ void setup() {
 
   
 }
-
-// FIXME : 
-// mis en place d'un composant dédié pour la gestion du PIR
 
 void loop() {
 

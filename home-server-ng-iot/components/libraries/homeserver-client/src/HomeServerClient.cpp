@@ -2,6 +2,7 @@
 #include <IPAddress.h>
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
+#include <ESP8266WebServer.h>
 #include "HomeServerClient.h"
 
 /**
@@ -68,4 +69,13 @@ void HomeServerClient::triggered() {
     } else {
 		Serial.println("cant connect to homeserver for trigger");
 	}
- }
+}
+
+void HomeServerClient::handleStatus(ESP8266WebServer &webserver) {
+	String statusMessage = "{\"componentName\":\"" + moduleName + "\",";
+	statusMessage += "\"ipAddress\":\""+WiFi.localIP().toString()+"\",";
+	statusMessage += "\"macAddress\":\""+WiFi.macAddress()+"\"";
+	statusMessage += "}";
+	
+	webserver.send(200, "application/json", statusMessage);
+}
