@@ -1,5 +1,6 @@
 #include <HomeServerClient.h>
 #include <ThreeLedState.h>
+#include <PirDetector.h>
 
 // RZO
 #include <ESP8266WiFi.h>
@@ -9,7 +10,7 @@
 
 #ifndef STASSID
 #define STASSID "SFR_B020"
-#define STAPSK  "myFunnypassw0rd"
+#define STAPSK  "unnefhekhacunhaufad3"
 #endif
 
 const char* ssid = STASSID;
@@ -27,11 +28,9 @@ const int pinMotionSensor = 14;
 // connexion homeserver
 const String moduleName = "homeserver-iot-motion-trigger";
 HomeServerClient homeserverClient(moduleName, "TRIGGER");
+PirDetector pirDetector(pinMotionSensor);
 
 ThreeLedState threeLedState = ThreeLedState(pinRedLed, pinYellowLed, pinGreenLed);
-
-int val = 0;
-int pirState = LOW;
 
 
 void handleStatus() {
@@ -71,10 +70,7 @@ void setup() {
   server.on("/", handleStatus);
   server.on("/status", handleStatus);
   server.begin();
-
-  pinMode(pinMotionSensor, INPUT);
-
-  
+ 
 }
 
 void loop() {
@@ -82,26 +78,11 @@ void loop() {
   server.handleClient();
   
   MDNS.update();
-  
 
-  val = digitalRead(pinMotionSensor);  // read input value
-  if (val == HIGH) {            // check if the input is HIGH
-    threeLedState.greenOn();  // turn LED ON
-    if (pirState == LOW) {
-      // we have just turned on
-      Serial.println("Motion detected!");
-      homeserverClient.triggered();
-
-      // We only want to print on the output change, not state
-      pirState = HIGH;
-    }
+  if(pirDetector.isMotionDetected()) {
+    threeLedState.greenOn();
+    homeserverClient.triggered();
   } else {
-    threeLedState.greenOff(); // turn LED OFF
-    if (pirState == HIGH){
-      // we have just turned of
-      Serial.println("Motion ended!");
-      // We only want to print on the output change, not state
-      pirState = LOW;
-    }
+    threeLedState.greenOff();
   }
 }
