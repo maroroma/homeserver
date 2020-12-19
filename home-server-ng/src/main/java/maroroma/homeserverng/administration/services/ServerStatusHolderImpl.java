@@ -6,13 +6,12 @@ import maroroma.homeserverng.administration.model.HomeServerStatus;
 import maroroma.homeserverng.network.services.NetworkServiceImpl;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.helpers.DriveUtils;
 import maroroma.homeserverng.tools.notifications.NotificationEvent;
 import maroroma.homeserverng.tools.notifications.Notifyer;
 import maroroma.homeserverng.tools.notifications.NotifyerContainer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -50,9 +49,9 @@ public class ServerStatusHolderImpl {
     private HomeServerPropertyHolder unixDrives;
 
     /**
-     * {@link Notifyer} général.
+     * pour l'accès au notifier sans se cogner des références circulaires
      */
-    private final NotifyerContainer notificationContainer;
+    private final ApplicationContext applicationContext;
 
     /**
      * Pour les informations réseau.
@@ -60,10 +59,10 @@ public class ServerStatusHolderImpl {
     private final NetworkServiceImpl networkService;
 
     public ServerStatusHolderImpl(@Value("${homeserver.version}") String homeServerVersion,
-                                  NotifyerContainer notificationContainer,
+                                  ApplicationContext applicationContext,
                                   NetworkServiceImpl networkService) {
         this.homeServerVersion = homeServerVersion;
-        this.notificationContainer = notificationContainer;
+        this.applicationContext = applicationContext;
         this.networkService = networkService;
     }
 
@@ -105,7 +104,8 @@ public class ServerStatusHolderImpl {
         this.startupTime = LocalDateTime.now();
 
         // émission de notification
-        this.notificationContainer.notify(NotificationEvent.builder()
+        this.applicationContext.getBean(NotifyerContainer.class)
+                .notify(NotificationEvent.builder()
                 .creationDate(new Date())
                 .title("Démarrage du serveur")
                 .message("Le serveur homeserver vient de démarrer")

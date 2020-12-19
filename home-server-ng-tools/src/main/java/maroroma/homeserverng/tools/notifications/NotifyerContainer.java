@@ -1,7 +1,6 @@
 package maroroma.homeserverng.tools.notifications;
 
 import lombok.extern.log4j.Log4j2;
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -22,9 +21,12 @@ public class NotifyerContainer {
 	/**
 	 * Liste de {@link Notifyer}.
 	 */
-	@Autowired(required = false)
-	private List<Notifyer> notifiers;
-	
+	private final List<Notifyer> notifiers;
+
+	public NotifyerContainer(List<Notifyer> notifiers) {
+		this.notifiers = notifiers;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 * <br /> Dans cette implémentation, permet d'émettre la notification vers l'ensemble des
