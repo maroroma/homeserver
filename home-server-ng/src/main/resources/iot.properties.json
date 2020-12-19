@@ -35,6 +35,12 @@
   "readOnly" : false,
   "moduleId" : "iot"
 }, {
+  "id" : "homeserver.iot.components.status.refresh.frequency",
+  "value" : "60000",
+  "description" : "intervalle entre chaque récupération globale de l'état des composants iot connus",
+  "readOnly" : false,
+  "moduleId" : "iot"
+}, {
   "id" : "homeserver.iot.alarm.siren.delay",
   "value" : "30000",
   "description" : "délai avant le déclenchement de la sirène d'alarme",

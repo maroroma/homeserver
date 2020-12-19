@@ -46,9 +46,11 @@ public class IotServiceImpl {
     private NanoRepository preferedNamesRepo;
 
     private final IotComponentsFactory iotComponentsFactory;
+    private final UpdateIotComponentStatusService updateIotComponentStatusService;
 
-    public IotServiceImpl(IotComponentsFactory iotComponentsFactory) {
+    public IotServiceImpl(IotComponentsFactory iotComponentsFactory, UpdateIotComponentStatusService updateIotComponentStatusService) {
         this.iotComponentsFactory = iotComponentsFactory;
+        this.updateIotComponentStatusService = updateIotComponentStatusService;
     }
 
 
@@ -86,8 +88,7 @@ public class IotServiceImpl {
     public List<AbstractIotComponent<?>> getAllIotComponents() {
         return this.iotComponentsRepo.<IotComponentDescriptor>getAll().stream()
                 .map(this.iotComponentsFactory::createIotComponent)
-                .parallel()
-                .map(AbstractIotComponent::updateStatus)
+                .map(this.updateIotComponentStatusService::updateStatus)
                 .collect(Collectors.toList());
     }
 

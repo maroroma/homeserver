@@ -2,6 +2,7 @@ package maroroma.homeserverng.tools.files;
 
 import maroroma.homeserverng.tools.exceptions.Traper;
 import maroroma.homeserverng.tools.security.SecurityManager;
+import org.springframework.util.FileSystemUtils;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -113,6 +114,9 @@ public class LocalFileDescriptorAdapter extends AbstractFileDescriptorAdapter {
 
     @Override
     public boolean delete() {
+        if (this.file.isDirectory()) {
+            return FileSystemUtils.deleteRecursively(this.file);
+        }
         return this.file.delete();
     }
 
