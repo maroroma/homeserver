@@ -43,6 +43,20 @@
 			<fileMode>775</fileMode>
 			<outputDirectory>/</outputDirectory>
 		</file>
+		<!-- inclusion du script d'installation linux -->
+		<file>
+			<source>${basedir}/src/main/packaging/install.sh</source>
+			<filtered>true</filtered>
+			<fileMode>775</fileMode>
+			<outputDirectory>/</outputDirectory>
+		</file>
+		<!-- inclusion du script de run systemd linux -->
+		<file>
+			<source>${basedir}/src/main/packaging/homeserver.service</source>
+			<filtered>true</filtered>
+			<fileMode>775</fileMode>
+			<outputDirectory>/</outputDirectory>
+		</file>
 		<!-- inclusion du script de lancement windows -->
 		<file>
 			<source>${basedir}/src/main/packaging/run.bat</source>
