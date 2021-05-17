@@ -19,9 +19,15 @@ public:
   PirDetector(int dataPin);
   
   /**
-   * Détermine si un mouvement a été détecté
+   * Détermine si un mouvement a été détecté (uniquement un changement de status)
    */ 
   bool isMotionDetected();
+  
+  /**
+   * Détermine si un mouvement est en cours (état haut du détecteur)
+   * Ne présume pas du status précédent
+   */
+  bool isMotionInProgress();
     
 private:
   /**

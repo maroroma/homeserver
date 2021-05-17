@@ -30,3 +30,8 @@ bool PirDetector::isMotionDetected() {
 	
 	return false;
 }
+
+bool PirDetector::isMotionInProgress() {
+	int val = digitalRead(this->pinPIR);
+	return val == HIGH;
+}
