@@ -1,12 +1,17 @@
 package maroroma.homeserverng.tools.exceptions;
 
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
  * Classe utilitaire pour faciliter la gestion des exceptions qui ne sont pas des {@link RuntimeException}
  */
 public abstract class Traper {
+
+    public static<T, U> Function<T, U> trapAndMap(WithExceptionFunction<T, U> supplier) {
+        return input -> trap(() -> supplier.apply(input));
+    }
 
     public static <T> T trap(WithExceptionSupplier<T> supplier) {
         return trap(supplier, null);
@@ -45,5 +50,9 @@ public abstract class Traper {
 
     public interface WithExceptionSupplier<T> {
         T supply() throws Exception;
+    }
+
+    public interface WithExceptionFunction<T, U> {
+        U apply(T input) throws Exception;
     }
 }

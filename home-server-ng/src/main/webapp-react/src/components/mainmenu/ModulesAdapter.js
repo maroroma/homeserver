@@ -12,6 +12,7 @@ import ManageIotComponent from '../iot/manage/ManageIotComponent';
 import TriggersManagerComponent from '../iot/triggers/TriggersManagerComponent';
 import AlarmComponent from '../iot/alarm/AlarmComponent';
 import LogEventComponent from '../administration/LogEventsComponent';
+import AllBricksComponent from '../lego/AllBricksComponent';
 
 
 export default function modulesAdapter() {
@@ -91,6 +92,13 @@ export default function modulesAdapter() {
             //     component: (<TriggersManagerComponent></TriggersManagerComponent>)
             // }
         ]
+    }, {
+        module: 'lego',
+        path: '/lego',
+        icon: 'face',
+        title: 'Lego',
+        component: (<AllBricksComponent></AllBricksComponent>),
+        dontUseDefaultPanel: true
     }, {
         module: 'music',
         path: '/music',

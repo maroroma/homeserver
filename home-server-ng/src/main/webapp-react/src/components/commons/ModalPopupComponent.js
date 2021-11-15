@@ -23,7 +23,9 @@ export function ModalPopupComponent({ children, driver }) {
     useEffect(() => {
         if (innerPopupInstance) {
             if (driver && driver.open) {
+                const wasClosed = !innerPopupInstance.isOpen;
                 innerPopupInstance.open();
+                if (wasClosed) { eventReactor().shortcuts().modalOpened(driver); }
             } else {
                 innerPopupInstance.close();
             }

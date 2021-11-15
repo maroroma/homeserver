@@ -31,7 +31,7 @@ export class When {
         return this;
     }
 
-    then(producer) {
+    then(producer = lastResult => lastResult) {
 
         let previousResult = true;
 

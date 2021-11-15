@@ -80,7 +80,7 @@ export default function SeedboxDownloadsComponents() {
         const unsubscribePopupOk = eventReactor().shortcuts().onModalOk(driver => {
             setTorrentPopupDriver({ ...driver });
             sendAddMagnetRequest();
-        })
+        });
 
 
         return () => {

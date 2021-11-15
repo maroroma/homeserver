@@ -13,6 +13,7 @@ export const FILE_BROWSER_RENAME_ONE_FILE = 'FILE_BROWSER_RENAME_ONE_FILE';
 
 export const MODAL_POPUP_CLOSE = 'MODAL_POPUP_CLOSE';
 export const MODAL_POPUP_OK = 'MODAL_POPUP_OK';
+export const MODAL_POPUP_OPENED = 'MODAL_POPUP_OPENED';
 
 // gestion du verrou de l'application en cas de modification du status de l'alarme
 export const ALARM_STATUS_CHANGED = 'ALARM_STATUS_CHANGED';
@@ -20,3 +21,5 @@ export const ALARM_STATUS_CHANGED = 'ALARM_STATUS_CHANGED';
 export const DATAGRID_DELETE_ALL = 'DATAGRID_DELETE_ALL';
 export const DATAGRID_DELETE_ONE = 'DATAGRID_DELETE_ONE';
 export const DATAGRID_REFRESH_ALL = 'DATAGRID_REFRESH_ALL';
+export const DATAGRID_ADD_ITEM = 'DATAGRID_ADD_ITEM';
+export const DATAGRID_SAVE_ITEMS = 'DATAGRID_SAVE_ITEMS';

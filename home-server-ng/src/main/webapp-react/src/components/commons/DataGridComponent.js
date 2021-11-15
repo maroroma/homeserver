@@ -1,7 +1,7 @@
 import React from 'react';
 import SwitchComponent from './SwitchComponent';
 import IconComponent from './IconComponent';
-import { ModalPopupComponent } from './ModalPopupComponent';
+import { ModalPopupComponent, usePopupDriver } from './ModalPopupComponent';
 import { useState, useEffect } from 'react';
 import sort from '../../tools/sort';
 import orElse from '../../tools/orElse';
@@ -16,7 +16,8 @@ export default function DataGridComponent({ configuration, data }) {
     const [actionButtonsConfiguration, setActionButtonsConfiguration] = useState({
         displaySaveButton: true,
         displayDeleteAllButton: false,
-        displayRefreshButton: false
+        displayRefreshButton: false,
+        displayAddButton: false
     });
 
     const [dataToDisplay, setDataToDisplay] = useState([]);
@@ -28,13 +29,9 @@ export default function DataGridComponent({ configuration, data }) {
         sortFunction: sort().neutral()
     });
     const [changedRows, setChangedRows] = useState([]);
-    const [popupDriver, setPopupDriver] = useState({
+    const [popupDriver, setPopupDriver] = usePopupDriver({
         id: 'popupEditProperty',
-        open: false,
         title: 'Editer une propriété',
-        okLabel: 'Ok',
-        cancelLabel: 'Annuler',
-        data: {}
     });
 
 
@@ -73,7 +70,8 @@ export default function DataGridComponent({ configuration, data }) {
             ...actionButtonsConfiguration,
             displaySaveButton: orElse(configuration.displaySaveButton, true),
             displayDeleteAllButton: orElse(configuration.displayDeleteAllButton, false),
-            displayRefreshButton: orElse(configuration.displayRefreshButton, false)
+            displayRefreshButton: orElse(configuration.displayRefreshButton, false),
+            displayAddButton: orElse(configuration.displayAddButton, false)
         });
 
         setDataToDisplay(data.sort(sortFunction));
@@ -110,7 +108,11 @@ export default function DataGridComponent({ configuration, data }) {
 
     const resolveColumnClass = (columnConfiguration) => {
         if (columnConfiguration.hideOnSmallDevice) {
-            return 'hide-on-small-only'
+            return 'hide-on-small-only';
+        }
+
+        if (columnConfiguration.customClass !== undefined) {
+            return columnConfiguration.customClass;
         }
 
         return '';
@@ -184,8 +186,9 @@ export default function DataGridComponent({ configuration, data }) {
                 <input type="text" className="validate" value={dataForCell} onChange={(event) => updateData(event.target.value)} disabled={readOnly}></input>
             </div>);
         }
+        // pour un champ custom on descend directement le callback d'ouverture de popup d'édition
         if (columnConfiguration.renderer === 'custom') {
-            cellContent = columnConfiguration.customRenderer(row, dataForCell);
+            cellContent = columnConfiguration.customRenderer(row, dataForCell, () => openEditPopup(columnConfiguration, row));
         }
 
         const cellClassName = resolveColumnClass(columnConfiguration);
@@ -222,6 +225,7 @@ export default function DataGridComponent({ configuration, data }) {
         if (configuration.onSaveHandler !== undefined) {
             configuration.onSaveHandler(dataToDisplay, changedRows);
         }
+        eventReactor().shortcuts().dataGridSaveItems(changedRows);
     }
 
     const onDeleteClickHandler = () => {
@@ -230,6 +234,10 @@ export default function DataGridComponent({ configuration, data }) {
 
     const onRefreshClickHandler = () => {
         eventReactor().shortcuts().dataGridRefreshAll();
+    }
+
+    const onAddClickHandler = () => {
+        eventReactor().shortcuts().dataGridAddItem();
     }
 
     const btnSaveClass = changedRows.length > 0 ? 'blue pulse' : 'disabled';
@@ -267,6 +275,9 @@ export default function DataGridComponent({ configuration, data }) {
                 </a>
                 <a className={when(!actionButtonsConfiguration.displayDeleteAllButton).thenHideElement(`btn-floating btn-large red`)} onClick={onDeleteClickHandler}>
                     <IconComponent icon="delete" classAddons="large"></IconComponent>
+                </a>
+                <a className={when(!actionButtonsConfiguration.displayAddButton).thenHideElement(`btn-floating btn-large green`)} onClick={onAddClickHandler}>
+                    <IconComponent icon="add" classAddons="large"></IconComponent>
                 </a>
             </div>
 

@@ -1,0 +1,13 @@
+[ {
+  "id" : "homeserver.lego.bricks.store",
+  "value" : "${homeserver.config.dir}/bricks.json",
+  "description" : "Database pour le stockage de l'ensemble des briques",
+  "readOnly" : false,
+  "moduleId" : "lego"
+}, {
+  "id" : "homeserver.lego.bricks.image.library",
+  "value" : "${homeserver.data.dir}/brick-pictures",
+  "description" : "Emplacement pour les images représentant les briques lego",
+  "readOnly" : false,
+  "moduleId" : "lego"
+}]
