@@ -4,7 +4,7 @@ After=syslog.target
 
 [Service]
 WorkingDirectory=/media/disk02/SHARE/homeserver-${project.version}
-ExecStart=java -Dspring.profiles.active=prod -jar /media/disk02/SHARE/homeserver-${project.version}/home-server-ng-${project.version}.jar
+ExecStart=/home/pi/.sdkman/candidates/java/current/bin/java -Dspring.profiles.active=prod -jar /media/disk02/SHARE/homeserver-${project.version}/home-server-ng-${project.version}.jar
 SuccessExitStatus=143
 Restart=always
 
