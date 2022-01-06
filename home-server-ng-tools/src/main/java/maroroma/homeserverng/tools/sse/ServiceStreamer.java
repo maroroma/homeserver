@@ -6,7 +6,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 
-import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,8 @@ import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.exceptions.SSEStreamableException;
 import maroroma.homeserverng.tools.helpers.Assert;
+
+import javax.annotation.PostConstruct;
 
 /**
  * Service permettant d'encapulser un bean implémentant {@link SSEStreamable}, avec l'utilisation 

@@ -31,11 +31,6 @@ import java.util.stream.Stream;
 public class NanoRepository {
 
 	/**
-	 * Constante pour le nommage de l'objet de verrou.
-	 */
-	private static final String NANO_LOCK_NAME = "nanoLock";
-
-	/**
 	 * Gestion d'un verrou pour l'accès multiple au fichier.
 	 */
 	private final Object nanoLock = new Object();
@@ -100,7 +95,7 @@ public class NanoRepository {
 	 * @param toSave object à sauvegarder.
 	 * @throws HomeServerException -3
 	 */
-	@Synchronized(NanoRepository.NANO_LOCK_NAME)
+	@Synchronized("nanoLock")
 	private void saveToFile(final Object toSave) throws HomeServerException {
 		Assert.notNull(toSave, "toSave can't be null");
 		ObjectMapper mapper = new ObjectMapper();
@@ -119,7 +114,7 @@ public class NanoRepository {
 	 * @param <T> type attendu
 	 * @throws HomeServerException -
 	 */
-	@Synchronized(NanoRepository.NANO_LOCK_NAME)
+	@Synchronized("nanoLock")
 	private <T> List<T> getFromFile() throws RuntimeHomeServerException {
 		ObjectMapper serializer = new ObjectMapper();
 		List<T> returnValue = null;

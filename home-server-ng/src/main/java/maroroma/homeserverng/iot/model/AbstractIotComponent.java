@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,8 +56,8 @@ public abstract class AbstractIotComponent<T extends AbstractIotComponent<T>> {
      */
     protected RestTemplate restTemplate() {
         return new RestTemplateBuilder()
-                .setConnectTimeout(this.timeout)
-                .setReadTimeout(this.timeout)
+                .setConnectTimeout(Duration.ofMillis(this.timeout))
+                .setReadTimeout(Duration.ofMillis(this.timeout))
                 .build();
     }
 

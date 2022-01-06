@@ -104,11 +104,12 @@ public class ServerStatusHolderImpl {
         this.startupTime = LocalDateTime.now();
 
         // émission de notification
-        this.applicationContext.getBean(NotifyerContainer.class)
-                .notify(NotificationEvent.builder()
-                .creationDate(new Date())
-                .title("Démarrage du serveur")
-                .message("Le serveur homeserver vient de démarrer")
-                .build());
+        // FIXME : basculer sur des events handler pour la mise à jour de ces status
+//        this.applicationContext.getBean(NotifyerContainer.class)
+//                .notify(NotificationEvent.builder()
+//                .creationDate(new Date())
+//                .title("Démarrage du serveur")
+//                .message("Le serveur homeserver vient de démarrer")
+//                .build());
     }
 }

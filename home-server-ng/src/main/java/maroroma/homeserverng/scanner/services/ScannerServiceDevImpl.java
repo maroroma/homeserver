@@ -5,6 +5,7 @@ import maroroma.homeserverng.scanner.model.ScanRequest;
 import maroroma.homeserverng.tools.annotations.DevProfile;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.files.FileDescriptor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ import java.util.List;
 @Service
 @Log4j2
 @DevProfile
+@Primary
+// FIXME : supprimer la gestion du scanner
 public class ScannerServiceDevImpl extends ScannerServiceImpl {
 
 	@Async
