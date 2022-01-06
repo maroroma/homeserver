@@ -49,6 +49,7 @@
 			<filtered>true</filtered>
 			<fileMode>775</fileMode>
 			<outputDirectory>/</outputDirectory>
+			<lineEnding>unix</lineEnding>
 		</file>
 		<!-- inclusion du script de run systemd linux -->
 		<file>
