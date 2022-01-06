@@ -7,16 +7,10 @@ import maroroma.homeserverng.network.services.NetworkServiceImpl;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.helpers.DriveUtils;
-import maroroma.homeserverng.tools.notifications.NotificationEvent;
-import maroroma.homeserverng.tools.notifications.Notifyer;
-import maroroma.homeserverng.tools.notifications.NotifyerContainer;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Implémentation du holder du status du server.
@@ -49,20 +43,13 @@ public class ServerStatusHolderImpl {
     private HomeServerPropertyHolder unixDrives;
 
     /**
-     * pour l'accès au notifier sans se cogner des références circulaires
-     */
-    private final ApplicationContext applicationContext;
-
-    /**
      * Pour les informations réseau.
      */
     private final NetworkServiceImpl networkService;
 
     public ServerStatusHolderImpl(@Value("${homeserver.version}") String homeServerVersion,
-                                  ApplicationContext applicationContext,
                                   NetworkServiceImpl networkService) {
         this.homeServerVersion = homeServerVersion;
-        this.applicationContext = applicationContext;
         this.networkService = networkService;
     }
 
@@ -94,22 +81,10 @@ public class ServerStatusHolderImpl {
     }
 
     /**
-     * Permet de détecter une init du contexte spring et de passer
-     * le status du server à {@link HomeServerRunningStatus}.RUNNING.
+     * Mise à jour du status et de la date de démarrage suite au démarrage de l'application
      */
-    @PostConstruct
-    protected void postInit() {
-        log.info("init du contexte spring");
+    public void applicationIsRunning() {
         this.setStatus(HomeServerRunningStatus.RUNNING);
         this.startupTime = LocalDateTime.now();
-
-        // émission de notification
-        // FIXME : basculer sur des events handler pour la mise à jour de ces status
-//        this.applicationContext.getBean(NotifyerContainer.class)
-//                .notify(NotificationEvent.builder()
-//                .creationDate(new Date())
-//                .title("Démarrage du serveur")
-//                .message("Le serveur homeserver vient de démarrer")
-//                .build());
     }
 }

@@ -1,7 +1,6 @@
 package maroroma.homeserverng.tools.notifications;
 
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -10,44 +9,44 @@ import java.util.List;
 
 /**
  * Implémentation de {@link Notifyer} permettant d'aggréget un ensemble de {@link Notifyer}.
- * @author RLEVEXIE
  *
+ * @author RLEVEXIE
  */
 @Component
 @Log4j2
 public class NotifyerContainer {
 
-	
-	/**
-	 * Liste de {@link Notifyer}.
-	 */
-	private final List<Notifyer> notifiers;
 
-	public NotifyerContainer(List<Notifyer> notifiers) {
-		this.notifiers = notifiers;
-	}
+    /**
+     * Liste de {@link Notifyer}.
+     */
+    private final List<Notifyer> notifiers;
 
-	/**
-	 * {@inheritDoc}
-	 * <br /> Dans cette implémentation, permet d'émettre la notification vers l'ensemble des
-	 * {@link Notifyer} trouvés dans le contexte.
-	 */
-	@Async
-	public void notify(final NotificationEvent notification){
-		
-		// validation de la notification
-		NotificationValidator.validate(notification);
-		
-		// pour chacun des notifiers, si présents
-		if (!CollectionUtils.isEmpty(this.notifiers)) {
-			notifiers.parallelStream().forEach(oneNotifyer -> {
-				try {
-					oneNotifyer.notify(notification);
-				} catch (Exception e) {
-					log.warn("Erreur rencontrée lors de l'émission d'une notification", e);
-				}
-			});
-		}
-	}
+    public NotifyerContainer(List<Notifyer> notifiers) {
+        this.notifiers = notifiers;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <br /> Dans cette implémentation, permet d'émettre la notification vers l'ensemble des
+     * {@link Notifyer} trouvés dans le contexte.
+     */
+    @Async
+    public void notify(final NotificationEvent notification) {
+
+        // validation de la notification
+        NotificationValidator.validate(notification);
+
+        // pour chacun des notifiers, si présents
+        if (!CollectionUtils.isEmpty(this.notifiers)) {
+            notifiers.parallelStream().forEach(oneNotifyer -> {
+                try {
+                    oneNotifyer.notify(notification);
+                } catch (Exception e) {
+                    log.warn("Erreur rencontrée lors de l'émission d'une notification", e);
+                }
+            });
+        }
+    }
 
 }
