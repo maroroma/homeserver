@@ -1,21 +1,19 @@
 package maroroma.homeserverng.tools.webcam;
 
-import org.springframework.util.Assert;
-
 import com.github.sarxos.webcam.WebcamMotionDetector;
 import com.github.sarxos.webcam.WebcamMotionEvent;
 import com.github.sarxos.webcam.WebcamMotionListener;
-
 import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import org.springframework.util.Assert;
 
 /**
  * Listener pour la détection de mouvement.
  * @author rlevexie
  *
  */
-@Log4j2
+@Slf4j
 @NoArgsConstructor
 public class MotionListener implements WebcamMotionListener {
 

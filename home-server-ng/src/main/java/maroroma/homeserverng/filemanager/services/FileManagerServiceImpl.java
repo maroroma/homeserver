@@ -1,6 +1,6 @@
 package maroroma.homeserverng.filemanager.services;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.administration.services.SecurityManagerImpl;
 import maroroma.homeserverng.filemanager.model.DirectoryCreationRequest;
 import maroroma.homeserverng.filemanager.model.RenameFileDescriptor;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  *
  */
 @Service
-@Log4j2
+@Slf4j
 public class FileManagerServiceImpl {
 
 	/**

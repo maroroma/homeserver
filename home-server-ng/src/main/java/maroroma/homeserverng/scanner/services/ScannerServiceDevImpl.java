@@ -1,6 +1,6 @@
 package maroroma.homeserverng.scanner.services;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.scanner.model.ScanRequest;
 import maroroma.homeserverng.tools.annotations.DevProfile;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
@@ -19,7 +19,7 @@ import java.util.List;
  *
  */
 @Service
-@Log4j2
+@Slf4j
 @DevProfile
 @Primary
 // FIXME : supprimer la gestion du scanner

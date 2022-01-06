@@ -1,18 +1,17 @@
 package maroroma.homeserverng.tools.webcam;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.sarxos.webcam.WebcamUtils;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.helpers.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Description d'une webcam logique.
@@ -24,7 +23,7 @@ import maroroma.homeserverng.tools.helpers.Assert;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Log4j2
+@Slf4j
 public class Webcam {
 	
 	/**

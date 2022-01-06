@@ -1,0 +1,182 @@
+2022-01-06 14:51:59.795  INFO 4080 --- [restartedMain] maroroma.homeserverng.Main               : Starting Main using Java 17.0.1 on L-5CD8134SWL with PID 4080 (C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\target\classes started by rodolphe_levexier in C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng-parent)
+2022-01-06 14:51:59.795  INFO 4080 --- [restartedMain] maroroma.homeserverng.Main               : The following profiles are active: dev
+2022-01-06 14:51:59.853  INFO 4080 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\rodolphe_levexier\.m2\repository\com\drewnoakes\metadata-extractor\2.9.1\metadata-extractor-2.9.1.jar referenced one or more files that do not exist: file:/C:/Users/rodolphe_levexier/.m2/repository/com/drewnoakes/metadata-extractor/2.9.1/xmpcore-5.1.2.jar
+2022-01-06 14:51:59.880  INFO 4080 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-01-06 14:51:59.880  INFO 4080 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-01-06 14:52:00.897  INFO 4080 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'pluginDynamicPropertiesSourcesConfig' of type [maroroma.homeserverng.config.PluginDynamicPropertiesSourcesConfig$$EnhancerBySpringCGLIB$$9c3221cc] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-01-06 14:52:00.913  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : Répertoire de configuration : [C:/Workspaces/PERSO/homeserver/homeserver/home-server-ng/src/main/resources]
+2022-01-06 14:52:01.040  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.administrations.drives : [D:/temp/TEST/music/musicworkingdir]
+2022-01-06 14:52:01.040  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.administrations.sambaUser : [yourname@yourpassword]
+2022-01-06 14:52:01.040  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.administration.logevents.store : [${homeserver.config.dir}/administration.logevents.json]
+2022-01-06 14:52:01.040  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : chargement du fichier de propriété [C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\src\main\resources\administration.properties.json] ok
+2022-01-06 14:52:01.043  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.filemanager.rootdirectories : [D:/tmp/TEST/reducer/reduced/,D:/temp/TEST/COMPLETED,D:/temp/TEST/Videos/Series,D:/temp/TEST/music/musicworkingdir,C:\Users\maroroma\Videos\films,C:\tmp\homeserver\TODO,${homeserver.music.target.directory},C:\tmp\homeserver\mp3tagworkingdir]
+2022-01-06 14:52:01.043  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : chargement du fichier de propriété [C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\src\main\resources\filemanager.properties.json] ok
+2022-01-06 14:52:01.045  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.iot.buzzer.buzztime : [5003]
+2022-01-06 14:52:01.045  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.iot.components.store : [${homeserver.config.dir}/iot.components.json]
+2022-01-06 14:52:01.045  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.iot.sprites.store : [${homeserver.config.dir}/iot.sprites.json]
+2022-01-06 14:52:01.045  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.iot.preferednames.store : [${homeserver.config.dir}/iot.preferednames.json]
+2022-01-06 14:52:01.045  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.iot.components.http.timeout : [3005]
+2022-01-06 14:52:01.046  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.iot.alarm.code : [1234]
+2022-01-06 14:52:01.046  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.iot.components.status.refresh.frequency : [60000]
+2022-01-06 14:52:01.046  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.iot.alarm.siren.delay : [30000]
+2022-01-06 14:52:01.046  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : chargement du fichier de propriété [C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\src\main\resources\iot.properties.json] ok
+2022-01-06 14:52:01.049  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.kiosk.displayCurrentReading : [false]
+2022-01-06 14:52:01.049  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.kiosk.displayCurrentDownload : [true]
+2022-01-06 14:52:01.049  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.kiosk.displayHour : [true]
+2022-01-06 14:52:01.049  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.kiosk.displayWeather : [false]
+2022-01-06 14:52:01.049  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : chargement du fichier de propriété [C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\src\main\resources\kiosk.properties.json] ok
+2022-01-06 14:52:01.051  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.kodimanager.instances.urls : [http://192.168.0.51/jsonrpc,http://192.168.0.18:8080/jsonrpc]
+2022-01-06 14:52:01.052  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.kodimanager.notification.displaytime : [10000]
+2022-01-06 14:52:01.052  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : chargement du fichier de propriété [C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\src\main\resources\kodimanager.properties.json] ok
+2022-01-06 14:52:01.053  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.lego.bricks.store : [${homeserver.config.dir}/bricks.json]
+2022-01-06 14:52:01.054  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.lego.bricks.image.library : [${homeserver.data.dir}/brick-pictures]
+2022-01-06 14:52:01.054  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : chargement du fichier de propriété [C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\src\main\resources\lego.properties.json] ok
+2022-01-06 14:52:01.056  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.music.working.directory : [C:\tmp\homeserver\mp3tagworkingdir]
+2022-01-06 14:52:01.056  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.music.target.directory : [C:/tmp/homeserver/mp3tagtarget]
+2022-01-06 14:52:01.056  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.music.albums.store : [${homeserver.config.dir}/albums.json]
+2022-01-06 14:52:01.056  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : chargement du fichier de propriété [C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\src\main\resources\music.properties.json] ok
+2022-01-06 14:52:01.058  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.network.localnetwork.scan.timeout : [11]
+2022-01-06 14:52:01.058  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.network.servers.store : [${homeserver.config.dir}/servers.json]
+2022-01-06 14:52:01.058  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.network.ip : [192.168.0.53]
+2022-01-06 14:52:01.058  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.network.localnetwork.address.min : [127.0.0.0]
+2022-01-06 14:52:01.058  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.network.localnetwork.address.max : [127.0.0.10]
+2022-01-06 14:52:01.059  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : chargement du fichier de propriété [C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\src\main\resources\network.properties.json] ok
+2022-01-06 14:52:01.060  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.notifyer.mail.smtp.password : [local.homeserver.ng.azer1234]
+2022-01-06 14:52:01.060  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.notifyer.mail.smtp.host : [smtp.gmail.com]
+2022-01-06 14:52:01.061  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.notifyer.mail.smtp.login : [local.homeserver.ng@gmail.com]
+2022-01-06 14:52:01.061  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.notifyer.mail.smtp.port : [587]
+2022-01-06 14:52:01.061  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.notifyer.mail.smtp.clients : [rodolphe.levexier@gmail.com,test.levexier@gmail.com]
+2022-01-06 14:52:01.061  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : chargement du fichier de propriété [C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\src\main\resources\notifyer.properties.json] ok
+2022-01-06 14:52:01.063  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.photo.resolution.thumb : [200x150]
+2022-01-06 14:52:01.063  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.photo.resolution.medium : [1024x768]
+2022-01-06 14:52:01.063  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.photo.extensions : [jpg,jpeg,png]
+2022-01-06 14:52:01.063  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.photo.directory : [D:\temp\TEST\Photos]
+2022-01-06 14:52:01.063  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.photo.cache.directory : [D:\temp\TEST\cachephoto]
+2022-01-06 14:52:01.063  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.photo.thumb.cache.directory : [D:\temp\TEST\cachethumb]
+2022-01-06 14:52:01.063  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : chargement du fichier de propriété [C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\src\main\resources\photo.properties.json] ok
+2022-01-06 14:52:01.065  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.reducer.reducedimages.supportedextensions : [PNG,JPG,JPEG]
+2022-01-06 14:52:01.065  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.reducer.reducedimages.directory : [D:/tmp/TEST/reducer/reduced/]
+2022-01-06 14:52:01.065  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.reducer.mails.store : [${homeserver.config.dir}/reducermails.json]
+2022-01-06 14:52:01.066  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.reducer.reducedimages.maxsize : [1024]
+2022-01-06 14:52:01.066  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : chargement du fichier de propriété [C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\src\main\resources\reducer.properties.json] ok
+2022-01-06 14:52:01.067  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.scanner.donescans.directory : [D:/tmp/TEST/scanner/done/]
+2022-01-06 14:52:01.067  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.scanner.deviceid : [hpaio:/usb/Deskjet_F4100_series?serial=CN7BE4S54D04TJ]
+2022-01-06 14:52:01.067  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : chargement du fichier de propriété [C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\src\main\resources\scanner.properties.json] ok
+2022-01-06 14:52:01.069  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.seedbox.target.directory.movies : [C:\tmp\homeserver\SHARE\Films]
+2022-01-06 14:52:01.069  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.seedbox.target.directory.tvshows.kodialias : [Series@melchior]
+2022-01-06 14:52:01.069  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.seedbox.target.directory.movies.kodialias : [Films@melchior]
+2022-01-06 14:52:01.069  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.seedbox.transmission.geturi : [/rpc]
+2022-01-06 14:52:01.069  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.seedbox.transmission.removeuri : [torrent-get-response1.json/]
+2022-01-06 14:52:01.070  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.seedbox.transmission.url : [http://192.168.1.52:9091/transmission]
+2022-01-06 14:52:01.070  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.seedbox.client.stream.fixedDelay : [10000]
+2022-01-06 14:52:01.070  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.seedbox.download.linkformat : [http://%s/filemanager/directdownload?id=%s]
+2022-01-06 14:52:01.070  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.seedbox.todo.directory : [C:\tmp\homeserver\TODO]
+2022-01-06 14:52:01.070  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.seedbox.target.directory.tvshows : [C:\tmp\homeserver\SHARE\Series]
+2022-01-06 14:52:01.070  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : chargement du fichier de propriété [C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\src\main\resources\seedbox.properties.json] ok
+2022-01-06 14:52:01.071  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.watch.cameras.store : [${homeserver.config.dir}/cameras.json]
+2022-01-06 14:52:01.071  INFO 4080 --- [restartedMain] m.h.config.HomeServerPropertiesSource    : [homeserverconfig] - homeserver.watch.remoteagents.urls : [http://localhost:8180]
+2022-01-06 14:52:01.071  INFO 4080 --- [restartedMain] h.c.PluginDynamicPropertiesSourcesConfig : chargement du fichier de propriété [C:\Workspaces\PERSO\homeserver\homeserver\home-server-ng\src\main\resources\watch.properties.json] ok
+2022-01-06 14:52:01.071  INFO 4080 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'pluginsPropertiesSources' of type [java.util.ArrayList] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-01-06 14:52:01.078  INFO 4080 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'nanoRepositoriesManager' of type [maroroma.homeserverng.tools.repositories.NanoRepositoriesManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-01-06 14:52:01.162  INFO 4080 --- [restartedMain] org.eclipse.jetty.util.log               : Logging initialized @4664ms to org.eclipse.jetty.util.log.Slf4jLog
+2022-01-06 14:52:01.310  INFO 4080 --- [restartedMain] o.s.b.w.e.j.JettyServletWebServerFactory : Server initialized with port: 80
+2022-01-06 14:52:01.312  INFO 4080 --- [restartedMain] org.eclipse.jetty.server.Server          : jetty-9.4.44.v20210927; built: 2021-09-27T23:02:44.612Z; git: 8da83308eeca865e495e53ef315a249d63ba9332; jvm 17.0.1+12-LTS
+2022-01-06 14:52:01.335  INFO 4080 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring embedded WebApplicationContext
+2022-01-06 14:52:01.335  INFO 4080 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1454 ms
+2022-01-06 14:52:01.394  INFO 4080 --- [restartedMain] org.eclipse.jetty.server.session         : DefaultSessionIdManager workerName=node0
+2022-01-06 14:52:01.394  INFO 4080 --- [restartedMain] org.eclipse.jetty.server.session         : No SessionScavenger set, using defaults
+2022-01-06 14:52:01.395  INFO 4080 --- [restartedMain] org.eclipse.jetty.server.session         : node0 Scavenging every 660000ms
+2022-01-06 14:52:01.404  INFO 4080 --- [restartedMain] o.e.jetty.server.handler.ContextHandler  : Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@d7079e1{application,/,[file:///C:/temp/jetty-docbase.80.16531349093631875222/],AVAILABLE}
+2022-01-06 14:52:01.404  INFO 4080 --- [restartedMain] org.eclipse.jetty.server.Server          : Started @4906ms
+2022-01-06 14:52:01.435  INFO 4080 --- [restartedMain] m.h.config.CacheConfiguration            : [homeserver - caches] - Caches demandés : PHOTO_MONTH_CACHE;PHOTO_YEAR_CACHE;PHOTO_ALL_YEARS_CACHE;PHOTO_DAY_CACHE
+2022-01-06 14:52:01.437  INFO 4080 --- [restartedMain] m.h.config.CacheConfiguration            : [homeserver - caches] - Caches Fichiers simple demandés : PHOTO_THUMB_CACHE
+2022-01-06 14:52:01.438  INFO 4080 --- [restartedMain] m.h.config.CacheConfiguration            : [homeserver - caches] - Caches Fichiers à deux niveaux demandés : PHOTO_FULL_SIZE_CACHE
+2022-01-06 14:52:01.440  INFO 4080 --- [restartedMain] m.h.a.s.AdministrationServiceImpl        : Initialisation de la liste des plugins
+2022-01-06 14:52:01.623  INFO 4080 --- [restartedMain] m.h.a.tools.HomeServerModulesScanner     : 14 plugins déjà présents
+2022-01-06 14:52:01.696  WARN 4080 --- [iotTaskScheduler1] m.h.i.s.UpdateIotComponentStatusService  : UPDATE!!
+2022-01-06 14:52:02.383  INFO 4080 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-01-06 14:52:02.409  INFO 4080 --- [restartedMain] o.e.j.s.h.ContextHandler.application     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-01-06 14:52:02.409  INFO 4080 --- [restartedMain] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-01-06 14:52:02.410  INFO 4080 --- [restartedMain] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-01-06 14:52:02.456  INFO 4080 --- [restartedMain] o.e.jetty.server.AbstractConnector       : Started ServerConnector@3361a5d2{HTTP/1.1, (http/1.1)}{0.0.0.0:80}
+2022-01-06 14:52:02.457  INFO 4080 --- [restartedMain] o.s.b.web.embedded.jetty.JettyWebServer  : Jetty started on port(s) 80 (http/1.1) with context path '/'
+2022-01-06 14:52:02.464  INFO 4080 --- [restartedMain] m.h.a.services.ServerStatusHolderImpl    : mise à jour du status du server : [STARTING] vers [RUNNING]
+2022-01-06 14:52:02.474  INFO 4080 --- [restartedMain] maroroma.homeserverng.Main               : Started Main in 3.087 seconds (JVM running for 5.977)
+2022-01-06 14:52:02.918  WARN 4080 --- [ThreadPoolTaskExecutor-2] m.h.notifyer.services.MailNotifyer       : Emission d'une notification par mail KO
+
+javax.mail.MessagingException: Could not convert socket to TLS
+	at com.sun.mail.smtp.SMTPTransport.startTLS(SMTPTransport.java:1907) ~[mail-1.4.7.jar:1.4.7]
+	at com.sun.mail.smtp.SMTPTransport.protocolConnect(SMTPTransport.java:666) ~[mail-1.4.7.jar:1.4.7]
+	at javax.mail.Service.connect(Service.java:317) ~[mail-1.4.7.jar:1.4.7]
+	at javax.mail.Service.connect(Service.java:176) ~[mail-1.4.7.jar:1.4.7]
+	at javax.mail.Service.connect(Service.java:125) ~[mail-1.4.7.jar:1.4.7]
+	at javax.mail.Transport.send0(Transport.java:194) ~[mail-1.4.7.jar:1.4.7]
+	at javax.mail.Transport.send(Transport.java:124) ~[mail-1.4.7.jar:1.4.7]
+	at maroroma.homeserverng.notifyer.services.MailNotifyer.doNotify(MailNotifyer.java:54) ~[classes/:na]
+	at maroroma.homeserverng.notifyer.services.AbstractDisableableNotifyer.notify(AbstractDisableableNotifyer.java:43) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:344) ~[spring-aop-5.3.14.jar:5.3.14]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:198) ~[spring-aop-5.3.14.jar:5.3.14]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-5.3.14.jar:5.3.14]
+	at org.springframework.aop.interceptor.AsyncExecutionInterceptor.lambda$invoke$0(AsyncExecutionInterceptor.java:115) ~[spring-aop-5.3.14.jar:5.3.14]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: javax.net.ssl.SSLHandshakeException: No appropriate protocol (protocol is disabled or cipher suites are inappropriate)
+	at java.base/sun.security.ssl.HandshakeContext.<init>(HandshakeContext.java:172) ~[na:na]
+	at java.base/sun.security.ssl.ClientHandshakeContext.<init>(ClientHandshakeContext.java:103) ~[na:na]
+	at java.base/sun.security.ssl.TransportContext.kickstart(TransportContext.java:239) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:443) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:421) ~[na:na]
+	at com.sun.mail.util.SocketFetcher.configureSSLSocket(SocketFetcher.java:549) ~[mail-1.4.7.jar:1.4.7]
+	at com.sun.mail.util.SocketFetcher.startTLS(SocketFetcher.java:486) ~[mail-1.4.7.jar:1.4.7]
+	at com.sun.mail.smtp.SMTPTransport.startTLS(SMTPTransport.java:1902) ~[mail-1.4.7.jar:1.4.7]
+	... 20 common frames omitted
+
+2022-01-06 14:52:02.919 ERROR 4080 --- [ThreadPoolTaskExecutor-2] .a.i.SimpleAsyncUncaughtExceptionHandler : Unexpected exception occurred invoking async method: public void maroroma.homeserverng.notifyer.services.AbstractDisableableNotifyer.notify(maroroma.homeserverng.tools.notifications.NotificationEvent) throws maroroma.homeserverng.tools.exceptions.HomeServerException
+
+maroroma.homeserverng.tools.exceptions.HomeServerException: Erreur rencontrée lors de l'émission du mail
+	at maroroma.homeserverng.notifyer.services.MailNotifyer.doNotify(MailNotifyer.java:58) ~[classes/:na]
+	at maroroma.homeserverng.notifyer.services.AbstractDisableableNotifyer.notify(AbstractDisableableNotifyer.java:43) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:344) ~[spring-aop-5.3.14.jar:5.3.14]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:198) ~[spring-aop-5.3.14.jar:5.3.14]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-5.3.14.jar:5.3.14]
+	at org.springframework.aop.interceptor.AsyncExecutionInterceptor.lambda$invoke$0(AsyncExecutionInterceptor.java:115) ~[spring-aop-5.3.14.jar:5.3.14]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: javax.mail.MessagingException: Could not convert socket to TLS
+	at com.sun.mail.smtp.SMTPTransport.startTLS(SMTPTransport.java:1907) ~[mail-1.4.7.jar:1.4.7]
+	at com.sun.mail.smtp.SMTPTransport.protocolConnect(SMTPTransport.java:666) ~[mail-1.4.7.jar:1.4.7]
+	at javax.mail.Service.connect(Service.java:317) ~[mail-1.4.7.jar:1.4.7]
+	at javax.mail.Service.connect(Service.java:176) ~[mail-1.4.7.jar:1.4.7]
+	at javax.mail.Service.connect(Service.java:125) ~[mail-1.4.7.jar:1.4.7]
+	at javax.mail.Transport.send0(Transport.java:194) ~[mail-1.4.7.jar:1.4.7]
+	at javax.mail.Transport.send(Transport.java:124) ~[mail-1.4.7.jar:1.4.7]
+	at maroroma.homeserverng.notifyer.services.MailNotifyer.doNotify(MailNotifyer.java:54) ~[classes/:na]
+	... 13 common frames omitted
+Caused by: javax.net.ssl.SSLHandshakeException: No appropriate protocol (protocol is disabled or cipher suites are inappropriate)
+	at java.base/sun.security.ssl.HandshakeContext.<init>(HandshakeContext.java:172) ~[na:na]
+	at java.base/sun.security.ssl.ClientHandshakeContext.<init>(ClientHandshakeContext.java:103) ~[na:na]
+	at java.base/sun.security.ssl.TransportContext.kickstart(TransportContext.java:239) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:443) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:421) ~[na:na]
+	at com.sun.mail.util.SocketFetcher.configureSSLSocket(SocketFetcher.java:549) ~[mail-1.4.7.jar:1.4.7]
+	at com.sun.mail.util.SocketFetcher.startTLS(SocketFetcher.java:486) ~[mail-1.4.7.jar:1.4.7]
+	at com.sun.mail.smtp.SMTPTransport.startTLS(SMTPTransport.java:1902) ~[mail-1.4.7.jar:1.4.7]
+	... 20 common frames omitted
+
+2022-01-06 14:53:01.704  WARN 4080 --- [iotTaskScheduler2] m.h.i.s.UpdateIotComponentStatusService  : UPDATE!!
+2022-01-06 14:53:48.271  INFO 4080 --- [SpringApplicationShutdownHook] o.e.jetty.server.AbstractConnector       : Stopped ServerConnector@3361a5d2{HTTP/1.1, (http/1.1)}{0.0.0.0:80}
+2022-01-06 14:53:48.271  INFO 4080 --- [SpringApplicationShutdownHook] org.eclipse.jetty.server.session         : node0 Stopped scavenging
+2022-01-06 14:53:48.272  INFO 4080 --- [SpringApplicationShutdownHook] o.e.j.s.h.ContextHandler.application     : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2022-01-06 14:53:48.273  INFO 4080 --- [SpringApplicationShutdownHook] o.e.jetty.server.handler.ContextHandler  : Stopped o.s.b.w.e.j.JettyEmbeddedWebAppContext@d7079e1{application,/,[file:///C:/temp/jetty-docbase.80.16531349093631875222/],STOPPED}

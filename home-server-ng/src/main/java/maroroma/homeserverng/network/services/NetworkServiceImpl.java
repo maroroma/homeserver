@@ -1,6 +1,6 @@
 package maroroma.homeserverng.network.services;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.network.model.ServerDescriptor;
 import maroroma.homeserverng.network.model.UrlScanParameter;
 import maroroma.homeserverng.network.tools.UrlScanParameterHLP;
@@ -8,7 +8,6 @@ import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,7 +25,7 @@ import java.util.stream.Collectors;
  *
  */
 @Repository
-@Log4j2
+@Slf4j
 public class NetworkServiceImpl {
 
 	/**

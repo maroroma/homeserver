@@ -2,7 +2,7 @@ package maroroma.homeserverng.tools.streaming.ouput;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +18,7 @@ import java.util.List;
  * @author rlevexie
  *
  */
-@Log4j2
+@Slf4j
 @Builder
 @AllArgsConstructor
 public class StreamingFileSender {

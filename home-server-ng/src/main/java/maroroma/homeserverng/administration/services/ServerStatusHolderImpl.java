@@ -1,6 +1,6 @@
 package maroroma.homeserverng.administration.services;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.administration.model.HomeServerRunningStatus;
 import maroroma.homeserverng.administration.model.HomeServerStatus;
 import maroroma.homeserverng.network.services.NetworkServiceImpl;
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  * @author rlevexie
  */
 @Service
-@Log4j2
+@Slf4j
 public class ServerStatusHolderImpl {
 
     /**

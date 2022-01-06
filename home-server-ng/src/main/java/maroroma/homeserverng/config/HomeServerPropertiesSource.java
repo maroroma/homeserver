@@ -1,5 +1,14 @@
 package maroroma.homeserverng.config;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.config.PropertySetterListener;
+import maroroma.homeserverng.tools.config.PropertyValueResolver;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.helpers.Assert;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,23 +16,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.extern.log4j.Log4j2;
-import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
-import maroroma.homeserverng.tools.config.PropertySetterListener;
-import maroroma.homeserverng.tools.config.PropertyValueResolver;
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.helpers.Assert;
-
 /**
  * Définition d'une source de propriété customisée, permettant de charger les {@link HomeServerPropertyHolder}, 
  * propriétés modifiables à chaud au niveau du homeserver.
  * @author RLEVEXIE
  *
  */
-@Log4j2
+@Slf4j
 public class HomeServerPropertiesSource implements PropertySetterListener {
 
 	/**

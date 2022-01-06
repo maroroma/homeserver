@@ -1,18 +1,16 @@
 package maroroma.homeserverng.administration.services;
 
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.notifications.NotificationEvent;
 import maroroma.homeserverng.tools.notifications.Notifyer;
 import maroroma.homeserverng.tools.notifications.NotifyerContainer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.scheduling.annotation.Async;
+
+import java.util.Date;
 
 /**
  * Implémentation du service de redémarrage du server.
@@ -20,7 +18,7 @@ import maroroma.homeserverng.tools.notifications.NotifyerContainer;
  *
  */
 //@Service
-@Log4j2
+@Slf4j
 public class RestarterServiceImpl implements RestarterService {
 
 	/**

@@ -1,12 +1,13 @@
 package maroroma.homeserverng.administration.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.log4j.Log4j2;
-import maroroma.homeserverng.administration.model.*;
+import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.administration.model.FullConfigurationHolder;
+import maroroma.homeserverng.administration.model.HomeServerRunningStatus;
+import maroroma.homeserverng.administration.model.HomeServerStatus;
+import maroroma.homeserverng.administration.model.UploadPropertiesResponse;
 import maroroma.homeserverng.administration.tools.HomeServerModulesScanner;
-import maroroma.homeserverng.notifyer.services.LogEventsNotifyer;
 import maroroma.homeserverng.tools.annotations.HomeServerModuleDescriptor;
-import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.cache.CacheDescriptor;
 import maroroma.homeserverng.tools.cache.CacheKeyDescriptor;
 import maroroma.homeserverng.tools.config.HomeServerModuleActivationStatus;
@@ -39,7 +40,7 @@ import java.util.stream.Collectors;
  *
  */
 @Service
-@Log4j2
+@Slf4j
 public class AdministrationServiceImpl implements AdministrationService {
 
 	/**

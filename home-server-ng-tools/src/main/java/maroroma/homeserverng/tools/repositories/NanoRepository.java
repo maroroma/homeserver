@@ -3,7 +3,7 @@ package maroroma.homeserverng.tools.repositories;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Synchronized;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
@@ -27,7 +27,7 @@ import java.util.stream.Stream;
  * <br /> On gère toutefois un verrou pour les accès concurrentiel sur le fichier json de persistance.
  * @author rlevexie
  */
-@Log4j2
+@Slf4j
 public class NanoRepository {
 
 	/**

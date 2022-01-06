@@ -1,9 +1,12 @@
 package maroroma.homeserverng.config;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
+import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.tools.annotations.HomeServerModuleDescriptor;
+import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
+import maroroma.homeserverng.tools.helpers.Assert;
+import maroroma.homeserverng.tools.helpers.BeanDefinitionsHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Bean;
@@ -11,13 +14,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
-import lombok.extern.log4j.Log4j2;
-import maroroma.homeserverng.tools.annotations.HomeServerModuleDescriptor;
-import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
-import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.helpers.BeanDefinitionsHelper;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Bean de configuration permettant de charger l'ensemble des fichiers de properties des modules.
@@ -26,7 +25,7 @@ import maroroma.homeserverng.tools.helpers.BeanDefinitionsHelper;
  */
 @Configuration
 @Order(Ordered.LOWEST_PRECEDENCE)
-@Log4j2
+@Slf4j
 public class PluginDynamicPropertiesSourcesConfig {
 
 

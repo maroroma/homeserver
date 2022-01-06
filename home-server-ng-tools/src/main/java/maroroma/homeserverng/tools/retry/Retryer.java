@@ -1,5 +1,11 @@
 package maroroma.homeserverng.tools.retry;
 
+import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,13 +13,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.Assert;
-
-import lombok.extern.log4j.Log4j2;
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
 
 /**
  * Classe utilitaire permettant de rejouer plusieurs fois des appels, en modifiant sur exception les paramètres d'entrée initiaux.
@@ -28,7 +27,7 @@ import maroroma.homeserverng.tools.exceptions.HomeServerException;
  * @param <T> entrée de l'appel
  * @param <U> sortie de l'appel
  */
-@Log4j2
+@Slf4j
 public final class Retryer<T, U> {
 
 	/**

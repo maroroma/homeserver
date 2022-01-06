@@ -1,7 +1,7 @@
 package maroroma.homeserverng.tools.streaming.ouput;
 
 import lombok.Builder;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
@@ -20,7 +20,7 @@ import java.util.List;
  *
  */
 @Builder
-@Log4j2
+@Slf4j
 public class StreamingResponseWriter {
 
 

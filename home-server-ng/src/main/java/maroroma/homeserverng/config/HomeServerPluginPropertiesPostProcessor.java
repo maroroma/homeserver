@@ -1,6 +1,6 @@
 package maroroma.homeserverng.config;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.annotations.PropertyRefreshHandlers;
 import maroroma.homeserverng.tools.config.HomeServerPluginPropertiesManager;
@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  * @author RLEVEXIE
  *
  */
-@Log4j2
+@Slf4j
 public class HomeServerPluginPropertiesPostProcessor implements BeanPostProcessor, HomeServerPluginPropertiesManager, PropertyValueResolver {
 
 

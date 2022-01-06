@@ -1,6 +1,6 @@
 package maroroma.homeserverng.tools.notifications;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author RLEVEXIE
  */
 @Component
-@Log4j2
+@Slf4j
 public class NotifyerContainer {
 
 

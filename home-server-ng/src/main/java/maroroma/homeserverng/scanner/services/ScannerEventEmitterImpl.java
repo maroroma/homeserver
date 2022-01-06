@@ -1,18 +1,8 @@
 package maroroma.homeserverng.scanner.services;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter.SseEventBuilder;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.scanner.exceptions.SseEmiterException;
 import maroroma.homeserverng.scanner.model.ScannerEvent;
 import maroroma.homeserverng.scanner.model.ScannerEventType;
@@ -20,13 +10,21 @@ import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.sse.ManagedSseEmitter;
 import maroroma.homeserverng.tools.sse.ManagedSseEmitterCollection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter.SseEventBuilder;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Implémentation de {@link ScannerEventEmitter}.
  * @author RLEVEXIE
  *
  */
-@Log4j2
+@Slf4j
 @Service
 public class ScannerEventEmitterImpl implements ScannerEventEmitter {
 

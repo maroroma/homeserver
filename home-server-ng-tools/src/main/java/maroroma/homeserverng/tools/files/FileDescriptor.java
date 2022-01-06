@@ -3,7 +3,7 @@ package maroroma.homeserverng.tools.files;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.tools.exceptions.Traper;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.FileCopyUtils;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  */
 @Data
 @NoArgsConstructor
-@Log4j2
+@Slf4j
 public class FileDescriptor {
 
 	/**

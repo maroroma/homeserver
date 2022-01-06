@@ -1,18 +1,17 @@
 package maroroma.homeserverng.config;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.tools.annotations.HomeServerModuleDescriptor;
+import maroroma.homeserverng.tools.config.HomeServerModuleManager;
+import maroroma.homeserverng.tools.exceptions.DisableModuleException;
+import maroroma.homeserverng.tools.helpers.BeanDefinitionsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import lombok.extern.log4j.Log4j2;
-import maroroma.homeserverng.tools.annotations.HomeServerModuleDescriptor;
-import maroroma.homeserverng.tools.config.HomeServerModuleManager;
-import maroroma.homeserverng.tools.exceptions.DisableModuleException;
-import maroroma.homeserverng.tools.helpers.BeanDefinitionsHelper;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Permet de controller qu'un appel rest est bien appelé sur un module activé.
@@ -21,7 +20,7 @@ import maroroma.homeserverng.tools.helpers.BeanDefinitionsHelper;
  *
  */
 @Component
-@Log4j2
+@Slf4j
 public class EnableModuleInterceptor extends HandlerInterceptorAdapter {
 
 	/**

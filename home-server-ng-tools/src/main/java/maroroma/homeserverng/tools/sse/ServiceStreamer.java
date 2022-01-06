@@ -1,12 +1,15 @@
 package maroroma.homeserverng.tools.sse;
 
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.Synchronized;
+import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.tools.annotations.Property;
+import maroroma.homeserverng.tools.annotations.Streamed;
+import maroroma.homeserverng.tools.config.HomeServerPluginPropertiesManager;
+import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.exceptions.SSEStreamableException;
+import maroroma.homeserverng.tools.helpers.Assert;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -17,19 +20,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter.SseEventBuilder;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import lombok.Synchronized;
-import lombok.extern.log4j.Log4j2;
-import maroroma.homeserverng.tools.annotations.Property;
-import maroroma.homeserverng.tools.annotations.Streamed;
-import maroroma.homeserverng.tools.config.HomeServerPluginPropertiesManager;
-import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.exceptions.SSEStreamableException;
-import maroroma.homeserverng.tools.helpers.Assert;
-
 import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 
 /**
  * Service permettant d'encapulser un bean implémentant {@link SSEStreamable}, avec l'utilisation 
@@ -41,7 +37,7 @@ import javax.annotation.PostConstruct;
  */
 @Component
 @Scope("prototype")
-@Log4j2
+@Slf4j
 public class ServiceStreamer<T extends SSEStreamable> {
 
 	/**

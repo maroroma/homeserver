@@ -1,6 +1,6 @@
 package maroroma.homeserverng.seedbox.services;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.network.services.NetworkServiceImpl;
 import maroroma.homeserverng.seedbox.model.EpisodeParseResult;
 import maroroma.homeserverng.seedbox.tools.SeedboxModuleConstants;
@@ -30,7 +30,7 @@ import java.util.List;
  * @author rlevexie
  */
 @Component
-@Log4j2
+@Slf4j
 public class TodoDirectoryMonitor {
 
 

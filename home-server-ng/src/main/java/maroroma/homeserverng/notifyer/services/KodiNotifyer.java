@@ -1,6 +1,6 @@
 package maroroma.homeserverng.notifyer.services;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.kodimanager.services.KodiManagerService;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.notifications.NotificationEvent;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-@Log4j2
+@Slf4j
 public class KodiNotifyer extends AbstractDisableableNotifyer implements Notifyer {
 
 	/**

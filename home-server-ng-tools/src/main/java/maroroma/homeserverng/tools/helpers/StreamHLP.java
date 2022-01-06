@@ -1,17 +1,17 @@
 package maroroma.homeserverng.tools.helpers;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.Closeable;
 import java.io.Flushable;
 import java.io.IOException;
-
-import lombok.extern.log4j.Log4j2;
 
 /**
  * Classe utilitaire pour la gestion des streams.
  * @author RLEVEXIE
  *
  */
-@Log4j2
+@Slf4j
 public abstract class StreamHLP {
 
 	/**

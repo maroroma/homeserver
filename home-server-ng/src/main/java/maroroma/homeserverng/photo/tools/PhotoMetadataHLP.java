@@ -1,28 +1,26 @@
 package maroroma.homeserverng.photo.tools;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.LocalDate;
-
-import org.springframework.web.multipart.MultipartFile;
-
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
 import com.drew.metadata.xmp.XmpDirectory;
-
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.helpers.FluentList;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDate;
 
 /**
  * Classe utilitaire pour extraire les métadonnées d'une photo.
  * @author rlevexie
  *
  */
-@Log4j2
+@Slf4j
 public abstract class PhotoMetadataHLP {
 
 	/**
@@ -143,7 +141,7 @@ public abstract class PhotoMetadataHLP {
 		metadata.getDirectories().forEach(d -> d.getTags().forEach(t -> {
 //			log.info("{}-{}-{}", d.getClass(), t.getTagName(), t.getTagType());
 			if (t.getTagName().toLowerCase().contains("date")) {
-				log.info(d.getDate(t.getTagType()));
+				log.info(d.getDate(t.getTagType()).toString());
 			}
 		}));
 	}

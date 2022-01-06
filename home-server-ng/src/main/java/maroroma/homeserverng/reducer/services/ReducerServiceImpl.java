@@ -1,6 +1,6 @@
 package maroroma.homeserverng.reducer.services;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.config.MailConfigHolder;
 import maroroma.homeserverng.reducer.model.ReducedImageInput;
 import maroroma.homeserverng.reducer.model.SendMailRequest;
@@ -30,8 +30,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 /**
  * Implémentation du service de sauvegarde des images réduites sur le serveur.
@@ -39,7 +39,7 @@ import java.util.List;
  *
  */
 @Service
-@Log4j2
+@Slf4j
 public class ReducerServiceImpl {
 
 	/**

@@ -1,28 +1,7 @@
 package maroroma.homeserverng.photo.services;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.imageio.ImageIO;
-
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import lombok.extern.log4j.Log4j2;
-import maroroma.homeserverng.photo.model.DayDirectoryDescriptor;
-import maroroma.homeserverng.photo.model.MonthDirectoryDescriptor;
-import maroroma.homeserverng.photo.model.PhotoDescriptor;
-import maroroma.homeserverng.photo.model.PhotoResolution;
-import maroroma.homeserverng.photo.model.UploadedPhoto;
-import maroroma.homeserverng.photo.model.YearDirectoryDescriptor;
+import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.photo.model.*;
 import maroroma.homeserverng.photo.needers.PhotoCacheNeeder;
 import maroroma.homeserverng.photo.tools.PhotoFileHLP;
 import maroroma.homeserverng.photo.tools.PhotoMetadataHLP;
@@ -31,12 +10,21 @@ import maroroma.homeserverng.photo.tools.ResolutionHLP;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.helpers.CommonFileFilter;
-import maroroma.homeserverng.tools.helpers.FileAndDirectoryHLP;
-import maroroma.homeserverng.tools.helpers.StreamHLP;
-import maroroma.homeserverng.tools.helpers.StringUtils;
-import maroroma.homeserverng.tools.helpers.Tuple;
+import maroroma.homeserverng.tools.helpers.*;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -45,7 +33,7 @@ import maroroma.homeserverng.tools.helpers.Tuple;
  *
  */
 @Service
-@Log4j2
+@Slf4j
 public class PhotoScanServiceImpl implements PhotoScanService {
 
 	/**

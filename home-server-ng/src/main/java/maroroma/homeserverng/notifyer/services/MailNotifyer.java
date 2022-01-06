@@ -1,6 +1,6 @@
 package maroroma.homeserverng.notifyer.services;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.config.MailConfigHolder;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
@@ -21,7 +21,7 @@ import javax.mail.internet.MimeMessage;
  *
  */
 @Service
-@Log4j2
+@Slf4j
 public class MailNotifyer extends AbstractDisableableNotifyer implements Notifyer {
 
 	/**
@@ -54,6 +54,7 @@ public class MailNotifyer extends AbstractDisableableNotifyer implements Notifye
 			Transport.send(mail);
 			log.info("Emission d'une notification par mail ok (" + notification.toString() + ")");
 		} catch (MessagingException e) {
+			log.warn("Emission d'une notification par mail KO", e);
 			throw new HomeServerException("Erreur rencontrée lors de l'émission du mail", e);
 		}
 	}

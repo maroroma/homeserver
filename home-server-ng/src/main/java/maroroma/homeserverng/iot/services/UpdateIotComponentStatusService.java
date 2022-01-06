@@ -1,7 +1,7 @@
 package maroroma.homeserverng.iot.services;
 
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.iot.model.AbstractIotComponent;
 import maroroma.homeserverng.iot.model.IotComponentDescriptor;
 import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * Sinon le ping est trop lorsque sollicité directement par l'ihm
  */
 @Service
-@Log4j2
+@Slf4j
 public class UpdateIotComponentStatusService {
 
     public static final String HOMESERVER_IOT_COMPONENTS_STATUS_REFRESH_FREQUENCY = "homeserver.iot.components.status.refresh.frequency";

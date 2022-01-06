@@ -1,6 +1,6 @@
 package maroroma.homeserverng.tools.helpers;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.files.FileDescriptor;
@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author rlevexie
  *
  */
-@Log4j2
+@Slf4j
 public abstract class FileAndDirectoryHLP {
 
 	/**

@@ -1,18 +1,17 @@
 package maroroma.homeserverng.tools.cache;
 
+import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.helpers.Assert;
+import maroroma.homeserverng.tools.helpers.FluentList;
+import org.springframework.cache.Cache;
+import org.springframework.cache.support.SimpleValueWrapper;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-
-import org.springframework.cache.Cache;
-import org.springframework.cache.support.SimpleValueWrapper;
-
-import lombok.extern.log4j.Log4j2;
-import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
-import maroroma.homeserverng.tools.helpers.Assert;
-import maroroma.homeserverng.tools.helpers.FluentList;
 
 
 /**
@@ -22,7 +21,7 @@ import maroroma.homeserverng.tools.helpers.FluentList;
  * @author rlevexie
  *
  */
-@Log4j2
+@Slf4j
 public class TwoLevelFileCache extends AbstractCacheAdvancedOperator implements Cache, CacheAdvancedOperator {
 
 	/**

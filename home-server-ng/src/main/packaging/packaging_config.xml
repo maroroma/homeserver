@@ -22,11 +22,11 @@
 			<filtered>true</filtered>
 		</file>
 		<!-- inclusion fichier de properties pour les logs -->
-		<file>
-			<source>${basedir}/src/main/resources/log4j.xml</source>
-			<outputDirectory>/config/</outputDirectory>
-			<lineEnding>unix</lineEnding>
-		</file>
+<!--		<file>-->
+<!--			<source>${basedir}/src/main/resources/logback-spring.xml</source>-->
+<!--			<outputDirectory>/config/</outputDirectory>-->
+<!--			<lineEnding>unix</lineEnding>-->
+<!--		</file>-->
 
 		<!-- inclusion du jar principal -->
 		<file>

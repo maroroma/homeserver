@@ -1,6 +1,6 @@
 package maroroma.homeserverng.music.services;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.music.model.AddTracksFromExistingSourceRequest;
 import maroroma.homeserverng.music.model.AlbumDescriptor;
 import maroroma.homeserverng.music.model.TrackDescriptor;
@@ -13,7 +13,6 @@ import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.exceptions.Traper;
 import maroroma.homeserverng.tools.files.FileDescriptor;
 import maroroma.homeserverng.tools.files.FileDescriptorFactory;
@@ -43,7 +42,7 @@ import java.util.stream.Collectors;
  *
  */
 @Service
-@Log4j2
+@Slf4j
 public class MusicServiceImpl {
 
 	/**

@@ -1,16 +1,15 @@
 package maroroma.homeserverng.tools.sse;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-
-import lombok.extern.log4j.Log4j2;
 
 /**
  * Gestionnaire de liste de {@link ManagedSseEmitter}.
@@ -20,7 +19,7 @@ import lombok.extern.log4j.Log4j2;
  */
 @Component
 @Scope(value = "prototype")
-@Log4j2
+@Slf4j
 public class ManagedSseEmitterCollection {
 
 	/**

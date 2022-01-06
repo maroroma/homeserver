@@ -1,5 +1,20 @@
 package maroroma.homeserverng.administration.tools;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.tools.annotations.HomeServerModuleDescriptor;
+import maroroma.homeserverng.tools.annotations.HomeServerRestController;
+import maroroma.homeserverng.tools.config.HomeServerModuleActivationStatus;
+import maroroma.homeserverng.tools.config.HomeServerModuleHandler;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.helpers.BeanDefinitionsHelper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.stereotype.Component;
+import org.springframework.util.ReflectionUtils;
+import org.springframework.util.ReflectionUtils.MethodCallback;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -8,30 +23,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.stereotype.Component;
-import org.springframework.util.ReflectionUtils;
-import org.springframework.util.ReflectionUtils.MethodCallback;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.extern.log4j.Log4j2;
-import maroroma.homeserverng.tools.annotations.HomeServerModuleDescriptor;
-import maroroma.homeserverng.tools.annotations.HomeServerRestController;
-import maroroma.homeserverng.tools.config.HomeServerModuleActivationStatus;
-import maroroma.homeserverng.tools.config.HomeServerModuleHandler;
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.helpers.BeanDefinitionsHelper;
-
 /**
  * Classe utilitaire pour le chargement et la sauvegarde de la configuration des modules.
  * @author RLEVEXIE
  *
  */
 @Component
-@Log4j2
+@Slf4j
 public class HomeServerModulesScanner {
 
 	/**

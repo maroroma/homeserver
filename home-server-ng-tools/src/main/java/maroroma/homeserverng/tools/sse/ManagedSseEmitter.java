@@ -1,23 +1,22 @@
 package maroroma.homeserverng.tools.sse;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import lombok.Getter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter.SseEventBuilder;
 
-import lombok.Getter;
-import lombok.ToString;
-import lombok.extern.log4j.Log4j2;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Encaspulation d'un SSEEmitter pour la gestion de handlers multiples.
  * @author RLEVEXIE
  *
  */
-@Log4j2
+@Slf4j
 @ToString
 public class ManagedSseEmitter {
 	

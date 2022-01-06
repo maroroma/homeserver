@@ -1,6 +1,6 @@
 package maroroma.homeserverng.scanner.services;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.scanner.model.ScanRequest;
 import maroroma.homeserverng.scanner.model.ScannerColorMode;
 import maroroma.homeserverng.scanner.repositories.ScannerRepository;
@@ -25,7 +25,7 @@ import java.util.List;
  *
  */
 @Service
-@Log4j2
+@Slf4j
 @ProductionProfile
 public class ScannerServiceImpl implements ScannerService {
 

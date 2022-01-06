@@ -1,5 +1,11 @@
 package maroroma.homeserverng.tools.directorymonitoring;
 
+import lombok.Getter;
+import lombok.Synchronized;
+import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.helpers.Assert;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -12,18 +18,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lombok.Getter;
-import lombok.Synchronized;
-import lombok.extern.log4j.Log4j2;
-import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.helpers.Assert;
-
 /**
  * Classe utilitaire pour le monitoring des modifications au sein d'un répertoire.
  * @author rlevexie
  *
  */
-@Log4j2
+@Slf4j
 public class DirectoryMonitor {
 
 	/**

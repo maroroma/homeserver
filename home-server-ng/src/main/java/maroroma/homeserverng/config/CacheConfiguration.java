@@ -1,21 +1,6 @@
 package maroroma.homeserverng.config;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
-import org.springframework.cache.interceptor.KeyGenerator;
-import org.springframework.cache.support.CompositeCacheManager;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.tools.cache.FileCache;
 import maroroma.homeserverng.tools.cache.FileCacheManager;
 import maroroma.homeserverng.tools.cache.OpenSimpleStringsKeyGenerator;
@@ -27,6 +12,20 @@ import maroroma.homeserverng.tools.helpers.FluentList;
 import maroroma.homeserverng.tools.helpers.Tuple;
 import maroroma.homeserverng.tools.needers.CacheNeed;
 import maroroma.homeserverng.tools.needers.CacheNeeder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
+import org.springframework.cache.interceptor.KeyGenerator;
+import org.springframework.cache.support.CompositeCacheManager;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Classe de configuration pour la mise en place du cache.
@@ -39,7 +38,7 @@ import maroroma.homeserverng.tools.needers.CacheNeeder;
  *
  */
 @Configuration
-@Log4j2
+@Slf4j
 public class CacheConfiguration extends CachingConfigurerSupport {
 
 	/**

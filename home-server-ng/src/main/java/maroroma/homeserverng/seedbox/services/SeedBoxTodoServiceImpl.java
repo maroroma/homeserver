@@ -1,6 +1,6 @@
 package maroroma.homeserverng.seedbox.services;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.seedbox.model.TargetDirectory;
 import maroroma.homeserverng.seedbox.model.TodoFile;
 import maroroma.homeserverng.seedbox.tools.SeedboxModuleConstants;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  *
  */
 @Service
-@Log4j2
+@Slf4j
 public class SeedBoxTodoServiceImpl {
 
 	/**
