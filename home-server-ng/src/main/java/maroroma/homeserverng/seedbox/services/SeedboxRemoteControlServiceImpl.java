@@ -49,7 +49,7 @@ public class SeedboxRemoteControlServiceImpl {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	public List<RunningTorrent> getTorrents() throws HomeServerException {
+	public List<RunningTorrent> getTorrents() {
 		return GetTorrent
 				.create()
 				.build()
@@ -99,7 +99,7 @@ public class SeedboxRemoteControlServiceImpl {
 	 * @return -
 	 */
 	private TransmissionClient getClient() {
-		if(!this.transmissionClient.isPresent()) {
+		if(this.transmissionClient.isEmpty()) {
 			this.initTransmissionClient();
 		}
 		return this.transmissionClient.get();

@@ -33,6 +33,33 @@ export function administrationApi() {
             .catch(er => console.error(er));
     }
 
+
+
+    const getRunningTasks = () =>
+        fetch(`${apiRoot()}/administration/tasks`)
+            .then(errorHandler("Erreur rencontrée lors de la récupération des taches en cours"))
+            .catch(er => console.error(er));
+
+    const cancelTask = (taskToCancel) => {
+
+        const request = {
+            supplierType: taskToCancel.supplierType,
+            taskId: taskToCancel.id
+        }
+
+
+        return fetch(`${apiRoot()}/administration/tasks`, {
+            method: 'POST',
+            headers: defaultJsonHeaders(),
+            body: JSON.stringify(request)
+        })
+            .then(errorHandler(`Erreur rencontrée lors de l'annulation de la tache ${taskToCancel.title}`,
+                `Annulation de la tache ${taskToCancel.title} demandée`))
+            .catch(er => console.error(er));
+    }
+
+
+
     const getAllModule = () =>
         fetch(`${apiRoot()}/administration/modules`)
             .then(errorHandler("Erreur rencontrée lors de la récupération des modules"))
@@ -76,6 +103,8 @@ export function administrationApi() {
         getServerStatus: getServerStatus,
         getOneProperty: getOneProperty,
         getAllLogEvents: getAllLogEvents,
-        deleteRepo: deleteRepo
+        deleteRepo: deleteRepo,
+        getRunningTasks: getRunningTasks,
+        cancelTask: cancelTask
     }
 }

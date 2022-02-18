@@ -5,11 +5,11 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import maroroma.homeserverng.administration.AdministrationModuleDescriptor;
-import maroroma.homeserverng.administration.model.AllLogEvents;
-import maroroma.homeserverng.administration.model.HomeServerStatus;
-import maroroma.homeserverng.administration.model.UploadPropertiesResponse;
+import maroroma.homeserverng.administration.model.*;
 import maroroma.homeserverng.administration.services.AdministrationService;
 import maroroma.homeserverng.administration.services.ServerStatusHolderImpl;
+import maroroma.homeserverng.administration.services.TasksManager;
+import maroroma.homeserverng.lego.model.Brick;
 import maroroma.homeserverng.notifyer.services.LogEventsNotifyer;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.cache.CacheDescriptor;
@@ -51,7 +51,20 @@ public class AdministrationController {
 	 */
 	@Autowired
 	private ServerStatusHolderImpl statusHolder;
-	
+
+	@Autowired
+	private TasksManager tasksManager;
+
+	@GetMapping("${homeserver.api.path:}/administration/tasks")
+	public ResponseEntity<List<Task>> getCurrentTasks() {
+		return ResponseEntity.ok(this.tasksManager.getCurrentTasks());
+	}
+
+	@PostMapping("${homeserver.api.path:}/administration/tasks")
+	public ResponseEntity<Boolean> cancelTask(@RequestBody TaskCancelRequest cancelRequest) throws HomeServerException {
+		return ResponseEntity.ok(this.tasksManager.cancelOneTask(cancelRequest));
+	}
+
 	/**
 	 * Retourne les modules applicatifs activés.
 	 * @return -

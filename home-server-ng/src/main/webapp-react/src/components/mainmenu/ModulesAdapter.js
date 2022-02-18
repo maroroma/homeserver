@@ -13,6 +13,7 @@ import TriggersManagerComponent from '../iot/triggers/TriggersManagerComponent';
 import AlarmComponent from '../iot/alarm/AlarmComponent';
 import LogEventComponent from '../administration/LogEventsComponent';
 import AllBricksComponent from '../lego/AllBricksComponent';
+import RunningTasksComponent from '../administration/RunningTasksComponent';
 
 
 export default function modulesAdapter() {
@@ -39,6 +40,12 @@ export default function modulesAdapter() {
                 icon: 'info',
                 title: 'Status',
                 component: (<StatusComponent></StatusComponent>)
+            },
+            {
+                path: '/administration/tasks',
+                icon: 'playlist_play',
+                title: 'Tasks',
+                component: (<RunningTasksComponent></RunningTasksComponent>)
             },
             {
                 path: '/administration/logEvents',

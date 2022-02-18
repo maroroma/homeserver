@@ -13,6 +13,10 @@ public abstract class Traper {
         return input -> trap(() -> supplier.apply(input));
     }
 
+    public static <T> Optional<T> trapWithOptional(WithExceptionSupplier<T> supplier) {
+        return Traper.trapOr(() -> Optional.<T>ofNullable(supplier.supply()), Optional::empty);
+    }
+
     public static <T> T trap(WithExceptionSupplier<T> supplier) {
         return trap(supplier, null);
     }

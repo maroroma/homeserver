@@ -30,7 +30,7 @@
   "moduleId" : "seedbox"
 }, {
   "id" : "homeserver.seedbox.transmission.url",
-  "value" : "http://192.168.1.52:9091/transmission",
+  "value" : "http://severus:9091/transmission",
   "description" : "Url principale de l'api transmission",
   "readOnly" : false,
   "moduleId" : "seedbox"

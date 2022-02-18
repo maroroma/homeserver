@@ -16,17 +16,6 @@ public abstract class AbstractKodiMethodBuilder<I, R, T extends AbstractKodiMeth
      */
     public static final String JSON_RPC_V_2_0 = "2.0";
 
-
-    /**
-     * Nom de la méthode pour la récupération des lecteurs actifs.
-     */
-    public static final String KODI_METHOD_NAME_GET_ACTIVE_PLAYER = "Player.GetActivePlayers";
-
-    /**
-     * Nom de la méthode pour la récupération du détail de la lecture en cours.
-     */
-    public static final String KODI_METHOD_NAME_GET_ITEM = "Player.GetItem";
-
     /**
      * Nom de la méthode.
      */
