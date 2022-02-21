@@ -12,6 +12,9 @@ import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * {@link TasksSupplier} spécialisé pour kodi
+ */
 @Service
 public class KodiTasksSupplier implements TasksSupplier {
 

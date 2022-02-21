@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * {@link TasksSupplier} pour la seedbox
+ */
 @Service
 public class SeedBoxTasksSupplier implements TasksSupplier {
 

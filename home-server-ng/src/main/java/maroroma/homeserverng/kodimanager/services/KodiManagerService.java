@@ -82,12 +82,22 @@ public class KodiManagerService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Retourne la liste des players actifs
+     * @return
+     */
     public List<KodiResponse<GetActivePlayersResponse>> getActivePlayers() {
         return this.execute(GetActivePlayers.create())
                 .filter(KodiResponse::hasNoError)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Arrête le lecteur pour un kodi donné
+     * @param kodiUrl kodi cible
+     * @param playerId player cible
+     * @return
+     */
     public boolean stopPlayer(String kodiUrl, String playerId) {
         KodiResponse<String> response = this.execute(kodiUrl, StopPlayer.create().playerId(playerId));
         return Optional.of(response)
@@ -97,6 +107,10 @@ public class KodiManagerService {
                 .orElse(false);
     }
 
+    /**
+     * Retourne la liste des {@link KodiCurrentPlayers}, représentant une instance kodi rattachées à ses lecteurs
+     * @return
+     */
     public List<KodiCurrentPlayers> getCurrentPlayersWithProperties() {
         return getActivePlayers().stream()
                 // une réponse par kodi, avec pour chacun potentiellement de multiples players
@@ -114,6 +128,7 @@ public class KodiManagerService {
                             .map(Optional::get)
                             .collect(Collectors.toList());
 
+                    // association instance kodi et ses lecteurs
                     return KodiCurrentPlayers.builder()
                             .kodiUrl(kodiClientForThesePlayers.getKodiUrl())
                             .currentPlayers(currentPlayerForThisKodiInstance)
@@ -122,11 +137,19 @@ public class KodiManagerService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Récupération des propriétés d'un lecteur donné et du titre de l'item en cours de lecture
+     * @param kodiClientForThisActivePlayer
+     * @param getActivePlayersResult
+     * @return
+     */
     Optional<CurrentPlayer> mapCurrentPlayerFromActivePlayerProperties(KodiClient kodiClientForThisActivePlayer, GetActivePlayersResult getActivePlayersResult) {
         int playerId = getActivePlayersResult.getPlayerid();
+
         // propriétés d'avancement, etc
         KodiResponse<GetPlayerPropertiesResponse> propertiesResponse = this.execute(kodiClientForThisActivePlayer, GetPlayerProperties.create().playerId(playerId));
-        // juste pour le titre T_T
+
+        // juste pour le titre en cours de lecture T_T
         KodiResponse<GetPlayerItemResponse> itemResponse = this.execute(kodiClientForThisActivePlayer, GetPlayerItem.create().playerId(playerId));
 
         String title = Optional.of(itemResponse)
