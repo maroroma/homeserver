@@ -14,11 +14,12 @@ import lombok.Data;
  * Permet de modéliser une pièce jointe de mail dont la forme adopte un tableau de {@link Byte}.
  * <br /> Ce micro container permet d'y associer pour la gestion des pièces jointes un nom de fichier et un type MIME.
  * @author RLEVEXIE
- *
+ * @deprecated va sauter avec le reducer
  */
 @Data
 @Builder
 @AllArgsConstructor
+@Deprecated
 public class RawFileAttachment {
 	/**
 	 * Nom de fichier.

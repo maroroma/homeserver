@@ -1,11 +1,13 @@
 package maroroma.homeserverng.administration.services;
 
+import maroroma.homeserverng.notifyer.services.CommonNotificatonTypes;
 import maroroma.homeserverng.tools.notifications.NotificationEvent;
 import maroroma.homeserverng.tools.notifications.NotifyerContainer;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -24,6 +26,8 @@ public class SpringApplicationEventsListeners {
      */
     private final ServerStatusHolderImpl serverStatusHolder;
 
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+
     public SpringApplicationEventsListeners(NotifyerContainer notifyerContainer,
                                             ServerStatusHolderImpl serverStatusHolder) {
         this.notifyerContainer = notifyerContainer;
@@ -35,10 +39,13 @@ public class SpringApplicationEventsListeners {
 
         serverStatusHolder.applicationIsRunning();
 
+        Date startupDate = new Date(startEvent.getTimestamp());
+
         notifyerContainer.notify(NotificationEvent.builder()
-                .creationDate(new Date())
+                .creationDate(startupDate)
+                .eventType(CommonNotificatonTypes.STARTUP)
                 .title("Démarrage du serveur")
-                .message("Le serveur homeserver vient de démarrer")
+                .message("Le serveur vient de démarrer à la date suivante : " + simpleDateFormat.format(startupDate))
                 .build());
     }
 }

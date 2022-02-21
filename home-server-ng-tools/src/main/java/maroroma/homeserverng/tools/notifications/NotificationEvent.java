@@ -35,6 +35,11 @@ public class NotificationEvent {
 	private Date creationDate;
 
 	/**
+	 * Permet de réaliser des traitement supplémentaires (identification pour template, etc)
+	 */
+	private String eventType;
+
+	/**
 	 * Détermine si un message complexe est renseigné.
 	 * @return -
 	 */

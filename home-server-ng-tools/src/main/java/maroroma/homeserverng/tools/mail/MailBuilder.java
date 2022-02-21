@@ -22,13 +22,10 @@ import java.util.Properties;
 /**
  * Classe utilitaire pour la construction d'email.
  * @author rlevexie
- *
+ * @deprecated au profit de spring boot
  */
+@Deprecated
 public class MailBuilder {
-
-
-
-
 
 	/**
 	 * Encodage du corps et de l'objet du mail.

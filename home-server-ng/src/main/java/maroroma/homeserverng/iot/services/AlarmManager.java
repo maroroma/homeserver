@@ -1,6 +1,7 @@
 package maroroma.homeserverng.iot.services;
 
 import maroroma.homeserverng.iot.model.*;
+import maroroma.homeserverng.notifyer.services.CommonNotificatonTypes;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.notifications.NotificationEvent;
@@ -95,6 +96,7 @@ public class AlarmManager extends AbstractIotDedicatedService<SirenIotComponent>
         NotificationEvent notificationEvent = NotificationEvent.builder()
                 .creationDate(activationTime)
                 .title("Alarme activée")
+                .eventType(CommonNotificatonTypes.ALARM_ON)
                 .message(String.format("Alarme activée à %s", sdf.format(activationTime)))
                 .build();
 
@@ -126,6 +128,7 @@ public class AlarmManager extends AbstractIotDedicatedService<SirenIotComponent>
             notificationEventBuilder = notificationEventBuilder
                     .creationDate(desactivationTime)
                     .title("Alarme désactivée")
+                    .eventType(CommonNotificatonTypes.ALARM_OFF)
                     .message(String.format("Alarme désactivée à %s", sdf.format(desactivationTime)));
 
             // annulation de la sirène si elle était programmée

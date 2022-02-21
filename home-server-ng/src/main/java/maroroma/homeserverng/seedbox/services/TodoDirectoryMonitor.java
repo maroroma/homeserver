@@ -2,6 +2,7 @@ package maroroma.homeserverng.seedbox.services;
 
 import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.network.services.NetworkServiceImpl;
+import maroroma.homeserverng.notifyer.services.CommonNotificatonTypes;
 import maroroma.homeserverng.seedbox.model.EpisodeParseResult;
 import maroroma.homeserverng.seedbox.tools.SeedboxModuleConstants;
 import maroroma.homeserverng.tools.annotations.Property;
@@ -131,6 +132,7 @@ public class TodoDirectoryMonitor {
             NotificationEvent.NotificationEventBuilder notificationEventBuilder = NotificationEvent.builder()
                     .creationDate(new Date())
                     .title("Téléchargement terminé")
+                    .eventType(CommonNotificatonTypes.DOWNLOAD_COMPLETED)
                     .message("Le fichier \"" + event.getFile().getName() + "\" a fini d'être téléchargé.")
                     .complexMessage(this.todoFileDownloadMessage(event.getFile()));
 
@@ -151,6 +153,7 @@ public class TodoDirectoryMonitor {
                         // modification des propriétés à émettre
                         notificationEventBuilder
                                 .title("Téléchargement trié")
+                                .eventType(CommonNotificatonTypes.DOWNLOAD_COMPLETED)
                                 .complexMessage(this.sortedFileDownloadMessage(movedFileList.get(0).getTargetFile()))
                                 .message("Le fichier\"" + event.getFile().getName() + "\" a été déplacé et scanné.");
                     }
