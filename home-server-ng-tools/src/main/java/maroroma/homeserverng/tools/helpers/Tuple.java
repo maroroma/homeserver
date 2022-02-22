@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -72,5 +73,15 @@ public class Tuple<T, U> {
 			returnValue.add(Tuple.from(list1.get(i), list2.get(i)));
 		}
 		return returnValue;
+	}
+
+	public static <T,U, X, Y> List<Tuple<T, U>> fromMap(Map<X, Y> source, Function<X, T> keyMapper, Function<Y, U> valueMapper) {
+		return source.entrySet().stream()
+				.map(oneEntry -> Tuple.from(oneEntry, keyMapper, valueMapper))
+				.toList();
+	}
+
+	public static <T,U, X, Y> Tuple<T, U> from(Map.Entry<X, Y> entry, Function<X, T> keyMapper, Function<Y, U> valueMapper) {
+		return Tuple.from(keyMapper.apply(entry.getKey()), valueMapper.apply(entry.getValue()));
 	}
 }

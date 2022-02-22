@@ -7,12 +7,12 @@ import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.notifications.NotificationEvent;
 import maroroma.homeserverng.tools.notifications.Notifyer;
+import maroroma.homeserverng.tools.template.TemplateBuilder;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import java.util.Map;
@@ -31,7 +31,6 @@ public class MailNotifyer extends AbstractDisableableNotifyer implements Notifye
      * Effort de centralisation de la configuration des mails.
      */
     private final MailConfigHolder mailConfigHolder;
-    private final TemplateEngine templateEngine;
 
     /**
      * Pour l'instant on fait du cheap
@@ -49,10 +48,8 @@ public class MailNotifyer extends AbstractDisableableNotifyer implements Notifye
     @Property("homeserver.notifyer.mail.smtp.clients")
     private HomeServerPropertyHolder notificationClients;
 
-    public MailNotifyer(MailConfigHolder mailConfigHolder,
-                        TemplateEngine templateEngine) {
+    public MailNotifyer(MailConfigHolder mailConfigHolder) {
         this.mailConfigHolder = mailConfigHolder;
-        this.templateEngine = templateEngine;
     }
 
     /**
@@ -64,7 +61,7 @@ public class MailNotifyer extends AbstractDisableableNotifyer implements Notifye
         JavaMailSender sender = this.mailConfigHolder.createSender();
 
         sender.send(mimeMessage -> {
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             mimeMessageHelper.setSubject(notification.getTitle());
             mimeMessageHelper.setTo(this.notificationClients.asStringArray());
             mimeMessageHelper.setFrom("homeserverrkt");
@@ -74,10 +71,12 @@ public class MailNotifyer extends AbstractDisableableNotifyer implements Notifye
 
     void processTemplate(MimeMessageHelper mimeMessageHelper, NotificationEvent notificationEvent) throws MessagingException {
         if (notificationTypesWithIcons.containsKey(notificationEvent.getEventType())) {
-            Context context = new Context();
-            context.setVariable("notification", notificationEvent);
-            context.setVariable("imageResourceName", "imageResourceName");
-            mimeMessageHelper.setText(templateEngine.process("default-email", context), true);
+            String content = TemplateBuilder.create()
+                    .addParameter("title", notificationEvent.getTitle())
+                    .addParameter("message", notificationEvent.getMessage())
+                    .withTemplate("templates/default-notification-email.html")
+                    .resolve();
+            mimeMessageHelper.setText(content, true);
             mimeMessageHelper.addInline("imageResourceName",
                     new ClassPathResource("templates/assets/" + notificationTypesWithIcons.get(notificationEvent.getEventType())));
         } else {
