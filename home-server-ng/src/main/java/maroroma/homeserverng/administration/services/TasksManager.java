@@ -20,6 +20,7 @@ public class TasksManager {
      */
     private final List<TasksSupplier> tasksSuppliers;
 
+
     public TasksManager(List<TasksSupplier> tasksSuppliers) {
         this.tasksSuppliers = tasksSuppliers;
     }

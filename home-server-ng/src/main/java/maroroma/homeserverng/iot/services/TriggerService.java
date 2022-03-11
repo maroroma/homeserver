@@ -27,10 +27,11 @@ public class TriggerService extends AbstractIotDedicatedService<TriggerIotCompon
 
     public TriggerService(IotComponentsFactory iotComponentsFactory,
                           @Autowired(required = false) List<TriggerableService> subTriggerableServices,
-                          ThreadPoolTaskScheduler threadPoolTaskScheduler, AlarmManager alarmManager) {
+                          ThreadPoolTaskScheduler iotTaskScheduler,
+                          AlarmManager alarmManager) {
         super(TriggerIotComponent.class, iotComponentsFactory, IotComponentTypes.TRIGGER);
         this.subServices = subTriggerableServices;
-        this.threadPoolTaskScheduler = threadPoolTaskScheduler;
+        this.threadPoolTaskScheduler = iotTaskScheduler;
         this.alarmManager = alarmManager;
     }
 

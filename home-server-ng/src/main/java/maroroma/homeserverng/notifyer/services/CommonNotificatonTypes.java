@@ -8,4 +8,5 @@ public class CommonNotificatonTypes {
     public static final String ALARM_ON = "ALARM_ON";
     public static final String ALARM_OFF = "ALARM_OFF";
     public static final String DOWNLOAD_COMPLETED = "DOWNLOAD_COMPLETED";
+    public static final String TASKS_LIST_CHANGED = "TASKS_LIST_CHANGED";
 }

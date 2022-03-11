@@ -81,7 +81,7 @@ public class SeedBoxTodoServiceImpl {
 
 		// mise à jour de la liste de noms de fichier pour le prochain appel
 		this.lastCompletedFileList = todoFiles.stream()
-				.map(oneTodoFile -> oneTodoFile.getId())
+				.map(FileDescriptor::getId)
 				.collect(Collectors.toList());
 
 

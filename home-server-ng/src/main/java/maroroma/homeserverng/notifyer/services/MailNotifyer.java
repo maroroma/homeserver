@@ -1,6 +1,7 @@
 package maroroma.homeserverng.notifyer.services;
 
 import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.administration.model.Task;
 import maroroma.homeserverng.config.MailConfigHolder;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
@@ -12,9 +13,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
 
 import javax.mail.MessagingException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,7 +36,7 @@ public class MailNotifyer extends AbstractDisableableNotifyer implements Notifye
     /**
      * Pour l'instant on fait du cheap
      */
-    private final Map<String, String> notificationTypesWithIcons = Map.of(
+    private final Map<String, String> simpleNotificationTypesWithIcons = Map.of(
             CommonNotificatonTypes.STARTUP, "home.png",
             CommonNotificatonTypes.ALARM_ON, "alarm_on.png",
             CommonNotificatonTypes.ALARM_OFF, "alarm_off.png",
@@ -70,7 +71,7 @@ public class MailNotifyer extends AbstractDisableableNotifyer implements Notifye
     }
 
     void processTemplate(MimeMessageHelper mimeMessageHelper, NotificationEvent notificationEvent) throws MessagingException {
-        if (notificationTypesWithIcons.containsKey(notificationEvent.getEventType())) {
+        if (simpleNotificationTypesWithIcons.containsKey(notificationEvent.getEventType())) {
             String content = TemplateBuilder.create()
                     .addParameter("title", notificationEvent.getTitle())
                     .addParameter("message", notificationEvent.getMessage())
@@ -78,10 +79,25 @@ public class MailNotifyer extends AbstractDisableableNotifyer implements Notifye
                     .resolve();
             mimeMessageHelper.setText(content, true);
             mimeMessageHelper.addInline("imageResourceName",
-                    new ClassPathResource("templates/assets/" + notificationTypesWithIcons.get(notificationEvent.getEventType())));
+                    new ClassPathResource("templates/assets/" + simpleNotificationTypesWithIcons.get(notificationEvent.getEventType())));
+        } else if(CommonNotificatonTypes.TASKS_LIST_CHANGED.equals(notificationEvent.getEventType())) {
+            String content = TemplateBuilder.create()
+                    .addParameter("title", notificationEvent.getTitle())
+                    .addParameter("message", notificationEvent.getMessage())
+                    .addArrayParameter("newTasks", (List<Task>) notificationEvent.getProperties().get("newTasks"), this::taskToTableLineTransformer)
+                    .addArrayParameter("deletedTasks", (List<Task>) notificationEvent.getProperties().get("deletedTasks"), this::taskToTableLineTransformer)
+                    .withTemplate("templates/tasks-changed-email.html")
+                    .resolve();
+            mimeMessageHelper.setText(content, true);
+            mimeMessageHelper.addInline("imageResourceName",
+                    new ClassPathResource("templates/assets/home.png"));
         } else {
             mimeMessageHelper.setText(notificationEvent.getMessage());
         }
+    }
+
+    private String taskToTableLineTransformer(Task oneTask) {
+        return "<tr><td>"  + oneTask.getSupplierType() + "&nbsp;:&nbsp;" + oneTask.getTitle() + "</td></tr>";
     }
 
 

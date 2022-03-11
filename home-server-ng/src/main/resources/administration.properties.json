@@ -1,19 +1,30 @@
-[ {
-  "id" : "homeserver.administrations.drives",
-  "value" : "D:/temp/TEST/music/musicworkingdir",
-  "description" : "Chemin vers les montages unix",
-  "readOnly" : false,
-  "moduleId" : "administration"
-},{
-  "id" : "homeserver.administrations.sambaUser",
-  "value" : "yourname@yourpassword",
-  "description" : "user samba",
-  "readOnly" : false,
-  "moduleId" : "administration"
-}, {
-  "id" : "homeserver.administration.logevents.store",
-  "value" : "${homeserver.config.dir}/administration.logevents.json",
-  "description" : "Emplacement du store pour l'archivage des notifications",
-  "readOnly" : false,
-  "moduleId" : "administration"
-}]
+[
+  {
+    "id": "homeserver.administrations.drives",
+    "value": "D:/temp/TEST/music/musicworkingdir",
+    "description": "Chemin vers les montages unix",
+    "readOnly": false,
+    "moduleId": "administration"
+  },
+  {
+    "id": "homeserver.administrations.sambaUser",
+    "value": "yourname@yourpassword",
+    "description": "user samba",
+    "readOnly": false,
+    "moduleId": "administration"
+  },
+  {
+    "id": "homeserver.administration.logevents.store",
+    "value": "${homeserver.config.dir}/administration.logevents.json",
+    "description": "Emplacement du store pour l'archivage des notifications",
+    "readOnly": false,
+    "moduleId": "administration"
+  },
+  {
+    "id": "homeserver.administration.tasks.monitor.refresh.frequency",
+    "value": "60000",
+    "description": "intervalle entre chaque récupération globale des taches en cours (-1 = désactivation)",
+    "readOnly": false,
+    "moduleId": "administration"
+  }
+]

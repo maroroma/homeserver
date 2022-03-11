@@ -1,5 +1,6 @@
 package maroroma.homeserverng.administration.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,4 +20,16 @@ public class Task {
     String labelTotal;
     String labelDone;
     String labelRemaining;
+
+    @JsonIgnore
+    public String generateKey() {
+        return new StringBuilder(this.supplierType)
+                .append("#")
+                .append(this.id)
+                .append("#")
+                .append(this.title)
+                .append("#")
+                .append(this.isRunning)
+                .toString();
+    }
 }

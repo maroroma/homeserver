@@ -6,6 +6,8 @@ import lombok.Data;
 import maroroma.homeserverng.tools.helpers.StringUtils;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Event général de notification.
@@ -38,6 +40,11 @@ public class NotificationEvent {
 	 * Permet de réaliser des traitement supplémentaires (identification pour template, etc)
 	 */
 	private String eventType;
+
+	/**
+	 * Permet de rendre modulaire les events (passage de params, etc)
+	 */
+	private Map<String, Object> properties = new HashMap<>();
 
 	/**
 	 * Détermine si un message complexe est renseigné.

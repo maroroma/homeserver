@@ -7,8 +7,10 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Classe custom pour la construction et la résolution de templates
@@ -29,6 +31,13 @@ public class TemplateBuilder {
     public TemplateBuilder addParameter(String key, String value) {
         this.parameters.put(key, value);
         return this;
+    }
+
+    public <REPEATED_ITEM> TemplateBuilder addArrayParameter(String key, List<REPEATED_ITEM> items, Function<REPEATED_ITEM, String> itemToLineTransformer) {
+        return this.addParameter(key, items
+                .stream()
+                .map(itemToLineTransformer)
+                .collect(Collectors.joining()));
     }
 
     public TemplateBuilder withTemplate(String templatePath) {

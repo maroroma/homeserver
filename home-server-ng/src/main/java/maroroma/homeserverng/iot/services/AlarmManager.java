@@ -66,7 +66,10 @@ public class AlarmManager extends AbstractIotDedicatedService<SirenIotComponent>
 
     private final AbstractIotDedicatedService<TriggerIotComponent> simplerTriggerIotServive;
 
-    public AlarmManager(NotifyerContainer notifyerContainer, ThreadPoolTaskScheduler iotTaskScheduler, IotComponentsFactory iotComponentsFactory, AbstractIotDedicatedService<TriggerIotComponent> simplerTriggerIotServive) {
+    public AlarmManager(NotifyerContainer notifyerContainer,
+                        ThreadPoolTaskScheduler iotTaskScheduler,
+                        IotComponentsFactory iotComponentsFactory,
+                        AbstractIotDedicatedService<TriggerIotComponent> simplerTriggerIotServive) {
         super(SirenIotComponent.class, iotComponentsFactory, IotComponentTypes.SIREN);
         this.notifyerContainer = notifyerContainer;
         this.iotTaskScheduler = iotTaskScheduler;
