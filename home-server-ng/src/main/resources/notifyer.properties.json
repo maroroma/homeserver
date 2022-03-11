@@ -28,4 +28,10 @@
   "description" : "adresses mail des clients à notifier",
   "readOnly" : false,
   "moduleId" : "notifyer"
-} ]
+}, {
+  "id" : "homeserver.notifyer.templates.path",
+  "value" : "${homeserver.config.dir}/templates",
+  "description" : "adresses mail des clients à notifier",
+  "readOnly" : false,
+  "moduleId" : "notifyer"
+}]

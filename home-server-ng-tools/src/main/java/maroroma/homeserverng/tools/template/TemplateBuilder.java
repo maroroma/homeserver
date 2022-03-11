@@ -3,7 +3,7 @@ package maroroma.homeserverng.tools.template;
 import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.exceptions.Traper;
 import maroroma.homeserverng.tools.helpers.Tuple;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -50,7 +50,7 @@ public class TemplateBuilder {
      * @return
      */
     public String resolve() {
-        return Traper.trapWithOptional(() -> Files.readString(new ClassPathResource(this.templatePath).getFile().toPath()))
+        return Traper.trapWithOptional(() -> Files.readString(new FileSystemResource(this.templatePath).getFile().toPath()))
                 .map(this::resolve)
                 .orElseThrow(() -> new RuntimeHomeServerException("Impossible de charger le template " + this.templatePath));
     }

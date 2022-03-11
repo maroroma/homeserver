@@ -176,6 +176,15 @@
 			<fileMode>775</fileMode>
 			<directoryMode>0777</directoryMode>
 		</fileSet>
+
+		<!-- templates pour les mails -->
+		<fileSet>
+			<directory>${basedir}/src/main/resources/templates</directory>
+			<filtered>false</filtered>
+			<outputDirectory>/config/templates</outputDirectory>
+			<fileMode>775</fileMode>
+			<directoryMode>0777</directoryMode>
+		</fileSet>
 		
 	</fileSets>
 

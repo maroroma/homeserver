@@ -9,7 +9,7 @@ import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.notifications.NotificationEvent;
 import maroroma.homeserverng.tools.notifications.Notifyer;
 import maroroma.homeserverng.tools.template.TemplateBuilder;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -49,6 +49,9 @@ public class MailNotifyer extends AbstractDisableableNotifyer implements Notifye
     @Property("homeserver.notifyer.mail.smtp.clients")
     private HomeServerPropertyHolder notificationClients;
 
+    @Property("homeserver.notifyer.templates.path")
+    private HomeServerPropertyHolder templatesDirectory;
+
     public MailNotifyer(MailConfigHolder mailConfigHolder) {
         this.mailConfigHolder = mailConfigHolder;
     }
@@ -75,22 +78,22 @@ public class MailNotifyer extends AbstractDisableableNotifyer implements Notifye
             String content = TemplateBuilder.create()
                     .addParameter("title", notificationEvent.getTitle())
                     .addParameter("message", notificationEvent.getMessage())
-                    .withTemplate("templates/default-notification-email.html")
+                    .withTemplate(this.templatesDirectory.getResolvedValue() + "/default-notification-email.html")
                     .resolve();
             mimeMessageHelper.setText(content, true);
             mimeMessageHelper.addInline("imageResourceName",
-                    new ClassPathResource("templates/assets/" + simpleNotificationTypesWithIcons.get(notificationEvent.getEventType())));
+                    new FileSystemResource(this.templatesDirectory.getResolvedValue() + "/assets/" + simpleNotificationTypesWithIcons.get(notificationEvent.getEventType())));
         } else if(CommonNotificatonTypes.TASKS_LIST_CHANGED.equals(notificationEvent.getEventType())) {
             String content = TemplateBuilder.create()
                     .addParameter("title", notificationEvent.getTitle())
                     .addParameter("message", notificationEvent.getMessage())
                     .addArrayParameter("newTasks", (List<Task>) notificationEvent.getProperties().get("newTasks"), this::taskToTableLineTransformer)
                     .addArrayParameter("deletedTasks", (List<Task>) notificationEvent.getProperties().get("deletedTasks"), this::taskToTableLineTransformer)
-                    .withTemplate("templates/tasks-changed-email.html")
+                    .withTemplate(this.templatesDirectory.getResolvedValue() +"/tasks-changed-email.html")
                     .resolve();
             mimeMessageHelper.setText(content, true);
             mimeMessageHelper.addInline("imageResourceName",
-                    new ClassPathResource("templates/assets/home.png"));
+                    new FileSystemResource(this.templatesDirectory.getResolvedValue() +"/assets/home.png"));
         } else {
             mimeMessageHelper.setText(notificationEvent.getMessage());
         }
