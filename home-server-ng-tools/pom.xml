@@ -1,103 +1,115 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>maro.roma</groupId>
-		<artifactId>home-server-ng-parent</artifactId>
-		<version>0.0.39-SNAPSHOT</version>
-		<relativePath>../home-server-ng-parent/pom.xml</relativePath>
-	</parent>
-	<artifactId>home-server-ng-tools</artifactId>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>maro.roma</groupId>
+        <artifactId>home-server-ng-parent</artifactId>
+        <version>0.0.39-SNAPSHOT</version>
+        <relativePath>../home-server-ng-parent/pom.xml</relativePath>
+    </parent>
+    <artifactId>home-server-ng-tools</artifactId>
 
 
-	<dependencies>
+    <dependencies>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
-		</dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>com.github.sarxos</groupId>
-			<artifactId>webcam-capture</artifactId>
-			<version>0.3.10</version>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.kamranzafar</groupId>
-			<artifactId>jtar</artifactId>
-			<version>2.3</version>
-		</dependency>
+        <dependency>
+            <groupId>com.github.sarxos</groupId>
+            <artifactId>webcam-capture</artifactId>
+            <version>0.3.10</version>
+        </dependency>
 
-		<!-- upload amélioré des fichiers-->
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.4</version>
-		</dependency>
+        <dependency>
+            <groupId>org.kamranzafar</groupId>
+            <artifactId>jtar</artifactId>
+            <version>2.3</version>
+        </dependency>
 
-		<dependency>
-			<groupId>jcifs</groupId>
-			<artifactId>jcifs</artifactId>
-			<version>1.3.17</version>
-		</dependency>
+        <!-- upload amélioré des fichiers-->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
 
-		<dependency>
-			<groupId>javax.annotation</groupId>
-			<artifactId>javax.annotation-api</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>jcifs</groupId>
+            <artifactId>jcifs</artifactId>
+            <version>1.3.17</version>
+        </dependency>
 
-		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-context-support</artifactId> 
-			<version>2.5.6.SEC02</version> </dependency> <dependency> <groupId>net.sf.ehcache</groupId> 
-			<artifactId>ehcache</artifactId> <version>1.2.4</version> </dependency> -->
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+        </dependency>
 
-	</dependencies>
+        <!-- gestion des codes barres-->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+
+        <!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-context-support</artifactId>
+            <version>2.5.6.SEC02</version> </dependency> <dependency> <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId> <version>1.2.4</version> </dependency> -->
+
+    </dependencies>
 
 
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${mvn.homeserver.java.version}</source>
-					<target>${mvn.homeserver.java.version}</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${mvn.homeserver.java.version}</source>
+                    <target>${mvn.homeserver.java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>

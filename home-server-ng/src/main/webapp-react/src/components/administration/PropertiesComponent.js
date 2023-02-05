@@ -7,13 +7,13 @@ import toaster from '../commons/Toaster';
 import DataGridComponent from '../commons/DataGridComponent';
 import RadioButtonComponent from '../commons/RadioButtonComponent';
 import MasonryContainerComponent from '../commons/MasonryContainerComponent';
-import UniqueCollapsibleContainerComponent from '../commons/UniqueCollapsibleContainerComponent';
 
 import eventReactor from '../../eventReactor/EventReactor';
 
 import on from '../../tools/on';
 import { useDisplayList } from '../../tools/displayList';
 import { searchSubReactor } from '../mainmenu/SearchBarComponent';
+import { UniqueCollapsibleContainerComponent } from '../commons/UniqueCollapsibleContainerComponent';
 
 export default function PropertiesComponent() {
 
@@ -130,7 +130,7 @@ export default function PropertiesComponent() {
 
     return (
         <>
-            <UniqueCollapsibleContainerComponent title={`Filtrer${filterPanelTitle}`}>
+            <UniqueCollapsibleContainerComponent id="filterForPropertiesInAdministration" title={`Filtrer${filterPanelTitle}`}>
                 <MasonryContainerComponent>
                     {usableFilters.map((oneFilter, filterIndex) => (
                         <div className="masonry-item" key={filterIndex}>

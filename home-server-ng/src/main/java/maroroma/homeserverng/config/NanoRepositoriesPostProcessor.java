@@ -121,7 +121,7 @@ public class NanoRepositoriesPostProcessor implements BeanPostProcessor {
 							persistentFileProperty, repositoryDescriptor.idField(), preProcessor);
 					this.repoManager.add(repositoryToSet);
 				}
-				
+
 				// modification accessibilité du champ pour affectation du repos
 				ReflectionUtils.makeAccessible(field);
 

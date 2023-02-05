@@ -14,6 +14,9 @@ import AlarmComponent from '../iot/alarm/AlarmComponent';
 import LogEventComponent from '../administration/LogEventsComponent';
 import AllBricksComponent from '../lego/AllBricksComponent';
 import RunningTasksComponent from '../administration/RunningTasksComponent';
+import AddBookComponent from '../book/add/AddBookComponent';
+import AllBooksComponent from '../book/AllBooksComponent';
+import AllSeriesComponent from '../book/AllSeriesComponent';
 
 
 export default function modulesAdapter() {
@@ -106,7 +109,34 @@ export default function modulesAdapter() {
         title: 'Lego',
         component: (<AllBricksComponent></AllBricksComponent>),
         dontUseDefaultPanel: true
-    }, {
+    },
+    {
+        module: 'books',
+        path: '/books',
+        icon: 'local_library',
+        title: 'Books',
+        subMenu: [
+            {
+                path: '/books/allbooks',
+                icon: 'library_books',
+                title: 'Tous les livres',
+                component: (<AllBooksComponent></AllBooksComponent>)
+            },
+            {
+                path: '/books/allseries',
+                icon: 'view_column',
+                title: 'Toutes les séries',
+                component: (<AllSeriesComponent></AllSeriesComponent>)
+            },
+            {
+                path: '/books/search',
+                icon: 'add',
+                title: 'Ajouter un livre',
+                component: (<AddBookComponent></AddBookComponent>)
+            }
+        ]
+    },
+    {
         module: 'music',
         path: '/music',
         icon: 'music_note',
@@ -141,9 +171,15 @@ export default function modulesAdapter() {
     }];
 
     const getMenuDescriptor = (module) => menuDescriptors.filter(oneDescriptor => module.moduleId === oneDescriptor.module).shift();
+
+    // const getMenuDescriptorForPath = (path) => menuDescriptors
+    //     .flatMap(oneDescriptor => oneDescriptor.subMenu ? oneDescriptor.subMenu : [oneDescriptor])
+    //     .filter(oneDescriptor => path === oneDescriptor.path).shift();
+
     const getMenuDescriptorForPath = (path) => menuDescriptors
-        .flatMap(oneDescriptor => oneDescriptor.subMenu ? oneDescriptor.subMenu : [oneDescriptor])
-        .filter(oneDescriptor => path === oneDescriptor.path).shift();
+        .flatMap(oneDescriptor => oneDescriptor.subMenu ? [oneDescriptor].concat(oneDescriptor.subMenu) : [oneDescriptor])
+        .find(oneDescriptor => path === oneDescriptor.path);
+
     const homeMenuDescriptor = () => { return { title: 'HomeServer' } };
 
 

@@ -1,6 +1,6 @@
 [ {
   "id" : "homeserver.filemanager.rootdirectories",
-    "value" : "D:/tmp/TEST/reducer/reduced/,D:/temp/TEST/COMPLETED,D:/temp/TEST/Videos/Series,D:/temp/TEST/music/musicworkingdir,C:\\Users\\maroroma\\Videos\\films,C:\\tmp\\homeserver\\TODO,${homeserver.music.target.directory},C:\\tmp\\homeserver\\mp3tagworkingdir",
+  "value" : "D:/tmp/TEST/reducer/reduced/,D:/temp/TEST/COMPLETED,D:/temp/TEST/Videos/Series,D:/temp/TEST/music/musicworkingdir,C:\\Users\\maroroma\\Videos\\films,C:\\tmp\\homeserver\\TODO,${homeserver.music.target.directory},C:\\tmp\\homeserver\\mp3tagworkingdir,${homeserver.data.dir}",
   "description" : "Les différents répertoires racines gérables par le filemanager",
   "readOnly" : false,
   "moduleId" : "filemanager"

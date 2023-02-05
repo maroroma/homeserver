@@ -19,6 +19,8 @@ export class StepperDriver {
         this.steps = new DisplayList([]);
         this.defaultSelected = undefined;
         this.appendStep = this.appendStep.bind(this);
+        this.removeStep = this.removeStep.bind(this);
+        this.insertStepBefore = this.insertStepBefore.bind(this);
         this.withSelected = this.withSelected.bind(this);
         this.disableAfterSelected = this.disableAfterSelected.bind(this);
         this.getSelectedIndex = this.getSelectedIndex.bind(this);
@@ -28,9 +30,11 @@ export class StepperDriver {
         this.disableNextStepButton = this.disableNextStepButton.bind(this);
         this.enablePreviousStepButton = this.enablePreviousStepButton.bind(this);
         this.disablePreviousStepButton = this.disablePreviousStepButton.bind(this);
-        this.nextStep = this.nextStep.bind(this);
-        this.previousStep = this.previousStep.bind(this);
+        this.innerNextStep = this.innerNextStep.bind(this);
+        this.innerPreviousStep = this.innerPreviousStep.bind(this);
         this.selectStep = this.selectStep.bind(this);
+        this.disableAfter = this.disableAfter.bind(this);
+        this.nextStep = this.nextStep.bind(this);
 
         this.onDriverUpdated = this.onDriverUpdated.bind(this);
 
@@ -50,6 +54,37 @@ export class StepperDriver {
             .updateItems(enhance().indexed())
             .updateItems(enhance().selectable())
             .updateItems(enhance().disablable());
+        return this;
+    }
+
+    removeStep(stepIndexToRemove) {
+        console.log("removeStep");
+        this.steps.update(this.steps.rawList
+            .filter((oneStep) => stepIndexToRemove !== oneStep.index)
+            .map((oneStepToReindex, index) => { return { ...oneStepToReindex, index }; })
+        );
+        return this;
+    }
+
+    insertStepBefore(indexForInsertion, icon, title, component) {
+        const stepsBefore = this.steps.rawList.filter(oneStep => oneStep.index < indexForInsertion);
+        const stepsAfter = this.steps
+            .rawList
+            .filter(oneStep => oneStep.index >= indexForInsertion)
+            .map(oneStepWithIndexToUpdate => {
+                return { ...oneStepWithIndexToUpdate, index: (oneStepWithIndexToUpdate.index + 1), }
+            });
+        console.log(stepsAfter);
+        let stepToInsert = enhance().indexed()({
+            icon: icon,
+            title: title,
+            component: component
+        });
+        stepToInsert = enhance().selectable()(stepToInsert);
+        stepToInsert = enhance().disablable()(stepToInsert);
+        stepToInsert.index = indexForInsertion;
+        this.steps.update(stepsBefore.concat([stepToInsert]).concat(stepsAfter));
+        console.log(this.steps.rawList);
         return this;
     }
 
@@ -100,6 +135,16 @@ export class StepperDriver {
         return this;
     }
 
+    disableAfter(indexFrom) {
+        this.steps = this.steps.updateItems((oneItem, index) => {
+            if (index > indexFrom) {
+                return oneItem.disable();
+            }
+            return oneItem;
+        });
+        return this;
+    }
+
     getSelectedIndex() {
         const selectedItem = this.steps.rawList.find(on().selected());
         return selectedItem ? selectedItem.index : -1;
@@ -125,12 +170,17 @@ export class StepperDriver {
         return this;
     }
 
-    nextStep() {
+    innerNextStep() {
         eventReactor().emit(StepperDriverEvents.DRIVER_UPDATED, this.withSelected(this.getSelectedIndex() + 1));
         return this;
     }
 
-    previousStep() {
+    nextStep() {
+        this.withSelected(this.getSelectedIndex() + 1)
+        return this;
+    }
+
+    innerPreviousStep() {
         eventReactor().emit(StepperDriverEvents.DRIVER_UPDATED, this.withSelected(this.getSelectedIndex() - 1));
         return this;
     }
@@ -182,7 +232,7 @@ export function StepComponent({ step, onSelect }) {
 }
 
 
-export function StepperComponent({ driver }) {
+export function StepperComponent({ driver, stepperId = "defaultStepperId" }) {
 
     const [collapsibleInstance, setCollapsibleInstance] = useState(undefined);
 
@@ -212,7 +262,7 @@ export function StepperComponent({ driver }) {
                 if (driver.isLastStep()) {
                     driver.complete();
                 } else {
-                    driver.nextStep();
+                    driver.innerNextStep();
                 }
             }
         }
@@ -232,19 +282,19 @@ export function StepperComponent({ driver }) {
 
     const nextButton = driver.isLastStep() ? <a href="#!" title="Ctrl+Enter" className={when(!driver.nextStepButtonEnabled).thenDisableElement("btn-floating btn-small green")} onClick={() => driver.complete()}>
         <i className="material-icons">check</i>
-    </a> : <a href="#!" title="Ctrl+Enter" className={when(!driver.nextStepButtonEnabled).thenDisableElement("btn-floating btn-small blue")} onClick={() => driver.nextStep()}>
-            <i className="material-icons">navigate_next</i>
-        </a>
+    </a> : <a href="#!" title="Ctrl+Enter" className={when(!driver.nextStepButtonEnabled).thenDisableElement("btn-floating btn-small blue")} onClick={() => driver.innerNextStep()}>
+        <i className="material-icons">navigate_next</i>
+    </a>
 
 
     return (
         <>
             <ul className="collapsible stepper">
-                {driver.steps.displayList.map(oneStep => <StepComponent step={oneStep} key={oneStep.index} onSelect={onStepSelected}></StepComponent>)}
+                {driver.steps.displayList.map(oneStep => <StepComponent step={oneStep} key={`stepComponent-${stepperId}-${oneStep.index}`} onSelect={onStepSelected}></StepComponent>)}
             </ul>
             <ActionMenuComponent alwaysOpen="true">
                 <li>
-                    <a href="#!" className={when(!driver.previousStepButtonEnabled).thenDisableElement("btn-floating btn-small blue")} onClick={() => driver.previousStep()}>
+                    <a href="#!" className={when(!driver.previousStepButtonEnabled).thenDisableElement("btn-floating btn-small blue")} onClick={() => driver.innerPreviousStep()}>
                         <i className="material-icons">navigate_before</i>
                     </a>
                 </li>

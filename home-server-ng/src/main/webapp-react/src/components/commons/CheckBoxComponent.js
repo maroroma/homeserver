@@ -1,7 +1,7 @@
 import React from 'react';
 import "./CheckBoxComponent.scss";
 
-export default function CheckBoxComponent({ dataswitch, onChange, disabled = false }) {
+export default function CheckBoxComponent({ dataswitch, onChange = () => {}, disabled = false }) {
 
     const innerOnChangeHandler = () => onChange(!dataswitch);
 

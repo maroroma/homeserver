@@ -1,0 +1,43 @@
+[ {
+  "id" : "homeserver.books.googleapi.enable",
+  "value" : "false",
+  "description" : "détermine si l'utilisation de l'api google est activée",
+  "readOnly" : false,
+  "moduleId" : "books"
+}, {
+  "id" : "homeserver.books.image.library",
+  "value" : "${homeserver.data.dir}/book-pictures",
+  "description" : "Emplacement pour couvertures des livres",
+  "readOnly" : false,
+  "moduleId" : "books"
+}, {
+  "id" : "homeserver.books.store",
+  "value" : "${homeserver.config.dir}/books.json",
+  "description" : "Database pour le stockage de l'ensemble des livres",
+  "readOnly" : false,
+  "moduleId" : "books"
+}, {
+  "id" : "homeserver.books.sanctuary.api.url",
+  "value" : "https://www.sanctuary.fr/",
+  "description" : "url de base pour l'api sanctuary",
+  "readOnly" : false,
+  "moduleId" : "books"
+}, {
+  "id" : "homeserver.books.googleapi.url",
+  "value" : "https://www.googleapis.com/books/v1/",
+  "description" : "url de base pour l'api google book",
+  "readOnly" : false,
+  "moduleId" : "books"
+}, {
+  "id" : "homeserver.books.series.store",
+  "value" : "${homeserver.config.dir}/books-series.json",
+  "description" : "Database pour le stockage de l'ensemble séries associées aux livres",
+  "readOnly" : false,
+  "moduleId" : "books"
+}, {
+  "id" : "homeserver.books.sanctuary.enable",
+  "value" : "true",
+  "description" : "détermine si l'utilisation de l'api sanctuary est activée",
+  "readOnly" : false,
+  "moduleId" : "books"
+} ]

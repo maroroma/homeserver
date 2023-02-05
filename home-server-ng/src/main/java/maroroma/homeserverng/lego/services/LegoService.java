@@ -1,5 +1,6 @@
 package maroroma.homeserverng.lego.services;
 
+import maroroma.homeserverng.filemanager.services.FileManagerServiceImpl;
 import maroroma.homeserverng.lego.model.Brick;
 import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
@@ -44,6 +45,9 @@ public class LegoService {
 
     @Autowired
     private SecurityManager securityManager;
+
+    @Autowired
+    private FileManagerServiceImpl fileManagerService;
 
 
     public List<Brick> getAllBricks() {
@@ -119,20 +123,24 @@ public class LegoService {
      */
     public void getBrickPicture(String brickId, HttpServletResponse response) {
 
-        // récupération du fichier
-        FileDescriptor toDownload = this.bricksRepo
+        this.fileManagerService.getFile(() -> this.bricksRepo
                 .<Brick>findById(brickId)
-                .map(Brick::getPictureFileId)
-                .map(FileDescriptorFactory::fromId)
-                .map(fileDescriptorFactory -> fileDescriptorFactory.withSecurityManager(securityManager))
-                .map(FileDescriptorFactory::fileDescriptor)
-                .orElseThrow(() -> new RuntimeHomeServerException("impossible de récupérer le picto pour la brique"));
+                .map(Brick::getPictureFileId), response);
 
-
-        if (toDownload.getSize() > 0) {
-            response.setHeader("Content-Length", "" + toDownload.getSize());
-        }
-
-        toDownload.copyTo(Traper.trap(response::getOutputStream));
+//        // récupération du fichier
+//        FileDescriptor toDownload = this.bricksRepo
+//                .<Brick>findById(brickId)
+//                .map(Brick::getPictureFileId)
+//                .map(FileDescriptorFactory::fromId)
+//                .map(fileDescriptorFactory -> fileDescriptorFactory.withSecurityManager(securityManager))
+//                .map(FileDescriptorFactory::fileDescriptor)
+//                .orElseThrow(() -> new RuntimeHomeServerException("impossible de récupérer le picto pour la brique"));
+//
+//
+//        if (toDownload.getSize() > 0) {
+//            response.setHeader("Content-Length", "" + toDownload.getSize());
+//        }
+//
+//        toDownload.copyTo(Traper.trap(response::getOutputStream));
     }
 }

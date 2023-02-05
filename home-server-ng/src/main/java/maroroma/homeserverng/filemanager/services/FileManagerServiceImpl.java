@@ -18,6 +18,7 @@ import maroroma.homeserverng.tools.streaming.input.UploadFileStream;
 import maroroma.homeserverng.tools.streaming.ouput.StreamingFileSender;
 import maroroma.homeserverng.tools.streaming.ouput.StreamingFileSenderException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -177,7 +180,7 @@ public class FileManagerServiceImpl {
 	 * @param response port le flux à modifier.
 	 * @throws HomeServerException -
 	 */
-	public void getFile(final String base64FileName, final HttpServletResponse response) throws HomeServerException {
+	public void getFile(final String base64FileName, final HttpServletResponse response) {
 
 		// récupération du fichier
 		FileDescriptor toDownload = FileDescriptorFactory.fromId(base64FileName)
@@ -189,6 +192,13 @@ public class FileManagerServiceImpl {
 		}
 
 		toDownload.copyTo(Traper.trap(response::getOutputStream));
+	}
+
+	public void getFile(Supplier<Optional<String>> fileIdSupplier, final HttpServletResponse httpServletResponse) {
+		fileIdSupplier.get()
+				.ifPresentOrElse(
+						fileID -> this.getFile(fileID, httpServletResponse),
+						() -> httpServletResponse.setStatus(HttpStatus.NOT_FOUND.value()));
 	}
 
 	/**

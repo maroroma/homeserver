@@ -1,4 +1,4 @@
-import eventReactor from "../../../eventReactor/EventReactor"
+import eventReactor from "../../../eventReactor/EventReactor";
 
 
 export const FILE_SELECTED_CHANGE = 'FILE_SELECTED';

@@ -20,8 +20,8 @@ export default function on() {
             // return previousResult;
 
             return expectedStrings
-            .map(oneExpectedString => stringContains(oneExpectedString, extractor))
-            .reduce((previousResult, currentFilter) => previousResult && currentFilter(oneItemToTest), true);
+                .map(oneExpectedString => stringContains(oneExpectedString, extractor))
+                .reduce((previousResult, currentFilter) => previousResult && currentFilter(oneItemToTest), true);
 
         }
 
@@ -52,6 +52,14 @@ export default function on() {
         return oneItem => oneItem !== undefined;
     }
 
+    const exists = (extractor = underTest => underTest) => {
+        return oneItem => defined(extractor)(oneItem) && notNull(extractor)(oneItem);
+    }
+
+    const doesntExist = (extractor = underTest => underTest) => {
+        return oneItem => { return !defined(extractor)(oneItem) || !notNull(extractor)(oneItem) };
+    }
+
     return {
         stringContains: stringContains,
         selected: selected,
@@ -62,7 +70,9 @@ export default function on() {
         stringMatches: stringMatches,
         notNull: notNull,
         stringContainsOneOf: stringContainsOneOf,
-        stringContainsAllOf: stringContainsAllOf
+        stringContainsAllOf: stringContainsAllOf,
+        exists: exists,
+        doesntExist: doesntExist
     }
 }
 

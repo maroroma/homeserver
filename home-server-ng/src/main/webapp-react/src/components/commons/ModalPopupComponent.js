@@ -86,3 +86,8 @@ export function usePopupDriver(popupStartConfig) {
         data: {}
     });
 }
+
+export function getPopupInstance(id, innerPopupInstanceClose = () => {}) {
+    var elems = document.querySelectorAll('#' + id);
+    return window.M.Modal.init(elems, { onCloseEnd: innerPopupInstanceClose })[0];
+}

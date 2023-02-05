@@ -1,0 +1,121 @@
+[ {
+  "id" : "5aab9345-617d-4a87-a3cf-c6c245078ed7",
+  "title" : "plop",
+  "bookIds" : null,
+  "pictureFileId" : null,
+  "completed" : false
+}, {
+  "id" : "9ce8f998-89e8-46f8-9cde-5a2c087d40c3",
+  "title" : "ggggggg",
+  "bookIds" : null,
+  "pictureFileId" : null,
+  "completed" : false
+}, {
+  "id" : "9a04eaba-740d-40d4-a88c-d23945801888",
+  "title" : "glog",
+  "bookIds" : null,
+  "pictureFileId" : null,
+  "completed" : false
+}, {
+  "id" : "a115b592-33f8-48a0-b3c7-3fda90e1ef28",
+  "title" : "glog2",
+  "bookIds" : null,
+  "pictureFileId" : null,
+  "completed" : false
+}, {
+  "id" : "9a66ab49-6dbb-4675-8da6-ea744a26de28",
+  "title" : "bliblu",
+  "bookIds" : null,
+  "pictureFileId" : null,
+  "completed" : false
+}, {
+  "id" : "ad35783f-fc92-4a4e-acce-213c87fd356e",
+  "title" : "ccccc",
+  "bookIds" : null,
+  "pictureFileId" : null,
+  "completed" : false
+}, {
+  "id" : "a1e6e1fd-afcc-42ae-887c-f692b3708096",
+  "title" : "gleach",
+  "bookIds" : null,
+  "pictureFileId" : null,
+  "completed" : false
+}, {
+  "id" : "1c56b875-99c9-40be-a509-4509ab7631a1",
+  "title" : "qsdqsd",
+  "bookIds" : null,
+  "pictureFileId" : null,
+  "completed" : false
+}, {
+  "id" : "cb841759-1928-4c5e-9bfc-e7f26d20ce41",
+  "title" : "azert",
+  "bookIds" : null,
+  "pictureFileId" : null,
+  "completed" : false
+}, {
+  "id" : "e3237ade-c7c3-48f4-9cbc-e013215f0016",
+  "title" : "kikou",
+  "bookIds" : null,
+  "pictureFileId" : null,
+  "completed" : false
+}, {
+  "id" : "98377a4d-562f-4960-bc3a-8805c69c94dd",
+  "title" : "zzzzzz",
+  "bookIds" : null,
+  "pictureFileId" : null,
+  "completed" : false
+}, {
+  "id" : "a1fb1b46-f722-4a59-b9d0-bc145233d1fb",
+  "title" : "Evangelion",
+  "bookIds" : [ "9b69ac88-3091-4277-8da6-8b3af989efc6" ],
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXDliNjlhYzg4LTMwOTEtNDI3Ny04ZGE2LThiM2FmOTg5ZWZjNi5ib29rUGljdHVyZQ==",
+  "completed" : false
+}, {
+  "id" : "27c73c86-ba61-4af7-8ae4-d3396767f656",
+  "title" : "Gunnm Mars Chronicle",
+  "bookIds" : [ "df771131-0091-47fa-9f57-78e29efe4f1d" ],
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXGRmNzcxMTMxLTAwOTEtNDdmYS05ZjU3LTc4ZTI5ZWZlNGYxZC5ib29rUGljdHVyZQ==",
+  "completed" : false
+}, {
+  "id" : "6cde06bc-eab9-4b0e-b41e-6ec0bfa33b50",
+  "title" : "Naruto",
+  "bookIds" : [ "a412fdd3-a44f-4461-bfcf-91f0307e8bf9", "c2a96122-fa27-4445-9607-e41282fe327b" ],
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXGE0MTJmZGQzLWE0NGYtNDQ2MS1iZmNmLTkxZjAzMDdlOGJmOS5ib29rUGljdHVyZQ==",
+  "completed" : false
+}, {
+  "id" : "3fdd39ed-2b82-4776-8c5e-195c370673e6",
+  "title" : "bleach",
+  "bookIds" : [ "53bd712d-603e-420d-8928-6c38c6a12f40", "680f7027-8efb-4e8f-98f2-49bedede1dac", "83173dcf-1d2b-4fb5-ae93-96822ff68db4", "9147ddcc-c856-40fc-b6ba-1de1a57e1d7f", "680f7027-8efb-4e8f-98f2-49bedede1dac", "8edd76cf-26f6-4b30-a474-c07795c8e776" ],
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXDgzMTczZGNmLTFkMmItNGZiNS1hZTkzLTk2ODIyZmY2OGRiNC5ib29rUGljdHVyZQ==",
+  "completed" : false
+}, {
+  "id" : "f3a31197-353e-458a-8ff6-c6080d154ed2",
+  "title" : "Gunnm Last Order",
+  "bookIds" : [ "88487525-d4cf-441e-a609-f09088bd8ddd", "47d95aa8-02d9-41c0-843a-6bafec70ad99", "6028825f-ba38-43c3-9ee8-72684e75fe49", "2ce3228e-2824-4b16-b238-0c0acaf51f53" ],
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXDg4NDg3NTI1LWQ0Y2YtNDQxZS1hNjA5LWYwOTA4OGJkOGRkZC5ib29rUGljdHVyZQ==",
+  "completed" : false
+}, {
+  "id" : "cbfe79a8-50f1-4c16-b154-a2587c6d449b",
+  "title" : "Asterix",
+  "bookIds" : [ ],
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXGMxY2U0M2YxLTgyNGEtNDdiMS05NDAzLTJiMmU5MDQyZWNiMi5ib29rUGljdHVyZQ==",
+  "completed" : true
+}, {
+  "id" : "25b19a8b-e52a-488e-bdf4-f12e36c0c707",
+  "title" : "azd",
+  "bookIds" : [ "3b1a2d60-a5fb-4cce-b6bf-1129dff9507e", "f359fde5-30a9-4373-85c2-ad4a10314a11" ],
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXGYzNTlmZGU1LTMwYTktNDM3My04NWMyLWFkNGExMDMxNGExMS5ib29rUGljdHVyZQ==",
+  "completed" : true
+}, {
+  "id" : "3374b979-5b71-4cbc-811b-617d0f04108e",
+  "title" : "Dragon Quest Dai",
+  "bookIds" : [ "6a50bea9-6b87-4436-a8b6-3ed7450f8b03" ],
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXDZhNTBiZWE5LTZiODctNDQzNi1hOGI2LTNlZDc0NTBmOGIwMy5ib29rUGljdHVyZQ==",
+  "completed" : true
+}, {
+  "id" : "33fff1ef-bde9-4eeb-96d5-2f22a7401059",
+  "title" : "adadadad",
+  "bookIds" : [ "a8c8d387-cdc9-4a5b-9dcd-38dac7263b2b" ],
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXGE4YzhkMzg3LWNkYzktNGE1Yi05ZGNkLTM4ZGFjNzI2M2IyYi5ib29rUGljdHVyZQ==",
+  "completed" : true
+} ]

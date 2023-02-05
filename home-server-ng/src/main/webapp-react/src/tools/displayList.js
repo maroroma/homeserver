@@ -34,6 +34,7 @@ export class DisplayList {
         this.updateAllSelectableItems = this.updateAllSelectableItems.bind(this);
         this.updateSelectableItems = this.updateSelectableItems.bind(this);
         this.getSelectedItems = this.getSelectedItems.bind(this);
+        this.getFirstSelectedItem = this.getFirstSelectedItem.bind(this);
 
         this.currentFilter = on().passthrough();
         this.currentSort = sort().neutral();
@@ -79,6 +80,14 @@ export class DisplayList {
 
     getSelectedItems() {
         return this.rawList.filter(on().selected());
+    }
+
+    getFirstSelectedItem() {
+        if (this.hasNoSelectedItems()) {
+            return null;
+        } else {
+            return this.getSelectedItems()[0];
+        }
     }
 
     selectionMemento(idResolver = oneItem => oneItem.id) {

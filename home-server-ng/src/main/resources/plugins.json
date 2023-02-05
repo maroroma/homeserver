@@ -20,6 +20,9 @@
   "id" : "network",
   "enabled" : true
 }, {
+  "id" : "books",
+  "enabled" : true
+}, {
   "id" : "lego",
   "enabled" : true
 }, {

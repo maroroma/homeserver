@@ -1,0 +1,119 @@
+{
+  "kind": "books#volumes",
+  "totalItems": 1,
+  "items": [
+    {
+      "kind": "books#volume",
+      "id": "kqccAwAAQBAJ",
+      "etag": "DfqTWUiNdbo",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/kqccAwAAQBAJ",
+      "volumeInfo": {
+        "title": "Bleach -",
+        "subtitle": "Goodbye Parakeet, Goodnite my sista",
+        "authors": [
+          "Tite Kubo"
+        ],
+        "publisher": "Glénat Manga",
+        "publishedDate": "2014-03-19",
+        "description": "Adolescent de quinze ans, Ichigo Kurosaki possède un don particulier : celui de voir les esprits. Un jour, il croise la route d'une belle Shinigami (un être spirituel) en train de pourchasser une \"âme perdue\", un esprit maléfique qui hante notre monde et n'arrive pas à trouver le repos. Mise en difficulté par son ennemi, la jeune fille décide alors de prêter une partie de ses pouvoirs à Ichigo, mais ce dernier hérite finalement de toute la puissance du Shinigami. Contraint d'assumer son nouveau statut, Ichigo va devoir gérer ses deux vies : celle de lycéen ordinaire, et celle de chasseur de démons... Bleach est un manga d'action au rythme trépidant, au graphisme soigné et à l'intrigue palpitante.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9782331009518"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "2331009511"
+          }
+        ],
+        "readingModes": {
+          "text": true,
+          "image": true
+        },
+        "pageCount": 192,
+        "printType": "BOOK",
+        "categories": [
+          "Comics & Graphic Novels"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": true,
+        "contentVersion": "1.2.2.0.preview.3",
+        "panelizationSummary": {
+          "containsEpubBubbles": true,
+          "containsImageBubbles": true,
+          "epubBubbleVersion": "e52e5fd305baa65c_A",
+          "imageBubbleVersion": "e52e5fd305baa65c_A"
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=kqccAwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=kqccAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "fr",
+        "previewLink": "http://books.google.fr/books?id=kqccAwAAQBAJ&printsec=frontcover&dq=isbn:9782331009518&hl=&cd=1&source=gbs_api",
+        "infoLink": "https://play.google.com/store/books/details?id=kqccAwAAQBAJ&source=gbs_api",
+        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=kqccAwAAQBAJ",
+        "seriesInfo": {
+          "kind": "books#volume_series_info",
+          "shortSeriesBookTitle": "Goodbye Parakeet, Goodnite my sista",
+          "bookDisplayNumber": "2",
+          "volumeSeries": [
+            {
+              "seriesId": "LXfZFwAAABD1YM",
+              "seriesBookType": "COLLECTED_EDITION",
+              "orderNumber": 2
+            }
+          ]
+        }
+      },
+      "saleInfo": {
+        "country": "FR",
+        "saleability": "FOR_SALE",
+        "isEbook": true,
+        "listPrice": {
+          "amount": 4.99,
+          "currencyCode": "EUR"
+        },
+        "retailPrice": {
+          "amount": 4.99,
+          "currencyCode": "EUR"
+        },
+        "buyLink": "https://play.google.com/store/books/details?id=kqccAwAAQBAJ&rdid=book-kqccAwAAQBAJ&rdot=1&source=gbs_api",
+        "offers": [
+          {
+            "finskyOfferType": 1,
+            "listPrice": {
+              "amountInMicros": 4990000,
+              "currencyCode": "EUR"
+            },
+            "retailPrice": {
+              "amountInMicros": 4990000,
+              "currencyCode": "EUR"
+            },
+            "giftable": true
+          }
+        ]
+      },
+      "accessInfo": {
+        "country": "FR",
+        "viewability": "PARTIAL",
+        "embeddable": true,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": true,
+          "acsTokenLink": "http://books.google.fr/books/download/Bleach-sample-epub.acsm?id=kqccAwAAQBAJ&format=epub&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api"
+        },
+        "pdf": {
+          "isAvailable": true,
+          "acsTokenLink": "http://books.google.fr/books/download/Bleach-sample-pdf.acsm?id=kqccAwAAQBAJ&format=pdf&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api"
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=kqccAwAAQBAJ&hl=&source=gbs_api",
+        "accessViewStatus": "SAMPLE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "Adolescent de quinze ans, Ichigo Kurosaki possède un don particulier : celui de voir les esprits."
+      }
+    }
+  ]
+}

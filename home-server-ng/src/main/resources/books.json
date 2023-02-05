@@ -1,0 +1,241 @@
+[ {
+  "id" : "f359fde5-30a9-4373-85c2-ad4a10314a11",
+  "title" : "title2",
+  "subtitle" : "subtitle",
+  "isbns" : [ "sdqsdqsd" ],
+  "author" : "author",
+  "pageCount" : 32,
+  "initialImageLink" : "http://books.google.com/books/content?id=fpBtDgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+  "serieInfo" : {
+    "serieId" : "seriedId",
+    "serieName" : "serieName",
+    "orderInSerie" : "3"
+  },
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXGYzNTlmZGU1LTMwYTktNDM3My04NWMyLWFkNGExMDMxNGExMS5ib29rUGljdHVyZQ==",
+  "owner" : null,
+  "scrapperSource" : null
+}, {
+  "id" : "71f6c778-c31d-4f37-abf9-3e46a2e724a4",
+  "title" : "The title",
+  "subtitle" : "the subtitle",
+  "isbns" : [ "azdazdazd" ],
+  "author" : "the author",
+  "pageCount" : 32,
+  "initialImageLink" : "http://books.google.com/books/content?id=fpBtDgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+  "serieInfo" : {
+    "serieId" : "seriedId",
+    "serieName" : "serieName",
+    "orderInSerie" : "3"
+  },
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXDcxZjZjNzc4LWMzMWQtNGYzNy1hYmY5LTNlNDZhMmU3MjRhNC5ib29rUGljdHVyZQ==",
+  "owner" : null,
+  "scrapperSource" : null
+}, {
+  "id" : "680f7027-8efb-4e8f-98f2-49bedede1dac",
+  "title" : "Bleach 1 -",
+  "subtitle" : "Death and Strawberry",
+  "isbns" : [ "8484499766", "9788484499763" ],
+  "author" : "Tite Kubo",
+  "pageCount" : 189,
+  "initialImageLink" : "http://books.google.com/books/content?id=0TYsLQAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+  "serieInfo" : {
+    "serieId" : "3fdd39ed-2b82-4776-8c5e-195c370673e6",
+    "serieName" : "bleach",
+    "orderInSerie" : "1"
+  },
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXDY4MGY3MDI3LThlZmItNGU4Zi05OGYyLTQ5YmVkZWRlMWRhYy5ib29rUGljdHVyZQ==",
+  "owner" : null,
+  "scrapperSource" : null
+}, {
+  "id" : "a8c8d387-cdc9-4a5b-9dcd-38dac7263b2b",
+  "title" : "test",
+  "subtitle" : "subtitle que je viens de modifier",
+  "isbns" : [ "azdazdazd" ],
+  "author" : "author",
+  "pageCount" : 32,
+  "initialImageLink" : "http://books.google.com/books/content?id=fpBtDgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+  "serieInfo" : {
+    "serieId" : "33fff1ef-bde9-4eeb-96d5-2f22a7401059",
+    "serieName" : "adadadad",
+    "orderInSerie" : null
+  },
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXGE4YzhkMzg3LWNkYzktNGE1Yi05ZGNkLTM4ZGFjNzI2M2IyYi5ib29rUGljdHVyZQ==",
+  "owner" : null,
+  "scrapperSource" : null
+}, {
+  "id" : "9b69ac88-3091-4277-8da6-8b3af989efc6",
+  "title" : "Evangelion -",
+  "subtitle" : "Tome 1 i dont have a subtitle yet its me mario",
+  "isbns" : [ "9875620424", "9789875620421" ],
+  "author" : "Yoshiyuki Sadamoto",
+  "pageCount" : 92,
+  "initialImageLink" : "http://books.google.com/books/content?id=qPHMPwAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+  "serieInfo" : {
+    "serieId" : "a1fb1b46-f722-4a59-b9d0-bc145233d1fb",
+    "serieName" : "Evangelion",
+    "orderInSerie" : "1"
+  },
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXDliNjlhYzg4LTMwOTEtNDI3Ny04ZGE2LThiM2FmOTg5ZWZjNi5ib29rUGljdHVyZQ==",
+  "owner" : null,
+  "scrapperSource" : null
+}, {
+  "id" : "df771131-0091-47fa-9f57-78e29efe4f1d",
+  "title" : "Gunnm Mars Chronicle - Tome 08",
+  "subtitle" : null,
+  "isbns" : [ "9782331074363", "2331074364" ],
+  "author" : "Yukito Kishiro",
+  "pageCount" : 162,
+  "initialImageLink" : "http://books.google.com/books/content?id=0511EAAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+  "serieInfo" : {
+    "serieId" : "27c73c86-ba61-4af7-8ae4-d3396767f656",
+    "serieName" : "Gunnm Mars Chronicle",
+    "orderInSerie" : "8"
+  },
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXGRmNzcxMTMxLTAwOTEtNDdmYS05ZjU3LTc4ZTI5ZWZlNGYxZC5ib29rUGljdHVyZQ==",
+  "owner" : null,
+  "scrapperSource" : null
+}, {
+  "id" : "6a50bea9-6b87-4436-a8b6-3ed7450f8b03",
+  "title" : "Dragon Quest - ",
+  "subtitle" : "Disciples of Avan",
+  "isbns" : [ "1974728935", "9781974728930" ],
+  "author" : "Riku Sanjo",
+  "pageCount" : 336,
+  "initialImageLink" : "http://books.google.com/books/content?id=SOqLzgEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+  "serieInfo" : {
+    "serieId" : "3374b979-5b71-4cbc-811b-617d0f04108e",
+    "serieName" : "Dragon Quest Dai",
+    "orderInSerie" : "1"
+  },
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXDZhNTBiZWE5LTZiODctNDQzNi1hOGI2LTNlZDc0NTBmOGIwMy5ib29rUGljdHVyZQ==",
+  "owner" : null,
+  "scrapperSource" : null
+}, {
+  "id" : "47d95aa8-02d9-41c0-843a-6bafec70ad99",
+  "title" : "Gunnm Last Order #11",
+  "subtitle" : "test sanctuary",
+  "isbns" : null,
+  "author" : "Yukito Kishiro",
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/300/66458.jpg",
+  "serieInfo" : {
+    "serieId" : "f3a31197-353e-458a-8ff6-c6080d154ed2",
+    "serieName" : "Gunnm Last Order",
+    "orderInSerie" : "11"
+  },
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXDQ3ZDk1YWE4LTAyZDktNDFjMC04NDNhLTZiYWZlYzcwYWQ5OS5ib29rUGljdHVyZQ==",
+  "owner" : null,
+  "scrapperSource" : null
+}, {
+  "id" : "9147ddcc-c856-40fc-b6ba-1de1a57e1d7f",
+  "title" : "Bleach -",
+  "subtitle" : "Fourteen days for conspiracy",
+  "isbns" : [ "9782331013355", "2331013357" ],
+  "author" : "Tite Kubo",
+  "pageCount" : 192,
+  "initialImageLink" : "http://books.google.com/books/content?id=L6eZBAAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+  "serieInfo" : {
+    "serieId" : "3fdd39ed-2b82-4776-8c5e-195c370673e6",
+    "serieName" : "bleach",
+    "orderInSerie" : "9"
+  },
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXDkxNDdkZGNjLWM4NTYtNDBmYy1iNmJhLTFkZTFhNTdlMWQ3Zi5ib29rUGljdHVyZQ==",
+  "owner" : "Rodolphe",
+  "scrapperSource" : null
+}, {
+  "id" : "8edd76cf-26f6-4b30-a474-c07795c8e776",
+  "title" : "Bleach -",
+  "subtitle" : "The lust",
+  "isbns" : [ "9782331027598", "2331027595" ],
+  "author" : "Tite Kubo",
+  "pageCount" : 192,
+  "initialImageLink" : "http://books.google.com/books/content?id=Qe4gDgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+  "serieInfo" : {
+    "serieId" : "3fdd39ed-2b82-4776-8c5e-195c370673e6",
+    "serieName" : "bleach",
+    "orderInSerie" : "40"
+  },
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXDhlZGQ3NmNmLTI2ZjYtNGIzMC1hNDc0LWMwNzc5NWM4ZTc3Ni5ib29rUGljdHVyZQ==",
+  "owner" : "Rodolphe",
+  "scrapperSource" : null
+}, {
+  "id" : "6028825f-ba38-43c3-9ee8-72684e75fe49",
+  "title" : "Gunnm Last Order",
+  "subtitle" : "",
+  "isbns" : [ "2723490726", "9782723490726" ],
+  "author" : "Kishiro Yukito",
+  "pageCount" : 192,
+  "initialImageLink" : null,
+  "serieInfo" : {
+    "serieId" : "f3a31197-353e-458a-8ff6-c6080d154ed2",
+    "serieName" : "Gunnm Last Order",
+    "orderInSerie" : ""
+  },
+  "pictureFileId" : null,
+  "owner" : null,
+  "scrapperSource" : null
+}, {
+  "id" : "c2a96122-fa27-4445-9607-e41282fe327b",
+  "title" : "Naruto -",
+  "subtitle" : "Tome 61",
+  "isbns" : [ "9782505046202", "2505046204" ],
+  "author" : "Masashi Kishimoto",
+  "pageCount" : 224,
+  "initialImageLink" : "http://books.google.com/books/content?id=KGAuAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+  "serieInfo" : {
+    "serieId" : "6cde06bc-eab9-4b0e-b41e-6ec0bfa33b50",
+    "serieName" : "Naruto",
+    "orderInSerie" : "61"
+  },
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXGMyYTk2MTIyLWZhMjctNDQ0NS05NjA3LWU0MTI4MmZlMzI3Yi5ib29rUGljdHVyZQ==",
+  "owner" : "à moi",
+  "scrapperSource" : null
+}, {
+  "id" : "2ce3228e-2824-4b16-b238-0c0acaf51f53",
+  "title" : "Battle Angel Alita - Last Order vol. 11",
+  "subtitle" : "",
+  "isbns" : [ "9786555942330", "6555942339" ],
+  "author" : "Yukito Kishiro",
+  "pageCount" : 391,
+  "initialImageLink" : "http://books.google.com/books/content?id=O_lNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+  "serieInfo" : {
+    "serieId" : "f3a31197-353e-458a-8ff6-c6080d154ed2",
+    "serieName" : "Gunnm Last Order",
+    "orderInSerie" : null
+  },
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXDJjZTMyMjhlLTI4MjQtNGIxNi1iMjM4LTBjMGFjYWY1MWY1My5ib29rUGljdHVyZQ==",
+  "owner" : "Tom",
+  "scrapperSource" : null
+}, {
+  "id" : "88487525-d4cf-441e-a609-f09088bd8ddd",
+  "title" : "Gunnm Last Order -",
+  "subtitle" : "Tome 1",
+  "isbns" : [ "9782331045066", "2331045062" ],
+  "author" : "Yukito Kishiro",
+  "pageCount" : 344,
+  "initialImageLink" : "http://books.google.com/books/content?id=Qge1DwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+  "serieInfo" : {
+    "serieId" : "f3a31197-353e-458a-8ff6-c6080d154ed2",
+    "serieName" : "Gunnm Last Order",
+    "orderInSerie" : ""
+  },
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXDg4NDg3NTI1LWQ0Y2YtNDQxZS1hNjA5LWYwOTA4OGJkOGRkZC5ib29rUGljdHVyZQ==",
+  "owner" : "Roro",
+  "scrapperSource" : null
+}, {
+  "id" : "83173dcf-1d2b-4fb5-ae93-96822ff68db4",
+  "title" : "Bleach -",
+  "subtitle" : "The Death and the Strawberry",
+  "isbns" : [ "9782331033063", "2331033064" ],
+  "author" : "Tite Kubo",
+  "pageCount" : 240,
+  "initialImageLink" : "http://books.google.com/books/content?id=cLo6DwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+  "serieInfo" : {
+    "serieId" : "3fdd39ed-2b82-4776-8c5e-195c370673e6",
+    "serieName" : "bleach",
+    "orderInSerie" : "74"
+  },
+  "pictureFileId" : "QzpcdG1wXGhvbWVzZXJ2ZXJcZGF0YVxib29rLXBpY3R1cmVzXDgzMTczZGNmLTFkMmItNGZiNS1hZTkzLTk2ODIyZmY2OGRiNC5ib29rUGljdHVyZQ==",
+  "owner" : "Roro",
+  "scrapperSource" : null
+} ]

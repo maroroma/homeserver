@@ -3,6 +3,7 @@ export default function toaster() {
 
     const plopError = errorContent => plop(errorContent, "red");
     const plopSuccess = successContent => plop(successContent, "green");
+    const plopWarning = warningContent => plop(warningContent, "orange");
     const plopAndWait = (awaited, content) => {
         plop(content, "blue", undefined);
         return awaited().then(response => {
@@ -14,6 +15,7 @@ export default function toaster() {
     return {
         plopError: plopError,
         plopSuccess: plopSuccess,
-        plopAndWait: plopAndWait
+        plopAndWait: plopAndWait,
+        plopWarning: plopWarning
     }
 }

@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -33,11 +34,28 @@ public class TemplateBuilder {
         return this;
     }
 
+    public TemplateBuilder addParameter(String key, int value) {
+        return this.addParameter(key, Integer.toString(value));
+    }
+
     public <REPEATED_ITEM> TemplateBuilder addArrayParameter(String key, List<REPEATED_ITEM> items, Function<REPEATED_ITEM, String> itemToLineTransformer) {
         return this.addParameter(key, items
                 .stream()
                 .map(itemToLineTransformer)
                 .collect(Collectors.joining()));
+    }
+
+    public <REPEATED_ITEM> TemplateBuilder addArrayParameter(String key,
+                                                             String subTemplatePath,
+                                                             List<REPEATED_ITEM> items,
+                                                             BiConsumer<TemplateBuilder, REPEATED_ITEM> builderAppender) {
+        return this.addArrayParameter(key, items, oneItem -> {
+            TemplateBuilder templateBuilder = TemplateBuilder.create().withTemplate(subTemplatePath);
+
+            builderAppender.accept(templateBuilder, oneItem);
+
+            return templateBuilder.resolve();
+        });
     }
 
     public TemplateBuilder withTemplate(String templatePath) {
@@ -47,6 +65,7 @@ public class TemplateBuilder {
 
     /**
      * Retourne une chaine issue d'un template dont les variables ont été résolues
+     *
      * @return
      */
     public String resolve() {

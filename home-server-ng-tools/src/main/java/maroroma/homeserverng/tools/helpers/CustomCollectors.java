@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Permet de produire des {@link Collector} propre à l'application.
@@ -21,7 +22,7 @@ public abstract class CustomCollectors {
     Collector<List<T>, ?, List<T>> toAgregatedList() {
 		return Collector.of(
 				// création du type de retour (supplier de type List<T>)
-				() -> new ArrayList<T>(),
+				ArrayList::new,
 				// méthode utilisée pour ajouter des éléments dans le type de retour (agregator , BiConsumer<List<T>, List<T>>)
 				(container, elementToAdd) -> container.addAll(elementToAdd),
 				// méthode utilisée pour cumuler deux container. (binary operator, BinaryOperator<List<T>, List<T>>)
@@ -47,43 +48,13 @@ public abstract class CustomCollectors {
 					return left;
 				});
 	}
-	
-	
-//	/**
-//	 * Collecte l'ensemble des données sous la forme d'un {@link String} concaténé.
-//	 * @return -
-//	 */
-//	public static 
-//    Collector<String, ?, StringBuilder> toConcatenatedString() {
-//		return Collector.of(
-//				// création du type de retour (supplier de type StringBuilder)
-//				() -> new StringBuilder(),
-//				// méthode utilisée pour ajouter des éléments dans le type de retour (agregator , BiConsumer<List<T>, List<T>>)
-//				(container, elementToAdd) -> container.append(elementToAdd),
-//				// méthode utilisée pour cumuler deux container. (binary operator, BinaryOperator<List<T>, List<T>>)
-//                (left, right) -> { 
-//                	left.append(right.toString()); 
-//                	return left; 
-//                	});
-//    }
-//	
-//	/**
-//	 * Retourne l'ensemble des données sous la forme d'une chaine concaténée avec un séparateur donné.
-//	 * @param separator -
-//	 * @return -
-//	 */
-//	public static 
-//    Collector<String, ?, StringBuilder> toConcatenatedString(final String separator) {
-//		return Collector.of(
-//				// création du type de retour (supplier de type StringBuilder)
-//				() -> new StringBuilder(),
-//				// méthode utilisée pour ajouter des éléments dans le type de retour (agregator , BiConsumer<List<T>, List<T>>)
-//				(container, elementToAdd) -> container.append(elementToAdd).append(separator),
-//				// méthode utilisée pour cumuler deux container. (binary operator, BinaryOperator<List<T>, List<T>>)
-//                (left, right) -> { 
-//                	left.append(right.toString()); 
-//                	return left; 
-//                	});
-//    }
-	
+
+	public static <T> Collector<T, ?, FluentList<T>> toFluentList() {
+		return Collector.of(
+				// factory pour le type qu'on veut produire
+				FluentList::new,
+				ArrayList::add,
+				FluentList::addAllAnd);
+	}
+
 }
