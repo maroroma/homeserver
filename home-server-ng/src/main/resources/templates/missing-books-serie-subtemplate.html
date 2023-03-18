@@ -1,15 +1,15 @@
 <tr style="width:100%">
-    <td colspan="2" style="padding-left:20px;background-color: #f3e5f5"><h3>{{serieTitle}}</h3></td>
-</tr>
-<tr>
-    <td style="font-weight: bold;text-align: left;width: 20%; padding-left:10px">Déjà dans la collection</td>
-    <td style="text-align: left">{{currentBooksInSerie}}</td>
+    <td style="padding-left:20px;background-color: #f3e5f5" colspan="2">
+        <h3>${serieTitle} : ${currentBooksInSerie} tomes déjà dans la collection</h3>
+    </td>
 </tr>
 <tr>
     <td style="font-weight: bold;text-align: left;width: 20%; padding-left:10px">Dernier tome</td>
-    <td>{{maxBookInSerie}}</td>
+    <td>${maxBookInSerie}</td>
 </tr>
 <tr>
     <td style="font-weight: bold;text-align: left;width: 20%; padding-left:10px">Manquants</td>
-    <td>{{estimatedMissingBook}}</td>
+    <td>
+        ${estimatedMissingBooks}
+    </td>
 </tr>

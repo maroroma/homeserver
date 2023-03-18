@@ -147,20 +147,6 @@ export default function AllBooksComponent() {
 
     }, [displaySettings]);
 
-    useEffect(() => {
-        // const unsubscriveSaveBook = editBookComponentEventReactor().onSaveBook(bookToSave => {
-        //     bookApi().saveBook(bookToSave)
-        //         .then(result => editBookComponentEventReactor().cancel())
-        //         .then(result => bookApi().getAllBooks())
-        //         .then(reloadAllBooks);
-        // });
-
-        // return () => {
-        //     unsubscriveSaveBook();
-        // }
-
-    }, [allBooks]);
-
     // affichage de la page d'ajout
     const goToAddNewBook = () => {
         mofRouterEventReactor().selectedModuleChange(modulesAdapter().getMenuDescriptorForPath("/books/search"));

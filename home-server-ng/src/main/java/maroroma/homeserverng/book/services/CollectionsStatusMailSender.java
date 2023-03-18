@@ -17,11 +17,9 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 @Component
 public class CollectionsStatusMailSender {
@@ -74,10 +72,11 @@ public class CollectionsStatusMailSender {
                                 .addParameter("serieTitle", oneItem.getSerieTitle())
                                 .addParameter("currentBooksInSerie", oneItem.getCurrentBooksInSerie())
                                 .addParameter("maxBookInSerie", oneItem.getMaxBookInSerie())
-                                .addParameter("estimatedMissingBook", oneItem.getEstimatedMissingBook()
-                                        .stream()
-                                        .map(Object::toString)
-                                        .collect(Collectors.joining("<br />")))
+                                .addArrayParameter("estimatedMissingBooks",
+                                        this.templatesDirectory.getResolvedValue() + "/estimated-missing-books-subtemplate.html",
+                                        oneItem.getEstimatedMissingBook(),
+                                        (subTemplateBuilderForMissingBooks, oneMissingBookNumber) -> subTemplateBuilderForMissingBooks.addParameter("oneMissingBook", oneMissingBookNumber)
+                                )
                 )
                 .resolve();
 
@@ -117,7 +116,7 @@ public class CollectionsStatusMailSender {
                 .sorted()
                 .toList();
 
-        return IntStream.range(0, CollectionUtils.lastElement(actualVolumes))
+        return IntStream.range(1, CollectionUtils.lastElement(actualVolumes))
                 .filter(oneVolume -> !actualVolumes.contains(oneVolume))
                 .boxed()
                 .toList();

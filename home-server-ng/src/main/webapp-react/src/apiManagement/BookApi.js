@@ -63,6 +63,16 @@ export default function bookApi() {
             .catch(er => console.error(er));
     };
 
+    const sendMailForMissingBooks = (emails) => {
+        return fetch(`${apiRoot()}/books/mail/missing`, {
+            method: 'POST',
+            headers: defaultJsonHeaders(),
+            body: JSON.stringify({ emails: emails })
+        })
+            .then(errorHandler(`Erreur rencontrée lors l'émission du mail`, "Mail envoyé"))
+            .catch(er => console.error(er));
+    };
+
     const saveBook = (bookToSave) => {
         return fetch(`${apiRoot()}/books`, {
             method: 'PUT',
@@ -130,6 +140,8 @@ export default function bookApi() {
         }
     }
 
+
+
     return {
         findBooksByIsbn: findBooksByIsbn,
         findBooksByGenericQuery: findBooksByGenericQuery,
@@ -146,6 +158,7 @@ export default function bookApi() {
         findBooksByIsbnPicture: findBooksByIsbnPicture,
         saveSerie: saveSerie,
         findBooksBySerieResource: findBooksBySerieResource,
-        importBooksIntoSerie:importBooksIntoSerie
+        importBooksIntoSerie: importBooksIntoSerie,
+        sendMailForMissingBooks: sendMailForMissingBooks
     }
 }

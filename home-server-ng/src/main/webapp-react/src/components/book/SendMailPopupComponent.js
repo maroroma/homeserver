@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import bookApi from '../../apiManagement/BookApi';
 import eventReactor from '../../eventReactor/EventReactor';
-import { useDisplayList } from '../../tools/displayList';
+import {useDisplayList} from '../../tools/displayList';
 import enhance from '../../tools/enhance';
 import keys from '../../tools/keys';
 import popup from '../../tools/popup';
-import { when } from '../../tools/when';
+import {when} from '../../tools/when';
 
 export function sendMailWithMissingBooksEventReactor() {
     const openSendMailPopup = () => eventReactor().emit("OPEN_SEND_MISSING_BOOKS_POPUP");
@@ -69,6 +69,10 @@ export function SendMailPopupComponent() {
         setMailingList({ ...mailingList.update([...mailingList.rawList.filter(oneMail => oneMail.index !== index)]) })
     }
 
+    const sendMail = () => {
+        bookApi().sendMailForMissingBooks(mailingList.rawList.map(oneMail => oneMail.mail)).then(result => selfPopupInstance.close());
+    }
+
 
     return <div className="modal" id="sendMailPopupInstance">
         <div className="modal-content">
@@ -94,7 +98,7 @@ export function SendMailPopupComponent() {
             </div>
         </div>
         <div className="modal-footer">
-            <button className={when(mailingList.displayList.length === 0).thenDisableElement("btn waves-effect waves-green")}>Envoyer</button>
+            <button className={when(mailingList.displayList.length === 0).thenDisableElement("btn waves-effect waves-green")} onClick={sendMail}>Envoyer</button>
         </div>
     </div>
 
