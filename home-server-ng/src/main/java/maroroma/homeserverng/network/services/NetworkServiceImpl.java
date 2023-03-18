@@ -8,16 +8,16 @@ import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.exceptions.Traper;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.ResourceAccessException;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.io.*;
+import java.net.*;
+import java.util.*;
+import java.util.stream.*;
 
 /**
  * Implémentation de gestion du réseau
@@ -146,19 +146,16 @@ public class NetworkServiceImpl {
 		return this.myIP.getResolvedValue();
 	}
 
+	public String getRealIPAddress() {
+		return Traper.trapOr(() -> InetAddress.getLocalHost().getHostAddress(), () -> "NC");
+	}
+
 	/**
 	 * Retourne le hostname de la machine
 	 * @return
 	 */
 	public String getHostName() {
-		String hostName = "NC";
-		try {
-			hostName = InetAddress.getLocalHost().getHostName();
-		} catch (UnknownHostException e) {
-			log.warn("Impossible de déterminer le nom de l'host");
-		}
-
-		return hostName;
+		return Traper.trapOr(() -> InetAddress.getLocalHost().getHostName(), () -> "NC");
 	}
 
 }

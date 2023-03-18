@@ -6,7 +6,7 @@
   "moduleId" : "notifyer"
 }, {
   "id" : "homeserver.notifyer.mail.smtp.host",
-  "value" : "smtp.gmail.com",
+  "value" : "localhost",
   "description" : "server smtp",
   "readOnly" : false,
   "moduleId" : "notifyer"

@@ -4,8 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import maroroma.homeserverng.tools.model.Drive;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.*;
+import java.util.*;
 
 /**
  * Vue pour connaitre l'état du serveur.
@@ -42,4 +42,9 @@ public class HomeServerStatus {
 	 * Liste des lecteurs logiques.
 	 */
 	private List<Drive> drives;
+
+	/**
+	 * Port sur lequel est démarré l'appli
+	 */
+	private int port;
 }

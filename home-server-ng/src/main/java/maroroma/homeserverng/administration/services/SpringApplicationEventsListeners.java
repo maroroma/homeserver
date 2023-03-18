@@ -1,5 +1,6 @@
 package maroroma.homeserverng.administration.services;
 
+import maroroma.homeserverng.administration.model.HomeServerStatus;
 import maroroma.homeserverng.notifyer.services.CommonNotificatonTypes;
 import maroroma.homeserverng.tools.notifications.NotificationEvent;
 import maroroma.homeserverng.tools.notifications.NotifyerContainer;
@@ -7,8 +8,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.text.*;
+import java.util.*;
 
 /**
  * Centralisation de la capture du cycle de vie spring (démarrage et arrêt)
@@ -41,11 +42,13 @@ public class SpringApplicationEventsListeners {
 
         Date startupDate = new Date(startEvent.getTimestamp());
 
+        HomeServerStatus homeServerStatus = this.serverStatusHolder.getStatus();
+
         notifyerContainer.notify(NotificationEvent.builder()
                 .creationDate(startupDate)
                 .eventType(CommonNotificatonTypes.STARTUP)
-                .title("Démarrage du serveur")
-                .message("Le serveur vient de démarrer à la date suivante : " + simpleDateFormat.format(startupDate))
+                .title("Démarrage du serveur " + homeServerStatus.getHostName())
+                .message("Le serveur est accessible ici : <a href=\"http://" + homeServerStatus.getIpAddress() + ":" + homeServerStatus.getPort() +"\">"+homeServerStatus.getHostName()+"</a>")
                 .build());
     }
 }

@@ -10,7 +10,7 @@ import maroroma.homeserverng.tools.helpers.DriveUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.*;
 
 /**
  * Implémentation du holder du status du server.
@@ -36,6 +36,8 @@ public class ServerStatusHolderImpl {
      */
     private final String homeServerVersion;
 
+    private final int serverPort;
+
     /**
      * Liste des montages unix.
      */
@@ -48,8 +50,10 @@ public class ServerStatusHolderImpl {
     private final NetworkServiceImpl networkService;
 
     public ServerStatusHolderImpl(@Value("${homeserver.version}") String homeServerVersion,
+                                  @Value("${server.port}") int serverPort,
                                   NetworkServiceImpl networkService) {
         this.homeServerVersion = homeServerVersion;
+        this.serverPort = serverPort;
         this.networkService = networkService;
     }
 
@@ -60,8 +64,9 @@ public class ServerStatusHolderImpl {
 
         return HomeServerStatus.builder()
                 .startUpTime(this.startupTime)
-                .ipAddress(this.networkService.getMyIPAddress())
+                .ipAddress(this.networkService.getRealIPAddress())
                 .hostName(this.networkService.getHostName())
+                .port(this.serverPort)
                 .operatingSystem(System.getProperty("os.name"))
                 .drives(DriveUtils.getDrives(this.unixDrives.asFileList()))
                 .version(this.homeServerVersion).build();
