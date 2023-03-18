@@ -12,6 +12,7 @@ import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.helpers.StringUtils;
 import maroroma.homeserverng.tools.template.TemplateBuilder;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -89,6 +90,8 @@ public class CollectionsStatusMailSender {
             mimeMessageHelper.setTo(sendCollectionsStatusRequest.getEmails().toArray(String[]::new));
             mimeMessageHelper.setFrom("homeserverrkt");
             mimeMessageHelper.setText(fullMailBody, true);
+            mimeMessageHelper.addInline("imageResourceName",
+                    new FileSystemResource(this.templatesDirectory.getResolvedValue() +"/assets/home.png"));
         });
     }
 

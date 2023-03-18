@@ -858,4 +858,14 @@
   "title" : "Démarrage du serveur",
   "message" : "Le serveur vient de démarrer à la date suivante : 06:54:37 18/03/2023",
   "creationDate" : "2023/03/18 06:54:37"
+}, {
+  "id" : "9d925e88-ab51-4d14-a7f5-d8e1a926b40d",
+  "title" : "Démarrage du serveur L-5CD2430JM0",
+  "message" : "Le serveur est accessible ici : <a href=\"http://192.168.1.60:80\">L-5CD2430JM0</a>",
+  "creationDate" : "2023/03/18 09:08:57"
+}, {
+  "id" : "d15eb6c5-0155-4ab1-abba-0098a66eb341",
+  "title" : "Démarrage du serveur L-5CD2430JM0",
+  "message" : "Le serveur est accessible ici : <a href=\"http://192.168.1.60:80\">L-5CD2430JM0</a>",
+  "creationDate" : "2023/03/18 09:29:40"
 } ]

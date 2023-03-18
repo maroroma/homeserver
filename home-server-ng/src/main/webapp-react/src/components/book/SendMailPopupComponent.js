@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {administrationApi} from '../../apiManagement/AdministrationApi';
 import bookApi from '../../apiManagement/BookApi';
 import eventReactor from '../../eventReactor/EventReactor';
 import {useDisplayList} from '../../tools/displayList';
@@ -30,6 +31,8 @@ export function SendMailPopupComponent() {
         const instance = popup("sendMailPopupInstance", setSelfPopupInstance, innerClose);
 
 
+
+
         return () => {
             instance.destroy();
         }
@@ -39,6 +42,35 @@ export function SendMailPopupComponent() {
     useEffect(() => {
         const unsubscribeOnOpenPopup = sendMailWithMissingBooksEventReactor().onOpenSendMailPopup(() => {
             selfPopupInstance.open();
+
+
+            // récup adresse mail par défaut
+            administrationApi()
+                .getOneProperty("homeserver.notifyer.mail.smtp.clients")
+                .then(response => {
+                    console.log(response.value
+                        .split(",")
+                        .map(oneRawMail => {
+                            return {
+                                mail: oneRawMail
+                            }
+                        }));
+                    setMailingList({
+                        ...mailingList
+                            .update(
+
+                                response.value
+                                    .split(",")
+                                    .map(oneRawMail => {
+                                        return {
+                                            mail: oneRawMail
+                                        }
+                                    }))
+                            .updateItems(enhance().indexed())
+                    })
+                }
+                );
+
         });
 
         return () => {
