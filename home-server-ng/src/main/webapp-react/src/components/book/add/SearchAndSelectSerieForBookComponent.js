@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import bookApi from '../../../apiManagement/BookApi';
-import { useDisplayList } from '../../../tools/displayList';
+import {useDisplayList} from '../../../tools/displayList';
 import enhance from '../../../tools/enhance';
 import on from '../../../tools/on';
 import sort from '../../../tools/sort';
-import { when } from '../../../tools/when';
-import { addBookSubReactor } from './AddBookSubReactor';
+import {when} from '../../../tools/when';
+import {addBookSubReactor} from './AddBookSubReactor';
 
 
-export default function SearchAndSelectSerieForBookComponent() {
+export default function SearchAndSelectSerieForBookComponent({ canSkipSerie = true }) {
 
 
     const [allSeriesList, setAllSeriesList] = useDisplayList();
@@ -49,11 +49,12 @@ export default function SearchAndSelectSerieForBookComponent() {
     useEffect(() => {
         bookApi().getAllSeries()
             .then(result => {
-                setAllSeriesList({ ...allSeriesList
-                    .update(result)
-                    .updateItems(enhance().selectable())
-                    .updateSort(sort().basic(oneSerie => oneSerie.title))
-                 });
+                setAllSeriesList({
+                    ...allSeriesList
+                        .update(result)
+                        .updateItems(enhance().selectable())
+                        .updateSort(sort().basic(oneSerie => oneSerie.title))
+                });
             });
 
     }, []);
@@ -79,7 +80,8 @@ export default function SearchAndSelectSerieForBookComponent() {
     };
 
     return <div>
-        <a className="waves-effect waves-light btn" onClick={(event) => skipSerieSelection(event)}><i className="material-icons left">skip_next</i>Pas de série</a>
+        {canSkipSerie ? <a className="waves-effect waves-light btn" onClick={(event) => skipSerieSelection(event)}><i className="material-icons left">skip_next</i>Pas de série</a> :<></> }
+
 
         <div className="input-field col s9">
             <i className="material-icons prefix small">book</i>

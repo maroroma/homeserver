@@ -1,19 +1,30 @@
 package maroroma.homeserverng.book.controllers;
 
 import maroroma.homeserverng.book.BookModuleDescriptor;
-import maroroma.homeserverng.book.model.*;
+import maroroma.homeserverng.book.model.AddBookRequest;
+import maroroma.homeserverng.book.model.BooksGroupedBySeries;
+import maroroma.homeserverng.book.model.IsbnPhoto;
+import maroroma.homeserverng.book.model.SearchResultsViaIsbnPhoto;
+import maroroma.homeserverng.book.model.SendCollectionsStatusRequest;
 import maroroma.homeserverng.book.model.custom.Book;
 import maroroma.homeserverng.book.model.custom.Serie;
-import maroroma.homeserverng.book.model.custom.SerieInfo;
+import maroroma.homeserverng.book.model.importbatch.ImportBookProposal;
+import maroroma.homeserverng.book.model.importbatch.ImportBookProposalsForSerieRequest;
+import maroroma.homeserverng.book.model.importbatch.ImportFromPageRequest;
+import maroroma.homeserverng.book.services.BookImporter;
 import maroroma.homeserverng.book.services.BookService;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.*;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * Controller pour la gestion des books
@@ -23,8 +34,11 @@ public class BooksController {
 
     private final BookService bookService;
 
-    public BooksController(BookService bookService) {
+    private final BookImporter bookImporter;
+
+    public BooksController(BookService bookService, BookImporter bookImporter) {
         this.bookService = bookService;
+        this.bookImporter = bookImporter;
     }
 
     @GetMapping("${homeserver.api.path:}/books")
@@ -98,6 +112,16 @@ public class BooksController {
     @PostMapping("${homeserver.api.path:}/books/search/isbn")
     public ResponseEntity<SearchResultsViaIsbnPhoto> searchBookFromIsbn(@RequestBody IsbnPhoto isbnPhoto) {
         return ResponseEntity.ok(this.bookService.getBookCandidatesFromIsbnPicture(isbnPhoto));
+    }
+
+    @PostMapping("${homeserver.api.path:}/books/import/serieUrl")
+    public ResponseEntity<List<ImportBookProposal>> importBooksFromSerieResource(@RequestBody ImportFromPageRequest importFromPageRequest) {
+        return ResponseEntity.ok(bookImporter.getBookProposalsFromSerieResource(importFromPageRequest));
+    }
+
+    @PostMapping("${homeserver.api.path:}/books/import/bookProposals")
+    public ResponseEntity<Boolean> importBookProposalsIntoSerie(@RequestBody ImportBookProposalsForSerieRequest importBookProposalsForSerieRequest) {
+        return ResponseEntity.ok(bookImporter.importBookProposalsIntoSerie(importBookProposalsForSerieRequest));
     }
 
     @GetMapping("${homeserver.api.path:}/books/search/isbn/{isbnToSearch}")

@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import sort from '../../../tools/sort';
 import SerieRendererComponent from '../SerieRendererComponent';
-import { addBookSubReactor } from './AddBookSubReactor';
+import {addBookSubReactor} from './AddBookSubReactor';
 
 
 export default function ConfirmBookAddComponent() {

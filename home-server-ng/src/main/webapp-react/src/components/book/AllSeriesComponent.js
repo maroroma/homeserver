@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import bookApi from '../../apiManagement/BookApi';
-import { useDisplayList } from '../../tools/displayList';
+import {useDisplayList} from '../../tools/displayList';
 import sort from '../../tools/sort';
 import SimplerYesNoModalPopupComponent from '../commons/SimplerYesNoModalPopupComponent';
 import SerieRendererComponent from './SerieRendererComponent';

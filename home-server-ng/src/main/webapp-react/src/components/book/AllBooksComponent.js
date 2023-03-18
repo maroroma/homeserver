@@ -1,19 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import bookApi from '../../apiManagement/BookApi';
-import { DisplayList, emptyDisplayList, useDisplayList } from '../../tools/displayList';
+import {emptyDisplayList, useDisplayList} from '../../tools/displayList';
 import on from '../../tools/on';
 import sort from '../../tools/sort';
-import { when } from '../../tools/when';
-import { ActionMenuComponent } from '../commons/ActionMenuComponent';
+import {when} from '../../tools/when';
+import {ActionMenuComponent} from '../commons/ActionMenuComponent';
 import modulesAdapter from '../mainmenu/ModulesAdapter';
 import mofRouterEventReactor from '../mainmenu/MOFRouterEventReactor';
-import { searchSubReactor } from '../mainmenu/SearchBarComponent';
-import { EditBookComponent, editBookComponentEventReactor } from './EditBookComponent';
+import {searchSubReactor} from '../mainmenu/SearchBarComponent';
+import {EditBookComponent, editBookComponentEventReactor} from './EditBookComponent';
 import SimpleBookRendererComponent from './SimpleBookRendererComponent';
 
 import './AllBooksComponent.scss';
 import SerieWithItsBooksRendererComponent from './SerieWithItsBooksRendererComponent';
-import { SendMailPopupComponent, sendMailWithMissingBooksEventReactor } from './SendMailPopupComponent';
+import {SendMailPopupComponent, sendMailWithMissingBooksEventReactor} from './SendMailPopupComponent';
 
 
 export default function AllBooksComponent() {
@@ -28,7 +28,7 @@ export default function AllBooksComponent() {
 
     // pilote comment la liste de livre est affichée (groupement, tri, filtre)
     const [displaySettings, setDisplaySettings] = useState({
-        mode: "BOOKS_MODE"
+        mode: "SERIES_MODE"
     });
 
     const selectBookDisplayMode = () => setDisplaySettings({ ...displaySettings, mode: "BOOKS_MODE" });

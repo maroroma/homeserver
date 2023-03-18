@@ -1,6 +1,10 @@
 package maroroma.homeserverng.book.services;
 
-import maroroma.homeserverng.book.model.*;
+import maroroma.homeserverng.book.model.AddBookRequest;
+import maroroma.homeserverng.book.model.BooksGroupedBySeries;
+import maroroma.homeserverng.book.model.IsbnPhoto;
+import maroroma.homeserverng.book.model.SearchResultsViaIsbnPhoto;
+import maroroma.homeserverng.book.model.SendCollectionsStatusRequest;
 import maroroma.homeserverng.book.model.custom.Book;
 import maroroma.homeserverng.book.model.custom.Serie;
 import maroroma.homeserverng.book.model.custom.SerieInfo;
@@ -22,16 +26,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.CollectionUtils;
 
+import java.io.*;
+import java.net.*;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
-import java.net.URL;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
-import java.util.stream.Collectors;
 
 /**
  * Service de gestion des livres et bd et mangas
@@ -157,6 +157,11 @@ public class BookService {
                                 .toList()))
                 .build();
 
+    }
+
+
+    List<Book> getAllBooksForSerie(Serie serie) {
+        return this.booksRepo.findAll(BookPredicates.belongToSerie(this.seriesRepo.findByIdMandatory(serie.getId())));
     }
 
 

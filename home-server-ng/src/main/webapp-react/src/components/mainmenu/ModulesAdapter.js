@@ -9,7 +9,6 @@ import TodoComponent from '../seedbox/todo/TodoComponent';
 import IotBoardComponent from '../iot/board/IotBoardComponent';
 import SpriteListComponent from '../iot/sprites/SpriteListComponent';
 import ManageIotComponent from '../iot/manage/ManageIotComponent';
-import TriggersManagerComponent from '../iot/triggers/TriggersManagerComponent';
 import AlarmComponent from '../iot/alarm/AlarmComponent';
 import LogEventComponent from '../administration/LogEventsComponent';
 import AllBricksComponent from '../lego/AllBricksComponent';
@@ -17,6 +16,7 @@ import RunningTasksComponent from '../administration/RunningTasksComponent';
 import AddBookComponent from '../book/add/AddBookComponent';
 import AllBooksComponent from '../book/AllBooksComponent';
 import AllSeriesComponent from '../book/AllSeriesComponent';
+import ImportBooksWithProviderComponent from '../book/import/ImportBooksWithProviderComponent';
 
 
 export default function modulesAdapter() {
@@ -133,6 +133,12 @@ export default function modulesAdapter() {
                 icon: 'add',
                 title: 'Ajouter un livre',
                 component: (<AddBookComponent></AddBookComponent>)
+            },
+            {
+                path: '/books/import',
+                icon: 'cloud_upload',
+                title: 'Importer des livres depuis une série',
+                component: (<ImportBooksWithProviderComponent></ImportBooksWithProviderComponent>)
             }
         ]
     },

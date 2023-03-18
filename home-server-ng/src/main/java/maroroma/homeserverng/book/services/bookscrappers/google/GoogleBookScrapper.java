@@ -1,6 +1,8 @@
 package maroroma.homeserverng.book.services.bookscrappers.google;
 
 import maroroma.homeserverng.book.model.custom.Book;
+import maroroma.homeserverng.book.model.importbatch.ImportBookProposal;
+import maroroma.homeserverng.book.model.importbatch.ImportFromPageRequest;
 import maroroma.homeserverng.book.services.bookscrappers.BookScrapper;
 import maroroma.homeserverng.book.services.bookscrappers.BookScrapperSource;
 import maroroma.homeserverng.book.services.bookscrappers.google.api.SearchBookResponse;
@@ -10,10 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
+import java.util.*;
+import java.util.stream.*;
 
 @Component
 public class GoogleBookScrapper implements BookScrapper {
@@ -40,6 +40,11 @@ public class GoogleBookScrapper implements BookScrapper {
     @Override
     public boolean isEnable() {
         return isGoogleApiEnabled.asBoolean();
+    }
+
+    @Override
+    public boolean isSource(BookScrapperSource bookScrapperSource) {
+        return bookScrapperSource == BookScrapperSource.GOOGLE;
     }
 
     @Override
@@ -85,6 +90,11 @@ public class GoogleBookScrapper implements BookScrapper {
                 .getBody();
 
         return this.googleBookMapper.mapFromGoogleResponse(searchBookResponse);
+    }
+
+    @Override
+    public List<ImportBookProposal> listBooksFromSerieResource(ImportFromPageRequest importFromPageRequest) {
+        return List.of();
     }
 
 }

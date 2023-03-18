@@ -1,10 +1,7 @@
-
-import React, { useEffect, useRef, useState } from 'react';
-import { useDisplayList } from '../../../tools/displayList';
+import React, {useEffect} from 'react';
+import {useDisplayList} from '../../../tools/displayList';
 import enhance from '../../../tools/enhance';
-import { when } from '../../../tools/when';
-import BookRendererComponent from './SelectableBookRendererComponent';
-import { addBookSubReactor } from './AddBookSubReactor';
+import {addBookSubReactor} from './AddBookSubReactor';
 import SelectableBookRendererComponent from './SelectableBookRendererComponent';
 
 

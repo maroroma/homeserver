@@ -63,7 +63,7 @@ export class When {
     }
 
     thenPlopSelectedItem(initialClassName = "") {
-        return this.css("green-font jello-horizontal", initialClassName);
+        return this.css("green green-font jello-horizontal", initialClassName);
     }
 
 }

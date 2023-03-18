@@ -1,14 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import bookApi from '../../apiManagement/BookApi';
 import eventReactor from '../../eventReactor/EventReactor';
-import { useDisplayList } from '../../tools/displayList';
+import {useDisplayList} from '../../tools/displayList';
 import orElse from '../../tools/orElse';
 import sort from '../../tools/sort';
-import { UniqueCollapsibleContainerComponent, uniqueCollapsibleContainerSubReactor } from '../commons/UniqueCollapsibleContainerComponent';
+import {UniqueCollapsibleContainerComponent, uniqueCollapsibleContainerSubReactor} from '../commons/UniqueCollapsibleContainerComponent';
 import SerieRendererComponent from './SerieRendererComponent';
 import "./EditBookComponent.scss";
-import enhance from '../../tools/enhance';
-import { when } from '../../tools/when';
+import {when} from '../../tools/when';
 import SimplerYesNoModalPopupComponent from '../commons/SimplerYesNoModalPopupComponent';
 import popup from '../../tools/popup';
 

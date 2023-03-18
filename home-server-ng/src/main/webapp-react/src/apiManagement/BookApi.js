@@ -1,4 +1,4 @@
-import { defaultJsonHeaders, errorHandler, apiRoot } from './HttpUtils';
+import {apiRoot, defaultJsonHeaders, errorHandler} from './HttpUtils';
 
 export default function bookApi() {
     const findBooksByIsbn = (isbnCode) =>
@@ -22,6 +22,16 @@ export default function bookApi() {
             .catch(er => console.error(er));
     };
 
+    const findBooksBySerieResource = (request) => {
+        return fetch(`${apiRoot()}/books/import/serieUrl`, {
+            method: 'POST',
+            headers: defaultJsonHeaders(),
+            body: JSON.stringify(request)
+        })
+            .then(errorHandler(`Erreur rencontrée lors de l'import de livres pour une série donnée`))
+            .catch(er => console.error(er));
+    }
+
     const findBooksByIsbnPicture = (base64Image) => {
 
         return fetch(`${apiRoot()}/books/search/isbn`, {
@@ -40,6 +50,16 @@ export default function bookApi() {
             body: JSON.stringify(bookAddRequest)
         })
             .then(errorHandler(`Erreur rencontrée lors de l'ajout des livres dans la librairie`, "Ajout du ou des livres terminé"))
+            .catch(er => console.error(er));
+    };
+
+    const importBooksIntoSerie = (bookAddRequest) => {
+        return fetch(`${apiRoot()}/books/import/bookProposals`, {
+            method: 'POST',
+            headers: defaultJsonHeaders(),
+            body: JSON.stringify(bookAddRequest)
+        })
+            .then(errorHandler(`Erreur rencontrée lors de l'import des livres dans la librairie`, "Import du ou des livres terminé"))
             .catch(er => console.error(er));
     };
 
@@ -124,6 +144,8 @@ export default function bookApi() {
         getAllBooksGroupedBySeries: getAllBooksGroupedBySeries,
         deleteBook: deleteBook,
         findBooksByIsbnPicture: findBooksByIsbnPicture,
-        saveSerie: saveSerie
+        saveSerie: saveSerie,
+        findBooksBySerieResource: findBooksBySerieResource,
+        importBooksIntoSerie:importBooksIntoSerie
     }
 }

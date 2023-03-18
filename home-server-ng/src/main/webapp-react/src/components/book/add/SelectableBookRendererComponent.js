@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import bookApi from '../../../apiManagement/BookApi';
-import { when } from '../../../tools/when';
 import CheckBoxComponent from '../../commons/CheckBoxComponent';
 
 export default function SelectableBookRendererComponent({ bookToDisplay, useInitialImageLink = false, onClick = () => { } }) {

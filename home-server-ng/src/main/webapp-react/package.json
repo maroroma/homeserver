@@ -36,5 +36,8 @@
     ]
   },
   "proxy": "http://localhost:80/",
-  "devDependencies": {}
+  "devDependencies": {},
+  "options": {
+    "allowedHosts": ["localhost", ".localhost"]
+  }
 }

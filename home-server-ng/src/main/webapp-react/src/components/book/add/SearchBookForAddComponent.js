@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useState} from 'react';
 import bookApi from '../../../apiManagement/BookApi';
-import { when } from '../../../tools/when';
-import  toaster from '../../commons/Toaster';
-import { addBookSubReactor } from './AddBookSubReactor';
+import {when} from '../../../tools/when';
+import toaster from '../../commons/Toaster';
+import {addBookSubReactor} from './AddBookSubReactor';
 
 import TakePicturePopupComponent from '../../commons/TakePicturePopupComponent'
 

@@ -1,6 +1,6 @@
 [ {
   "id" : "homeserver.books.googleapi.enable",
-  "value" : "false",
+  "value" : "true",
   "description" : "détermine si l'utilisation de l'api google est activée",
   "readOnly" : false,
   "moduleId" : "books"

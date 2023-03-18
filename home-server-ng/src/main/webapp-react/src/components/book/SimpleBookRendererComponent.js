@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import bookApi from '../../apiManagement/BookApi';
-import CheckBoxComponent from '../commons/CheckBoxComponent';
 
 import "./SimpleBookRendererComponent.scss";
 import "./displayCover.scss";

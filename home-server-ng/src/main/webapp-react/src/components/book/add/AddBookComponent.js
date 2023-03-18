@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import bookApi from '../../../apiManagement/BookApi';
-import { StepperComponent, StepperDriver } from '../../commons/Stepper';
-import { addBookSubReactor } from './AddBookSubReactor';
+import {StepperComponent, StepperDriver} from '../../commons/Stepper';
+import {addBookSubReactor} from './AddBookSubReactor';
 import ConfirmBookAddComponent from './ConfirmBookAddComponent';
 import SearchAndSelectSerieForBookComponent from './SearchAndSelectSerieForBookComponent';
 import SearchBookForAddComponent from './SearchBookForAddComponent';

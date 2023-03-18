@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import maroroma.homeserverng.book.model.custom.SerieWithFullBooks;
 
-import java.util.List;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
