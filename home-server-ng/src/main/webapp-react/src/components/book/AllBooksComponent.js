@@ -14,6 +14,7 @@ import SimpleBookRendererComponent from './SimpleBookRendererComponent';
 import './AllBooksComponent.scss';
 import SerieWithItsBooksRendererComponent from './SerieWithItsBooksRendererComponent';
 import {SendMailPopupComponent, sendMailWithMissingBooksEventReactor} from './SendMailPopupComponent';
+import BookFromSerieComponentRenderer from './BookFromSerieComponentRenderer';
 
 
 export default function AllBooksComponent() {
@@ -131,9 +132,9 @@ export default function AllBooksComponent() {
 
             const unsubscribeDeleteBook = editBookComponentEventReactor().onDeleteBook(bookToSave => {
                 bookApi().deleteBook(bookToSave)
-                .then(result => editBookComponentEventReactor().cancel())
-                .then(result => bookApi().getAllBooksGroupedBySeries())
-                .then(reloadAllBooksGroupedBySeries);
+                    .then(result => editBookComponentEventReactor().cancel())
+                    .then(result => bookApi().getAllBooksGroupedBySeries())
+                    .then(reloadAllBooksGroupedBySeries);
             });
 
             return () => {
@@ -198,14 +199,11 @@ export default function AllBooksComponent() {
 
                 <li className="collection-header">
                     <h4>{booksWithoutSerie.rawList.length} livres sans série</h4>
-                    {booksWithoutSerie.displayList.map((oneBookResult, index) =>
-                        <SimpleBookRendererComponent
-                            bookToDisplay={oneBookResult}
-                            key={index}
-                            useInitialImageLink={false}
-                            onClick={() => openPopupForEditingOneBook(oneBookResult)}
-                            otherProperty={"book-into-serie"}
-                        ></SimpleBookRendererComponent>)}
+                    <div className="serie-with-books-wrapper">
+                        {booksWithoutSerie.displayList.map((oneBookResult, index) =>
+                            <BookFromSerieComponentRenderer key={index} oneBook={oneBookResult} onClick={() => openPopupForEditingOneBook(oneBookResult)}></BookFromSerieComponentRenderer>
+                        )}
+                    </div>
                 </li>
             </ul>
         </div>

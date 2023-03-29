@@ -6,9 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import maroroma.homeserverng.tools.helpers.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Data
 @Builder
@@ -20,6 +18,8 @@ public class Serie {
     private List<String> bookIds;
     private String pictureFileId;
     private boolean isCompleted;
+
+    private String serieUrlForImport;
 
     public Serie appendBooksToSerie(List<Book> books) {
 

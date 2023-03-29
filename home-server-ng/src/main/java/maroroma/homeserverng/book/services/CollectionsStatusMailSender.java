@@ -54,6 +54,7 @@ public class CollectionsStatusMailSender {
                 .stream()
                 // on ne garde que celles qui ne sont pas complétées
                 .filter(oneSerieWithBooks -> notCompletedSerieIds.contains(oneSerieWithBooks.getId()))
+                .sorted((serie1, serie2) -> serie1.getTitle().compareToIgnoreCase(serie2.getTitle()))
                 .map(oneSerieWithBooks -> CollectionStatusForSending.builder()
                         .serieTitle(oneSerieWithBooks.getTitle())
                         .maxBookInSerie(calculateMaxNbBooks(oneSerieWithBooks))

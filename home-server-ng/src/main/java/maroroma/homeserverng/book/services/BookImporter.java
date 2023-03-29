@@ -7,6 +7,7 @@ import maroroma.homeserverng.book.model.importbatch.ImportBookProposal;
 import maroroma.homeserverng.book.model.importbatch.ImportBookProposalsForSerieRequest;
 import maroroma.homeserverng.book.model.importbatch.ImportFromPageRequest;
 import maroroma.homeserverng.book.services.bookscrappers.BookScrapper;
+import maroroma.homeserverng.tools.exceptions.Traper;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,6 +24,13 @@ public class BookImporter {
     }
 
     public List<ImportBookProposal> getBookProposalsFromSerieResource(ImportFromPageRequest importFromPageRequest) {
+        // mise à jour de l'url de la série
+        var serieToUpdate = importFromPageRequest.getSerie();
+        serieToUpdate.setSerieUrlForImport(importFromPageRequest.getSeriePageUrl());
+
+        this.bookService.updateSerie(serieToUpdate);
+
+        // import depuis l'url fournie
         List<ImportBookProposal> allResults = bookScrappers.stream()
                 .filter(bookScrapper -> bookScrapper.isSource(importFromPageRequest.getBookScrapperSource()))
                 .flatMap(bookScrapper -> bookScrapper.listBooksFromSerieResource(importFromPageRequest).stream())
@@ -32,7 +40,7 @@ public class BookImporter {
         List<Integer> bookOrderInSerie = this.bookService.getAllBooksForSerie(importFromPageRequest.getSerie())
                 .stream()
                 .map(oneBook -> oneBook.getSerieInfo().getOrderInSerie())
-                .map(Integer::parseInt)
+                .map(oneRawOrder -> Traper.trapOr(() -> Integer.parseInt(oneRawOrder), () -> 0))
                 .toList();
 
         return allResults.stream()

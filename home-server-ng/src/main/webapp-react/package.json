@@ -38,6 +38,6 @@
   "proxy": "http://localhost:80/",
   "devDependencies": {},
   "options": {
-    "allowedHosts": ["localhost", ".localhost"]
+    "allowedHosts": ["localhost", ".localhost", "127.0.0.1"]
   }
 }

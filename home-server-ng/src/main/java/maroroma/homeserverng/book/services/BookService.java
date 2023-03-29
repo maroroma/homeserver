@@ -214,6 +214,7 @@ public class BookService {
     public List<Serie> updateSerie(Serie toUpdate) {
         Serie fromRepo = this.seriesRepo.findByIdMandatory(toUpdate.getId());
         fromRepo.setCompleted(toUpdate.isCompleted());
+        fromRepo.setSerieUrlForImport(toUpdate.getSerieUrlForImport());
         return this.seriesRepo.update(fromRepo);
     }
 

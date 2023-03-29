@@ -117,10 +117,14 @@ const useImportBookContext = () => useContext(ImportBookContext);
 
 
 const updateSelectedSerie = (previousState, action) => {
+
+    const newStepDriver = (action.selectedSerie.serieUrlForImport !== "" && action.selectedSerie.serieUrlForImport !== undefined && action.selectedSerie.serieUrlForImport !== null) ? { ...previousState.stepperDriver.nextStep().enableNextStepButton() } : { ...previousState.stepperDriver.nextStep().disableNextStepButton() }
+
     return {
         ...previousState,
         serie: action.selectedSerie,
-        stepperDriver: { ...previousState.stepperDriver.nextStep() }
+        seriePageUrl: action.selectedSerie.serieUrlForImport === null ? "" : action.selectedSerie.serieUrlForImport,
+        stepperDriver: { ...newStepDriver }
     }
 }
 
