@@ -1,7 +1,9 @@
-package maroroma.homeserverng.seedbox.services;
+package homeserverng.seedbox.services;
 
 import maroroma.homeserverng.seedbox.model.EpisodeParseResult;
 import maroroma.homeserverng.seedbox.model.TargetDirectory;
+import maroroma.homeserverng.seedbox.services.EpisodeParser;
+import maroroma.homeserverng.seedbox.services.TargetDirectoryTvShowLoader;
 import maroroma.homeserverng.tools.files.FileDescriptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.io.File;
-import java.util.Collections;
+import java.io.*;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

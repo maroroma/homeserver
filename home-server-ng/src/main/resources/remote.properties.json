@@ -1,0 +1,25 @@
+[ {
+  "id" : "homeserver.remote.mail.authorized",
+  "value" : "test@test.com,rodolphe.levexier@gmail.com",
+  "description" : "mails autorisés pour l'émission des commandes",
+  "readOnly" : false,
+  "moduleId" : "remote"
+}, {
+  "id" : "homeserver.remote.mail.fetch.frequency",
+  "value" : "10000",
+  "description" : "Fréquence pour le scan des mails",
+  "readOnly" : false,
+  "moduleId" : "remote"
+}, {
+  "id" : "homeserver.remote.command.authorized",
+  "value" : "HELLOWORLD,SENDLASTBOOKS",
+  "description" : "commandes autorisées",
+  "readOnly" : false,
+  "moduleId" : "remote"
+}, {
+  "id" : "homeserver.remote.imap.host",
+  "value" : "imap.googlemail.com",
+  "description" : "serveur mail distant pour récupérer les mails de commandes",
+  "readOnly" : false,
+  "moduleId" : "remote"
+}]

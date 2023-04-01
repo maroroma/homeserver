@@ -14,6 +14,9 @@
   "id" : "filemanager",
   "enabled" : true
 }, {
+  "id" : "remote",
+  "enabled" : true
+}, {
   "id" : "iot",
   "enabled" : true
 }, {

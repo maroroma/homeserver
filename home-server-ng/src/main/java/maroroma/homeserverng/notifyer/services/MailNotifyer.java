@@ -14,9 +14,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
 import javax.mail.MessagingException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Implémentation de {@link Notifyer} permettant d'envoyer des mails.
@@ -40,7 +39,9 @@ public class MailNotifyer extends AbstractDisableableNotifyer implements Notifye
             CommonNotificatonTypes.STARTUP, "home.png",
             CommonNotificatonTypes.ALARM_ON, "alarm_on.png",
             CommonNotificatonTypes.ALARM_OFF, "alarm_off.png",
-            CommonNotificatonTypes.DOWNLOAD_COMPLETED, "download_completed.png"
+            CommonNotificatonTypes.DOWNLOAD_COMPLETED, "download_completed.png",
+            CommonNotificatonTypes.REMOTE_CONTROL_HELLO_WORLD, "home.png",
+            CommonNotificatonTypes.INVALID_COMMAND, "home.png"
     );
 
     /**

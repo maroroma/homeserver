@@ -1,4 +1,4 @@
-package maroroma.homeserverng.seedbox.services;
+package homeserverng.seedbox.services;
 
 import org.junit.Test;
 

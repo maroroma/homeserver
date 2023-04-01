@@ -1,10 +1,11 @@
-package maroroma.homeserverng.book.services;
+package homeserverng.book.services;
 
 
 import maroroma.homeserverng.book.model.custom.Book;
+import maroroma.homeserverng.book.services.BookSearchResultSorter;
 import org.junit.Test;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Classe de test pour {@link BookSearchResultSorter}.

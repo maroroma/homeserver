@@ -22,7 +22,7 @@ public class IotConfiguration {
     public ThreadPoolTaskScheduler iotTaskScheduler(){
         ThreadPoolTaskScheduler threadPoolTaskScheduler
                 = new ThreadPoolTaskScheduler();
-        threadPoolTaskScheduler.setPoolSize(5);
+        threadPoolTaskScheduler.setPoolSize(10);
         threadPoolTaskScheduler.setThreadNamePrefix(
                 "iotTaskScheduler");
         return threadPoolTaskScheduler;

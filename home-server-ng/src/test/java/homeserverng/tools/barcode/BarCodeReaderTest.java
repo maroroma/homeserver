@@ -1,10 +1,10 @@
-package maroroma.homeserverng.tools.barcode;
+package homeserverng.tools.barcode;
 
 import com.google.zxing.NotFoundException;
 import junit.framework.TestCase;
 import org.junit.Test;
 
-import java.io.IOException;
+import java.io.*;
 
 public class BarCodeReaderTest extends TestCase {
 

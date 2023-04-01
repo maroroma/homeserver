@@ -12,11 +12,10 @@ import maroroma.homeserverng.tools.repositories.NanoRepository;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.stream.*;
 import javax.annotation.PostConstruct;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ScheduledFuture;
-import java.util.stream.Collectors;
 
 
 /**
@@ -70,8 +69,6 @@ public class UpdateIotComponentStatusService {
     }
 
     protected void scheduledUpdate() {
-        log.warn("UPDATE!!");
-
 
         Map<String, Boolean> allComponentStatus = this.iotComponentsRepo.<IotComponentDescriptor>getAll().stream()
                 .map(this.iotComponentsFactory::createIotComponent)

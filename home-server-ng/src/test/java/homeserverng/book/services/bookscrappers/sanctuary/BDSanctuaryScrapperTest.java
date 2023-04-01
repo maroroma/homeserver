@@ -1,17 +1,11 @@
-package maroroma.homeserverng.book.services.bookscrappers.sanctuary;
+package homeserverng.book.services.bookscrappers.sanctuary;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import junit.framework.TestCase;
-import maroroma.homeserverng.book.services.bookscrappers.sanctuary.api.OneBook;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class BDSanctuaryScrapperTest {
 

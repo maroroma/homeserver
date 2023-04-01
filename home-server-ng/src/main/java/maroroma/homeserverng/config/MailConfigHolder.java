@@ -2,12 +2,13 @@ package maroroma.homeserverng.config;
 
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.mail.ImapReceiver;
 import maroroma.homeserverng.tools.mail.MailBuilder;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
 
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Permet de centraliser la configuration du compte mail utilisé au niveau du serveur
@@ -40,6 +41,9 @@ public class MailConfigHolder {
 	 */
 	@Property("homeserver.notifyer.mail.smtp.port")
 	private HomeServerPropertyHolder smtpPort;
+
+	@Property("homeserver.remote.imap.host")
+	private HomeServerPropertyHolder imapHost;
 	
 	/**
 	 * Génère le {@link MailBuilder} avec comme base la configuration du serveur SMTP et du compte à utiliser.
@@ -75,6 +79,18 @@ public class MailConfigHolder {
 		props.put("mail.debug", "true");
 
 		return mailSender;
+	}
+
+	/**
+	 * Création de la classe utilitaire pour la réception des mails sur la base des paramètres applicatifs
+	 * @return
+	 */
+	public ImapReceiver createReceiver() {
+		return ImapReceiver.builder()
+				.host(this.imapHost.getResolvedValue())
+				.user(this.smtpLogin.getValue())
+				.password(this.smtpPassword.getValue())
+				.build();
 	}
 
 }
