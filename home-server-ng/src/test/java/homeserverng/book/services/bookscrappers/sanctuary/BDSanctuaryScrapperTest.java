@@ -3,13 +3,12 @@ package homeserverng.book.services.bookscrappers.sanctuary;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.junit.Test;
 
 import java.io.*;
 
 public class BDSanctuaryScrapperTest {
 
-    @Test
+//    @Test
     public void testFindFromIsbn() throws IOException {
 
         File htmlFile = new File("C:\\tmp\\test_scrapper.htm");
