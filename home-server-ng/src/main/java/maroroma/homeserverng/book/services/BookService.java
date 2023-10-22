@@ -292,4 +292,7 @@ public class BookService {
 
     }
 
+    public Serie getSerie(String serieId) {
+        return this.seriesRepo.findByIdMandatory(serieId);
+    }
 }

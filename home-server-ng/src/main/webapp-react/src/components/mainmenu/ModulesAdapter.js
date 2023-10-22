@@ -13,7 +13,6 @@ import AlarmComponent from '../iot/alarm/AlarmComponent';
 import LogEventComponent from '../administration/LogEventsComponent';
 import AllBricksComponent from '../lego/AllBricksComponent';
 import RunningTasksComponent from '../administration/RunningTasksComponent';
-import AddBookComponent from '../book/add/AddBookComponent';
 import AllBooksComponent from '../book/AllBooksComponent';
 import AllSeriesComponent from '../book/AllSeriesComponent';
 import ImportBooksWithProviderComponent from '../book/import/ImportBooksWithProviderComponent';
@@ -128,16 +127,16 @@ export default function modulesAdapter() {
                 title: 'Toutes les séries',
                 component: (<AllSeriesComponent></AllSeriesComponent>)
             },
-            {
-                path: '/books/search',
-                icon: 'add',
-                title: 'Ajouter un livre',
-                component: (<AddBookComponent></AddBookComponent>)
-            },
+            // {
+            //     path: '/books/search',
+            //     icon: 'add',
+            //     title: 'Ajouter un livre',
+            //     component: (<AddBookComponent></AddBookComponent>)
+            // },
             {
                 path: '/books/import',
                 icon: 'cloud_upload',
-                title: 'Importer des livres depuis une série',
+                title: 'Importer un livre',
                 component: (<ImportBooksWithProviderComponent></ImportBooksWithProviderComponent>)
             }
         ]

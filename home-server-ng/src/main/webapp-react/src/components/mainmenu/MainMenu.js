@@ -1,13 +1,12 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import eventReactor from '../../eventReactor/EventReactor';
-import { DISPLAYABLE_MODULES_CHANGED } from '../../eventReactor/EventIds';
+import {DISPLAYABLE_MODULES_CHANGED} from '../../eventReactor/EventIds';
 import modulesAdapter from './ModulesAdapter';
 import BrandLogoComponent from './BrandLogoComponent';
 import MainMenuItemComponent from './MainMenuItemComponent';
 import SideBarMenuItemComponent from './SideBarMenuItemComponent';
 import mofRouterEventReactor from './MOFRouterEventReactor';
-import { SearchDisplayButtonComponent } from './SearchBarComponent';
+import {SearchDisplayButtonComponent} from './SearchBarComponent';
 
 export default function MainMenu() {
     const [selectedModule, setSelectedModule] = useState({
@@ -26,7 +25,7 @@ export default function MainMenu() {
             setMenuDescriptors(displayableModules.map(oneDisplayableModule => modulesAdapter().getMenuDescriptor(oneDisplayableModule)));
         });
 
-        const unsubscribeSelectedModuleChange = mofRouterEventReactor().onSelectedModuleChange(newSelectedModule => updateSelectedModule(newSelectedModule));
+        const unsubscribeSelectedModuleChange = mofRouterEventReactor().onSelectedModuleChange(moduleChangedEvent => updateSelectedModule(moduleChangedEvent.newSelectedModule));
 
         return () => {
             unsubscribeDiplayableModulesChange();

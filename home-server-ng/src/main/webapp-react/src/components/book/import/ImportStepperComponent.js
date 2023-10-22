@@ -1,32 +1,50 @@
 import React, {useEffect} from 'react';
-import {StepperComponent} from '../../commons/Stepper';
-import {addBookSubReactor} from '../add/AddBookSubReactor';
 import {useImportBookContext} from './ImportBookContext';
+import bookApi from '../../../apiManagement/BookApi';
+import {SimpleStepper} from '../../commons/SimpleStepper/SimpleStepper';
 
 export default function ImportStepperComponent() {
-    const { stepperDriver, dispatchSerieUpdated, dispatchExternalUpdateForStepDriver, dispatchExecuteImport } = useImportBookContext();
+    const {
+        stepperConfiguration,
+        dispatchSerieUpdated,
+        dispatchExecuteImport,
+        dispatchExecuteLoadProposals,
+        dispatchNextStepRequired,
+        dispatchManualStepRequired,
+        dispatchPreviousStepRequired
+    } = useImportBookContext();
 
     useEffect(() => {
-        const unsubscribeSerieSelected = addBookSubReactor().onSerieSelected(selectedSerie => {
-            dispatchSerieUpdated(selectedSerie);
-        });
-
-        const unsubscribeUpdateDriver = stepperDriver.onDriverUpdated((newDriver) => {
-            dispatchExternalUpdateForStepDriver(newDriver);
-        });
-
-        const unsubscriveComplete = stepperDriver.onComplete(() => {
-            dispatchExecuteImport();
-        })
-
-        return () => {
-            unsubscribeSerieSelected();
-            unsubscribeUpdateDriver();
-            unsubscriveComplete();
+        // ici on gère l'auto sélection d'une série via les queryPArams
+        const urlParams = new URLSearchParams(window.location.search);
+        const serieIdFromQueryParam = urlParams.get("serieId");
+        if (serieIdFromQueryParam !== undefined && serieIdFromQueryParam !== null) {
+            console.log("on charge automatiquement la série", serieIdFromQueryParam);
+            bookApi().getOneSerie(serieIdFromQueryParam)
+                .then(result => {
+                    console.log("autoload serie", result);
+                    dispatchSerieUpdated(result);
+                    if (result.serieUrlForImport !== undefined) {
+                        dispatchExecuteLoadProposals();
+                    }
+                });
         }
+
     }, []);
 
+    const onNextStep = () => dispatchNextStepRequired();
 
-    return <StepperComponent driver={stepperDriver} stepperId="importBooksStepper">
-    </StepperComponent>
+    const onComplete = () => dispatchExecuteImport();
+    const onPreviousStep = () => dispatchPreviousStepRequired();
+    const onStepSelected = (selectedStep) => dispatchManualStepRequired(selectedStep);
+
+    return <>
+        <SimpleStepper
+            simpleStepperConfiguration={stepperConfiguration}
+            onNextStep={onNextStep}
+            onComplete={onComplete}
+            onPreviousStep={onPreviousStep}
+            onStepSelected={onStepSelected}
+        ></SimpleStepper>
+    </>
 }

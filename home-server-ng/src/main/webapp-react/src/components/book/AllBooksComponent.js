@@ -148,9 +148,9 @@ export default function AllBooksComponent() {
 
     }, [displaySettings]);
 
-    // affichage de la page d'ajout
+    // affichage de la page d'import
     const goToAddNewBook = () => {
-        mofRouterEventReactor().selectedModuleChange(modulesAdapter().getMenuDescriptorForPath("/books/search"));
+        mofRouterEventReactor().selectedModuleChange(modulesAdapter().getMenuDescriptorForPath("/books/import"));
     }
 
     const openPopupForEditingOneBook = (oneBookToEdit) => {
@@ -212,7 +212,11 @@ export default function AllBooksComponent() {
 
 
         <ActionMenuComponent>
-            <li><a href="#!" className="btn-floating btn-small green" onClick={goToAddNewBook} title="Ajouter un livre"><i className="material-icons">add</i></a></li>
+            <li>
+                <a href="#!" className="btn-floating btn-small green" onClick={goToAddNewBook} title="Ajouter un livre">
+                    <i className="material-icons">add</i>
+                </a>
+            </li>
             <li>
                 <a href="#!" className={when(displaySettings.mode === "BOOKS_MODE").thenHideElement("btn-floating btn-small blue")}
                     title="Afficher par livres" onClick={selectBookDisplayMode}>

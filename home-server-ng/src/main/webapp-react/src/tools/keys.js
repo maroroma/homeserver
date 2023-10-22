@@ -1,11 +1,18 @@
-export default function keys(key) {
+export default function keys(keyEvent) {
     const onEnter = (keyHandler) => {
-        if (key.keyCode === 13) {
-            keyHandler();
+        if (keyEvent.keyCode === 13) {
+            keyHandler(keyEvent);
+        }
+    }
+
+    const onCtrlEnter = (keyHandler) => {
+        if (keyEvent.keyCode === 13 && keyEvent.ctrlKey) {
+            keyHandler(keyEvent);
         }
     }
 
     return {
-        onEnter: onEnter
+        onEnter: onEnter,
+        onCtrlEnter: onCtrlEnter
     }
 }

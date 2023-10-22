@@ -6,11 +6,12 @@ import on from '../../../tools/on';
 import sort from '../../../tools/sort';
 import {when} from '../../../tools/when';
 import {addBookSubReactor} from './AddBookSubReactor';
+import {useImportBookContext} from '../import/ImportBookContext';
 
 
 export default function SearchAndSelectSerieForBookComponent({ canSkipSerie = true }) {
 
-
+    const { dispatchSerieUpdated } = useImportBookContext();
     const [allSeriesList, setAllSeriesList] = useDisplayList();
 
     const [newSerieName, setNewSerieName] = useState("");
@@ -40,7 +41,8 @@ export default function SearchAndSelectSerieForBookComponent({ canSkipSerie = tr
                 });
                 setNewSerieName("");
 
-                addBookSubReactor().serieSelected(allSeriesList.getFirstSelectedItem());
+                // addBookSubReactor().serieSelected(allSeriesList.getFirstSelectedItem());
+                dispatchSerieUpdated(allSeriesList.getFirstSelectedItem());
 
             });
     }
@@ -80,7 +82,7 @@ export default function SearchAndSelectSerieForBookComponent({ canSkipSerie = tr
     };
 
     return <div>
-        {canSkipSerie ? <a className="waves-effect waves-light btn" onClick={(event) => skipSerieSelection(event)}><i className="material-icons left">skip_next</i>Pas de série</a> :<></> }
+        {canSkipSerie ? <a className="waves-effect waves-light btn" onClick={(event) => skipSerieSelection(event)}><i className="material-icons left">skip_next</i>Pas de série</a> : <></>}
 
 
         <div className="input-field col s9">

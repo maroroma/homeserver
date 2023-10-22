@@ -93,6 +93,11 @@ public class BooksController {
         return ResponseEntity.ok(this.bookService.getAllSeries());
     }
 
+    @GetMapping("${homeserver.api.path:}/books/series/{id}")
+    public ResponseEntity<Serie> getOneSerie(@PathVariable("id") String serieId) {
+        return ResponseEntity.ok(this.bookService.getSerie(serieId));
+    }
+
     @PostMapping("${homeserver.api.path:}/books/series")
     public ResponseEntity<List<Serie>> addNewSerie(@RequestBody Serie serieToAdd) throws HomeServerException {
         return ResponseEntity.ok(this.bookService.createSerie(serieToAdd));

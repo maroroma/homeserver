@@ -122,6 +122,10 @@ export default function bookApi() {
         .then(errorHandler("Erreur lors de la récupération des séries"))
         .catch(er => console.error(er));
 
+    const getOneSerie = (id) => fetch(`${apiRoot()}/books/series/${id}`)
+        .then(errorHandler("Erreur lors de la récupération d'une serie"))
+        .catch(er => console.error(er));
+
     const getAllBooks = () => fetch(`${apiRoot()}/books`)
         .then(errorHandler("Erreur lors de la récupération des livres"))
         .catch(er => console.error(er));
@@ -159,6 +163,7 @@ export default function bookApi() {
         saveSerie: saveSerie,
         findBooksBySerieResource: findBooksBySerieResource,
         importBooksIntoSerie: importBooksIntoSerie,
-        sendMailForMissingBooks: sendMailForMissingBooks
+        sendMailForMissingBooks: sendMailForMissingBooks,
+        getOneSerie: getOneSerie
     }
 }

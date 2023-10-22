@@ -1,12 +1,11 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 
 import modulesAdapter from './ModulesAdapter';
 
 import './MOFRouter.scss';
 import mofRouterEventReactor from './MOFRouterEventReactor';
-import { searchSubReactor } from './SearchBarComponent';
+import {searchSubReactor} from './SearchBarComponent';
 
 export default function MOFRouter() {
 
@@ -19,9 +18,13 @@ export default function MOFRouter() {
             setSelectedModule(selectedModuleFromPath);
         }
 
-        const unsubscribeOnSelectedModuleChange = mofRouterEventReactor().onSelectedModuleChange(newSelectedModule => {
-            window.location.hash = newSelectedModule.path;
-            setSelectedModule(newSelectedModule);
+        const unsubscribeOnSelectedModuleChange = mofRouterEventReactor().onSelectedModuleChange((moduleChangedEvent) => {
+            const path = moduleChangedEvent.newSelectedModule.path;
+            // const queryParams = (moduleChangedEvent.queryParams !== undefined) ? `${moduleChangedEvent.queryParams}`: '';
+            const queryParams = (moduleChangedEvent.queryParams !== undefined) ? `?${moduleChangedEvent.queryParams}`: '';
+            window.location.hash = path;
+            window.location.search = queryParams;
+            setSelectedModule(moduleChangedEvent.newSelectedModule);
             searchSubReactor().clearSearchBar();
         });
 
