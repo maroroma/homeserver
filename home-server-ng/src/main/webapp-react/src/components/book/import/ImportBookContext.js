@@ -263,7 +263,8 @@ const executeLoadSeries = (previousState, action) => {
 const loadSeries = (previousState, action) => {
     return {
         ...previousState,
-        allSeries: previousState.allSeries.update(action.result)
+        // on vire les séries complétées
+        allSeries: previousState.allSeries.update(action.result.filter(oneSerie => !oneSerie.completed))
             .updateItems(enhance().selectable())
             .updateSort(sort().basic(oneSerie => oneSerie.title))
     };
@@ -285,7 +286,7 @@ const addNewSerie = (previousState, action) => {
         .then(result => {
             action.dispatch({ type: ImportActions.SERIES_LOADED, result: result });
             action.dispatch({ type: ImportActions.SELECT_SERIE, selectedSerie: result.find(oneItem => oneItem.title === action.newSerieName) });
-        });
+        }, () => console.log("hophophoph tu peux paaaaaaaaaaaaaas"));
 
     return {
         ...previousState
@@ -413,9 +414,16 @@ const checkPreviousStep = (previousState, action) => {
     }
 
     if (previousState.stepperConfiguration.selectedIndex === ImportSteps.SET_URL_FOR_IMPORT) {
+
+        const stepperConfigurationWithDisabledNextStep = stepperConfiguration().disableStep(previousState.stepperConfiguration, ImportSteps.SET_URL_FOR_IMPORT);
+
+
+
         return {
             ...previousState,
-            stepperConfiguration: stepperConfiguration().selectStep(previousState.stepperConfiguration, ImportSteps.SELECT_A_SERIE)
+            serie: {},
+            seriePageUrl: "",
+            stepperConfiguration: stepperConfiguration().selectStep(stepperConfigurationWithDisabledNextStep, ImportSteps.SELECT_A_SERIE)
         };
     }
 

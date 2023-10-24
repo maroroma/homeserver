@@ -1,36 +1,4 @@
 [ {
-  "id" : "ee283421-4693-4fb5-9c75-e4d960e6b57e",
-  "title" : "No Guns Life",
-  "subtitle" : "Tome 4",
-  "isbns" : null,
-  "author" : null,
-  "pageCount" : 0,
-  "initialImageLink" : "https://img.sanctuary.fr/objet/150/278230.jpg",
-  "serieInfo" : {
-    "serieId" : "1e0ae7a6-6161-4ec6-b300-c83403c6dcba",
-    "serieName" : "No Guns Life",
-    "orderInSerie" : "4"
-  },
-  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1xlZTI4MzQyMS00NjkzLTRmYjUtOWM3NS1lNGQ5NjBlNmI1N2UuYm9va1BpY3R1cmU=",
-  "owner" : "Roro",
-  "scrapperSource" : null
-}, {
-  "id" : "9c2e2c1b-f703-4ac1-b13b-c1e8ccc114a6",
-  "title" : "No Guns Life",
-  "subtitle" : "Tome 5",
-  "isbns" : null,
-  "author" : null,
-  "pageCount" : 0,
-  "initialImageLink" : "https://img.sanctuary.fr/objet/150/297025.jpg",
-  "serieInfo" : {
-    "serieId" : "1e0ae7a6-6161-4ec6-b300-c83403c6dcba",
-    "serieName" : "No Guns Life",
-    "orderInSerie" : "5"
-  },
-  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w5YzJlMmMxYi1mNzAzLTRhYzEtYjEzYi1jMWU4Y2NjMTE0YTYuYm9va1BpY3R1cmU=",
-  "owner" : "Roro",
-  "scrapperSource" : null
-}, {
   "id" : "d144e812-2db8-49d2-aa7f-324932838d75",
   "title" : "No Guns Life",
   "subtitle" : "Tome 7",
@@ -127,22 +95,6 @@
   "owner" : "Liam",
   "scrapperSource" : null
 }, {
-  "id" : "eb0e8af3-c7b2-4f14-a0f6-3f513e314380",
-  "title" : "No Guns Life",
-  "subtitle" : "Tome 1",
-  "isbns" : null,
-  "author" : null,
-  "pageCount" : 0,
-  "initialImageLink" : "https://img.sanctuary.fr/objet/150/5737.jpg",
-  "serieInfo" : {
-    "serieId" : "1e0ae7a6-6161-4ec6-b300-c83403c6dcba",
-    "serieName" : "No Guns Life",
-    "orderInSerie" : "1"
-  },
-  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1xlYjBlOGFmMy1jN2IyLTRmMTQtYTBmNi0zZjUxM2UzMTQzODAuYm9va1BpY3R1cmU=",
-  "owner" : "zdazdazd",
-  "scrapperSource" : null
-}, {
   "id" : "1a124287-544a-44d3-a5f4-76ad6ebbe768",
   "title" : "Fire Force",
   "subtitle" : "Tome 5",
@@ -156,22 +108,6 @@
     "orderInSerie" : "5"
   },
   "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1wxYTEyNDI4Ny01NDRhLTQ0ZDMtYTVmNC03NmFkNmViYmU3NjguYm9va1BpY3R1cmU=",
-  "owner" : "Liam",
-  "scrapperSource" : null
-}, {
-  "id" : "3a9cb2c8-2254-4934-9fec-a93fbf64bb8f",
-  "title" : "Fire Force",
-  "subtitle" : "Tome 2",
-  "isbns" : null,
-  "author" : "",
-  "pageCount" : 0,
-  "initialImageLink" : "https://img.sanctuary.fr/objet/150/275102.jpg",
-  "serieInfo" : {
-    "serieId" : "78e0b555-f874-4114-b889-684eb7f47688",
-    "serieName" : "Fire Force",
-    "orderInSerie" : "2"
-  },
-  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1wzYTljYjJjOC0yMjU0LTQ5MzQtOWZlYy1hOTNmYmY2NGJiOGYuYm9va1BpY3R1cmU=",
   "owner" : "Liam",
   "scrapperSource" : null
 }, {
@@ -235,22 +171,6 @@
   "owner" : "",
   "scrapperSource" : null
 }, {
-  "id" : "54f913c5-6c25-433e-b10b-c3cd4ce711f4",
-  "title" : "No Guns Life",
-  "subtitle" : "Tome 3",
-  "isbns" : null,
-  "author" : null,
-  "pageCount" : 0,
-  "initialImageLink" : "https://img.sanctuary.fr/objet/150/278228.jpg",
-  "serieInfo" : {
-    "serieId" : "1e0ae7a6-6161-4ec6-b300-c83403c6dcba",
-    "serieName" : "No Guns Life",
-    "orderInSerie" : "3"
-  },
-  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w1NGY5MTNjNS02YzI1LTQzM2UtYjEwYi1jM2NkNGNlNzExZjQuYm9va1BpY3R1cmU=",
-  "owner" : "",
-  "scrapperSource" : null
-}, {
   "id" : "32bc2b3e-283b-445d-8770-5dc67c6edb26",
   "title" : "Fire Force",
   "subtitle" : "Tome 10",
@@ -283,22 +203,6 @@
   "owner" : "",
   "scrapperSource" : null
 }, {
-  "id" : "007243a4-4066-4783-a4b3-7f716a1716bf",
-  "title" : "Fire Force",
-  "subtitle" : "Tome 13",
-  "isbns" : null,
-  "author" : null,
-  "pageCount" : 0,
-  "initialImageLink" : "https://img.sanctuary.fr/objet/150/329492.jpg",
-  "serieInfo" : {
-    "serieId" : "78e0b555-f874-4114-b889-684eb7f47688",
-    "serieName" : "Fire Force",
-    "orderInSerie" : "13"
-  },
-  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1wwMDcyNDNhNC00MDY2LTQ3ODMtYTRiMy03ZjcxNmExNzE2YmYuYm9va1BpY3R1cmU=",
-  "owner" : "",
-  "scrapperSource" : null
-}, {
   "id" : "36b1e52d-078c-4f4e-8573-d920806860f6",
   "title" : "No Guns Life",
   "subtitle" : "Tome 6",
@@ -328,22 +232,6 @@
     "orderInSerie" : "11"
   },
   "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w4ODRjZGM1Ny01MmY5LTQzMzAtYTY3MC1kNTgyNmU4MDAxZjcuYm9va1BpY3R1cmU=",
-  "owner" : "",
-  "scrapperSource" : null
-}, {
-  "id" : "7d3d136d-ee53-4c9c-97f0-85100469f339",
-  "title" : "No Guns Life",
-  "subtitle" : "Tome 9",
-  "isbns" : null,
-  "author" : null,
-  "pageCount" : 0,
-  "initialImageLink" : "https://img.sanctuary.fr/objet/150/336917.jpg",
-  "serieInfo" : {
-    "serieId" : "1e0ae7a6-6161-4ec6-b300-c83403c6dcba",
-    "serieName" : "No Guns Life",
-    "orderInSerie" : "9"
-  },
-  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w3ZDNkMTM2ZC1lZTUzLTRjOWMtOTdmMC04NTEwMDQ2OWYzMzkuYm9va1BpY3R1cmU=",
   "owner" : "",
   "scrapperSource" : null
 }, {
@@ -587,22 +475,6 @@
   "owner" : "",
   "scrapperSource" : null
 }, {
-  "id" : "5ac2de5c-d9ef-4ee7-ad15-6420187301f5",
-  "title" : "pioupiou",
-  "subtitle" : "Tome 1",
-  "isbns" : null,
-  "author" : null,
-  "pageCount" : 0,
-  "initialImageLink" : "https://img.sanctuary.fr/objet/150/324225.jpg",
-  "serieInfo" : {
-    "serieId" : "97438237-78b7-42cc-a09c-a621636236ec",
-    "serieName" : "pioupiou",
-    "orderInSerie" : "1"
-  },
-  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w1YWMyZGU1Yy1kOWVmLTRlZTctYWQxNS02NDIwMTg3MzAxZjUuYm9va1BpY3R1cmU=",
-  "owner" : "azd",
-  "scrapperSource" : null
-}, {
   "id" : "a11d9ba0-579b-4de0-b910-7dace95b05ce",
   "title" : "pioupiou",
   "subtitle" : "Tome 2",
@@ -635,22 +507,6 @@
   "owner" : "azd",
   "scrapperSource" : null
 }, {
-  "id" : "899290b2-4c1c-47c0-ac5b-dcf76390316c",
-  "title" : "No Guns Life",
-  "subtitle" : "Tome 2",
-  "isbns" : null,
-  "author" : null,
-  "pageCount" : 0,
-  "initialImageLink" : "https://img.sanctuary.fr/objet/150/269015.jpg",
-  "serieInfo" : {
-    "serieId" : "1e0ae7a6-6161-4ec6-b300-c83403c6dcba",
-    "serieName" : "No Guns Life",
-    "orderInSerie" : "2"
-  },
-  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w4OTkyOTBiMi00YzFjLTQ3YzAtYWM1Yi1kY2Y3NjM5MDMxNmMuYm9va1BpY3R1cmU=",
-  "owner" : "",
-  "scrapperSource" : null
-}, {
   "id" : "680f33aa-1e90-4ef8-9a64-789bda186739",
   "title" : "No Guns Life",
   "subtitle" : "Tome 12",
@@ -664,6 +520,374 @@
     "orderInSerie" : "12"
   },
   "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w2ODBmMzNhYS0xZTkwLTRlZjgtOWE2NC03ODliZGExODY3MzkuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "86e3576f-4627-4e14-91d1-01768bd1f4c1",
+  "title" : "Fire Force",
+  "subtitle" : "Tome 25",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/383420.jpg",
+  "serieInfo" : {
+    "serieId" : "78e0b555-f874-4114-b889-684eb7f47688",
+    "serieName" : "Fire Force",
+    "orderInSerie" : "25"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w4NmUzNTc2Zi00NjI3LTRlMTQtOTFkMS0wMTc2OGJkMWY0YzEuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "66a376fc-4027-4080-a2e9-74a65d04c8ac",
+  "title" : "yolo",
+  "subtitle" : "Tome 7",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/330694.jpg",
+  "serieInfo" : {
+    "serieId" : "ac977142-df95-4c39-be2b-75144cd578ae",
+    "serieName" : "yolo",
+    "orderInSerie" : "7"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w2NmEzNzZmYy00MDI3LTQwODAtYTJlOS03NGE2NWQwNGM4YWMuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "622da5cf-fee2-4499-ad83-14ab454e1605",
+  "title" : "pioupiou",
+  "subtitle" : "Tome 5",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/327528.jpg",
+  "serieInfo" : {
+    "serieId" : "97438237-78b7-42cc-a09c-a621636236ec",
+    "serieName" : "pioupiou",
+    "orderInSerie" : "5"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w2MjJkYTVjZi1mZWUyLTQ0OTktYWQ4My0xNGFiNDU0ZTE2MDUuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "8c765d9e-1214-4d86-8a91-93e38883b574",
+  "title" : "Fire Force",
+  "subtitle" : "Tome 17",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/338328.jpg",
+  "serieInfo" : {
+    "serieId" : "78e0b555-f874-4114-b889-684eb7f47688",
+    "serieName" : "Fire Force",
+    "orderInSerie" : "17"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w4Yzc2NWQ5ZS0xMjE0LTRkODYtOGE5MS05M2UzODg4M2I1NzQuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "899290b2-4c1c-47c0-ac5b-dcf76390316c",
+  "title" : "No Guns Life",
+  "subtitle" : "Tome 2",
+  "isbns" : null,
+  "author" : "",
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/269015.jpg",
+  "serieInfo" : {
+    "serieId" : "bd568643-f513-4039-84bb-070fb2ba4736",
+    "serieName" : "test",
+    "orderInSerie" : "2"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w4OTkyOTBiMi00YzFjLTQ3YzAtYWM1Yi1kY2Y3NjM5MDMxNmMuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "54f913c5-6c25-433e-b10b-c3cd4ce711f4",
+  "title" : "No Guns Life",
+  "subtitle" : "Tome 3",
+  "isbns" : null,
+  "author" : "",
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/278228.jpg",
+  "serieInfo" : {
+    "serieId" : "bd568643-f513-4039-84bb-070fb2ba4736",
+    "serieName" : "test",
+    "orderInSerie" : "3"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w1NGY5MTNjNS02YzI1LTQzM2UtYjEwYi1jM2NkNGNlNzExZjQuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "ee283421-4693-4fb5-9c75-e4d960e6b57e",
+  "title" : "No Guns Life",
+  "subtitle" : "Tome 4",
+  "isbns" : null,
+  "author" : "",
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/278230.jpg",
+  "serieInfo" : {
+    "serieId" : "bd568643-f513-4039-84bb-070fb2ba4736",
+    "serieName" : "test",
+    "orderInSerie" : "4"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1xlZTI4MzQyMS00NjkzLTRmYjUtOWM3NS1lNGQ5NjBlNmI1N2UuYm9va1BpY3R1cmU=",
+  "owner" : "Roro",
+  "scrapperSource" : null
+}, {
+  "id" : "0eb728e1-83b8-49c9-b182-36d56343403b",
+  "title" : "Fire Force",
+  "subtitle" : "Tome 13",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/329492.jpg",
+  "serieInfo" : {
+    "serieId" : "78e0b555-f874-4114-b889-684eb7f47688",
+    "serieName" : "Fire Force",
+    "orderInSerie" : "13"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1wwZWI3MjhlMS04M2I4LTQ5YzktYjE4Mi0zNmQ1NjM0MzQwM2IuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "b48044d8-81b4-490b-9f2a-9b3798a1829a",
+  "title" : "No Guns Life",
+  "subtitle" : "Tome 1",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/261448.jpg",
+  "serieInfo" : {
+    "serieId" : "1e0ae7a6-6161-4ec6-b300-c83403c6dcba",
+    "serieName" : "No Guns Life",
+    "orderInSerie" : "1"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1xiNDgwNDRkOC04MWI0LTQ5MGItOWYyYS05YjM3OThhMTgyOWEuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "1247ca54-e17c-4e0e-a2bc-cd1d05770fee",
+  "title" : "Fire Force",
+  "subtitle" : "Tome 18",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/341617.jpg",
+  "serieInfo" : {
+    "serieId" : "78e0b555-f874-4114-b889-684eb7f47688",
+    "serieName" : "Fire Force",
+    "orderInSerie" : "18"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1wxMjQ3Y2E1NC1lMTdjLTRlMGUtYTJiYy1jZDFkMDU3NzBmZWUuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "16f8f2e0-b5e7-4923-94a0-f1434ea1ed6d",
+  "title" : "No Guns Life",
+  "subtitle" : "Tome 2",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/269015.jpg",
+  "serieInfo" : {
+    "serieId" : "1e0ae7a6-6161-4ec6-b300-c83403c6dcba",
+    "serieName" : "No Guns Life",
+    "orderInSerie" : "2"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1wxNmY4ZjJlMC1iNWU3LTQ5MjMtOTRhMC1mMTQzNGVhMWVkNmQuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "7d3d136d-ee53-4c9c-97f0-85100469f339",
+  "title" : "No Guns Life",
+  "subtitle" : "Tome 9",
+  "isbns" : null,
+  "author" : "",
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/336917.jpg",
+  "serieInfo" : {
+    "serieId" : "97438237-78b7-42cc-a09c-a621636236ec",
+    "serieName" : "pioupiou",
+    "orderInSerie" : "9"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w3ZDNkMTM2ZC1lZTUzLTRjOWMtOTdmMC04NTEwMDQ2OWYzMzkuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "027c8e10-0f08-412b-8c55-320fb7f2c2ac",
+  "title" : "Fire Force",
+  "subtitle" : "Tome 19",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/344640.jpg",
+  "serieInfo" : {
+    "serieId" : "78e0b555-f874-4114-b889-684eb7f47688",
+    "serieName" : "Fire Force",
+    "orderInSerie" : "19"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1wwMjdjOGUxMC0wZjA4LTQxMmItOGM1NS0zMjBmYjdmMmMyYWMuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "4e34ae25-9a7a-4399-bf62-4aa5229eb85c",
+  "title" : "Fire Force",
+  "subtitle" : "Tome 2",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/275102.jpg",
+  "serieInfo" : {
+    "serieId" : "78e0b555-f874-4114-b889-684eb7f47688",
+    "serieName" : "Fire Force",
+    "orderInSerie" : "2"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w0ZTM0YWUyNS05YTdhLTQzOTktYmY2Mi00YWE1MjI5ZWI4NWMuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "f7b1bdf9-477e-40ec-8679-e4ce4d5af11e",
+  "title" : "No Guns Life",
+  "subtitle" : "Tome 3",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/278228.jpg",
+  "serieInfo" : {
+    "serieId" : "1e0ae7a6-6161-4ec6-b300-c83403c6dcba",
+    "serieName" : "No Guns Life",
+    "orderInSerie" : "3"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1xmN2IxYmRmOS00NzdlLTQwZWMtODY3OS1lNGNlNGQ1YWYxMWUuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "fa9a5098-d7d1-42c3-ada0-5ed31fe9ffdd",
+  "title" : "No Guns Life",
+  "subtitle" : "Tome 4",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/278230.jpg",
+  "serieInfo" : {
+    "serieId" : "1e0ae7a6-6161-4ec6-b300-c83403c6dcba",
+    "serieName" : "No Guns Life",
+    "orderInSerie" : "4"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1xmYTlhNTA5OC1kN2QxLTQyYzMtYWRhMC01ZWQzMWZlOWZmZGQuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "9dbb2f8c-89e2-43c3-91be-0561a51449ff",
+  "title" : "No Guns Life",
+  "subtitle" : "Tome 5",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/297025.jpg",
+  "serieInfo" : {
+    "serieId" : "1e0ae7a6-6161-4ec6-b300-c83403c6dcba",
+    "serieName" : "No Guns Life",
+    "orderInSerie" : "5"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w5ZGJiMmY4Yy04OWUyLTQzYzMtOTFiZS0wNTYxYTUxNDQ5ZmYuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "b1c5451b-5533-4694-ad1f-d953b4e37bdb",
+  "title" : "No Guns Life",
+  "subtitle" : "Tome 9",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/336917.jpg",
+  "serieInfo" : {
+    "serieId" : "1e0ae7a6-6161-4ec6-b300-c83403c6dcba",
+    "serieName" : "No Guns Life",
+    "orderInSerie" : "9"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1xiMWM1NDUxYi01NTMzLTQ2OTQtYWQxZi1kOTUzYjRlMzdiZGIuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "03ab3a26-067d-4669-b3aa-f62946eb3e2f",
+  "title" : "Gunnm",
+  "subtitle" : "Tome 1",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/6035.jpg",
+  "serieInfo" : {
+    "serieId" : "821ba4c9-c8b5-4a53-a965-0f9d88b4997a",
+    "serieName" : "Gunnm",
+    "orderInSerie" : "1"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1wwM2FiM2EyNi0wNjdkLTQ2NjktYjNhYS1mNjI5NDZlYjNlMmYuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "68f8fafd-3ebe-4119-b493-0091182f9591",
+  "title" : "Gunnm",
+  "subtitle" : "Tome 2",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/6036.jpg",
+  "serieInfo" : {
+    "serieId" : "821ba4c9-c8b5-4a53-a965-0f9d88b4997a",
+    "serieName" : "Gunnm",
+    "orderInSerie" : "2"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w2OGY4ZmFmZC0zZWJlLTQxMTktYjQ5My0wMDkxMTgyZjk1OTEuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "18fd8b84-11a8-4cbe-aae6-03b7c5f6be69",
+  "title" : "Gunnm",
+  "subtitle" : "Tome 5",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/6039.jpg",
+  "serieInfo" : {
+    "serieId" : "821ba4c9-c8b5-4a53-a965-0f9d88b4997a",
+    "serieName" : "Gunnm",
+    "orderInSerie" : "5"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1wxOGZkOGI4NC0xMWE4LTRjYmUtYWFlNi0wM2I3YzVmNmJlNjkuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "8d1cf906-12ae-4fda-8d38-03109cb1fc62",
+  "title" : "Gunnm",
+  "subtitle" : "Tome 3",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/6875.jpg",
+  "serieInfo" : {
+    "serieId" : "821ba4c9-c8b5-4a53-a965-0f9d88b4997a",
+    "serieName" : "Gunnm",
+    "orderInSerie" : "3"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w4ZDFjZjkwNi0xMmFlLTRmZGEtOGQzOC0wMzEwOWNiMWZjNjIuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
+}, {
+  "id" : "5718bc5d-be37-4b18-805d-fded48eebb1e",
+  "title" : "Gunnm",
+  "subtitle" : "Tome 4",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/6876.jpg",
+  "serieInfo" : {
+    "serieId" : "821ba4c9-c8b5-4a53-a965-0f9d88b4997a",
+    "serieName" : "Gunnm",
+    "orderInSerie" : "4"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w1NzE4YmM1ZC1iZTM3LTRiMTgtODA1ZC1mZGVkNDhlZWJiMWUuYm9va1BpY3R1cmU=",
   "owner" : "",
   "scrapperSource" : null
 } ]

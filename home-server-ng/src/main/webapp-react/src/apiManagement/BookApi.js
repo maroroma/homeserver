@@ -102,6 +102,15 @@ export default function bookApi() {
             .catch(er => console.error(er));
     }
 
+    const deleteSerie = (serieToDelete) => {
+        return fetch(`${apiRoot()}/books/series/${serieToDelete.id}`, {
+            method: 'DELETE',
+            headers: defaultJsonHeaders()
+        })
+            .then(errorHandler(`Erreur rencontrée lors de la suppression d'une série`, "Suppression de la série terminée"))
+            .catch(er => console.error(er));
+    }
+
     const addNewSerie = (serieTitle) => {
 
         const newSerie = {
@@ -114,8 +123,8 @@ export default function bookApi() {
             body: JSON.stringify(newSerie)
         })
             .then(errorHandler(`Erreur rencontrée lors de la création de la nouvelle série ${serieTitle}`,
-                `Série ${serieTitle} créée avec succès`))
-            .catch(er => console.error(er));
+                `Série ${serieTitle} créée avec succès`));
+
     }
 
     const getAllSeries = () => fetch(`${apiRoot()}/books/series`)
@@ -128,6 +137,10 @@ export default function bookApi() {
 
     const getAllBooks = () => fetch(`${apiRoot()}/books`)
         .then(errorHandler("Erreur lors de la récupération des livres"))
+        .catch(er => console.error(er));
+
+    const getAllBooksFromSerie = (serieId) => fetch(`${apiRoot()}/books/series/${serieId}/books`)
+        .then(errorHandler("Erreur lors de la récupération des livres de la série"))
         .catch(er => console.error(er));
 
     const getAllBooksGroupedBySeries = () => fetch(`${apiRoot()}/books/booksGroupedBySeries`)
@@ -164,6 +177,8 @@ export default function bookApi() {
         findBooksBySerieResource: findBooksBySerieResource,
         importBooksIntoSerie: importBooksIntoSerie,
         sendMailForMissingBooks: sendMailForMissingBooks,
-        getOneSerie: getOneSerie
+        getOneSerie: getOneSerie,
+        getAllBooksFromSerie: getAllBooksFromSerie,
+        deleteSerie: deleteSerie
     }
 }

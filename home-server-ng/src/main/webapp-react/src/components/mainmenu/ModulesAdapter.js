@@ -13,9 +13,8 @@ import AlarmComponent from '../iot/alarm/AlarmComponent';
 import LogEventComponent from '../administration/LogEventsComponent';
 import AllBricksComponent from '../lego/AllBricksComponent';
 import RunningTasksComponent from '../administration/RunningTasksComponent';
-import AllBooksComponent from '../book/AllBooksComponent';
-import AllSeriesComponent from '../book/AllSeriesComponent';
 import ImportBooksWithProviderComponent from '../book/import/ImportBooksWithProviderComponent';
+import ListBooksComponent from '../book/listbook/ListBooksComponent';
 
 
 export default function modulesAdapter() {
@@ -119,14 +118,20 @@ export default function modulesAdapter() {
                 path: '/books/allbooks',
                 icon: 'library_books',
                 title: 'Tous les livres',
-                component: (<AllBooksComponent></AllBooksComponent>)
+                component: (<ListBooksComponent></ListBooksComponent>)
             },
-            {
-                path: '/books/allseries',
-                icon: 'view_column',
-                title: 'Toutes les séries',
-                component: (<AllSeriesComponent></AllSeriesComponent>)
-            },
+            // {
+            //     path: '/books/allbooks',
+            //     icon: 'library_books',
+            //     title: 'Tous les livres',
+            //     component: (<AllBooksComponent></AllBooksComponent>)
+            // },
+            // {
+            //     path: '/books/allseries',
+            //     icon: 'view_column',
+            //     title: 'Toutes les séries',
+            //     component: (<AllSeriesComponent></AllSeriesComponent>)
+            // },
             // {
             //     path: '/books/search',
             //     icon: 'add',

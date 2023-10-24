@@ -15,6 +15,7 @@ import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.barcode.BarCodeReader;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.exceptions.Traper;
 import maroroma.homeserverng.tools.files.FileDescriptor;
 import maroroma.homeserverng.tools.files.FileDescriptorFactory;
@@ -164,8 +165,19 @@ public class BookService {
         return this.booksRepo.findAll(BookPredicates.belongToSerie(this.seriesRepo.findByIdMandatory(serie.getId())));
     }
 
+    public List<Book> getAllBooksForSerie(String serieId) {
+        return this.getAllBooksForSerie(this.seriesRepo.<Serie>findByIdMandatory(serieId));
+    }
+
 
     public List<Serie> createSerie(Serie serieToAdd) {
+
+        // on tente d'éviter les doublons ici
+        if (this.seriesRepo.<Serie>find(oneSerie -> oneSerie.getTitle().trim().equalsIgnoreCase(serieToAdd.getTitle().trim())).isPresent()) {
+            throw new RuntimeHomeServerException("Serie déjà existante : impossible d'ajouter");
+        }
+
+
         serieToAdd.setId(UUID.randomUUID().toString());
         this.seriesRepo.save(serieToAdd);
         return this.seriesRepo.getAll();
@@ -295,4 +307,14 @@ public class BookService {
     public Serie getSerie(String serieId) {
         return this.seriesRepo.findByIdMandatory(serieId);
     }
+
+    public List<Serie> deleteOneSerie(String serieId) {
+        Serie serieToDelete = this.seriesRepo.findByIdMandatory(serieId);
+
+        this.booksRepo.delete(BookPredicates.belongToSerie(serieToDelete));
+
+        return this.seriesRepo.delete(serieId);
+    }
+
+
 }

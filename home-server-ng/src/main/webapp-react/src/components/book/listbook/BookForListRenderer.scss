@@ -1,0 +1,29 @@
+
+@media only screen and (min-width: 600px) {
+    .book-big-screen  {
+        
+    }
+    
+    .book-small-screen {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .book-big-screen  {
+        display: none;
+    }
+
+    .book-small-screen {
+        
+    }
+}
+
+.book-title {
+    padding: 0 !important;
+    background-color: #2bbbad;
+    width:95%;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    bottom: 5px !important;
+}

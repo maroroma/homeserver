@@ -59,7 +59,7 @@ public class BooksController {
 
     @GetMapping("${homeserver.api.path:}/books/series/{id}/picture")
     public void downloadSerieCover(@PathVariable("id") final String serieId,
-                                  final HttpServletResponse response) {
+                                   final HttpServletResponse response) {
         this.bookService.getSeriePicture(serieId, response);
     }
 
@@ -97,6 +97,18 @@ public class BooksController {
     public ResponseEntity<Serie> getOneSerie(@PathVariable("id") String serieId) {
         return ResponseEntity.ok(this.bookService.getSerie(serieId));
     }
+
+    @DeleteMapping("${homeserver.api.path:}/books/series/{id}")
+    public ResponseEntity<List<Serie>> deleteOneSerie(@PathVariable("id") String serieId) {
+        return ResponseEntity.ok(this.bookService.deleteOneSerie(serieId));
+    }
+
+
+    @GetMapping("${homeserver.api.path:}/books/series/{id}/books")
+    public ResponseEntity<List<Book>> getBooksFromeSerie(@PathVariable("id") String serieId) {
+        return ResponseEntity.ok(this.bookService.getAllBooksForSerie(serieId));
+    }
+
 
     @PostMapping("${homeserver.api.path:}/books/series")
     public ResponseEntity<List<Serie>> addNewSerie(@RequestBody Serie serieToAdd) throws HomeServerException {

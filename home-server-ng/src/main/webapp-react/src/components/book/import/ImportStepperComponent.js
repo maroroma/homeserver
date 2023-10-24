@@ -24,7 +24,7 @@ export default function ImportStepperComponent() {
                 .then(result => {
                     console.log("autoload serie", result);
                     dispatchSerieUpdated(result);
-                    if (result.serieUrlForImport !== undefined) {
+                    if (result.serieUrlForImport !== undefined && result.serieUrlForImport !== null && result.serieUrlForImport !== "") {
                         dispatchExecuteLoadProposals();
                     }
                 });

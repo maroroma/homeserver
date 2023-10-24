@@ -16,7 +16,7 @@ export default function FinalizeImportComponent() {
 
 
     return <div>
-        <div>{proposalResults.getSelectedItems().length} livre(s) sélectionné(s) pour l'import dans la série {serie.title}</div>
+        <div>{proposalResults.getSelectedItems().length} livre(s) sélectionné(s) pour l'import dans la série <span className="strong">{serie.title}</span></div>
         <div className="input-field col s6">
             <input placeholder="Préfixe pour le sous titre" id="prefix_input" type="text" className="validate" value={importTitlePrefix} onChange={(event) => dispatchNewImportPrefix(event.target.value)}></input>
             <label htmlFor="prefix_input" className="active">Préfixe</label>

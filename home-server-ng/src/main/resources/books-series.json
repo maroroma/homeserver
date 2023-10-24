@@ -1,50 +1,64 @@
 [ {
-  "id" : "bd568643-f513-4039-84bb-070fb2ba4736",
-  "title" : "test",
-  "bookIds" : null,
-  "pictureFileId" : null,
-  "serieUrlForImport" : null,
-  "completed" : false
-}, {
-  "id" : "15948860-8b62-47ba-a064-cdd2ac41b2e4",
-  "title" : "test2",
-  "bookIds" : null,
-  "pictureFileId" : null,
-  "serieUrlForImport" : null,
-  "completed" : false
-}, {
-  "id" : "c1d67728-38e1-42b9-9fec-677d6bfd11ad",
-  "title" : "test3",
-  "bookIds" : null,
-  "pictureFileId" : null,
-  "serieUrlForImport" : null,
-  "completed" : false
-}, {
   "id" : "ac977142-df95-4c39-be2b-75144cd578ae",
   "title" : "yolo",
-  "bookIds" : [ "fd503f27-2876-4c25-b1f3-f5b40ccf645a", "afd2df5c-99c6-4816-b48e-07a10e477e45", "610c16e9-11c0-4580-96d4-321393a63fe6", "27bf2dbc-4fd6-46e2-9e70-4b9808b6d144", "95d56812-4500-4f89-bf2b-a2d36ac3b43c", "5c9c9e0a-e610-429b-b430-984723a18e97" ],
+  "bookIds" : [ "fd503f27-2876-4c25-b1f3-f5b40ccf645a", "afd2df5c-99c6-4816-b48e-07a10e477e45", "610c16e9-11c0-4580-96d4-321393a63fe6", "27bf2dbc-4fd6-46e2-9e70-4b9808b6d144", "95d56812-4500-4f89-bf2b-a2d36ac3b43c", "5c9c9e0a-e610-429b-b430-984723a18e97", "66a376fc-4027-4080-a2e9-74a65d04c8ac" ],
   "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1xmZDUwM2YyNy0yODc2LTRjMjUtYjFmMy1mNWI0MGNjZjY0NWEuYm9va1BpY3R1cmU=",
+  "serieUrlForImport" : "https://www.sanctuary.fr/index.php?page=fiche-edition-objets&id=74631",
+  "completed" : false
+}, {
+  "id" : "7bb79e15-2a23-4fe5-a4ef-87837b7dfa49",
+  "title" : "cccccccccccccccccc",
+  "bookIds" : null,
+  "pictureFileId" : null,
+  "serieUrlForImport" : "",
+  "completed" : false
+}, {
+  "id" : "5e79e94e-35d7-4dab-8a95-c14e5bc977af",
+  "title" : "ddddddddddddddddd",
+  "bookIds" : null,
+  "pictureFileId" : null,
+  "serieUrlForImport" : "sdfsdfsdfsdfsdf",
+  "completed" : false
+}, {
+  "id" : "97438237-78b7-42cc-a09c-a621636236ec",
+  "title" : "pioupiou",
+  "bookIds" : [ "a11d9ba0-579b-4de0-b910-7dace95b05ce", "56df99de-d381-4269-941a-a8ac5a132735", "622da5cf-fee2-4499-ad83-14ab454e1605", "7d3d136d-ee53-4c9c-97f0-85100469f339" ],
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w1YWMyZGU1Yy1kOWVmLTRlZTctYWQxNS02NDIwMTg3MzAxZjUuYm9va1BpY3R1cmU=",
   "serieUrlForImport" : "https://www.sanctuary.fr/index.php?page=fiche-edition-objets&id=74631",
   "completed" : false
 }, {
   "id" : "78e0b555-f874-4114-b889-684eb7f47688",
   "title" : "Fire Force",
-  "bookIds" : [ "b606b9cc-573d-421d-af37-91e1c04a652c", "3a9cb2c8-2254-4934-9fec-a93fbf64bb8f", "047b29c2-bff2-4f8c-82af-7a4ee0ff9bed", "1a124287-544a-44d3-a5f4-76ad6ebbe768", "493d22fa-4dca-42f2-b27b-e9a8137c272d", "cc0a9c43-75de-4753-8816-6f7c5c971186", "4f058a9e-c990-4ddf-8480-394c3fc342dc", "32bc2b3e-283b-445d-8770-5dc67c6edb26", "db3a34e8-fff2-4a85-8410-105eb9446a79", "007243a4-4066-4783-a4b3-7f716a1716bf", "884cdc57-52f9-4330-a670-d5826e8001f7", "9ffae35f-72bc-4fe1-861c-05fab1d13fb0", "8a31250e-1347-4dcc-8871-bac2906e21b8", "62299fcc-626f-411e-af5a-82a2fd43dfa2", "c5068ddb-63e9-495b-892d-846ef39b007b", "8e17efff-c9cb-4d87-b400-77e07a575058", "9fc51a8e-aedd-4546-84bd-642d88ac41c3", "88aa5d58-9c6b-450f-affd-7187245ae073", "3e9bbc45-d089-4163-8d23-4a03d60c1ee8" ],
+  "bookIds" : [ "b606b9cc-573d-421d-af37-91e1c04a652c", "047b29c2-bff2-4f8c-82af-7a4ee0ff9bed", "1a124287-544a-44d3-a5f4-76ad6ebbe768", "493d22fa-4dca-42f2-b27b-e9a8137c272d", "cc0a9c43-75de-4753-8816-6f7c5c971186", "4f058a9e-c990-4ddf-8480-394c3fc342dc", "32bc2b3e-283b-445d-8770-5dc67c6edb26", "db3a34e8-fff2-4a85-8410-105eb9446a79", "884cdc57-52f9-4330-a670-d5826e8001f7", "9ffae35f-72bc-4fe1-861c-05fab1d13fb0", "8a31250e-1347-4dcc-8871-bac2906e21b8", "62299fcc-626f-411e-af5a-82a2fd43dfa2", "c5068ddb-63e9-495b-892d-846ef39b007b", "8e17efff-c9cb-4d87-b400-77e07a575058", "9fc51a8e-aedd-4546-84bd-642d88ac41c3", "88aa5d58-9c6b-450f-affd-7187245ae073", "3e9bbc45-d089-4163-8d23-4a03d60c1ee8", "86e3576f-4627-4e14-91d1-01768bd1f4c1", "8c765d9e-1214-4d86-8a91-93e38883b574", "0eb728e1-83b8-49c9-b182-36d56343403b", "1247ca54-e17c-4e0e-a2bc-cd1d05770fee", "027c8e10-0f08-412b-8c55-320fb7f2c2ac", "4e34ae25-9a7a-4399-bf62-4aa5229eb85c" ],
   "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1xiNjA2YjljYy01NzNkLTQyMWQtYWYzNy05MWUxYzA0YTY1MmMuYm9va1BpY3R1cmU=",
   "serieUrlForImport" : "https://www.sanctuary.fr/index.php?page=fiche-edition-objets&id=61450",
   "completed" : false
 }, {
-  "id" : "97438237-78b7-42cc-a09c-a621636236ec",
-  "title" : "pioupiou",
-  "bookIds" : [ "5ac2de5c-d9ef-4ee7-ad15-6420187301f5", "a11d9ba0-579b-4de0-b910-7dace95b05ce", "56df99de-d381-4269-941a-a8ac5a132735" ],
-  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w1YWMyZGU1Yy1kOWVmLTRlZTctYWQxNS02NDIwMTg3MzAxZjUuYm9va1BpY3R1cmU=",
-  "serieUrlForImport" : "https://www.sanctuary.fr/index.php?page=fiche-edition-objets&id=74631",
-  "completed" : false
+  "id" : "bd568643-f513-4039-84bb-070fb2ba4736",
+  "title" : "test",
+  "bookIds" : [ "899290b2-4c1c-47c0-ac5b-dcf76390316c", "54f913c5-6c25-433e-b10b-c3cd4ce711f4", "ee283421-4693-4fb5-9c75-e4d960e6b57e" ],
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w4OTkyOTBiMi00YzFjLTQ3YzAtYWM1Yi1kY2Y3NjM5MDMxNmMuYm9va1BpY3R1cmU=",
+  "serieUrlForImport" : "",
+  "completed" : true
 }, {
   "id" : "1e0ae7a6-6161-4ec6-b300-c83403c6dcba",
   "title" : "No Guns Life",
-  "bookIds" : [ "ee283421-4693-4fb5-9c75-e4d960e6b57e", "9c2e2c1b-f703-4ac1-b13b-c1e8ccc114a6", "d144e812-2db8-49d2-aa7f-324932838d75", "5cb2f9bd-9f4d-4efa-8e5b-66d7e0e38818", "7b53c8da-c256-486f-af3e-5a2bae88d5e9", "e7292a9b-9579-4295-811f-a95db6f5b9b8", "eb0e8af3-c7b2-4f14-a0f6-3f513e314380", "54f913c5-6c25-433e-b10b-c3cd4ce711f4", "36b1e52d-078c-4f4e-8573-d920806860f6", "7d3d136d-ee53-4c9c-97f0-85100469f339", "874035bb-a0dd-4164-aeb3-2b963aaa47f8", "899290b2-4c1c-47c0-ac5b-dcf76390316c", "680f33aa-1e90-4ef8-9a64-789bda186739" ],
+  "bookIds" : [ "d144e812-2db8-49d2-aa7f-324932838d75", "5cb2f9bd-9f4d-4efa-8e5b-66d7e0e38818", "7b53c8da-c256-486f-af3e-5a2bae88d5e9", "e7292a9b-9579-4295-811f-a95db6f5b9b8", "36b1e52d-078c-4f4e-8573-d920806860f6", "874035bb-a0dd-4164-aeb3-2b963aaa47f8", "680f33aa-1e90-4ef8-9a64-789bda186739", "b48044d8-81b4-490b-9f2a-9b3798a1829a", "16f8f2e0-b5e7-4923-94a0-f1434ea1ed6d", "f7b1bdf9-477e-40ec-8679-e4ce4d5af11e", "fa9a5098-d7d1-42c3-ada0-5ed31fe9ffdd", "9dbb2f8c-89e2-43c3-91be-0561a51449ff", "b1c5451b-5533-4694-ad1f-d953b4e37bdb" ],
   "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1xlZTI4MzQyMS00NjkzLTRmYjUtOWM3NS1lNGQ5NjBlNmI1N2UuYm9va1BpY3R1cmU=",
   "serieUrlForImport" : "https://www.sanctuary.fr/index.php?page=fiche-edition-objets&id=58681",
+  "completed" : false
+}, {
+  "id" : "c39a6fc4-91fd-4947-aeab-65d6fcd7f215",
+  "title" : "test564",
+  "bookIds" : null,
+  "pictureFileId" : null,
+  "serieUrlForImport" : null,
+  "completed" : false
+}, {
+  "id" : "821ba4c9-c8b5-4a53-a965-0f9d88b4997a",
+  "title" : "Gunnm",
+  "bookIds" : [ "03ab3a26-067d-4669-b3aa-f62946eb3e2f", "68f8fafd-3ebe-4119-b493-0091182f9591", "18fd8b84-11a8-4cbe-aae6-03b7c5f6be69", "8d1cf906-12ae-4fda-8d38-03109cb1fc62", "5718bc5d-be37-4b18-805d-fded48eebb1e" ],
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1wwM2FiM2EyNi0wNjdkLTQ2NjktYjNhYS1mNjI5NDZlYjNlMmYuYm9va1BpY3R1cmU=",
+  "serieUrlForImport" : "https://www.sanctuary.fr/index.php?page=fiche-edition-objets&id=669",
   "completed" : false
 } ]
