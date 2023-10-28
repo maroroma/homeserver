@@ -1,4 +1,4 @@
-import { defaultJsonHeaders, errorHandler, apiRoot } from './HttpUtils';
+import {apiRoot, defaultJsonHeaders, errorHandler, errorHandlerWithoutJson} from './HttpUtils';
 
 
 export default function fileManagerApi() {
@@ -12,8 +12,7 @@ export default function fileManagerApi() {
         fetch(`${apiRoot()}/filemanager/directories/${directoryToLoad.id}`)
             .then(errorHandler(
                 `Erreur de récupération du répertoire ${directoryToLoad.name}`
-            ))
-            .catch(er => console.error(er));
+            ));
 
     const createNewDirectory = (currentDirectory, newDirectoryName) => {
 
@@ -28,8 +27,7 @@ export default function fileManagerApi() {
             body: JSON.stringify(request)
         })
             .then(errorHandler(`Erreur rencontrée lors de la création du répertoire ${newDirectoryName}`,
-                `Répertoire ${newDirectoryName} créé`))
-            .catch(er => console.error(er));
+                `Répertoire ${newDirectoryName} créé`));
 
 
     }
@@ -42,8 +40,7 @@ export default function fileManagerApi() {
             }));
 
         return Promise.all(allDeletePromises)
-            .then(errorHandler("Erreur rencontrées lors de la suppression des fichiers", "Fichiers supprimés"))
-            .catch(er => console.error(er));
+            .then(errorHandlerWithoutJson("Erreur rencontrées lors de la suppression des fichiers", "Fichiers supprimés"))
     };
 
     const renameFile = (fileToRename, fileNewName) => {
@@ -58,10 +55,25 @@ export default function fileManagerApi() {
             body: JSON.stringify(request)
         })
             .then(errorHandler(`Erreur rencontrée lors du renommage du fichier ${fileNewName}`,
-                `Fichier ${fileNewName} renommé`))
-            .catch(er => console.error(er));
+                `Fichier ${fileNewName} renommé`));
 
     };
+
+    const uploadFiles = (targetDirectory, filesToUpload) => {
+
+        const request = new FormData();
+        filesToUpload.forEach(oneFile => request.append("file", oneFile));
+
+        return fetch(`${apiRoot()}/filemanager/files/${targetDirectory.id}`, {
+            method: 'POST',
+            // headers: defaultJsonHeaders(),
+            body: request
+        })
+            .then(errorHandler(`Erreur rencontrée lors l'upload des fichiers`,
+                `Fichiers uploadés`));
+
+
+    }
 
     const downloadBaseUrl = () => {
         return `${apiRoot()}/filemanager/files`;
@@ -74,7 +86,8 @@ export default function fileManagerApi() {
         createNewDirectory: createNewDirectory,
         deleteFiles: deleteFiles,
         renameFile: renameFile,
-        downloadBaseUrl: downloadBaseUrl
+        downloadBaseUrl: downloadBaseUrl,
+        uploadFiles: uploadFiles
     };
 
 }

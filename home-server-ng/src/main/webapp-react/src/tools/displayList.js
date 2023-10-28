@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import {useState} from 'react';
 import on from './on';
 import sort from './sort';
 
@@ -38,6 +37,9 @@ export class DisplayList {
 
         this.currentFilter = on().passthrough();
         this.currentSort = sort().neutral();
+
+        this.rawLength = this.rawLength.bind(this);
+        this.isEmpty = this.isEmpty.bind(this);
     }
 
     update(newRawList) {
@@ -141,5 +143,13 @@ export class DisplayList {
     innerApplySort() {
         this.displayList = this.displayList.sort(this.currentSort);
         return this;
+    }
+
+    rawLength() {
+        return this.rawList.length;
+    }
+
+    isEmpty() {
+        return this.rawList.length === 0;
     }
 }

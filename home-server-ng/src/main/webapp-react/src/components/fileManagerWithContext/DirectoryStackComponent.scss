@@ -1,0 +1,11 @@
+.directory-stack {
+    height: unset;
+    line-height: unset;
+    padding-left: 10px;
+    padding-top: 10px;
+    min-height: 45.5px;
+
+    .breadcrumb::before {
+        margin: -3px 0px 1px 0px;
+    }
+}

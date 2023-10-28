@@ -27,13 +27,6 @@
   "serieUrlForImport" : "https://www.sanctuary.fr/index.php?page=fiche-edition-objets&id=74631",
   "completed" : false
 }, {
-  "id" : "78e0b555-f874-4114-b889-684eb7f47688",
-  "title" : "Fire Force",
-  "bookIds" : [ "b606b9cc-573d-421d-af37-91e1c04a652c", "047b29c2-bff2-4f8c-82af-7a4ee0ff9bed", "1a124287-544a-44d3-a5f4-76ad6ebbe768", "493d22fa-4dca-42f2-b27b-e9a8137c272d", "cc0a9c43-75de-4753-8816-6f7c5c971186", "4f058a9e-c990-4ddf-8480-394c3fc342dc", "32bc2b3e-283b-445d-8770-5dc67c6edb26", "db3a34e8-fff2-4a85-8410-105eb9446a79", "884cdc57-52f9-4330-a670-d5826e8001f7", "9ffae35f-72bc-4fe1-861c-05fab1d13fb0", "8a31250e-1347-4dcc-8871-bac2906e21b8", "62299fcc-626f-411e-af5a-82a2fd43dfa2", "c5068ddb-63e9-495b-892d-846ef39b007b", "8e17efff-c9cb-4d87-b400-77e07a575058", "9fc51a8e-aedd-4546-84bd-642d88ac41c3", "88aa5d58-9c6b-450f-affd-7187245ae073", "3e9bbc45-d089-4163-8d23-4a03d60c1ee8", "86e3576f-4627-4e14-91d1-01768bd1f4c1", "8c765d9e-1214-4d86-8a91-93e38883b574", "0eb728e1-83b8-49c9-b182-36d56343403b", "1247ca54-e17c-4e0e-a2bc-cd1d05770fee", "027c8e10-0f08-412b-8c55-320fb7f2c2ac", "4e34ae25-9a7a-4399-bf62-4aa5229eb85c" ],
-  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1xiNjA2YjljYy01NzNkLTQyMWQtYWYzNy05MWUxYzA0YTY1MmMuYm9va1BpY3R1cmU=",
-  "serieUrlForImport" : "https://www.sanctuary.fr/index.php?page=fiche-edition-objets&id=61450",
-  "completed" : false
-}, {
   "id" : "bd568643-f513-4039-84bb-070fb2ba4736",
   "title" : "test",
   "bookIds" : [ "899290b2-4c1c-47c0-ac5b-dcf76390316c", "54f913c5-6c25-433e-b10b-c3cd4ce711f4", "ee283421-4693-4fb5-9c75-e4d960e6b57e" ],
@@ -60,5 +53,12 @@
   "bookIds" : [ "03ab3a26-067d-4669-b3aa-f62946eb3e2f", "68f8fafd-3ebe-4119-b493-0091182f9591", "18fd8b84-11a8-4cbe-aae6-03b7c5f6be69", "8d1cf906-12ae-4fda-8d38-03109cb1fc62", "5718bc5d-be37-4b18-805d-fded48eebb1e" ],
   "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1wwM2FiM2EyNi0wNjdkLTQ2NjktYjNhYS1mNjI5NDZlYjNlMmYuYm9va1BpY3R1cmU=",
   "serieUrlForImport" : "https://www.sanctuary.fr/index.php?page=fiche-edition-objets&id=669",
+  "completed" : false
+}, {
+  "id" : "78e0b555-f874-4114-b889-684eb7f47688",
+  "title" : "Fire Force",
+  "bookIds" : [ "b606b9cc-573d-421d-af37-91e1c04a652c", "047b29c2-bff2-4f8c-82af-7a4ee0ff9bed", "1a124287-544a-44d3-a5f4-76ad6ebbe768", "493d22fa-4dca-42f2-b27b-e9a8137c272d", "cc0a9c43-75de-4753-8816-6f7c5c971186", "4f058a9e-c990-4ddf-8480-394c3fc342dc", "32bc2b3e-283b-445d-8770-5dc67c6edb26", "db3a34e8-fff2-4a85-8410-105eb9446a79", "884cdc57-52f9-4330-a670-d5826e8001f7", "9ffae35f-72bc-4fe1-861c-05fab1d13fb0", "8a31250e-1347-4dcc-8871-bac2906e21b8", "62299fcc-626f-411e-af5a-82a2fd43dfa2", "c5068ddb-63e9-495b-892d-846ef39b007b", "8e17efff-c9cb-4d87-b400-77e07a575058", "9fc51a8e-aedd-4546-84bd-642d88ac41c3", "88aa5d58-9c6b-450f-affd-7187245ae073", "3e9bbc45-d089-4163-8d23-4a03d60c1ee8", "86e3576f-4627-4e14-91d1-01768bd1f4c1", "8c765d9e-1214-4d86-8a91-93e38883b574", "0eb728e1-83b8-49c9-b182-36d56343403b", "1247ca54-e17c-4e0e-a2bc-cd1d05770fee", "027c8e10-0f08-412b-8c55-320fb7f2c2ac", "4e34ae25-9a7a-4399-bf62-4aa5229eb85c", "fb53c1bf-16a6-42d4-a621-977470d899a5" ],
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1xiNjA2YjljYy01NzNkLTQyMWQtYWYzNy05MWUxYzA0YTY1MmMuYm9va1BpY3R1cmU=",
+  "serieUrlForImport" : "https://www.sanctuary.fr/index.php?page=fiche-edition-objets&id=61450",
   "completed" : false
 } ]

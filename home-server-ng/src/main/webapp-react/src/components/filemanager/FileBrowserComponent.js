@@ -1,29 +1,29 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import DirectoryRenderer from "./DirectoryRenderer"
 import FileRenderer from "./FileRenderer"
 import "./FileBrowserComponent.scss"
 import "../commons/Common.scss"
 import eventReactor from '../../eventReactor/EventReactor';
-import { ActionMenuComponent, actionMenu } from '../commons/ActionMenuComponent';
+import {actionMenu, ActionMenuComponent} from '../commons/ActionMenuComponent';
 import {
-    SELECT_ITEM, FILE_BROWSER_CHANGE_CURRENT_DIRECTORY,
+    FILE_BROWSER_CHANGE_CURRENT_DIRECTORY,
     FILE_BROWSER_CREATE_NEW_DIRECTORY,
     FILE_BROWSER_DELETE_FILES,
-    FILE_BROWSER_RENAME_ONE_FILE
+    FILE_BROWSER_RENAME_ONE_FILE,
+    SELECT_ITEM
 } from '../../eventReactor/EventIds';
 
-import { when } from "../../tools/when";
+import {when} from "../../tools/when";
 import on from '../../tools/on';
 import enhance from '../../tools/enhance';
 import sort from '../../tools/sort';
-import { DisplayList } from '../../tools/displayList';
+import {DisplayList} from '../../tools/displayList';
 
-import { ModalPopupComponent, usePopupDriver } from "../commons/ModalPopupComponent";
+import {ModalPopupComponent, usePopupDriver} from "../commons/ModalPopupComponent";
 import YesNoModalPopupComponent from "../commons/YesNoModalPopupComponent";
-import { fixedIconResolver, defaultDirectoryIconResolver, fileIconResolver } from './FileIconResolver';
+import {defaultDirectoryIconResolver, fileIconResolver, fixedIconResolver} from './FileIconResolver';
 import fileBrowserEventReactor from './fileBrowserEventReactor';
-import { searchSubReactor } from '../mainmenu/SearchBarComponent';
+import {searchSubReactor} from '../mainmenu/SearchBarComponent';
 
 
 export default function FileBrowserComponent({ startUpDirectory, options = {} }) {
@@ -65,7 +65,7 @@ export default function FileBrowserComponent({ startUpDirectory, options = {} })
             .onDirectoryDetailLoaded(
                 newDirectory => {
 
-                   searchSubReactor().clearSearchBar();
+                    searchSubReactor().clearSearchBar();
 
                     let newCurrentDirectory = newDirectory.directoryToDisplay;
 

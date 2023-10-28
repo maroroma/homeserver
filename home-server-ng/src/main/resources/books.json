@@ -890,4 +890,20 @@
   "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w1NzE4YmM1ZC1iZTM3LTRiMTgtODA1ZC1mZGVkNDhlZWJiMWUuYm9va1BpY3R1cmU=",
   "owner" : "",
   "scrapperSource" : null
+}, {
+  "id" : "fb53c1bf-16a6-42d4-a621-977470d899a5",
+  "title" : "Fire Force",
+  "subtitle" : "Tome 23",
+  "isbns" : null,
+  "author" : null,
+  "pageCount" : 0,
+  "initialImageLink" : "https://img.sanctuary.fr/objet/150/376097.jpg",
+  "serieInfo" : {
+    "serieId" : "78e0b555-f874-4114-b889-684eb7f47688",
+    "serieName" : "Fire Force",
+    "orderInSerie" : "23"
+  },
+  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1xmYjUzYzFiZi0xNmE2LTQyZDQtYTYyMS05Nzc0NzBkODk5YTUuYm9va1BpY3R1cmU=",
+  "owner" : "",
+  "scrapperSource" : null
 } ]

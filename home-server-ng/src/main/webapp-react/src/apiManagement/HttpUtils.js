@@ -13,7 +13,7 @@ export function defaultJsonHeaders() {
 }
 
 
-export function errorHandler(errorMessage, successMessage) {
+export function errorHandler(errorMessage, successMessage, debug = () => {}) {
 
     return (response) => {
         if (response.status > 300) {
@@ -25,7 +25,24 @@ export function errorHandler(errorMessage, successMessage) {
             toaster().plopSuccess(successMessage);
         }
 
+        debug(response);
 
         return response.json();
+    }
+}
+
+export function errorHandlerWithoutJson(errorMessage, successMessage) {
+    return (response) => {
+        if (response.status > 300) {
+            toaster().plopError(errorMessage);
+            throw new Error(errorMessage);
+        }
+
+        if (successMessage) {
+            toaster().plopSuccess(successMessage);
+        }
+
+
+        return response;
     }
 }

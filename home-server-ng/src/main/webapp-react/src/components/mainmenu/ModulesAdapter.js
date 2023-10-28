@@ -15,6 +15,7 @@ import AllBricksComponent from '../lego/AllBricksComponent';
 import RunningTasksComponent from '../administration/RunningTasksComponent';
 import ImportBooksWithProviderComponent from '../book/import/ImportBooksWithProviderComponent';
 import ListBooksComponent from '../book/listbook/ListBooksComponent';
+import FileManagerWithProviderComponent from '../fileManagerWithContext/FileManagerWithProviderComponent';
 
 
 export default function modulesAdapter() {
@@ -60,7 +61,8 @@ export default function modulesAdapter() {
         path: '/filemanager',
         icon: 'storage',
         title: 'FileManager',
-        component: (<FileManagerComponent></FileManagerComponent>),
+        component: (<FileManagerWithProviderComponent></FileManagerWithProviderComponent>),
+        // component: (<FileManagerComponent></FileManagerComponent>),
         dontUseDefaultPanel: true
     }, {
         module: 'iot',
@@ -120,18 +122,6 @@ export default function modulesAdapter() {
                 title: 'Tous les livres',
                 component: (<ListBooksComponent></ListBooksComponent>)
             },
-            // {
-            //     path: '/books/allbooks',
-            //     icon: 'library_books',
-            //     title: 'Tous les livres',
-            //     component: (<AllBooksComponent></AllBooksComponent>)
-            // },
-            // {
-            //     path: '/books/allseries',
-            //     icon: 'view_column',
-            //     title: 'Toutes les séries',
-            //     component: (<AllSeriesComponent></AllSeriesComponent>)
-            // },
             // {
             //     path: '/books/search',
             //     icon: 'add',
