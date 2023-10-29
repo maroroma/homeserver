@@ -78,10 +78,7 @@ export default function SpecificConfigurationComponent() {
             id: ConfigurationProperties.ROOT_DIRECTORIES,
             value: newValue
         }]).then(result => dispatchEndConfiguring());
-
     }
-
-
 
 
     return <div>
