@@ -57,12 +57,14 @@
         @media only screen and (min-width: 600px) {
             img.image-to-display {
                 height: 90%;
+                max-width: 100%;
             }
         }
 
         @media only screen and (max-width: 600px) {
             img.image-to-display {
                 width: 100%;
+                max-height: 90%;
             }
         }
 
