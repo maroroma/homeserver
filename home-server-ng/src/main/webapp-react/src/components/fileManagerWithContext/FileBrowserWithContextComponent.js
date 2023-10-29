@@ -11,6 +11,7 @@ import DeleteFilesComponent from "./pseudopopups/DeleteFilesComponent";
 import CreateDirectoryComponent from "./pseudopopups/CreateDirectoryComponent";
 import FileDownloadActionMenu from "./actionmenus/FileDownloadActionMenu";
 import UploadFilesComponent from "./pseudopopups/UploadFilesComponent";
+import SpecificConfigurationComponent from "./pseudopopups/SpecificConfigurationComponent";
 
 
 export default function FileBrowserWithContextComponent({ options, startupDirectoryPromise }) {
@@ -41,6 +42,10 @@ export default function FileBrowserWithContextComponent({ options, startupDirect
         </DisplayModeVisibleComponent>
         <DisplayModeVisibleComponent forDisplayMode={DirectoryDisplayMode.UPLOADING}>
             <UploadFilesComponent></UploadFilesComponent>
+        </DisplayModeVisibleComponent>
+
+        <DisplayModeVisibleComponent forDisplayMode={DirectoryDisplayMode.CONFIGURING}>
+            <SpecificConfigurationComponent></SpecificConfigurationComponent>
         </DisplayModeVisibleComponent>
 
         <FileBrowserOperationInProgressComponent></FileBrowserOperationInProgressComponent>

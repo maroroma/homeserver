@@ -24,7 +24,9 @@ const FileBrowserActions = {
     CANCEL_WIP: "CANCEL_WIP",
     START_UPLOAD_FILES: "START_UPLOAD_FILES",
     EXECUTE_UPLOAD_FILES: "EXECUTE_UPLOAD_FILES",
-    CANCEL_UPLOAD_FILES: "CANCEL_UPLOAD_FILES"
+    CANCEL_UPLOAD_FILES: "CANCEL_UPLOAD_FILES",
+    START_CONFIGURING: "START_CONFIGURING",
+    END_CONFIGURING: "END_CONFIGURING",
 
 };
 
@@ -76,6 +78,10 @@ const reducer = (previousState, action) => {
             return fileManagerStateManager.cancelUploadFiles(previousState);
         case FileBrowserActions.EXECUTE_UPLOAD_FILES:
             return fileManagerStateManager.executeUploadFiles(previousState, action.filesToUpload, action.dispatch);
+        case FileBrowserActions.START_CONFIGURING:
+            return fileManagerStateManager.startConfiguring(previousState);
+        case FileBrowserActions.END_CONFIGURING:
+            return fileManagerStateManager.endConfiguring(previousState, action.dispatch);
 
         default:
             return previousState;
@@ -161,6 +167,12 @@ const FileBrowserProvider = ({ children, options, startupDirectoryPromise }) => 
         },
         dispatchCancelUploadFiles: () => {
             dispatch({ type: FileBrowserActions.CANCEL_UPLOAD_FILES });
+        },
+        dispatchStartConfiguring: () => {
+            dispatch({ type: FileBrowserActions.START_CONFIGURING });
+        },
+        dispatchEndConfiguring: () => {
+            dispatch({ type: FileBrowserActions.END_CONFIGURING, dispatch: dispatch });
         }
     };
     return <FileBrowserContext.Provider value={value}>

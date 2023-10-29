@@ -335,9 +335,28 @@ const fileManagerStateManager = {
 
         return {
             ...previousState,
-            workInProgress:true
+            workInProgress: true
         }
 
+    },
+    startConfiguring: (previousState) => {
+        return {
+            ...previousState,
+            currentDirectory: {
+                ...previousState.currentDirectory,
+                displayMode: DirectoryDisplayMode.CONFIGURING
+            }
+        }
+    },
+    endConfiguring: (previousState) => {
+        return {
+            ...previousState,
+            startupDirectoryPromise: () => previousState.startupDirectoryPromise(),
+            currentDirectory: {
+                ...previousState.currentDirectory,
+                displayMode: DirectoryDisplayMode.BROWSING
+            }
+        }
     }
 
 }

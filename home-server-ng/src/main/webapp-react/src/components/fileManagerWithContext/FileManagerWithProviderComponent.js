@@ -5,7 +5,7 @@ import fileManagerApi from "../../apiManagement/FileManagerApi";
 
 export default function FileManagerWithProviderComponent() {
 
-    return <FileBrowserWithContextComponent startupDirectoryPromise={fileManagerApi().getRootDirectories()} options={
+    return <FileBrowserWithContextComponent startupDirectoryPromise={() => fileManagerApi().getRootDirectories()} options={
         {
             downloadBaseUrl: fileManagerApi().downloadBaseUrl(),
             startupDirectoryMapper: (rootDirectories) => {

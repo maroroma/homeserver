@@ -11,7 +11,8 @@ export default function FileBrowserActionMenu() {
         dispatchStartDeleting,
         dispatchStartCreateDirectory,
         disptachEnableDownloading,
-        dispatchStartUploadFiles
+        dispatchStartUploadFiles,
+        dispatchStartConfiguring
     } = useFileBrowserContext();
 
 
@@ -40,6 +41,11 @@ export default function FileBrowserActionMenu() {
         <li>
             <a href="#!" className={when(currentDirectory.isStartupDirectory).thenDisableElement("btn-floating btn-small green")} onClick={() => { dispatchStartUploadFiles() }}>
                 <i className="material-icons">cloud_upload</i>
+            </a>
+        </li>
+        <li>
+            <a href="#!" className="btn-floating btn-small orange" onClick={() => { dispatchStartConfiguring() }}>
+                <i className="material-icons">build</i>
             </a>
         </li>
     </FloatingMenuComponent >

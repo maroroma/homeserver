@@ -10,7 +10,8 @@ const DirectoryDisplayMode = {
     DOWNLOADING: "DOWNLOADING",
     DELETING: "DELETING",
     CREATE_DIRECTORY: "CREATE_DIRECTORY",
-    UPLOADING: "UPLOADING"
+    UPLOADING: "UPLOADING",
+    CONFIGURING: "CONFIGURING"
 }
 
 function DisplayModeVisibleComponent({ children, forDisplayMode = [DirectoryDisplayMode.BROWSING, DirectoryDisplayMode.DOWNLOADING] }) {

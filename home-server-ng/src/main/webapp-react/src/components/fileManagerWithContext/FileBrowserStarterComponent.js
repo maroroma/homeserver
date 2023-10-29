@@ -5,7 +5,7 @@ export default function FileBrowserStarterComponent() {
     const {startupDirectoryPromise, dispatchStartupDirectoryLoaded} = useFileBrowserContext();
 
     useEffect(() => {
-        startupDirectoryPromise.then(loadedStartupDirectory => dispatchStartupDirectoryLoaded(loadedStartupDirectory));
+        startupDirectoryPromise().then(loadedStartupDirectory => dispatchStartupDirectoryLoaded(loadedStartupDirectory));
     }, [startupDirectoryPromise]);
 
     return <></>

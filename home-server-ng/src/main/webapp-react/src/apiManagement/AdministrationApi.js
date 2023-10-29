@@ -1,4 +1,4 @@
-import { defaultJsonHeaders, errorHandler, apiRoot } from './HttpUtils';
+import {apiRoot, defaultJsonHeaders, errorHandler, errorHandlerWithoutJson} from './HttpUtils';
 
 export function administrationApi() {
     const updateModulesStatus = (updateModules) => {
@@ -29,8 +29,7 @@ export function administrationApi() {
             }));
 
         return Promise.all(allUpdatePromises)
-            .then(errorHandler("Erreur rencontrées lors de la mise à jour des propriétés", "Propriétés mises à jour"))
-            .catch(er => console.error(er));
+            .then(errorHandlerWithoutJson("Erreur rencontrées lors de la mise à jour des propriétés", "Propriétés mises à jour"))
     }
 
 
