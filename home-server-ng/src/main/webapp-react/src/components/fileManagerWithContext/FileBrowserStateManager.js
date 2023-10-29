@@ -3,6 +3,7 @@ import {DisplayList, emptyDisplayList} from "../../tools/displayList";
 import enhance from "../../tools/enhance";
 import sort from "../../tools/sort";
 import {isImageViewerCompatibleFile} from "../commons/ImageViewer/ImageViewerComponent";
+import {isMusicPlayerCompatibleFile} from "../commons/MusicPlayer/MusicPlayerComponent";
 import {defaultDirectoryIconResolver, fileIconResolver} from "../filemanager/FileIconResolver";
 import {DirectoryDisplayMode} from "./DirectoryDisplayMode";
 import {FileBrowserActions} from "./FileBrowserContextDefinition";
@@ -67,6 +68,11 @@ const fileManagerStateManager = {
                 imageUrlList: [],
                 imageBaseUrl: options.downloadBaseUrl,
                 selectedIndex: 0
+            },
+            musicPlayerState: {
+                display: false,
+                fileToPlay: {},
+                musicBaseUrl: options.downloadBaseUrl
             },
             computedOptions: {
                 downloadBaseUrl: options.downloadBaseUrl ? options.downloadBaseUrl : "",
@@ -138,9 +144,10 @@ const fileManagerStateManager = {
     // gestion du click sur un fichier (affichage du content...)
     clickOnFile: (previousState, fileClicked) => {
 
-        const shouldDisplayFile = isImageViewerCompatibleFile(fileClicked);
+        const shouldDisplayFileAsImage = isImageViewerCompatibleFile(fileClicked);
+        const shouldPlayFileAsMusic = isMusicPlayerCompatibleFile(fileClicked);
 
-        if (shouldDisplayFile) {
+        if (shouldDisplayFileAsImage) {
             const filesToDisplay = previousState.currentDirectory.files.rawList
                 .filter(isImageViewerCompatibleFile)
                 .map(aFile => aFile.id);
@@ -151,9 +158,20 @@ const fileManagerStateManager = {
                 ...previousState,
                 imageViewerState: {
                     ...previousState.imageViewerState,
-                    display: shouldDisplayFile,
+                    display: shouldDisplayFileAsImage,
                     imageUrlList: filesToDisplay,
                     selectedIndex: fileIndexToDisplay
+                }
+            }
+        }
+
+        if (shouldPlayFileAsMusic) {
+            return {
+                ...previousState,
+                musicPlayerState: {
+                    ...previousState.musicPlayerState,
+                    display: shouldPlayFileAsMusic,
+                    fileToPlay: fileClicked
                 }
             }
         }
@@ -169,6 +187,11 @@ const fileManagerStateManager = {
                 ...previousState.imageViewerState,
                 display: false,
                 imageUrlList: []
+            },
+            musicPlayerState: {
+                ...previousState.musicPlayerState,
+                display: false,
+                fileToPlay: {}
             }
         };
     },

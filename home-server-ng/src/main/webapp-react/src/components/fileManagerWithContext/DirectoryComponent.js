@@ -6,11 +6,12 @@ import "./FileBrowserCommon.scss";
 import OneFileRenderer from './OneFileRenderer';
 import {ImageViewerComponent} from '../commons/ImageViewer/ImageViewerComponent';
 import {DirectoryDisplayMode} from './DirectoryDisplayMode';
+import {MusicPlayerComponent} from '../commons/MusicPlayer/MusicPlayerComponent';
 
 
 export default function DirectoryComponent() {
 
-    const { currentDirectory, computedOptions, imageViewerState, dispatchCloseViewer } = useFileBrowserContext();
+    const { currentDirectory, computedOptions, imageViewerState, dispatchCloseViewer, musicPlayerState } = useFileBrowserContext();
 
 
     return <>
@@ -44,5 +45,12 @@ export default function DirectoryComponent() {
             selectedStartupIndex={imageViewerState.selectedIndex}
             onClose={dispatchCloseViewer}>
         </ImageViewerComponent>
+        <MusicPlayerComponent
+            display={musicPlayerState.display}
+            onClose={dispatchCloseViewer}
+            fileToPlay={musicPlayerState.fileToPlay}
+            musicBaseUrl={musicPlayerState.musicBaseUrl}>
+
+        </MusicPlayerComponent>
     </>
 }

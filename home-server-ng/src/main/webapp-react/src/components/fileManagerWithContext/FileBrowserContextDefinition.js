@@ -107,6 +107,7 @@ const FileBrowserProvider = ({ children, options, startupDirectoryPromise }) => 
         imageViewerState: state.imageViewerState,
         fileToRename: state.fileToRename,
         filesToDelete: state.filesToDelete,
+        musicPlayerState: state.musicPlayerState,
 
         dispatchStartupDirectoryLoaded: (loadedStartupDirectory) => {
             dispatch({ type: FileBrowserActions.STARTUP_DIRECTORY_LOADED, startupDirectory: loadedStartupDirectory })
