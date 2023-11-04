@@ -1,6 +1,6 @@
 [ {
   "id" : "homeserver.filemanager.rootdirectories",
-  "value" : "D:/temp/TEST/COMPLETED,D:/temp/TEST/Videos/Series,C:\\Users\\maroroma\\Videos\\films,C:\\tmp\\homeserver\\TODO,${homeserver.music.target.directory},C:\\tmp\\homeserver\\mp3tagworkingdir,${homeserver.data.dir},C:\\temp\\homeserverwip",
+  "value" : "C:\\Users\\maroroma\\Videos\\films,C:\\tmp\\homeserver\\TODO,${homeserver.music.target.directory},C:\\tmp\\homeserver\\mp3tagworkingdir,${homeserver.data.dir},C:\\temp\\homeserverwip,C:\\temp\\homeserverwip\\COMPLETED",
   "description" : "Les différents répertoires racines gérables par le filemanager",
   "readOnly" : false,
   "moduleId" : "filemanager"
