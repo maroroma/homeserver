@@ -173,13 +173,6 @@
 
 		<!-- inclusion du site web -->
 		<fileSet>
-			<!-- <directory>${basedir}/src/main/webapp/</directory> -->
-			
-			<!-- on utilise maintenant la sortie du build grunt -->
-			<!-- <directory>${project.build.directory}/webapp/</directory> -->
-
-			<!-- sortie pour ng2 -->
-<!--			<directory>${basedir}/src/main/webapp-ng2plus/dist</directory>-->
 
 			<!-- sortie react -->
 			<directory>${basedir}/src/main/webapp-react/build</directory>

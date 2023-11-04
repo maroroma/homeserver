@@ -1,4 +1,0 @@
-<homeserver-popup #popup [title]="popupTitle" [koButton]="false" okButtonLabel="Fermer" (ok)="onClosePlayer()">
-    <homeserver-music-player #musicPlayer *ngIf="isMusicPlayer" [fileToPlay]="fileToPlay"></homeserver-music-player>
-    <homeserver-video-player #videoPlayer *ngIf="!isMusicPlayer" [fileToPlay]="fileToPlay"></homeserver-video-player>
-</homeserver-popup>

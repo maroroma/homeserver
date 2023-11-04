@@ -1,7 +1,0 @@
-<homeserver-page-header></homeserver-page-header>
-
-<div class="page-content">
-    <homeserver-reducer-upload *ngIf="!displayMailComponent" (imageListUpdated)="reducedImageList.updateImageList($event)"></homeserver-reducer-upload>
-    <homeserver-reducer-image-list *ngIf="!displayMailComponent" #reducedImageList (sendMail)="displaySendMailComponent($event)"></homeserver-reducer-image-list>
-    <homeserver-reducer-send-mail *ngIf="displayMailComponent" [imagesToSend]="imagesToSend" (cancel)="cancelSendMail()"></homeserver-reducer-send-mail>
-</div>

@@ -177,22 +177,6 @@
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
-<!--					<execution>-->
-<!--						<id>build-ng2</id>-->
-<!--						<phase>generate-sources</phase>-->
-<!--						<configuration>-->
-<!--							<target name="building">-->
-<!--								<exec executable="cmd"-->
-<!--									dir="${project.basedir}/src/main/webapp-ng2plus" osfamily="windows"-->
-<!--									resultproperty="cmdresult">-->
-<!--									<arg line="/c ng build &#45;&#45;environment=prod" />-->
-<!--								</exec>-->
-<!--							</target>-->
-<!--						</configuration>-->
-<!--						<goals>-->
-<!--							<goal>run</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
 					<execution>
 						<id>build-react</id>
 						<phase>generate-sources</phase>
