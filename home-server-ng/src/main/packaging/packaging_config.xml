@@ -68,12 +68,6 @@
 		
 		<!-- inclusion des fichies de configuration des modules -->
 		<file>
-			<source>${basedir}/src/main/resources/scanner.properties.json</source>
-			<filtered>true</filtered>
-			<fileMode>775</fileMode>
-			<outputDirectory>/config/</outputDirectory>
-		</file>
-		<file>
 			<source>${basedir}/src/main/resources/seedbox.properties.json</source>
 			<filtered>true</filtered>
 			<fileMode>775</fileMode>
@@ -92,19 +86,7 @@
 			<outputDirectory>/config/</outputDirectory>
 		</file>
 		<file>
-			<source>${basedir}/src/main/resources/reducer.properties.json</source>
-			<filtered>true</filtered>
-			<fileMode>775</fileMode>
-			<outputDirectory>/config/</outputDirectory>
-		</file>
-		<file>
 			<source>${basedir}/src/main/resources/notifyer.properties.json</source>
-			<filtered>true</filtered>
-			<fileMode>775</fileMode>
-			<outputDirectory>/config/</outputDirectory>
-		</file>
-		<file>
-			<source>${basedir}/src/main/resources/photo.properties.json</source>
 			<filtered>true</filtered>
 			<fileMode>775</fileMode>
 			<outputDirectory>/config/</outputDirectory>
