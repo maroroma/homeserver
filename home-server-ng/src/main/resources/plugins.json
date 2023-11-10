@@ -5,9 +5,6 @@
   "id" : "notifyer",
   "enabled" : true
 }, {
-  "id" : "photo",
-  "enabled" : false
-}, {
   "id" : "kodimanager",
   "enabled" : true
 }, {
@@ -15,7 +12,7 @@
   "enabled" : true
 }, {
   "id" : "remote",
-  "enabled" : true
+  "enabled" : false
 }, {
   "id" : "iot",
   "enabled" : true
@@ -33,12 +30,6 @@
   "enabled" : false
 }, {
   "id" : "watch",
-  "enabled" : false
-}, {
-  "id" : "scanner",
-  "enabled" : false
-}, {
-  "id" : "reducer",
   "enabled" : false
 }, {
   "id" : "kiosk",

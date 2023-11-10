@@ -4,17 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.exceptions.Traper;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.FileCopyUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
+import java.util.stream.*;
 
 /**
  * DTO pour la description des fichiers présents
@@ -63,6 +61,17 @@ public class FileDescriptor {
 	 */
 	private boolean isDirectory;
 
+	/**
+	 * Opération de suppression interdite ?
+	 */
+	private boolean isProtected;
+
+	/**
+	 * Non visible sur une navigation standard
+	 */
+	private boolean isHidden;
+
+
 	@JsonIgnore
 	private AbstractFileDescriptorAdapter adapter;
 	/**
@@ -70,7 +79,7 @@ public class FileDescriptor {
 	 * @param fileName -
 	 * @param fullFileName -
 	 */
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	public FileDescriptor(final String fileName, final String fullFileName) {
 		this.name = fileName;
 		this.fullName = fullFileName;
@@ -81,7 +90,7 @@ public class FileDescriptor {
 	 * Constructeur.
 	 * @param file -
 	 */
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	public FileDescriptor(final File file) {
 		this(file.getName(), file.getAbsolutePath());
 		try {
@@ -106,6 +115,8 @@ public class FileDescriptor {
 		this.id = source.id;
 		this.isFile = source.isFile;
 		this.isDirectory = source.isDirectory;
+		this.isHidden = source.isHidden;
+		this.isProtected = source.isProtected;
 	}
 
 	public FileDescriptor(AbstractFileDescriptorAdapter adapter) {
@@ -122,7 +133,7 @@ public class FileDescriptor {
 	 * Produit un {@link File} à partir du nom complet du fichier.
 	 * @return -
 	 */
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	public File createFile() {
 		return new File(this.getFullName());
 	}
@@ -132,6 +143,7 @@ public class FileDescriptor {
 	 * @return true si la suppression est ok.
 	 */
 	public FileOperationResult deleteFile() {
+		failsIfProtected();
 		return FileOperationResult.builder()
 				.completed(this.adapter.delete())
 				.initialFile(this)
@@ -144,6 +156,7 @@ public class FileDescriptor {
 	 * @return true si le renommage est ok.
 	 */
 	public FileOperationResult renameFile(final String newName) {
+		failsIfProtected();
 		return FileOperationResult.builder()
 				.completed(this.adapter.rename(newName))
 				.initialFile(this)
@@ -251,5 +264,20 @@ public class FileDescriptor {
 
 	public boolean exists() {
 		return this.adapter.exists();
+	}
+
+	public Path toPath() {
+		return this.adapter.toPath();
+	}
+
+	public FileDescriptorPath toFileDescriptorPath() {
+		return this.adapter.toFileDescriptorPath();
+	}
+
+
+	private void failsIfProtected() {
+		if (this.isProtected) {
+			throw new RuntimeHomeServerException("File " + this.getFullName() + " is protected, can't be delete");
+		}
 	}
 }

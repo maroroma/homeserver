@@ -1,34 +1,32 @@
 package maroroma.homeserverng.lego.services;
 
+import lombok.RequiredArgsConstructor;
 import maroroma.homeserverng.filemanager.services.FileManagerServiceImpl;
+import maroroma.homeserverng.filemanager.services.FilesFactory;
 import maroroma.homeserverng.lego.model.Brick;
 import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.exceptions.Traper;
 import maroroma.homeserverng.tools.files.FileDescriptor;
-import maroroma.homeserverng.tools.files.FileDescriptorFactory;
+import maroroma.homeserverng.tools.files.FileDirectoryDescriptor;
 import maroroma.homeserverng.tools.files.FileOperationResult;
 import maroroma.homeserverng.tools.helpers.Predicates;
 import maroroma.homeserverng.tools.helpers.Tuple;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
-import maroroma.homeserverng.tools.security.SecurityManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.net.*;
+import java.util.*;
 import javax.servlet.http.HttpServletResponse;
-import java.net.URL;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Gestion du catalog lego de la maison
  */
 @Service
+@RequiredArgsConstructor
 public class LegoService {
 
 
@@ -43,11 +41,9 @@ public class LegoService {
     @Property("homeserver.lego.bricks.image.library")
     private HomeServerPropertyHolder bricksImageLibraryDir;
 
-    @Autowired
-    private SecurityManager securityManager;
 
-    @Autowired
-    private FileManagerServiceImpl fileManagerService;
+    private final FileManagerServiceImpl fileManagerService;
+    private final FilesFactory filesFactory;
 
 
     public List<Brick> getAllBricks() {
@@ -85,15 +81,12 @@ public class LegoService {
      */
     private Brick dowloadBrickPictureAndUpdateBrick(Brick brickToUpdate) {
         // dans le doute on créé l'arbo
-        FileDescriptor brickPicturesDirectory = bricksImageLibraryDir.asFileDescriptorFactory()
-                .withSecurityManager(this.securityManager).fileDescriptor();
+        FileDirectoryDescriptor brickPicturesDirectory = this.filesFactory.directoryFromProperty(bricksImageLibraryDir);
         brickPicturesDirectory.mkdirs();
 
-        FileDescriptor brickPictureFile = FileDescriptorFactory
-                .fromPath(brickPicturesDirectory.getFullName())
-                .withSecurityManager(this.securityManager)
+        FileDescriptor brickPictureFile = brickPicturesDirectory
                 .combinePath(brickToUpdate.getId() + ".brickPicture")
-                .fileDescriptor();
+                .asFile();
 
         // si url image renseignée, download
         Optional.ofNullable(brickToUpdate.getPictureUrl())
@@ -126,21 +119,5 @@ public class LegoService {
         this.fileManagerService.getFile(() -> this.bricksRepo
                 .<Brick>findById(brickId)
                 .map(Brick::getPictureFileId), response);
-
-//        // récupération du fichier
-//        FileDescriptor toDownload = this.bricksRepo
-//                .<Brick>findById(brickId)
-//                .map(Brick::getPictureFileId)
-//                .map(FileDescriptorFactory::fromId)
-//                .map(fileDescriptorFactory -> fileDescriptorFactory.withSecurityManager(securityManager))
-//                .map(FileDescriptorFactory::fileDescriptor)
-//                .orElseThrow(() -> new RuntimeHomeServerException("impossible de récupérer le picto pour la brique"));
-//
-//
-//        if (toDownload.getSize() > 0) {
-//            response.setHeader("Content-Length", "" + toDownload.getSize());
-//        }
-//
-//        toDownload.copyTo(Traper.trap(response::getOutputStream));
     }
 }

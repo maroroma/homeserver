@@ -3,11 +3,10 @@ package maroroma.homeserverng.tools.files;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.io.*;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 /**
  * Extension de {@link FileDescriptor} correspondant à un répertoire.
@@ -18,6 +17,7 @@ import java.util.stream.Collectors;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Deprecated(forRemoval = true)
 public abstract class DirectoryDescriptor<T extends FileDescriptor> extends FileDescriptor {
 
 	/**

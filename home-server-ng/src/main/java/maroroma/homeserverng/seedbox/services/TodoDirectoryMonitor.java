@@ -1,6 +1,7 @@
 package maroroma.homeserverng.seedbox.services;
 
 import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.filemanager.services.FilesFactory;
 import maroroma.homeserverng.network.services.NetworkServiceImpl;
 import maroroma.homeserverng.notifyer.services.CommonNotificatonTypes;
 import maroroma.homeserverng.seedbox.model.EpisodeParseResult;
@@ -18,10 +19,9 @@ import maroroma.homeserverng.tools.notifications.NotifyerContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Bean dédié à la surveillance en live du répertoire de téléchargements complétés.
@@ -74,6 +74,9 @@ public class TodoDirectoryMonitor {
     @Property("homeserver.seedbox.download.linkformat")
     private HomeServerPropertyHolder downloadLinkFormat;
 
+    @Autowired
+    private FilesFactory filesFactory;
+
     /**
      * à l'init du serveur, mise en place de la surveillance du répertoire todo.
      *
@@ -85,7 +88,7 @@ public class TodoDirectoryMonitor {
         try {
 
             // création d'un monitor
-            this.todoDirectoryMonitor = new DirectoryMonitor(this.todoDirectory.asFile())
+            this.todoDirectoryMonitor = new DirectoryMonitor(filesFactory.directoryFromProperty(this.todoDirectory))
                     // abonnement pour la création d'un fichier.
                     .watchCreation(this::handleFileCreation)
                     .start();

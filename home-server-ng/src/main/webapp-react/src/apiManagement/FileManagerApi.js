@@ -79,6 +79,47 @@ export default function fileManagerApi() {
         return `${apiRoot()}/filemanager/files`;
     }
 
+    const getRootDirectoriesConfiguration = () => {
+        return fetch(`${apiRoot()}/filemanager/configuration/rootDirectories`)
+            .then(errorHandler("Erreur lors de la récupération des répertoires racines"))
+    }
+
+    const addNewDirectoryConfiguration = (rawPath) => {
+        const request = {
+            rawPath: rawPath
+        };
+
+        return fetch(`${apiRoot()}/filemanager/configuration/rootDirectories`, {
+            method: 'POST',
+            headers: defaultJsonHeaders(),
+            body: JSON.stringify(request)
+        })
+            .then(errorHandler(`Erreur rencontrée lors de l'ajout de la nouvelle racine'`,
+                `Nouvelle racine créée`));
+    }
+
+
+    const updateRootDirectoryConfiguration = (rootDirectoryConfiguration) => {
+
+        return fetch(`${apiRoot()}/filemanager/configuration/rootDirectories/${rootDirectoryConfiguration.id}`, {
+            method: 'PATCH',
+            headers: defaultJsonHeaders(),
+            body: JSON.stringify(rootDirectoryConfiguration)
+        })
+            .then(errorHandler(`Erreur rencontrée de la mise à jour de la racine ${rootDirectoryConfiguration.rawPath}`,
+                `Racine ${rootDirectoryConfiguration.rawPath} modifié`));
+
+    };
+
+    const deleteRootDirectoryConfiguration = (rootDirectoryConfiguration) => {
+        return fetch(`${apiRoot()}/filemanager/configuration/rootDirectories/${rootDirectoryConfiguration.id}`, {
+            method: 'DELETE',
+            headers: defaultJsonHeaders()
+        }).then(errorHandler(`Erreur rencontrée de la suppression de la racine ${rootDirectoryConfiguration.rawPath}`,
+            `Racine ${rootDirectoryConfiguration.rawPath} supprimée`));
+    }
+
+
 
     return {
         getRootDirectories: getRootDirectories,
@@ -87,7 +128,11 @@ export default function fileManagerApi() {
         deleteFiles: deleteFiles,
         renameFile: renameFile,
         downloadBaseUrl: downloadBaseUrl,
-        uploadFiles: uploadFiles
+        uploadFiles: uploadFiles,
+        getRootDirectoriesConfiguration: getRootDirectoriesConfiguration,
+        addNewDirectoryConfiguration: addNewDirectoryConfiguration,
+        updateRootDirectoryConfiguration: updateRootDirectoryConfiguration,
+        deleteRootDirectoryConfiguration: deleteRootDirectoryConfiguration
     };
 
 }

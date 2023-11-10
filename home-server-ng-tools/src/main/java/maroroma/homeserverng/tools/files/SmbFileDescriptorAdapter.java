@@ -5,11 +5,11 @@ import jcifs.smb.SmbFile;
 import jcifs.smb.SmbFileInputStream;
 import jcifs.smb.SmbFileOutputStream;
 import maroroma.homeserverng.tools.exceptions.Traper;
-import maroroma.homeserverng.tools.security.SecurityManager;
+import maroroma.homeserverng.tools.security.SimpleUser;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.stream.Stream;
+import java.io.*;
+import java.nio.file.*;
+import java.util.stream.*;
 
 /**
  * Implémentation de l'adapteur pour des fichiers smb
@@ -18,18 +18,25 @@ public class SmbFileDescriptorAdapter extends AbstractFileDescriptorAdapter {
 
     private final SmbFile smbFile;
 
-    public SmbFileDescriptorAdapter(SmbFile smbFile) {
-        super(null);
+    private final SambaUserSupplier sambaUserSupplier;
+
+
+
+
+    SmbFileDescriptorAdapter(SmbFileDescriptorAdapter parent, SmbFile smbFile) {
         this.smbFile = smbFile;
+        this.sambaUserSupplier = parent.sambaUserSupplier;
     }
 
-    public SmbFileDescriptorAdapter(String smbFile, SecurityManager securityManager) {
-        super(securityManager);
+    public SmbFileDescriptorAdapter(String smbFile, SambaUserSupplier sambaUserSupplier) {
+        this.sambaUserSupplier = sambaUserSupplier;
         this.smbFile = Traper.trap(() -> new SmbFile(smbFile, mapSmbUser()));
     }
 
     private NtlmPasswordAuthentication mapSmbUser() {
-        return new NtlmPasswordAuthentication("", this.getSecurityManager().getSambaUser().getLogin(), this.getSecurityManager().getSambaUser().getPassword());
+        return new NtlmPasswordAuthentication("",
+                this.sambaUserSupplier.generateSambaUser().getLogin(),
+                this.sambaUserSupplier.generateSambaUser().getPassword());
     }
 
     @Override
@@ -69,7 +76,7 @@ public class SmbFileDescriptorAdapter extends AbstractFileDescriptorAdapter {
     protected Stream<AbstractFileDescriptorAdapter> listAllFileAdapters() {
         return Traper.trap(() -> Stream
                     .of(this.smbFile.listFiles())
-                    .map(SmbFileDescriptorAdapter::new));
+                    .map(aListedSambaFile -> new SmbFileDescriptorAdapter(this, aListedSambaFile)));
     }
 
     @Override
@@ -117,5 +124,25 @@ public class SmbFileDescriptorAdapter extends AbstractFileDescriptorAdapter {
     @Override
     public InputStream getInputStream() {
         return Traper.trap(() ->  new SmbFileInputStream(this.smbFile));
+    }
+
+    @Override
+    public Path toPath() {
+        return Path.of(this.getFullName());
+    }
+
+    @Override
+    public AbstractFileDescriptorAdapter combinePath(String path) {
+        return null;
+    }
+
+    @Override
+    public FileDescriptorPath toFileDescriptorPath() {
+        return new SmbFileDescriptorPath(this);
+    }
+
+
+    public interface SambaUserSupplier {
+        SimpleUser generateSambaUser();
     }
 }

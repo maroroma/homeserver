@@ -1,5 +1,7 @@
 package maroroma.homeserverng.seedbox.services;
 
+import lombok.RequiredArgsConstructor;
+import maroroma.homeserverng.filemanager.services.FilesFactory;
 import maroroma.homeserverng.seedbox.model.TargetDirectory;
 import maroroma.homeserverng.seedbox.model.TargetDirectoryType;
 import maroroma.homeserverng.tools.annotations.Property;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@RequiredArgsConstructor
 public class TargetDirectoryMoviesLoader extends AbstractTargetDirectoryLoader {
 
 	/**
@@ -24,14 +27,14 @@ public class TargetDirectoryMoviesLoader extends AbstractTargetDirectoryLoader {
 	@Property("homeserver.seedbox.target.directory.movies.kodialias")
 	private HomeServerPropertyHolder kodiAlias;
 
+	private final FilesFactory filesFactory;
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public TargetDirectory loadTargetDirectory() {
-		FileDescriptor targetDirectoryDescriptor = targetDirectoryPropertyHolder.asFileDescriptorFactory()
-				.withSecurityManager(this.getSecurityManager())
-				.fileDescriptor();
+		FileDescriptor targetDirectoryDescriptor = filesFactory.directoryFromProperty(targetDirectoryPropertyHolder);
 
 		TargetDirectory returnValue = new TargetDirectory(targetDirectoryDescriptor, TargetDirectoryType.MOVIES);
 

@@ -1,6 +1,7 @@
 package maroroma.homeserverng.music.services;
 
 import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.filemanager.services.FilesFactory;
 import maroroma.homeserverng.music.model.AddTracksFromExistingSourceRequest;
 import maroroma.homeserverng.music.model.AlbumDescriptor;
 import maroroma.homeserverng.music.model.TrackDescriptor;
@@ -15,7 +16,6 @@ import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.exceptions.Traper;
 import maroroma.homeserverng.tools.files.FileDescriptor;
-import maroroma.homeserverng.tools.files.FileDescriptorFactory;
 import maroroma.homeserverng.tools.files.FileDescriptorFilter;
 import maroroma.homeserverng.tools.files.FileDirectoryDescriptor;
 import maroroma.homeserverng.tools.helpers.Assert;
@@ -29,12 +29,11 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
+import java.util.*;
+import java.util.stream.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Service de gestion des tags mp3 d'un album.
@@ -74,6 +73,9 @@ public class MusicServiceImpl {
 	@Autowired
 	private SeedBoxTodoServiceImpl seedBoxTodoService;
 
+	@Autowired
+	private FilesFactory filesFactory;
+
 	/**
 	 * Préparation du répertoire de travail pour cet album.
 	 * @param request -
@@ -92,11 +94,10 @@ public class MusicServiceImpl {
 		this.autoCleanUpRepository();
 		
 		// création du répertoire de travail sur toute son arborescence
-		FileDirectoryDescriptor workingDirFile = this.workingDir.asFileDescriptorFactory()
-				.withSecurityManager(this.securityManager)
+		FileDirectoryDescriptor workingDirFile = filesFactory.directoryFromProperty(this.workingDir)
 				.combinePath(request.getArtistName())
 				.combinePath(String.format(MusicTools.ALBUM_DIR_NAME_FORMAT, request.getArtistName(), request.getAlbumName()))
-				.fileDirectoryDescriptor(false, false);
+				.asDirectory();
 
 		if (!workingDirFile.exists()) {
 			Assert.isTrue(workingDirFile.mkdirs(), "can't create music working dir [" + workingDirFile.getFullName() + "]");
@@ -149,13 +150,11 @@ public class MusicServiceImpl {
 
 		Optional<FileDescriptor> oldAlbumArt = Optional.ofNullable(albumDescriptor.getAlbumart())
 				.map(FileDescriptor::getId)
-				.map(oneId -> FileDescriptorFactory.fromId(oneId).withSecurityManager(this.securityManager))
-				.map(FileDescriptorFactory::fileDescriptor);
+				.map(filesFactory::fileFromId);
 
 		Optional<FileDescriptor> oldFolderArt = Optional.ofNullable(albumDescriptor.getFolderart())
 				.map(FileDescriptor::getId)
-				.map(oneId -> FileDescriptorFactory.fromId(oneId).withSecurityManager(this.securityManager))
-				.map(FileDescriptorFactory::fileDescriptor);
+				.map(filesFactory::fileFromId);
 
 		UploadFileStream.fromRequest(request).first(uploadFile -> {
 
@@ -166,15 +165,13 @@ public class MusicServiceImpl {
 			oldFolderArt.ifPresent(FileDescriptor::deleteFile);
 
 			// description du fichier albumart
-			FileDescriptor albumArt = FileDescriptorFactory.fromPath(albumDescriptor.getDirectoryDescriptor().getFullName())
-					.withSecurityManager(this.securityManager)
+			FileDescriptor albumArt = this.filesFactory.directoryFromPath(albumDescriptor.getDirectoryDescriptor().getFullName())
 					.combinePath(String.format(MusicTools.ALBUM_ART_NAME_FORMAT, FilenameUtils.getExtension(uploadFile.getFileName())))
-					.fileDescriptor();
+					.asFile();
 
-			FileDescriptor folderArt = FileDescriptorFactory.fromPath(albumDescriptor.getDirectoryDescriptor().getFullName())
-					.withSecurityManager(this.securityManager)
+			FileDescriptor folderArt = this.filesFactory.directoryFromPath(albumDescriptor.getDirectoryDescriptor().getFullName())
 					.combinePath(String.format(MusicTools.FOLDER_NAME_FORMAT, FilenameUtils.getExtension(uploadFile.getFileName())))
-					.fileDescriptor();
+					.asFile();
 
 			// ecriture du nouveau albumArt
 			albumArt.copyFrom(uploadFile.getInputStream()).crashIfFailed();
@@ -205,9 +202,8 @@ public class MusicServiceImpl {
 	public void getAlbumArt(final String albumPath, final HttpServletResponse response) throws HomeServerException {
 		AlbumDescriptor albumDescriptor = this.validateAndReturnAlbumDescriptor(albumPath);
 
-		FileDescriptorFactory.fromId(albumDescriptor.getAlbumart().getId())
-				.withSecurityManager(this.securityManager)
-				.fileDescriptor().copyTo(Traper.trap(() -> response.getOutputStream()));
+		this.filesFactory.fileFromId(albumDescriptor.getAlbumart().getId())
+				.copyTo(Traper.trap(() -> response.getOutputStream()));
 	}
 
 	/**
@@ -233,17 +229,15 @@ public class MusicServiceImpl {
 		// liste des fichiers à recopier
 		List<FileDescriptor> srcFiles = addTracksFromExistingSourceRequest.getFileIdsForWorkingDirectory()
 				.stream()
-				.map(oneId ->
-						FileDescriptorFactory.fromId(oneId).withSecurityManager(securityManager)
-								.fileDescriptor())
+				.map(this.filesFactory::fileFromId)
 				.collect(Collectors.toList());
 
 		// recopie des fichiers, application des tags par défaut et création des tracks descriptors
 		return srcFiles.stream()
-				.map(oneSrcFile -> FileDescriptorFactory
-						.fromPath(albumDescriptor.getDirectoryDescriptor().getFullName())
+				.map(oneSrcFile -> this.filesFactory
+						.directoryFromPath(albumDescriptor.getDirectoryDescriptor().getFullName())
 						.combinePath(oneSrcFile.getName())
-						.fileDescriptor()
+						.asFile()
 						.copyFrom(oneSrcFile)
 						.crashIfFailed()
 						.getInitialFile())
@@ -273,11 +267,9 @@ public class MusicServiceImpl {
 		// recopie du fichier en local
 		FileDescriptor uploadedTrack = UploadFileStream
 				.fromRequest(oneTrack)
-				.first(uploadedFile -> FileDescriptorFactory
-						.fromPath(albumDescriptor.getDirectoryDescriptor().getFullName())
-						.withSecurityManager(this.securityManager)
+				.first(uploadedFile -> this.filesFactory.directoryFromPath(albumDescriptor.getDirectoryDescriptor().getFullName())
 						.combinePath(uploadedFile.getFileName())
-						.fileDescriptor()
+						.asFile()
 						.copyFrom(uploadedFile.getInputStream())
 						.crashIfFailed()
 						.getInitialFile()
@@ -300,9 +292,7 @@ public class MusicServiceImpl {
 		// récup du répertoire de travail.
 		AlbumDescriptor albumDescriptor = validateAndReturnAlbumDescriptor(toUpdatePath);
 
-		return FileDescriptorFactory.fromPath(albumDescriptor.getDirectoryDescriptor().getFullName())
-				.withSecurityManager(this.securityManager)
-				.fileDescriptor()
+		return this.filesFactory.directoryFromPath(albumDescriptor.getDirectoryDescriptor().getFullName())
 				// que les fichiers mp3
 				.listFiles(FileDescriptorFilter.withExtensions(FileExtensionHelper.MP3))
 				.stream()
@@ -339,9 +329,7 @@ public class MusicServiceImpl {
 	 */
 	public TrackDescriptor updateTrack(final TrackDescriptor td) throws HomeServerException {
 		// récup et validation du fichier pour le morceau
-		FileDescriptor oneTrack = FileDescriptorFactory.fromId(td.getFile().getId())
-				.withSecurityManager(this.securityManager)
-				.fileDescriptor();
+		FileDescriptor oneTrack = this.filesFactory.fileFromId(td.getFile().getId());
 
 
 		// si le fichier est renommé, on le déplace
@@ -349,10 +337,9 @@ public class MusicServiceImpl {
 
 			oneTrack.renameFile(td.getNewFileName()).crashIfFailed();
 
-			oneTrack = FileDescriptorFactory.fromPath(oneTrack.getParent())
-					.withSecurityManager(this.securityManager)
+			oneTrack = this.filesFactory.directoryFromPath(oneTrack.getParent())
 					.combinePath(td.getNewFileName())
-					.fileDescriptor();
+					.asFile();
 		}
 
 		// modification des tags
@@ -404,10 +391,8 @@ public class MusicServiceImpl {
 	 * @throws HomeServerException 
 	 */
 	private void autoCleanUpRepository() throws HomeServerException {
-		this.albumRepo.<AlbumDescriptor>delete(ad -> !FileDescriptorFactory
-				.fromId(ad.getDirectoryDescriptor().getId())
-				.withSecurityManager(this.securityManager)
-				.fileDescriptor()
+		this.albumRepo.<AlbumDescriptor>delete(ad -> !filesFactory
+				.directoryFromId(ad.getDirectoryDescriptor().getId())
 				.exists()
 		);
 	}
@@ -424,16 +409,13 @@ public class MusicServiceImpl {
 		AlbumDescriptor albumDescriptor = this.validateAndReturnAlbumDescriptor(albumToArchiveId);
 
 		// album à archiver
-		FileDescriptor albumToArchive = FileDescriptorFactory.fromId(albumDescriptor.getId())
-				.withSecurityManager(this.securityManager)
-				.fileDescriptor();
+		FileDescriptor albumToArchive = filesFactory.fileFromId(albumDescriptor.getId());
 
 		// répertoire cible
-		FileDescriptor targetDirectory = this.targetDir.asFileDescriptorFactory()
-				.withSecurityManager(this.securityManager)
+		FileDirectoryDescriptor targetDirectory = filesFactory.directoryFromProperty(this.targetDir)
 				.combinePath(albumDescriptor.getArtistName())
 				.combinePath(albumDescriptor.getDirectoryDescriptor().getName())
-				.fileDescriptor();
+				.asDirectory();
 
 
 		if (!targetDirectory.exists()) {
@@ -443,12 +425,11 @@ public class MusicServiceImpl {
 		// recopie des différents fichiers
 		albumToArchive.listFilesOnly()
 				.stream()
-				.map(oneTrackToArchiveDescriptor -> Tuple.from(oneTrackToArchiveDescriptor, this.targetDir.asFileDescriptorFactory()
-						.withSecurityManager(this.securityManager)
+				.map(oneTrackToArchiveDescriptor -> Tuple.from(oneTrackToArchiveDescriptor, targetDirectory
 						.combinePath(albumDescriptor.getArtistName())
 						.combinePath(albumDescriptor.getDirectoryDescriptor().getName())
 						.combinePath(oneTrackToArchiveDescriptor.getName())
-						.fileDescriptor()))
+						.asFile()))
 				.forEach(copyPair -> copyPair.getItem1().copyTo(copyPair.getItem2()));
 
 		return albumDescriptor;

@@ -1,12 +1,11 @@
 package maroroma.homeserverng.tools.files;
 
 import maroroma.homeserverng.tools.exceptions.Traper;
-import maroroma.homeserverng.tools.security.SecurityManager;
 import org.springframework.util.FileSystemUtils;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.util.stream.Stream;
+import java.nio.file.*;
+import java.util.stream.*;
 
 /**
  * Implémentation pour les fichiers d'un système local.
@@ -15,12 +14,10 @@ public class LocalFileDescriptorAdapter extends AbstractFileDescriptorAdapter {
 
     private final File file;
 
-    public LocalFileDescriptorAdapter(File file) {
-        super(null);
+    LocalFileDescriptorAdapter(File file) {
         this.file = file;
     }
-    public LocalFileDescriptorAdapter(String path, SecurityManager securityManager) {
-        super(securityManager);
+    public LocalFileDescriptorAdapter(String path) {
         this.file = new File(path);
     }
 
@@ -118,6 +115,21 @@ public class LocalFileDescriptorAdapter extends AbstractFileDescriptorAdapter {
             return FileSystemUtils.deleteRecursively(this.file);
         }
         return this.file.delete();
+    }
+
+    @Override
+    public Path toPath() {
+        return this.file.toPath();
+    }
+
+    @Override
+    public AbstractFileDescriptorAdapter combinePath(String path) {
+        return new LocalFileDescriptorAdapter(new File(this.file, path));
+    }
+
+    @Override
+    public FileDescriptorPath toFileDescriptorPath() {
+        return new LocalFileDescriptorPath(this);
     }
 
 

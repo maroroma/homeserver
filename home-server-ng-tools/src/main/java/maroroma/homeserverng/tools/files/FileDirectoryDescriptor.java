@@ -4,8 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
 
 /**
  * Implémentation non récursive de la description d'un répertoire.
@@ -27,7 +27,9 @@ public class FileDirectoryDescriptor extends FileDescriptor {
 	 */
 	private List<FileDescriptor> directories;
 	
-	public FileDirectoryDescriptor(final AbstractFileDescriptorAdapter adapter, final boolean parseFiles, final boolean parseDirectories) {
+	public FileDirectoryDescriptor(final AbstractFileDescriptorAdapter adapter,
+								   final boolean parseFiles,
+								   final boolean parseDirectories) {
 		super(adapter);
 
 		// optimisons un peu
@@ -43,6 +45,38 @@ public class FileDirectoryDescriptor extends FileDescriptor {
 			}
 		}
 	}
+
+	public PathCombiner combinePath(String path) {
+		var combiner = new PathCombiner(this);
+		return combiner.combinePath(path);
+	}
+
+
+	public final class PathCombiner {
+		private final StringBuilder pathBuilder = new StringBuilder();
+		private final FileDirectoryDescriptor parent;
+
+		PathCombiner(FileDirectoryDescriptor parent) {
+			this.parent = parent;
+		}
+
+		public PathCombiner combinePath(String pathToAppend) {
+			this.pathBuilder
+					.append("/")
+					.append(pathToAppend);
+			return this;
+		}
+
+		public FileDescriptor asFile() {
+			return new FileDescriptor(this.parent.getAdapter().combinePath(this.pathBuilder.toString()));
+		}
+
+		public FileDirectoryDescriptor asDirectory() {
+			return new FileDirectoryDescriptor(this.parent.getAdapter().combinePath(this.pathBuilder.toString()), false, false);
+		}
+	}
+
+
 	
 
 }

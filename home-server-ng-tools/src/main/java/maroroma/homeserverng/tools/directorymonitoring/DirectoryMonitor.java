@@ -4,19 +4,13 @@ import lombok.Getter;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
+import maroroma.homeserverng.tools.files.FileDirectoryDescriptor;
 import maroroma.homeserverng.tools.helpers.Assert;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.StandardWatchEventKinds;
-import java.nio.file.WatchEvent.Kind;
-import java.nio.file.WatchService;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.nio.file.*;
+import java.nio.file.WatchEvent.*;
+import java.util.*;
 
 /**
  * Classe utilitaire pour le monitoring des modifications au sein d'un répertoire.
@@ -30,7 +24,7 @@ public class DirectoryMonitor {
 	 * Répertoire à surveiller.
 	 */
 	@Getter
-	private File directoryToWatch;
+	private FileDirectoryDescriptor directoryToWatch;
 
 	/**
 	 * Listing des events monitorés et des listeners associés.
@@ -76,7 +70,7 @@ public class DirectoryMonitor {
 	 * Constructeur.
 	 * @param directory -
 	 */
-	public DirectoryMonitor(final File directory) {
+	public DirectoryMonitor(final FileDirectoryDescriptor directory) {
 		Assert.isValidDirectory(directory);
 		this.directoryToWatch = directory;
 		this.eventsMonitored = new HashMap<>();
@@ -170,7 +164,7 @@ public class DirectoryMonitor {
 			dir.register(this.watchService,
 					this.eventsMonitored.keySet().stream().toArray(Kind<?>[]::new));
 		} catch (IOException e) {
-			String msg = "Erreur rencontrée lors de la mise en place du monitorin du répertoire " + this.directoryToWatch.getAbsolutePath();
+			String msg = "Erreur rencontrée lors de la mise en place du monitorin du répertoire " + this.directoryToWatch.getFullName();
 			log.error(msg, e);
 			throw new HomeServerException(msg, e);
 		}
@@ -196,7 +190,7 @@ public class DirectoryMonitor {
 				// sortie propre
 				this.watchService.close();
 			} catch (IOException e) {
-				String msg = "une erreur est survenue lors de l'arrêt du monitoring du répertoire " +  this.directoryToWatch.getAbsolutePath();
+				String msg = "une erreur est survenue lors de l'arrêt du monitoring du répertoire " +  this.directoryToWatch.getFullName();
 				log.error(msg, e);
 				throw new HomeServerException(msg, e);
 			}

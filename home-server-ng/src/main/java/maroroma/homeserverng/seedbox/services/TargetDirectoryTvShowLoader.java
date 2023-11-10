@@ -1,5 +1,7 @@
 package maroroma.homeserverng.seedbox.services;
 
+import lombok.RequiredArgsConstructor;
+import maroroma.homeserverng.filemanager.services.FilesFactory;
 import maroroma.homeserverng.seedbox.model.TargetDirectory;
 import maroroma.homeserverng.seedbox.model.TargetDirectoryType;
 import maroroma.homeserverng.tools.annotations.Property;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@RequiredArgsConstructor
 public class TargetDirectoryTvShowLoader extends AbstractTargetDirectoryLoader {
 
 	/**
@@ -25,6 +28,8 @@ public class TargetDirectoryTvShowLoader extends AbstractTargetDirectoryLoader {
 
 	@Property("homeserver.seedbox.target.directory.tvshows.kodialias")
 	private HomeServerPropertyHolder kodiAlias;
+
+	private final FilesFactory filesFactory;
 	
 	
 	/**
@@ -35,9 +40,7 @@ public class TargetDirectoryTvShowLoader extends AbstractTargetDirectoryLoader {
 		
 		Assert.isValidDirectory(this.targetDirectoryPropertyHolder);
 
-		FileDescriptor targetDirectoryDescriptor = this.targetDirectoryPropertyHolder.asFileDescriptorFactory()
-				.withSecurityManager(this.getSecurityManager())
-				.fileDescriptor();
+		FileDescriptor targetDirectoryDescriptor = filesFactory.directoryFromProperty(this.targetDirectoryPropertyHolder);
 
 		TargetDirectory returnValue = new TargetDirectory(targetDirectoryDescriptor, TargetDirectoryType.TVSHOWS);
 

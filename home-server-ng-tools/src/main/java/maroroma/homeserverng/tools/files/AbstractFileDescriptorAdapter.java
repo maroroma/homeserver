@@ -1,34 +1,18 @@
 package maroroma.homeserverng.tools.files;
 
-import lombok.Getter;
 import maroroma.homeserverng.tools.exceptions.Traper;
-import maroroma.homeserverng.tools.security.SecurityManager;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.FileCopyUtils;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.stream.Stream;
+import java.io.*;
+import java.nio.file.*;
+import java.util.stream.*;
 
 /**
  * Classe intermédiaire permettant de récupérer les informations des fichiers ou de les manipuler
  * pour les offrir à un {@link FileDescriptor}
  */
 public abstract class AbstractFileDescriptorAdapter {
-
-    /**
-     * Gestionnaire de sécurité
-     */
-    @Getter
-    private final SecurityManager securityManager;
-
-    /**
-     * Constructeur
-     * @param securityManager .
-     */
-    protected AbstractFileDescriptorAdapter(SecurityManager securityManager) {
-        this.securityManager = securityManager;
-    }
 
     /**
      * Liste l'ensemble des {@link AbstractFileDescriptorAdapter} de ce repertoire
@@ -205,5 +189,10 @@ public abstract class AbstractFileDescriptorAdapter {
     }
 
 
+    public abstract Path toPath();
+
+    public abstract AbstractFileDescriptorAdapter combinePath(String path);
+
+    public abstract FileDescriptorPath toFileDescriptorPath();
 
 }

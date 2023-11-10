@@ -1,23 +1,27 @@
 package maroroma.homeserverng.seedbox.services;
 
 import lombok.extern.slf4j.Slf4j;
+import maroroma.homeserverng.filemanager.services.FilesFactory;
 import maroroma.homeserverng.seedbox.model.TargetDirectory;
 import maroroma.homeserverng.seedbox.model.TodoFile;
 import maroroma.homeserverng.seedbox.tools.SeedboxModuleConstants;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import maroroma.homeserverng.tools.files.*;
+import maroroma.homeserverng.tools.files.FileDescriptor;
+import maroroma.homeserverng.tools.files.FileDescriptorFilter;
+import maroroma.homeserverng.tools.files.FileDirectoryDescriptor;
+import maroroma.homeserverng.tools.files.FileToMoveDescriptor;
+import maroroma.homeserverng.tools.files.MoveRequest;
+import maroroma.homeserverng.tools.files.MovedFile;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.FileExtensionHelper;
 import maroroma.homeserverng.tools.security.SecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
 
 /**
  * Implémentation du service de manipulation des fichiers à trier au niveau de la seedbox.
@@ -42,6 +46,9 @@ public class SeedBoxTodoServiceImpl {
 
 	@Autowired
 	private SecurityManager securityManager;
+
+	@Autowired
+	private FilesFactory filesFactory;
 
 	/**
 	 * Permet de stocker la dernière liste de nom de fichiers scannés.
@@ -68,9 +75,7 @@ public class SeedBoxTodoServiceImpl {
 	 */
 	public List<TodoFile> getTodoList() {
 
-		FileDescriptor todoDirectoryDescriptor = this.todoDirectory.asFileDescriptorFactory()
-				.withSecurityManager(this.securityManager)
-				.fileDescriptor();
+		FileDescriptor todoDirectoryDescriptor = this.filesFactory.directoryFromProperty(this.todoDirectory);
 
 		List<FileDescriptor> allTodoFiles = Collections.synchronizedList(new ArrayList<>());
 		this.listFiles(allTodoFiles, todoDirectoryDescriptor);
@@ -121,10 +126,7 @@ public class SeedBoxTodoServiceImpl {
 		log.info("déplacement d'un fichier : " + request.toString());
 
 		// résolution répertoire cible
-		FileDescriptor selectedTargetDirectory = FileDescriptorFactory
-				.fromId(request.getTarget().getId())
-				.withSecurityManager(this.securityManager)
-				.fileDescriptor();
+		FileDescriptor selectedTargetDirectory = filesFactory.directoryFromId(request.getTarget().getId());
 
 		// récupération du loader et controle de la bonne hierarchie
 		TargetDirectoryLoader loader = this.targetLoaders.stream()
@@ -153,9 +155,7 @@ public class SeedBoxTodoServiceImpl {
 	 * @return -
 	 */
 	public FileDirectoryDescriptor getDirectoryDetails(final String fileId) {
-		return FileDescriptorFactory.fromId(fileId)
-				.withSecurityManager(this.securityManager)
-				.fileDirectoryDescriptor(false, true);
+		return filesFactory.directoryFromId(fileId, FilesFactory.DirectoryParsingOptions.PARSE_DIRECTORIES);
 	}
 
 	/**
@@ -165,25 +165,18 @@ public class SeedBoxTodoServiceImpl {
 	 */
 	public List<TodoFile> deleteTodoFile(final String fileId) {
 		Assert.hasLength(fileId, "fileId can't be null");
-		FileDescriptorFactory.fromId(fileId)
-				.withSecurityManager(this.securityManager)
-				.fileDescriptor()
+		filesFactory.fileFromId(fileId)
 				.deleteFile();
 		return this.getTodoList();
 	}
 
 	private MovedFile moveOneFile(MoveRequest request, FileToMoveDescriptor oneFileToMove) {
 
-		FileDescriptor source = FileDescriptorFactory
-				.fromId(oneFileToMove.getId())
-				.withSecurityManager(this.securityManager)
-				.fileDescriptor();
+		FileDescriptor source = this.filesFactory.fileFromId(oneFileToMove.getId());
 
-		FileDescriptor target = FileDescriptorFactory
-				.fromId(request.getTarget().getId())
-				.withSecurityManager(this.securityManager)
+		FileDescriptor target = this.filesFactory.directoryFromId(request.getTarget().getId())
 				.combinePath(oneFileToMove.getNewName())
-				.fileDescriptor();
+				.asFile();
 
 		return MovedFile.builder()
 				.sourceFile(oneFileToMove)

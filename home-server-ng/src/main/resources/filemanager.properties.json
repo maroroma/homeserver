@@ -4,4 +4,10 @@
   "description" : "Les différents répertoires racines gérables par le filemanager",
   "readOnly" : false,
   "moduleId" : "filemanager"
+}, {
+  "id" : "homeserver.filemanager.specific.configuration",
+  "value" : "${homeserver.config.dir}/filemanager.specific.configuration.json",
+  "description" : "Les différents répertoires racines gérables par le filemanager",
+  "readOnly" : false,
+  "moduleId" : "filemanager"
 } ]

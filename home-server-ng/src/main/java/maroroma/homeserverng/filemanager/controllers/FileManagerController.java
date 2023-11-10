@@ -1,21 +1,29 @@
 package maroroma.homeserverng.filemanager.controllers;
 
+import lombok.RequiredArgsConstructor;
 import maroroma.homeserverng.filemanager.FileManagerModuleDescriptor;
 import maroroma.homeserverng.filemanager.model.DirectoryCreationRequest;
 import maroroma.homeserverng.filemanager.model.RenameFileDescriptor;
+import maroroma.homeserverng.filemanager.model.RootDirectoryConfiguration;
+import maroroma.homeserverng.filemanager.model.RootDirectoryConfigurationCreationRequest;
+import maroroma.homeserverng.filemanager.services.FileManagerConfigurationService;
 import maroroma.homeserverng.filemanager.services.FileManagerServiceImpl;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.files.FileDescriptor;
 import maroroma.homeserverng.tools.files.FileDirectoryDescriptor;
 import maroroma.homeserverng.tools.files.FileOperationResult;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 
 /**
@@ -24,13 +32,15 @@ import java.util.List;
  *
  */
 @HomeServerRestController(moduleDescriptor = FileManagerModuleDescriptor.class)
+@RequiredArgsConstructor
 public class FileManagerController {
 
 	/**
 	 * SErvice sous jacent.
 	 */
-	@Autowired
-	private FileManagerServiceImpl fileService;
+	private final FileManagerServiceImpl fileService;
+
+	private final FileManagerConfigurationService fileManagerConfigurationService;
 	
 	/**
 	 * Création d'un répertoire.
@@ -128,7 +138,27 @@ public class FileManagerController {
 	@PatchMapping("${homeserver.api.path:}/filemanager/files")
 	public ResponseEntity<FileOperationResult> renameFile(final @RequestBody RenameFileDescriptor rfd) throws HomeServerException {
 		return ResponseEntity.ok(this.fileService.renameFile(rfd));
-	} 
+	}
+
+	@GetMapping("${homeserver.api.path:}/filemanager/configuration/rootDirectories")
+	public ResponseEntity<List<RootDirectoryConfiguration>> getRootDirectoriesConfiguration() {
+		return ResponseEntity.ok(this.fileManagerConfigurationService.getRawRootDirectoriesConfiguration());
+	}
+
+	@PostMapping("${homeserver.api.path:}/filemanager/configuration/rootDirectories")
+	public ResponseEntity<List<RootDirectoryConfiguration>> addRootDirectory(@RequestBody RootDirectoryConfigurationCreationRequest rootDirectoryConfigurationCreationRequest) {
+		return ResponseEntity.ok(this.fileManagerConfigurationService.addRootDirectoryConfiguration(rootDirectoryConfigurationCreationRequest));
+	}
+
+	@PatchMapping("${homeserver.api.path:}/filemanager/configuration/rootDirectories/{id}")
+	public ResponseEntity<List<RootDirectoryConfiguration>> addRootDirectory(@PathVariable("id") String id,  @RequestBody RootDirectoryConfiguration rootDirectoryConfiguration) {
+		return ResponseEntity.ok(this.fileManagerConfigurationService.updateRootDirectoryConfiguration(id, rootDirectoryConfiguration));
+	}
+
+	@DeleteMapping("${homeserver.api.path:}/filemanager/configuration/rootDirectories/{id}")
+	public ResponseEntity<List<RootDirectoryConfiguration>> addRootDirectory(@PathVariable("id") String id) {
+		return ResponseEntity.ok(this.fileManagerConfigurationService.deleteRootDirectoryConfiguration(id));
+	}
 	
 	
 }

@@ -1,15 +1,12 @@
 package maroroma.homeserverng.filemanager.services;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import maroroma.homeserverng.administration.services.SecurityManagerImpl;
 import maroroma.homeserverng.filemanager.model.DirectoryCreationRequest;
 import maroroma.homeserverng.filemanager.model.RenameFileDescriptor;
-import maroroma.homeserverng.tools.annotations.Property;
-import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.exceptions.Traper;
 import maroroma.homeserverng.tools.files.FileDescriptor;
-import maroroma.homeserverng.tools.files.FileDescriptorFactory;
 import maroroma.homeserverng.tools.files.FileDirectoryDescriptor;
 import maroroma.homeserverng.tools.files.FileOperationResult;
 import maroroma.homeserverng.tools.helpers.Assert;
@@ -17,18 +14,15 @@ import maroroma.homeserverng.tools.helpers.FileAndDirectoryHLP;
 import maroroma.homeserverng.tools.streaming.input.UploadFileStream;
 import maroroma.homeserverng.tools.streaming.ouput.StreamingFileSender;
 import maroroma.homeserverng.tools.streaming.ouput.StreamingFileSenderException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 /**
  * Implémentation du service pour la gestion des fichiers.
@@ -37,19 +31,10 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class FileManagerServiceImpl {
 
-	/**
-	 * Liste des répertoires racines gérables par le filemanager.
-	 */
-	@Property("homeserver.filemanager.rootdirectories")
-	private HomeServerPropertyHolder rootDirectoriesList;
-
-	/**
-	 * Gestion de la securité
-	 */
-	@Autowired
-	private SecurityManagerImpl securityManager;
+	private final FilesWithAccessManagementFactory filesWithAccessManagementFactory;
 
 	/**
 	 * Création d'un répertoir.
@@ -65,11 +50,10 @@ public class FileManagerServiceImpl {
 		Assert.hasLength(creationRequest.getParentDirectory().getId(), "creationRequest.getParentDirectory().getId() can't be null or empty");
 		Assert.hasLength(creationRequest.getDirectoryName(), "creationRequest.getDirectoryName() can't be null or empty");
 
-		FileDescriptor target = FileDescriptorFactory
-				.fromId(creationRequest.getParentDirectory().getId())
-				.withSecurityManager(this.securityManager)
+		FileDescriptor target = this.filesWithAccessManagementFactory
+				.directoryFromId(creationRequest.getParentDirectory().getId())
 				.combinePath(creationRequest.getDirectoryName())
-				.fileDescriptor();
+				.asFile();
 
 		// création physique du répertoire
 		if (!target.mkdir()) {
@@ -86,12 +70,7 @@ public class FileManagerServiceImpl {
 	 * @throws HomeServerException -
 	 */
 	public List<FileDirectoryDescriptor> getRootDirectories() throws HomeServerException {
-		return this.rootDirectoriesList
-				.asFileDescriptorFactories()
-				.stream()
-				.map(factory -> factory.withSecurityManager(this.securityManager))
-				.map(factory -> factory.fileDirectoryDescriptor(false, false))
-				.collect(Collectors.toList());
+		return this.filesWithAccessManagementFactory.getRootDirectories();
 	}
 
 
@@ -101,11 +80,11 @@ public class FileManagerServiceImpl {
 	 * @return -
 	 * @throws HomeServerException -
 	 */
-	public FileDirectoryDescriptor getDirectoryDetail(final String id) throws HomeServerException {
-		return FileDescriptorFactory
-				.fromId(id)
-				.withSecurityManager(this.securityManager)
-				.fileDirectoryDescriptor(true, true);
+	public FileDirectoryDescriptor getDirectoryDetail(final String id) {
+		Assert.hasLength(id, "id can't be null or empty");
+		return this.filesWithAccessManagementFactory.directoryFromId(id,
+				FilesFactory.DirectoryParsingOptions.PARSE_FILES,
+				FilesFactory.DirectoryParsingOptions.PARSE_DIRECTORIES);
 	}
 
 
@@ -116,9 +95,8 @@ public class FileManagerServiceImpl {
 	 */
 	public FileOperationResult deleteFile(final String id) {
 		Assert.hasLength(id, "id can't be null or empty");
-		return FileDescriptorFactory.fromId(id)
-				.withSecurityManager(this.securityManager)
-				.fileDescriptor()
+		return this.filesWithAccessManagementFactory
+				.fileFromId(id)
 				.deleteFile();
 	}
 
@@ -133,11 +111,10 @@ public class FileManagerServiceImpl {
 		Assert.hasLength(directoryId, "id can't be null or empty");
 
 		return UploadFileStream.fromRequest(request)
-				.foreach(oneFile -> FileDescriptorFactory
-						.fromId(directoryId)
-						.withSecurityManager(this.securityManager)
+				.foreach(oneFile -> this.filesWithAccessManagementFactory
+						.directoryFromId(directoryId)
 						.combinePath(oneFile.getFileName())
-						.fileDescriptor()
+						.asFile()
 						.copyFrom(oneFile.getInputStream())
 						.getInitialFile()
 				)
@@ -155,24 +132,10 @@ public class FileManagerServiceImpl {
 		Assert.hasLength(rfd.getNewName(), "rfd.newName can't be null or emtpy");
 		Assert.notNull(rfd.getOriginalFile(), "rfd.originalFile can't be null or empty");
 
-		return FileDescriptorFactory
-				.fromId(rfd.getOriginalFile().getId())
-				.withSecurityManager(this.securityManager)
-				.fileDescriptor()
+		return this.filesWithAccessManagementFactory
+				.fileFromId(rfd.getOriginalFile().getId())
 				.renameFile(rfd.getNewName());
 	}
-
-	/**
-	 * Permet de controller la position du fichier par rapport à l'arborescence autorisée.
-	 * Controlle beaucoup trop simple.
-	 * @param fd -
-	 */
-	private void validateAuthorizedPath(final File fd) {
-		Assert.isTrue(this.rootDirectoriesList.asStringList().stream()
-				.anyMatch(rootPath -> FileAndDirectoryHLP.isParentOf(rootPath, fd)),
-				"Le fichier ne fait pas partie des répertoires gérables");
-	}
-
 
 	/**
 	 * Permet de télécharger un fichier en écrivant directement dans le flux de retour.
@@ -183,9 +146,7 @@ public class FileManagerServiceImpl {
 	public void getFile(final String base64FileName, final HttpServletResponse response) {
 
 		// récupération du fichier
-		FileDescriptor toDownload = FileDescriptorFactory.fromId(base64FileName)
-				.withSecurityManager(this.securityManager)
-				.fileDescriptor();
+		FileDescriptor toDownload = this.filesWithAccessManagementFactory.fileFromId(base64FileName);
 
 		if (toDownload.getSize() > 0) {
 			response.setHeader("Content-Length", "" + toDownload.getSize());
@@ -207,15 +168,7 @@ public class FileManagerServiceImpl {
 	 * @return -
 	 */
 	public FileDescriptor getFileDescriptor(final String base64FileName) {
-		File file = FileAndDirectoryHLP.decodeFile(base64FileName);
-
-		// validation de son existence
-		Assert.isValidFile(file);
-
-		// validation de son accès
-		this.validateAuthorizedPath(file);
-
-		return new FileDescriptor(file);
+		return this.filesWithAccessManagementFactory.fileFromId(base64FileName);
 	}
 
 	/**

@@ -347,22 +347,6 @@
   "owner" : "",
   "scrapperSource" : null
 }, {
-  "id" : "8e17efff-c9cb-4d87-b400-77e07a575058",
-  "title" : "Fire Force",
-  "subtitle" : "Tome 3",
-  "isbns" : null,
-  "author" : null,
-  "pageCount" : 0,
-  "initialImageLink" : "https://img.sanctuary.fr/objet/150/283022.jpg",
-  "serieInfo" : {
-    "serieId" : "78e0b555-f874-4114-b889-684eb7f47688",
-    "serieName" : "Fire Force",
-    "orderInSerie" : "3"
-  },
-  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w4ZTE3ZWZmZi1jOWNiLTRkODctYjQwMC03N2UwN2E1NzUwNTguYm9va1BpY3R1cmU=",
-  "owner" : "",
-  "scrapperSource" : null
-}, {
   "id" : "9fc51a8e-aedd-4546-84bd-642d88ac41c3",
   "title" : "Fire Force",
   "subtitle" : "Tome 15",
@@ -728,22 +712,6 @@
     "orderInSerie" : "19"
   },
   "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1wwMjdjOGUxMC0wZjA4LTQxMmItOGM1NS0zMjBmYjdmMmMyYWMuYm9va1BpY3R1cmU=",
-  "owner" : "",
-  "scrapperSource" : null
-}, {
-  "id" : "4e34ae25-9a7a-4399-bf62-4aa5229eb85c",
-  "title" : "Fire Force",
-  "subtitle" : "Tome 2",
-  "isbns" : null,
-  "author" : null,
-  "pageCount" : 0,
-  "initialImageLink" : "https://img.sanctuary.fr/objet/150/275102.jpg",
-  "serieInfo" : {
-    "serieId" : "78e0b555-f874-4114-b889-684eb7f47688",
-    "serieName" : "Fire Force",
-    "orderInSerie" : "2"
-  },
-  "pictureFileId" : "QzpcV29ya3NwYWNlc1xQRVJTT1xIT01FU0VSVkVSXGhvbWVzZXJ2ZXJcaG9tZS1zZXJ2ZXItbmctcGFyZW50XGhvbWVzZXJ2ZXIuZGF0YS5kaXJcYm9vay1waWN0dXJlc1w0ZTM0YWUyNS05YTdhLTQzOTktYmY2Mi00YWE1MjI5ZWI4NWMuYm9va1BpY3R1cmU=",
   "owner" : "",
   "scrapperSource" : null
 }, {

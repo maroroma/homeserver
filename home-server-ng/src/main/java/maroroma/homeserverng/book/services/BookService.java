@@ -1,5 +1,6 @@
 package maroroma.homeserverng.book.services;
 
+import lombok.RequiredArgsConstructor;
 import maroroma.homeserverng.book.model.AddBookRequest;
 import maroroma.homeserverng.book.model.BooksGroupedBySeries;
 import maroroma.homeserverng.book.model.IsbnPhoto;
@@ -11,6 +12,7 @@ import maroroma.homeserverng.book.model.custom.SerieInfo;
 import maroroma.homeserverng.book.model.custom.SerieWithFullBooks;
 import maroroma.homeserverng.book.services.bookscrappers.BookScrapper;
 import maroroma.homeserverng.filemanager.services.FileManagerServiceImpl;
+import maroroma.homeserverng.filemanager.services.FilesFactory;
 import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.barcode.BarCodeReader;
@@ -18,11 +20,10 @@ import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
 import maroroma.homeserverng.tools.exceptions.Traper;
 import maroroma.homeserverng.tools.files.FileDescriptor;
-import maroroma.homeserverng.tools.files.FileDescriptorFactory;
+import maroroma.homeserverng.tools.files.FileDirectoryDescriptor;
 import maroroma.homeserverng.tools.files.FileOperationResult;
 import maroroma.homeserverng.tools.helpers.Predicates;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
-import maroroma.homeserverng.tools.security.SecurityManager;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.CollectionUtils;
@@ -38,11 +39,12 @@ import javax.servlet.http.HttpServletResponse;
  * Service de gestion des livres et bd et mangas
  */
 @Service
+@RequiredArgsConstructor
 public class BookService {
 
-    private final SecurityManager securityManager;
     private final BookUpdaterService bookUpdaterService;
     private final FileManagerServiceImpl fileManagerService;
+    private final FilesFactory filesFactory;
     private final BookSearchResultSorter bookSearchResultSorter;
     private final List<BookScrapper> bookScrappers;
     private final CollectionsStatusMailSender collectionsStatusMailSender;
@@ -60,23 +62,6 @@ public class BookService {
             file = @Property("homeserver.books.store"),
             persistedType = Book.class)
     private NanoRepository booksRepo;
-
-
-
-    public BookService(SecurityManager securityManager,
-                       BookUpdaterService bookUpdaterService,
-                       FileManagerServiceImpl fileManagerService,
-                       BookSearchResultSorter bookSearchResultSorter,
-                       List<BookScrapper> bookScrappers,
-                       CollectionsStatusMailSender collectionsStatusMailSender) {
-        this.securityManager = securityManager;
-        this.bookUpdaterService = bookUpdaterService;
-        this.fileManagerService = fileManagerService;
-        this.bookSearchResultSorter = bookSearchResultSorter;
-        this.bookScrappers = bookScrappers;
-        this.collectionsStatusMailSender = collectionsStatusMailSender;
-    }
-
 
     public SearchResultsViaIsbnPhoto getBookCandidatesFromIsbnPicture(IsbnPhoto isbnPhoto) {
 
@@ -277,16 +262,13 @@ public class BookService {
      */
     private Book dowloadBookPictureAndUpdateBook(Book bookToUpdate) {
         // dans le doute on créé l'arbo
-        FileDescriptor bookPicturesDirectory = this.bookPicturesDirectoryPropertyHolder.asFileDescriptorFactory()
-                .withSecurityManager(this.securityManager)
-                .fileDescriptor();
+        FileDirectoryDescriptor bookPicturesDirectory = this.filesFactory
+                .directoryFromProperty(this.bookPicturesDirectoryPropertyHolder);
         bookPicturesDirectory.mkdirs();
 
-        FileDescriptor bookPictureFile = FileDescriptorFactory
-                .fromPath(bookPicturesDirectory.getFullName())
-                .withSecurityManager(this.securityManager)
+        FileDescriptor bookPictureFile = bookPicturesDirectory
                 .combinePath(bookToUpdate.getId() + ".bookPicture")
-                .fileDescriptor();
+                .asFile();
 
         // si url image renseignée, download
         Optional.ofNullable(bookToUpdate.getInitialImageLink())

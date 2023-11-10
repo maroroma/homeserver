@@ -1,88 +1,123 @@
 import React, {useEffect, useState} from 'react';
 import {useDisplayList} from '../../../tools/displayList';
-import {administrationApi} from '../../../apiManagement/AdministrationApi';
-import {ConfigurationProperties} from '../../administration/ConfigurationProperties';
 import {useFileBrowserContext} from '../FileBrowserContextDefinition';
 import {when} from '../../../tools/when';
 import sort from '../../../tools/sort';
+import fileManagerApi from '../../../apiManagement/FileManagerApi';
+
+import "./SpecificConfigurationComponent.scss";
 
 export default function SpecificConfigurationComponent() {
 
     const { dispatchEndConfiguring } = useFileBrowserContext();
 
-    const [rootDirectories, setRootDirectories] = useDisplayList();
 
+    const [rootDirectoriesConfiguration, setRootDirectoriesConfiguration] = useDisplayList();
+    const [newRootDirectoryConfigurationPath, setNewRootDirectoryConfigurationPath] = useState("");
+    const [enableAddNewDirectoryConfiguration, setableAddNewDirectoryConfiguration] = useState(false);
 
-    const [initialValue, setInitialValue] = useState("");
-    const [newValue, setNewValue] = useState("");
-
-    const [newRootDirectory, setNewRootDirectory] = useState("");
-    const [enableAddNewDirectory, setEnableAddNewDirectory] = useState(false);
-    const [enableSaveProperty, setEnableSaveProperty] = useState(false);
 
     useEffect(() => {
 
-        administrationApi()
-            .getOneProperty(ConfigurationProperties.ROOT_DIRECTORIES)
-            .then(oneProperty => {
-
-                const initialSortedValue = oneProperty.value.split(",").sort(sort().basic()).join(",");
-
-                setInitialValue(initialSortedValue);
-                setNewValue(initialSortedValue);
-                setEnableAddNewDirectory(false);
-
-                setRootDirectories({
-                    ...rootDirectories
-                        .update(oneProperty.value.split(","))
-                        .updateSort(sort().basic())
-                });
+        fileManagerApi()
+            .getRootDirectoriesConfiguration()
+            .then(result => {
+                setRootDirectoriesConfiguration({ ...rootDirectoriesConfiguration
+                    .update(result)
+                    .updateSort(sort().basic(aConfig => aConfig.rawPath)) })
             });
 
     }, []);
 
     useEffect(() => {
-        setEnableSaveProperty(initialValue !== newValue);
-    }, [newValue, initialValue]);
+        setableAddNewDirectoryConfiguration(newRootDirectoryConfigurationPath !== "");
+    }, [newRootDirectoryConfigurationPath]);
 
-    const deleteOneDirectory = (directory) => {
-        const newRawList = rootDirectories.rawList.filter(aRootDirectory => aRootDirectory !== directory);
 
-        setNewValue(newRawList.sort(sort().basic).join(","));
+    const addNewDirectoryConfiguration = () => {
 
-        setRootDirectories({ ...rootDirectories.update(newRawList).updateSort(sort().basic()) });
+        if (enableAddNewDirectoryConfiguration) {
 
-    }
-
-    const addARootDirectory = () => {
-        if (newRootDirectory !== "") {
-            const newRawList = [...rootDirectories.rawList];
-            newRawList.push(newRootDirectory);
-
-            setNewValue(newRawList.sort(sort().basic).join(","));
-
-            setRootDirectories({ ...rootDirectories.update(newRawList).updateSort(sort().basic()) });
-
-            setNewRootDirectory("");
+        fileManagerApi()
+            .addNewDirectoryConfiguration(newRootDirectoryConfigurationPath)
+            .then(result => {
+                setNewRootDirectoryConfigurationPath("");
+                setRootDirectoriesConfiguration({ ...rootDirectoriesConfiguration.update(result) });
+            });
         }
     }
 
+    const changeVisibility = (aRootDirectoryConfiguration) => {
+        const configurationToUpdate = {
+            ...aRootDirectoryConfiguration,
+            hidden: !aRootDirectoryConfiguration.hidden
+        }
 
-    useEffect(() => {
-        setEnableAddNewDirectory(newRootDirectory !== "");
-    }, [newRootDirectory]);
+        fileManagerApi().updateRootDirectoryConfiguration(configurationToUpdate)
+            .then(result => setRootDirectoriesConfiguration({ ...rootDirectoriesConfiguration.update(result) }));
+    };
 
+    const changeSecured = (aRootDirectoryConfiguration) => {
+        const configurationToUpdate = {
+            ...aRootDirectoryConfiguration,
+            protected: !aRootDirectoryConfiguration.protected
+        }
 
-    const saveProperty = () => {
-        administrationApi().updateProperties([{
-            id: ConfigurationProperties.ROOT_DIRECTORIES,
-            value: newValue
-        }]).then(result => dispatchEndConfiguring());
+        fileManagerApi().updateRootDirectoryConfiguration(configurationToUpdate)
+            .then(result => setRootDirectoriesConfiguration({ ...rootDirectoriesConfiguration.update(result) }));
+    };
+
+    const deleteConfiguration = (aRootDirectoryConfiguration) => {
+        fileManagerApi().deleteRootDirectoryConfiguration(aRootDirectoryConfiguration)
+            .then(result => setRootDirectoriesConfiguration({ ...rootDirectoriesConfiguration.update(result) }));
     }
+
+
+
 
 
     return <div>
         <div>
+            <h4 className="pseudo-popup-header">Répertoires racine</h4>
+        </div>
+        <div>
+            <ul className='collection'>
+                {rootDirectoriesConfiguration.displayList.map((aRootDirectoryConfiguration, key) => <li className='collection-item root-directory-item' key={key}>
+                    {aRootDirectoryConfiguration.rawPath}
+                    <a href="#!" className="secondary-content" onClick={() => { deleteConfiguration(aRootDirectoryConfiguration) }}>
+                        <i className="material-icons red-font">delete</i>
+                    </a>
+                    <a href="#!" className="secondary-content" onClick={() => { changeSecured(aRootDirectoryConfiguration) }}>
+                        {aRootDirectoryConfiguration.protected
+                            ? <i className="material-icons orange-text">lock</i>
+                            : <i className="material-icons green-font">lock_open</i>}
+                    </a>
+                    <a href="#!" className="secondary-content" onClick={() => { changeVisibility(aRootDirectoryConfiguration) }}>
+                        {aRootDirectoryConfiguration.hidden
+                            ? <i className="material-icons orange-text">visibility_off</i>
+                            : <i className="material-icons green-font">visibility</i>}
+                    </a>
+                </li>)}
+                <li className='collection-item valign-wrapper'>
+                    <input id="icon_prefix" type="text" className="validate input-new-directory" value={newRootDirectoryConfigurationPath} onChange={(event) => setNewRootDirectoryConfigurationPath(event.target.value)}></input>
+                    <a href="#!"
+                        disabled={!enableAddNewDirectoryConfiguration}
+                        className={when(!enableAddNewDirectoryConfiguration).thenDisableElement("secondary-content")}
+                        onClick={() => { addNewDirectoryConfiguration() }}>
+                        <i className="material-icons">create_new_folder</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div className="right-align">
+            <a href="#!" className="waves-effect waves-light btn pseudo-popup-action-buttons red"
+                onClick={() => dispatchEndConfiguring()}>
+                <i className="material-icons left">exit_to_app</i>
+                Quitter
+            </a>
+        </div>
+
+        {/* <div>
             <h4 className="pseudo-popup-header">Répertoires racine</h4>
         </div>
         <div>
@@ -112,6 +147,6 @@ export default function SpecificConfigurationComponent() {
                 <i className="material-icons left">exit_to_app</i>
                 Quitter
             </a>
-        </div>
+        </div> */}
     </div>
 }

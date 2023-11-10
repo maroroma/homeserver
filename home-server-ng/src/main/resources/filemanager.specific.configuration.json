@@ -1,0 +1,26 @@
+[ {
+  "id" : "e3866556-507b-4736-8cdd-4ca2bae5651f",
+  "rawPath" : "C:\\temp\\homeserverwip\\COMPLETED",
+  "hidden" : false,
+  "protected" : false
+}, {
+  "id" : "b8c11a49-bbe0-44e5-8e3e-d671afd46591",
+  "rawPath" : "C:\\temp\\homeserverwip\\FILMS",
+  "hidden" : false,
+  "protected" : false
+}, {
+  "id" : "113abd25-2397-4353-8848-e454703af6ee",
+  "rawPath" : "C:\\temp\\homeserverwip\\SERIES",
+  "hidden" : false,
+  "protected" : false
+}, {
+  "id" : "730cf879-a499-4f05-8865-b7cb910e65d9",
+  "rawPath" : "${homeserver.data.dir}",
+  "hidden" : true,
+  "protected" : false
+}, {
+  "id" : "534682c0-f43f-416d-86ba-da15a95b4efc",
+  "rawPath" : "${homeserver.config.dir}",
+  "hidden" : true,
+  "protected" : false
+} ]

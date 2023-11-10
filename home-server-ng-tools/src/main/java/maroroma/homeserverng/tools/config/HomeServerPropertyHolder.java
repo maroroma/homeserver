@@ -5,16 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import maroroma.homeserverng.tools.files.FileDescriptorFactory;
 import maroroma.homeserverng.tools.helpers.Assert;
 import maroroma.homeserverng.tools.helpers.Tuple;
 import maroroma.homeserverng.tools.security.SimpleUser;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.io.*;
+import java.util.*;
 
 /**
  * Holder pour une propriété applicative modifiable.
@@ -132,14 +128,6 @@ public class HomeServerPropertyHolder {
 		return new File(this.getResolvedValue());
 	}
 
-	public FileDescriptorFactory asFileDescriptorFactory() {
-		return FileDescriptorFactory.fromPath(this.getResolvedValue());
-	}
-
-	public List<FileDescriptorFactory> asFileDescriptorFactories() {
-		return asStringList().stream().map(FileDescriptorFactory::fromPath).collect(Collectors.toList());
-	}
-	
 	/**
 	 * Retourne la propriété en tant que {@link List} de {@link File}.
 	 * @return -

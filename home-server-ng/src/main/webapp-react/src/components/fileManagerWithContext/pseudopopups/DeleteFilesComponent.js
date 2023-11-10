@@ -43,7 +43,7 @@ export default function DeleteFilesComponent() {
 
             </ul>
         </div>
-        <div className="right-align">
+        <div className="right-align pseudo-popup-action-buttons">
             <a href="#!" className="waves-effect waves-light btn pseudo-popup-action-buttons red"
                 onClick={() => dispatchConfirmDelete()}>
                 <i class="material-icons left">delete</i>
