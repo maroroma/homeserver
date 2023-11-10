@@ -14,6 +14,6 @@ public class SmbFileDescriptorPath implements FileDescriptorPath {
 
     @Override
     public String resolvePathAsString() {
-        return Traper.trapOr(() -> new URI(this.rawPath).toString(), () -> "WTF");
+        return Traper.trapOr(() -> new URI(URLEncoder.encode(this.rawPath, "utf-8")).toString(), () -> "WTF");
     }
 }
