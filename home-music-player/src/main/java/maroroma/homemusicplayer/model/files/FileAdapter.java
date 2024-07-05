@@ -41,10 +41,9 @@ public interface FileAdapter {
 
     InputStream getInputStream();
 
-    default InputStream getInMemoryInputStream() {
+    default ByteArrayInputStream getInMemoryInputStream() {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         this.copyTo(byteArrayOutputStream);
-        System.out.println("file copyed to memory : " + byteArrayOutputStream.size());
         return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
     }
 

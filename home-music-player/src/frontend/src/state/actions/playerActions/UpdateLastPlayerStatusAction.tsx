@@ -10,6 +10,7 @@ export class UpdateLastPlayerStatusAction implements MusicPlayerContextAction {
     applyToState(previousState: MusicPlayerState): MusicPlayerState {
         return {
             ...previousState,
+            // toastState: {...previousState.toastState, messages : []},
             playerSubState: {
                 display: "small",
                 lastPlayerStatus: this.lastEvent

@@ -25,6 +25,21 @@ label {
   animation: ring 300ms normal;
 }
 
+.endless-rotation {
+  animation: endless_rotation 1s infinite;
+}
+
+@keyframes endless_rotation {
+  from {
+      transform: rotate(0deg);
+  }
+
+  to {
+      transform: rotate(360deg);
+  }
+}
+
+
 
 @keyframes ring {
   0% {

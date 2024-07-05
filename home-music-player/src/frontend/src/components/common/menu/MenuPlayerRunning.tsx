@@ -16,7 +16,7 @@ const MenuPlayerRunning: FC = () => {
     }
 
 
-    return <Button color="red" size="lg" variant="light" onClick={() => dispatch(new DisplayFullscreenPlayerAction())}><DiscFill className="menu-player-running menu-player-running-animated" size={30} /></Button>
+    return <Button color="red" size="lg" variant="light" onClick={() => dispatch(new DisplayFullscreenPlayerAction())}><DiscFill className="menu-player-running endless-rotation" size={30} /></Button>
 }
 
 export default MenuPlayerRunning;

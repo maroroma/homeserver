@@ -22,7 +22,7 @@ public class NaturalVolumeControl {
     private int currentIndexVolume;
 
 
-    public static NaturalVolumeControl from(SourceDataLine sourceDataLine) {
+    public static Optional<NaturalVolumeControl> from(SourceDataLine sourceDataLine) {
         return Optional.ofNullable(sourceDataLine)
                 .filter(notNullSourceDataLine -> notNullSourceDataLine.isControlSupported(FloatControl.Type.MASTER_GAIN))
                 .map(notNullSourceDataLine -> notNullSourceDataLine.getControl(FloatControl.Type.MASTER_GAIN))
@@ -36,20 +36,20 @@ public class NaturalVolumeControl {
 
                     // calcul des steps
                     var maxAmplitude = maxValue - minValue;
-                    var stepSize = maxAmplitude / 99;
+                    var stepSize = maxAmplitude / 100;
 
-                    var steps = IntStream.range(0, 100)
+                    var steps = IntStream.range(0, 101)
                             .mapToObj(index -> minValue + stepSize * index)
                             .sorted()
                             .toList();
 
-                    var currentIndexVolume = IntStream.range(0, 100)
+                    var currentIndexVolume = IntStream.range(0, 101)
                             .filter(index -> steps.get(index) >= currentValue)
                             .findFirst()
                             .orElseThrow(() -> new IllegalStateException("cant resolve current value as natural value"));
 
                     return new NaturalVolumeControl(volumeControl, steps, currentIndexVolume);
-                }).orElse(new NoopNaturalVolumeControl());
+                });
 
     }
 
@@ -65,10 +65,14 @@ public class NaturalVolumeControl {
     }
 
     public void volumeUp() {
-        if (this.currentIndexVolume + 2 < 100) {
+        if (this.currentIndexVolume + 2 <= 100) {
             this.currentIndexVolume += 2;
             this.innerVolumeControl.setValue(this.mappingVolume.get(this.currentIndexVolume));
         }
+    }
+
+    public void setCurrentVolume(int i) {
+        this.innerVolumeControl.setValue(this.mappingVolume.get(i));
     }
 
 
@@ -77,8 +81,9 @@ public class NaturalVolumeControl {
      */
     public static final class NoopNaturalVolumeControl extends NaturalVolumeControl {
 
-        public NoopNaturalVolumeControl() {
-            super(null, null, 50);
+        public NoopNaturalVolumeControl(Integer lastKnownVolume) {
+
+            super(null, null, Optional.ofNullable(lastKnownVolume).orElse(50));
         }
 
         @Override
@@ -89,7 +94,6 @@ public class NaturalVolumeControl {
         public void volumeUp() {
         }
     }
-
 
 
 }

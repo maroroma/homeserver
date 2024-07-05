@@ -2,7 +2,7 @@ import {Album} from "../library/Album";
 import {Artist} from "../library/Artist";
 import {Track} from "../library/Track";
 
-export type PlayerStatus = "PLAYING" | "PAUSED" | "STOPPED"
+export type PlayerStatus = "PLAYING" | "PAUSED" | "STOPPED" | "LOADING"
 
 
 export class PlayerStatusEvent {

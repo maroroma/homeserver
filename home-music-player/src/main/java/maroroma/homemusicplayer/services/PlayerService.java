@@ -10,6 +10,7 @@ import maroroma.homemusicplayer.model.player.api.AddAlbumToPlayListRequest;
 import maroroma.homemusicplayer.model.player.api.CreatePlayerRequest;
 import maroroma.homemusicplayer.model.player.api.PlayerStatus;
 import maroroma.homemusicplayer.services.mp3.Mp3Player;
+import maroroma.homemusicplayer.services.mp3.NaturalVolumeControl;
 import maroroma.homemusicplayer.tools.CustomAssert;
 import maroroma.homemusicplayer.tools.PlayList;
 import org.springframework.context.ApplicationEventPublisher;
@@ -57,6 +58,9 @@ public class PlayerService {
         CustomAssert.notAllNotNull("artistId AND albumId can't be both given", createPlayerRequest.getAlbumId(), createPlayerRequest.getArtistId());
         CustomAssert.notAllNull("artistId AND albumId can't be both null", createPlayerRequest.getAlbumId(), createPlayerRequest.getArtistId());
 
+        this.applicationEventPublisher.publishEvent(SimpleBroadcastNotification.info("Playlist en cours de chargement"));
+
+
         extractTracks(createPlayerRequest)
                 .ifPresentOrElse(tracks -> {
                     this.playList = PlayList.of(createPlayerRequest.getTrackId(), tracks);
@@ -85,8 +89,12 @@ public class PlayerService {
 
                     // si la liste était vide, on déclenche la lecture
                     if (wasEmpty) {
+                        this.applicationEventPublisher.publishEvent(SimpleBroadcastNotification.info("Playlist en cours de chargement"));
+
 
                         this.mp3Player.play(this.playList.getCurrentTrack(), endedTrack -> this.next());
+                        this.inputStreamCache.populate(this.playList);
+
                     }
                 }, () -> this.applicationEventPublisher.publishEvent(SimpleBroadcastNotification.error("Aucun morceau n'est accessible")));
 
@@ -120,15 +128,15 @@ public class PlayerService {
     }
 
     public void volumeUp() {
-        this.mp3Player.getVolumeControl().volumeUp();
+        this.mp3Player.doWithVolumeControl(NaturalVolumeControl::volumeUp);
     }
 
     public int getVolume() {
-        return this.mp3Player.getVolumeControl().getCurrentVolume();
+        return this.mp3Player.getVolume();
     }
 
     public void volumeDown() {
-        this.mp3Player.getVolumeControl().volumeDown();
+        this.mp3Player.doWithVolumeControl(NaturalVolumeControl::volumeDown);
     }
 
     /**

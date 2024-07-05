@@ -3,7 +3,7 @@ import {useMusicPlayerContext} from "../../state/MusicPlayerContext";
 import FanartPanelComponent from "../common/panels/FanartPanelComponent";
 import ThumbImage from "../common/ThumbImage";
 import ScrollingTextComponent from "../common/scrollingtext/ScrollingTextComponent";
-import {ChevronDoubleLeft, ChevronDoubleRight, PauseCircle, PlayCircle, StopCircle, VolumeDown, VolumeUp} from "react-bootstrap-icons";
+import {ArrowRepeat, ChevronDoubleLeft, ChevronDoubleRight, PauseCircle, PlayCircle, StopCircle, VolumeDown, VolumeUp} from "react-bootstrap-icons";
 import {PlayerRequester} from "../../api/requesters/PlayerRequester";
 import CircularSlider from "@fseehawer/react-circular-slider";
 
@@ -37,6 +37,17 @@ const FullscreenPlayerComponent: FC = () => {
 
             LibraryRequester.getTracksForAlbum(playerSubState.lastPlayerStatus?.album)
                 .then(tracks => dispatch(new DisplayAlbumAction(albumToLoader, tracks)));
+        }
+    }
+
+    const resolveButtonFromStatus = () => {
+        switch (playerSubState.lastPlayerStatus?.playerStatus) {
+            case "LOADING":
+                return <ArrowRepeat className="small-player-button endless-rotation"></ArrowRepeat>;
+            case "PLAYING":
+                return <PauseCircle className="clickable fullscreen-player-button" onClick={() => PlayerRequester.pausePlayer()} />;
+            default:
+                return <PlayCircle className="clickable fullscreen-player-button" onClick={() => PlayerRequester.resumePlayer()} />;
         }
     }
 
@@ -87,7 +98,7 @@ const FullscreenPlayerComponent: FC = () => {
             </div>
         </div>
         {/* uniquement en small device */}
-        <div className="fullscreen-player-smalldevices album-thumb clickable"  onClick={() => loadTracksForAlbum()}>
+        <div className="fullscreen-player-smalldevices album-thumb clickable" onClick={() => loadTracksForAlbum()}>
             <ThumbImage rounded={true} libraryItemArts={playerSubState.lastPlayerStatus?.album.libraryItemArts} type="description" className="large-thumb-override large-thumb-default-override" />
         </div>
         <div className="fullscreen-player-scrolling-text">
@@ -96,7 +107,7 @@ const FullscreenPlayerComponent: FC = () => {
         {/* uniquement en small device */}
         <div className="fullscreen-player-volume-smalldevices">
             <div className="album-and-artist-names">
-                <h1 className="clickable"  onClick={() => loadTracksForAlbum()}>{playerSubState.lastPlayerStatus?.album.name}</h1>
+                <h1 className="clickable" onClick={() => loadTracksForAlbum()}>{playerSubState.lastPlayerStatus?.album.name}</h1>
                 <h2 className="clickable" onClick={() => goToCurrentArtistAlbumList()}>{playerSubState.lastPlayerStatus?.artist.name}</h2>
             </div>
             <InputGroup className="fullscreen-player-volume-smalldevices-buttons">
@@ -112,9 +123,7 @@ const FullscreenPlayerComponent: FC = () => {
         <div className="fullscreen-player-buttons">
             <ChevronDoubleLeft className="clickable fullscreen-player-button" onClick={() => PlayerRequester.previous()} />
             {
-                playerSubState.lastPlayerStatus?.playerStatus === "PLAYING" ?
-                    <PauseCircle className="clickable fullscreen-player-button" onClick={() => PlayerRequester.pausePlayer()} />
-                    : <PlayCircle className="clickable fullscreen-player-button" onClick={() => PlayerRequester.resumePlayer()} />
+                resolveButtonFromStatus()
             }
             <StopCircle className="clickable fullscreen-player-button" onClick={() => PlayerRequester.stopPlayer()} />
 

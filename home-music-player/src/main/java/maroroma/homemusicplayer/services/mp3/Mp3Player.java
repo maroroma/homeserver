@@ -7,8 +7,11 @@ import maroroma.homemusicplayer.services.FilesFactory;
 import maroroma.homemusicplayer.services.InputStreamCache;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.*;
+import java.util.function.*;
 
 
 @Service
@@ -20,6 +23,11 @@ public class Mp3Player {
 
     private final InputStreamCache inputStreamCache;
 
+    private AtomicBoolean isPaused = new AtomicBoolean(false);
+    private AtomicBoolean isLoading = new AtomicBoolean(false);
+
+    private Integer lastKnownVolume = null;
+
     Queue<Mp3Task> mp3Tasks = new LinkedBlockingQueue<>();
 
     public void stop() {
@@ -30,12 +38,16 @@ public class Mp3Player {
         });
     }
 
+    public boolean isPaused() {
+        return this.isPaused.get();
+    }
+
     public void pause() {
-        this.getCurrentTask().ifPresent(Mp3Task::pause);
+        this.isPaused.set(true);
     }
 
     public void resume() {
-        this.getCurrentTask().ifPresent(Mp3Task::unpause);
+        this.isPaused.set(false);
     }
 
     public void play(TrackEntity currentTrack,
@@ -58,7 +70,7 @@ public class Mp3Player {
                         this.mp3Tasks.poll();
                         // ajout du nouveau, pour lequel on vient de demander l'arret
                         this.mp3Tasks.add(
-                                new Mp3Task(this.inputStreamCache.getInputStream(currentTrack))
+                                new Mp3Task(loadInputStream(currentTrack), this)
 //                                new Mp3Task(this.filesFactory.getFileFromBase64Path(currentTrack.getLibraryItemPath()))
                                         .addEndedEventListener(endedTask -> {
                                             this.mp3Tasks.poll();
@@ -73,8 +85,7 @@ public class Mp3Player {
 
         {
             // si pas de lecture en cours création standard
-            this.mp3Tasks.add(new Mp3Task(this.inputStreamCache.getInputStream(currentTrack))
-//            this.mp3Tasks.add(new Mp3Task(this.filesFactory.getFileFromBase64Path(currentTrack.getLibraryItemPath()))
+            this.mp3Tasks.add(new Mp3Task(loadInputStream(currentTrack), this)
                     .addEndedEventListener(endedTask -> {
                         this.mp3Tasks.poll();
                         endedEventListener.accept(endedTask);
@@ -85,18 +96,56 @@ public class Mp3Player {
 
     }
 
-    public NaturalVolumeControl getVolumeControl() {
-        return this.getCurrentTask().map(Mp3Task::getVolumeControl).orElseGet(NaturalVolumeControl.NoopNaturalVolumeControl::new);
+    private NaturalVolumeControl getVolumeControl() {
+        var volumeControle = this.getCurrentTask()
+                .flatMap(Mp3Task::getVolumeControl)
+                .orElseGet(() -> new NaturalVolumeControl.NoopNaturalVolumeControl(this.lastKnownVolume));
+        this.lastKnownVolume = volumeControle.getCurrentVolume();
+        return volumeControle;
     }
+
+    public int getVolume() {
+        return this.getVolumeControl().getCurrentVolume();
+    }
+
+    public void doWithVolumeControl(Consumer<NaturalVolumeControl> naturalVolumeControlConsumer) {
+        this.lastKnownVolume = getVolumeControl().getCurrentVolume();
+
+        naturalVolumeControlConsumer.accept(getVolumeControl());
+
+        this.lastKnownVolume = getVolumeControl().getCurrentVolume();
+    }
+
+    public Optional<Integer> getLastKnownVolume() {
+        return Optional.ofNullable(this.lastKnownVolume);
+    }
+
+
+
+    public PlayerStatus getPlayerStatus() {
+
+        if (this.isLoading.get()) {
+            return PlayerStatus.LOADING;
+        }
+
+        return this.getCurrentTask()
+                .map(taks -> this.isPaused() ? PlayerStatus.PAUSED : PlayerStatus.PLAYING)
+                .orElse(PlayerStatus.STOPPED);
+    }
+
+
+
+
+
 
     private Optional<Mp3Task> getCurrentTask() {
         return Optional.ofNullable(this.mp3Tasks.peek());
     }
 
-    public PlayerStatus getPlayerStatus() {
-        return this.getCurrentTask()
-                .map(Mp3Task::getPlayerStatus)
-                .orElse(PlayerStatus.STOPPED);
+    private InputStream loadInputStream(TrackEntity trackEntity) {
+        this.isLoading.set(true);
+        var loadedStream = this.inputStreamCache.getInputStream(trackEntity);
+        this.isLoading.set(false);
+        return loadedStream;
     }
-
 }

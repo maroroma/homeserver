@@ -4,4 +4,5 @@ public enum PlayerStatus {
     PLAYING,
     PAUSED,
     STOPPED,
+    LOADING,
 }

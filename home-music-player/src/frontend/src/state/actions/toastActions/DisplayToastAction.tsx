@@ -5,10 +5,10 @@ import {MusicPlayerContextAction} from "../MusicPlayerContextActions";
 
 export class DisplayToastAction implements MusicPlayerContextAction {
 
-    constructor(private message: string, private type: ToastType) { }
+    constructor(private message: string, private type: ToastType, private persistent: boolean = false) { }
 
-    public static info(message: string): DisplayToastAction {
-        return new DisplayToastAction(message, "Info");
+    public static info(message: string, persistent: boolean = false): DisplayToastAction {
+        return new DisplayToastAction(message, "Info", persistent);
     }
     public static error(message: string): DisplayToastAction {
         return new DisplayToastAction(message, "Error");
@@ -19,7 +19,7 @@ export class DisplayToastAction implements MusicPlayerContextAction {
             return DisplayToastAction.error(notitication.message);
         }
 
-        return DisplayToastAction.info(notitication.message);
+        return DisplayToastAction.info(notitication.message, notitication.persistent);
     }
 
 
@@ -33,7 +33,7 @@ export class DisplayToastAction implements MusicPlayerContextAction {
             ...previousState,
             toastState: {
                 ...previousState.toastState,
-                messages: canAddNewMessage ? [...previousState.toastState.messages, new ToastMessage(this.message, this.type)] : previousState.toastState.messages
+                messages: canAddNewMessage ? [...previousState.toastState.messages, new ToastMessage(this.message, this.type, this.persistent)] : previousState.toastState.messages
             }
         }
     }

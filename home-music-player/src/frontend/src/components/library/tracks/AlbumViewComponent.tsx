@@ -29,7 +29,7 @@ const AlbumViewComponent: FC = () => {
 
         if (albumWithTracksSubState.album) {
             PlayerRequester.startPlayer(albumWithTracksSubState.album, track)
-            .then(response => dispatch(DisplayToastAction.info("Lecture démarrée")))
+            // .then(response => dispatch(DisplayToastAction.info("Lecture en cours de démarrage")))
             .catch(error => dispatch(DisplayToastAction.error("Erreur rencontrée lors du lancement de la lecture")))
         }
     }

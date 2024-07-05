@@ -26,8 +26,6 @@ public class PlayerMonitor {
         if (this.playerService.getPlayerStatus() == PlayerStatus.STOPPED) {
             this.messagingService.broadcastStoppedStatus();
         } else {
-
-
             try {
 
                 this.playerService.getPlayList()

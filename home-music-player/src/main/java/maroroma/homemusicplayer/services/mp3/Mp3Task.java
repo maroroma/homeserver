@@ -1,7 +1,6 @@
 package maroroma.homemusicplayer.services.mp3;
 
 import lombok.RequiredArgsConstructor;
-import maroroma.homemusicplayer.model.player.api.PlayerStatus;
 import maroroma.homemusicplayer.tools.MusicPlayerException;
 
 import java.io.*;
@@ -25,10 +24,9 @@ import static javax.sound.sampled.AudioSystem.getAudioInputStream;
 @RequiredArgsConstructor
 public class Mp3Task extends Thread {
 
-//    private final FileAdapter fileAdapter;
-
     private final InputStream inputStream;
 
+    private final Mp3Player mp3Player;
     private AudioInputStream audioInputStream;
 
     private SourceDataLine sourceDataLine;
@@ -40,17 +38,10 @@ public class Mp3Task extends Thread {
     private boolean stopRequired = false;
 
 
-    /**
-     * Permet de bloquer l'avancée de la lecture des index dans la boucle de streming
-     */
-    private boolean isPaused = false;
-
-
-
     private Mp3TaskEventListener mp3TaskStoppedEventListener;
     private Mp3TaskEventListener mp3TaskEndedEventListener;
 
-    public NaturalVolumeControl getVolumeControl() {
+    public Optional<NaturalVolumeControl> getVolumeControl() {
         return NaturalVolumeControl.from(this.sourceDataLine);
     }
 
@@ -61,17 +52,14 @@ public class Mp3Task extends Thread {
 
 
         try {
-//            audioInputStream = getAudioInputStream(this.fileAdapter.getInMemoryInputStream());
-
             audioInputStream = getAudioInputStream(this.inputStream);
-
-            // méthode initiale à reconduire si ça le fait pas
-//            audioInputStream = getAudioInputStream(this.fileAdapter.getInputStream());
             final AudioFormat outFormat = getOutFormat(audioInputStream.getFormat());
             final DataLine.Info info = new DataLine.Info(SourceDataLine.class, outFormat);
             sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
             if (sourceDataLine != null) {
                 sourceDataLine.open(outFormat);
+                this.mp3Player.getLastKnownVolume()
+                        .ifPresent(knownVolume ->  this.getVolumeControl().ifPresent(control -> control.setCurrentVolume(knownVolume)));
                 sourceDataLine.start();
                 hasForciblyStopped = stream(getAudioInputStream(outFormat, audioInputStream), sourceDataLine);
                 sourceDataLine.drain();
@@ -138,9 +126,11 @@ public class Mp3Task extends Thread {
         // la boucle peut être arrêtée si un stop est requis
         for (int n = 0; n != -1 && !this.stopRequired; ) {
             // on avance plus les index si une pause est positionnée (on rend la boucle un peut bourrin mais bon)
-            if (!isPaused) {
+            if (!this.mp3Player.isPaused()) {
                 n = audioInputStream.read(buffer, 0, buffer.length);
-                sourceDataLineAsOutput.write(buffer, 0, n);
+                if (n != -1) {
+                    sourceDataLineAsOutput.write(buffer, 0, n);
+                }
             }
         }
         return this.stopRequired;
@@ -149,18 +139,6 @@ public class Mp3Task extends Thread {
 
     public void stopRequested() {
         this.stopRequired = true;
-    }
-
-    public void pause() {
-        this.isPaused = true;
-    }
-
-    public void unpause() {
-        this.isPaused = false;
-    }
-
-    public PlayerStatus getPlayerStatus() {
-        return this.isPaused ? PlayerStatus.PAUSED : PlayerStatus.PLAYING;
     }
 
     public Mp3Task startThen() {
