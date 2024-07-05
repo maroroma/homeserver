@@ -1,0 +1,47 @@
+.App {
+  text-align: center;
+}
+
+:root {
+  --default-font-color: white;
+}
+
+label {
+  color: white;
+  font-size: 2em;
+}
+
+.custom-switch input {
+  height: 3em;
+  width: 5em !important;
+  margin-right: 10px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:active {
+  animation: ring 300ms normal;
+}
+
+
+@keyframes ring {
+  0% {
+    color: var(--default-font-color);
+    transform: scale(1)
+  }
+
+  100% {
+    color: black;
+    transform: scale(1.2)
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .hide-on-small-devices {
+    display: none;
+  }
+}

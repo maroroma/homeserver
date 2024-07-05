@@ -1,0 +1,44 @@
+.artists-grid {
+  /**
+   * User input values.
+   */
+  --grid-layout-gap: 10px;
+  --grid-column-count: 10;
+  --grid-item--min-width: 200px;
+
+  /**
+    * Calculated values.
+    */
+  --gap-count: calc(var(--grid-column-count) - 1);
+  --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+  --grid-item--max-width: calc((100% - var(--total-gap-width)) / var(--grid-column-count));
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr));
+  grid-gap: var(--grid-layout-gap);
+
+  margin-right: 25px;
+  margin-left: 25px;
+  margin-bottom: 25px;
+  margin-top: 90px;
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  .artists-grid {
+    display: block;
+    margin-top: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 100px
+  }
+}
+
+/* Landscape phone to portrait tablet */
+/* @media (max-width: 767px) { ... } */
+
+/* Portrait tablet to landscape and desktop */
+/* @media (min-width: 768px) and (max-width: 979px) { ... } */
+
+/* Large desktop */
+/* @media (min-width: 1200px) { ... } */

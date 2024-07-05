@@ -1,0 +1,23 @@
+.track-item-renderer {
+    border-radius: 0.375em;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.384);
+    margin-bottom: 10px;
+    padding-left: 20px;
+}
+
+.track-name {
+    font-size: 50px;
+    color: var(--default-font-color);
+}
+
+@media (max-width: 480px) {
+    .track-name {
+        font-size: 30px;
+        color: var(--default-font-color);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}

@@ -1,0 +1,26 @@
+.fanart-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -15;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fanart-panel img {
+    height: 100%;
+}
+
+.fanart-mode-background {
+    opacity: 20%;
+}
+
+@media (max-width: 480px) {
+    .fanart-panel img {
+        width: 100%;
+        height: auto;
+    }
+}

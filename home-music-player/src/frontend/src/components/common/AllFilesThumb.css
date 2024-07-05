@@ -1,0 +1,6 @@
+.all-files-thumb-no-border {
+    border-style: none;
+}
+
+@media (max-width: 480px) {
+}

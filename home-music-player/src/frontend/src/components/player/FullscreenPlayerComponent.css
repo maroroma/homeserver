@@ -1,0 +1,152 @@
+.fullscreen-player-central-grid {
+    display: grid;
+    grid-template-columns: 2fr 3fr 2fr;
+    text-align: center;
+    margin-top: 150px;
+    color: var(--default-font-color);
+}
+
+h1 {
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+.fullscreen-player-volume code {
+    color: var(--default-font-color);
+}
+
+.fullscreen-player-buttons {
+    color: var(--default-font-color);
+    font-size: 125px;
+    text-align: center;
+}
+
+.fullscreen-player-volume {
+    justify-content: center;
+}
+
+.fullscreen-player-volume-buttons {
+    color: var(--default-font-color);
+    font-size: 125px;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.fullscreen-player-volume-buttons-left {
+    justify-content: right;
+    margin-right: 10px;
+}
+
+.fullscreen-player-volume-buttons-right {
+    justify-content: left;
+    margin-left: 20px;
+}
+
+
+.fullscreen-player-button {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.fullscreen-player-scrolling-text {
+    /* margin-top: 10px; */
+}
+
+.fullscreen-player-volume>h1 {
+    display: none;
+}
+
+
+.fullscreen-player-volume-smalldevices {
+    display: none;
+}
+
+.album-thumb {
+    display: none;
+}
+
+
+
+@media (max-width: 480px) {
+
+    :root {
+        --thumb-album-size: 60%
+    }
+
+
+    .fullscreen-player-central-grid {
+        display: none;
+    }
+
+
+
+
+    .fullscreen-player-scrolling-text {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .fullscreen-player-buttons {
+        color: var(--default-font-color);
+        font-size: 60px;
+        text-align: center;
+    }
+
+    .album-thumb {
+        display: block;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .fullscreen-player-volume-smalldevices {
+        color: var(--default-font-color);
+        display: grid !important;
+        width: 100%;
+        text-align: center;
+        display: block;
+        justify-content: center;
+
+    }
+
+    .fullscreen-player-volume-smalldevices-buttons .volume-up {
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+    .fullscreen-player-volume-smalldevices-buttons {
+        justify-content: center;
+    }
+
+
+
+    .fullscreen-player-volume-smalldevices-buttons .volume-down {
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+
+    .fullscreen-player-volume-smalldevices .album-and-artist-names {
+        margin-bottom: 20px;
+    }
+
+    .fullscreen-player-volume-smalldevices-value {
+        font-size: 50px;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        /* justify-content: center; */
+        background-color: #f8f9fa;
+        color: black;
+    }
+
+    .large-thumb-override {
+        width: var(--thumb-album-size);
+        height: var(--thumb-album-size);
+
+    }
+
+    .large-thumb-default-override {
+        width: var(--thumb-album-size);
+        height: var(--thumb-album-size);
+    }
+}

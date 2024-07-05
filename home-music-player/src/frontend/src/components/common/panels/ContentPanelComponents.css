@@ -1,0 +1,17 @@
+.content-panel {
+    margin-top: 100px;
+    margin-left: 350px;
+    margin-right: 20px;
+    margin-bottom: 200px;
+}
+
+
+
+@media (max-width: 480px) {
+    .content-panel {
+        margin-top: 90px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 90px;
+    }
+}

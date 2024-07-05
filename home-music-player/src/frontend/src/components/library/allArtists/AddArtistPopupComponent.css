@@ -1,0 +1,11 @@
+.modal-content {
+    background-color: black;
+}
+
+.modal-title {
+    color:var(--default-font-color);
+}
+
+.add-artist-add-icon {
+    margin-right:15px;
+}

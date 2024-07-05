@@ -1,0 +1,77 @@
+:root {
+    --thumb-small-size: 150px ;
+    --thumb-xsmall-size: 100px;
+    --thumb-large-size: 400px;
+}
+
+
+.large-thumb {
+    width: var(--thumb-large-size);
+    height: var(--thumb-large-size);
+}
+
+.large-thumb-default {
+    color: var(--default-font-color);
+    width: var(--thumb-large-size);
+    height: var(--thumb-large-size);
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    border-radius: 0.375rem;
+}
+
+
+
+.xsmall-thumb {
+    width: var(--thumb-xsmall-size);
+    height: var(--thumb-xsmall-size);
+}
+
+.xsmall-thumb-default {
+    color: var(--default-font-color);
+    width: var(--thumb-xsmall-size);
+    height: var(--thumb-xsmall-size);
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    border-radius: 0.375rem;
+}
+
+
+.small-thumb {
+    width: var(--thumb-small-size);
+    height: var(--thumb-small-size);
+}
+
+.small-thumb-default {
+    color: var(--default-font-color);
+    width: var(--thumb-small-size);
+    height: var(--thumb-small-size);
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    border-radius: 0.375rem;
+}
+
+.description-thumb {}
+
+.description-thumb-default {
+    color: var(--default-font-color);
+    width: 280px;
+    height: 280px;
+}
+
+
+@media (max-width: 480px) {
+    :root {
+        --thumb-small-size: 75px ;
+        --thumb-xsmall-size: 100px;
+        --thumb-large-size: 100px;
+    }
+
+    .description-thumb-default {
+        color: var(--default-font-color);
+        width: var(--thumb-small-size);
+        height: var(--thumb-small-size)
+    }
+}

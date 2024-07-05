@@ -1,0 +1,24 @@
+.artist-album {
+    margin-bottom: 10px;
+    cursor: pointer;
+
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    align-items: center;
+}
+
+.artist-album-thumb {
+    margin-right: 20px;
+}
+
+.artist-album-name {
+    font-size: 50px;
+    color: var(--default-font-color);
+}
+
+@media (max-width: 480px) {
+    .artist-album-name {
+        font-size: 20px;
+        color: var(--default-font-color);
+    }
+}
