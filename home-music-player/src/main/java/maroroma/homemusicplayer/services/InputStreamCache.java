@@ -66,7 +66,7 @@ public class InputStreamCache {
             itemKeysToRemove
                     .forEach(aKeyToRemove -> {
                         var removedItem = this.innerCache.remove(aKeyToRemove);
-                        log.info("{} removed from cache", removedItem.readableItemName);
+                        log.info("removed from cache -> {}", removedItem.readableItemName);
                     });
 
             log.info("cache cleaned : {} items remaining", this.innerCache.size());
@@ -91,7 +91,7 @@ public class InputStreamCache {
         static TimestampedInputStream init(FileAdapter inputStream) {
             var start = System.currentTimeMillis();
             var memoryInputStream = inputStream.getInMemoryInputStream();
-            InputStreamCache.log.info("{} added in cache in {}ms", inputStream.getFileName(), System.currentTimeMillis() - start);
+            InputStreamCache.log.info("added in {} ms in cache -> {}", System.currentTimeMillis() - start, inputStream.getFileName());
             return new TimestampedInputStream(inputStream.getFileName(), memoryInputStream, LocalDateTime.now());
         }
 

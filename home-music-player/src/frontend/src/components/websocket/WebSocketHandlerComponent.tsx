@@ -14,13 +14,15 @@ const WebSocketHandlerComponent: FC = () => {
 
     const { dispatch } = useMusicPlayerContext();
 
+    console.log("REACT_APP_WEBSOCKET_URL", process.env.REACT_APP_WEBSOCKET_URL)
 
 
     return <StompSessionProvider
         // onConnect={() => console.log("onConnect")}
         // onDisconnect={() => console.log("onDisconnect")}
         // onChangeState={() => console.log("onChangeState")}
-        url={'http://localhost:8080/ws-endpoint'}>
+        // url={'http://localhost:8080/ws-endpoint'}>
+        url={`${process.env.REACT_APP_WEBSOCKET_URL}/ws-endpoint`}>
         <div style={{ color: "white" }}>
             <SubscribingComponent></SubscribingComponent>
         </div>
