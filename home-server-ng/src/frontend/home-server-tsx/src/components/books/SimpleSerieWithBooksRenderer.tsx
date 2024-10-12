@@ -18,7 +18,7 @@ const SimpleSerieWithBooksRenderer: FC<SimpleSerieWithBooksRendererProps> = ({ a
 
 
     return <Card className="serie" onClick={() => navigate(`/books/serieDetails/${aSerieWithItsBooks.id}`)}>
-        <Card.Img variant="top" src={SerieWithFullBooks.seriePicture(aSerieWithItsBooks)} className="serie-picture" />
+        <Card.Img variant="top" loading="lazy" src={SerieWithFullBooks.seriePicture(aSerieWithItsBooks)} className="serie-picture" />
         <Card.Body>
             <Card.Title className={`${BootstrapText.AlignLeft} serie-title`}>
                 {aSerieWithItsBooks.completed ? <BookFill className={CustomClassNames.SpaceAfterIcon}/> : <BookHalf  className={CustomClassNames.SpaceAfterIcon}/>}

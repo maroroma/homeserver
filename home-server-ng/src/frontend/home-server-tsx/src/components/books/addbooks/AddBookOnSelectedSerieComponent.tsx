@@ -7,7 +7,7 @@ import SelectedSerieLoadedAction from "../../../context/actions/books/SelectedSe
 import ToastAction from "../../../context/actions/ToastAction";
 import {Button, Card, CardBody, Col, Form, InputGroup, Row} from "react-bootstrap";
 import SerieCardHeader from "../SerieCardHeader";
-import {BookmarkDash, BookmarkPlus, Search} from "react-bootstrap-icons";
+import {BookmarkDash, BookmarkPlus, BoxArrowUpRight, Search} from "react-bootstrap-icons";
 import BlockingButton from "../../blockingbutton/BlockingButton";
 import ImportBookProposal from "../../../model/books/ImportBookProposal";
 import EndWIPInErrorAction from "../../../context/actions/EndWIPInErrorAction";
@@ -82,9 +82,10 @@ const AddBookOnSelectedSerieComponent: FC = () => {
                 }} />
             <Card.Body>
                 <InputGroup className="mb-3">
-                    <InputGroup.Text id="basic-addon3">
+                    <Button href="https://www.sanctuary.fr" target="_blank">
+                        <BoxArrowUpRight className={CustomClassNames.SpaceAfterIcon} />
                         Url Sanctuary
-                    </InputGroup.Text>
+                    </Button>
                     <Form.Control
                         disabled={workInProgress}
                         isInvalid={sanctuaryUrl === undefined || sanctuaryUrl === ""}

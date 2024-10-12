@@ -17,6 +17,8 @@ const MenuComponent: FC = () => {
     const booksMenuButtons =
         DropDownButton.unique("ajouter", <BookmarkPlus />, "/books/add/serieselection")
 
+        
+
     const administrationMenuButtons = [
         DropDownButton.of("status", <InfoCircle />, "/administration/status"),
         DropDownButton.of("tasks", <UiRadios />, "/administration/tasks"),
@@ -39,7 +41,7 @@ const MenuComponent: FC = () => {
                     <DropDownMenuButton title="Administration" icon={<Tools />} path="/administration/properties" dropDownButtons={administrationMenuButtons} onClick={() => setMenuExpanded(false)} />
                     <SimpleMenuButton icon={<Bell />} label="Buzzer" path="/buzzer" onClick={() => setMenuExpanded(false)}></SimpleMenuButton>
                     <SimpleMenuButton icon={<FolderSymlink />} label="Files" path="/files/filemanager" onClick={() => setMenuExpanded(false)}></SimpleMenuButton>
-                    <SimpleMenuButton icon={<Boxes />} label="Lego" path="/buzzer" onClick={() => setMenuExpanded(false)}></SimpleMenuButton>
+                    <SimpleMenuButton icon={<Boxes />} label="Lego" path="/legos" onClick={() => setMenuExpanded(false)}></SimpleMenuButton>
                     <DropDownMenuButton title="Seedbox" icon={<BoxSeam />} path="/seedbox" dropDownButtons={seedBoxMenuButtons} onClick={() => setMenuExpanded(false)} />
                     <DropDownMenuButton title="Books" icon={<Book />} path="/books/allbooks" dropDownButtons={booksMenuButtons} onClick={() => setMenuExpanded(false)} />
                 </Nav>

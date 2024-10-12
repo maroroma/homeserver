@@ -117,7 +117,7 @@ const FullSerieComponent: FC = () => {
                                     setFocusedBook(aBook)
                                     setDisplayBookPopup(true);
                                 }}>
-                                    <Card.Img variant="top" src={Book.bookPicture(aBook)} className="serie-picture" />
+                                    <Card.Img variant="top" loading="lazy" src={Book.bookPicture(aBook)} className="serie-picture" />
                                     <Card.Body>
                                         <CardText as="h3" className={BootstrapText.Capitalize}>{aBook.subtitle}</CardText>
                                     </Card.Body>

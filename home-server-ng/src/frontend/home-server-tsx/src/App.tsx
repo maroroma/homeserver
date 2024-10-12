@@ -16,6 +16,7 @@ import AddBookSelectSerieComponent from './components/books/addbooks/AddBookSele
 import AddBookOnSelectedSerieComponent from './components/books/addbooks/AddBookOnSelectedSerieComponent';
 import FileManagerComponent from './components/filemanager/FileManagerComponent';
 import EditSpriteComponent from './components/iot/EditSpriteComponent';
+import LegoComponent from './components/lego/LegoComponent';
 
 function App() {
   const router = createHashRouter([
@@ -62,11 +63,14 @@ function App() {
         {
           path: "books/add/serie/:serieId",
           element: <AddBookOnSelectedSerieComponent />
-        }
-        ,
+        },
         {
           path: "files/filemanager",
           element: <FileManagerComponent />
+        },
+        {
+          path: "legos",
+          element: <LegoComponent />
         }
       ]
     }
