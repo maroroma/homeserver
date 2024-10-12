@@ -2,16 +2,20 @@ package maroroma.homeserverng.iot.services;
 
 import maroroma.homeserverng.iot.model.BuzzRequest;
 import maroroma.homeserverng.iot.model.BuzzerIotComponent;
+import maroroma.homeserverng.iot.model.IotComponentDescriptor;
 import maroroma.homeserverng.iot.model.IotComponentTypes;
 import maroroma.homeserverng.iot.model.MiniSprite;
 import maroroma.homeserverng.tools.annotations.InjectNanoRepository;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.exceptions.RuntimeHomeServerException;
+import maroroma.homeserverng.tools.helpers.StringUtils;
 import maroroma.homeserverng.tools.repositories.NanoRepository;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
 
 @Service
 public class BuzzerService extends AbstractIotDedicatedService<BuzzerIotComponent> {
@@ -34,7 +38,19 @@ public class BuzzerService extends AbstractIotDedicatedService<BuzzerIotComponen
 
     @Async
     public void buzz(BuzzRequest buzzRequest) {
-        this.protectedCall(buzzRequest.getId(), buzzer -> {
+
+        String buzzedId = Optional.ofNullable(buzzRequest.getId())
+                .filter(StringUtils::hasLength)
+                .orElseGet(() ->
+                        this.getAllComponents().stream().findFirst()
+                                .map(BuzzerIotComponent::getComponentDescriptor)
+                                .map(IotComponentDescriptor::getId)
+                                .orElseThrow(() -> new RuntimeHomeServerException("impossible de trouver un buzzer"))
+                );
+
+
+
+        this.protectedCall(buzzedId, buzzer -> {
             buzzer.buzzOn(convertSpriteToString(buzzRequest.getLedTemplate()));
             try {
                 Thread.sleep(buzzTime.asInt());

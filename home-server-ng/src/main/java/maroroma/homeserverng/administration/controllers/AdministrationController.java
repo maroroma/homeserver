@@ -5,11 +5,14 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import maroroma.homeserverng.administration.AdministrationModuleDescriptor;
-import maroroma.homeserverng.administration.model.*;
+import maroroma.homeserverng.administration.model.AllLogEvents;
+import maroroma.homeserverng.administration.model.HomeServerStatus;
+import maroroma.homeserverng.administration.model.Task;
+import maroroma.homeserverng.administration.model.TaskCancelRequest;
+import maroroma.homeserverng.administration.model.UploadPropertiesResponse;
 import maroroma.homeserverng.administration.services.AdministrationService;
 import maroroma.homeserverng.administration.services.ServerStatusHolderImpl;
 import maroroma.homeserverng.administration.services.TasksManager;
-import maroroma.homeserverng.lego.model.Brick;
 import maroroma.homeserverng.notifyer.services.LogEventsNotifyer;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.cache.CacheDescriptor;
@@ -22,12 +25,17 @@ import maroroma.homeserverng.tools.repositories.NanoRepositoryDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 /**
  * Controller pour la gestion de l'administration.
@@ -251,8 +259,11 @@ public class AdministrationController {
 	}
 
 	@DeleteMapping(path = "${homeserver.api.path:}/administration/repo/{id}")
-	public void deleteRepository(@PathVariable("id") final String id) throws HomeServerException {
+	public ResponseEntity<Boolean> deleteRepository(@PathVariable("id") final String id) throws HomeServerException {
+
 		this.serviceAdministration.clearRepository(id);
+
+		return ResponseEntity.ok(true);
 	}
 
 	/**
@@ -303,7 +314,12 @@ public class AdministrationController {
 	 */
 	@GetMapping(path="${homeserver.api.path:}/administration/logEvents")
 	public ResponseEntity<AllLogEvents> getAllLogEvents() {
-		return ResponseEntity.ok(this.logEventsNotifyer.getAllLogEvents());
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(this.logEventsNotifyer.getAllLogEvents());
 	}
 	
 	

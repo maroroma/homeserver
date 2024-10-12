@@ -1,0 +1,9 @@
+.file-descriptor {
+    display: grid;
+    grid-template-columns: min-content min-content auto;
+    grid-gap: 10px;
+}
+
+.file-descriptor-icon {
+    min-width: 40px;
+}

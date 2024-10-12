@@ -25,7 +25,7 @@ public class Serie {
 
         // si non renseigné, on tope la couverture du premier bouquin pour lequel
         // on a enregistré quelque chose
-        if (pictureFileId == null) {
+        if (org.springframework.util.StringUtils.isEmpty(pictureFileId)) {
             this.pictureFileId = books.stream()
                     .map(Book::getPictureFileId)
                     .filter(StringUtils::hasLength)

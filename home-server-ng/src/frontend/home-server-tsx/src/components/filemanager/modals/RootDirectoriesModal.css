@@ -1,0 +1,5 @@
+.root-directory {
+    display: grid;
+    grid-template-columns: auto min-content;
+    grid-gap: 5px;
+}

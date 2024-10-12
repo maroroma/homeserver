@@ -1,0 +1,30 @@
+.image-viewer-image {
+    max-width: 100%;
+    max-height: 90%;
+}
+
+.image-viewer-container {
+    /* background-color: red; */
+    height: 100%;
+    justify-content: center;
+}
+
+.image-viewer-carousel {
+    height: 100%!important;
+}
+
+.image-viewer-carousel .carousel-inner {
+    height: 100%!important;
+
+}
+
+.image-viewer-carousel .carousel-item {
+    height: 100%!important;
+}
+
+.image-viewer-close-button {
+    position: fixed;
+    right: var(--default-padding-and-margin);
+    top: var(--default-padding-and-margin);
+    z-index: calc(var(--bs-modal-zindex) *2);
+}

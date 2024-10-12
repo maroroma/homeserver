@@ -28,137 +28,152 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Controller pour la manipulation générique de fichiers.
- * @author rlevexie
  *
+ * @author rlevexie
  */
 @HomeServerRestController(moduleDescriptor = FileManagerModuleDescriptor.class)
 @RequiredArgsConstructor
 public class FileManagerController {
 
-	/**
-	 * SErvice sous jacent.
-	 */
-	private final FileManagerServiceImpl fileService;
+    /**
+     * SErvice sous jacent.
+     */
+    private final FileManagerServiceImpl fileService;
 
-	private final FileManagerConfigurationService fileManagerConfigurationService;
-	
-	/**
-	 * Création d'un répertoire.
-	 * @param creationRequest -
-	 * @return -
-	 * @throws HomeServerException -
-	 */
-	@PostMapping("${homeserver.api.path:}/filemanager/directory")
-	public ResponseEntity<FileDescriptor> createNewDirectory(final @RequestBody DirectoryCreationRequest creationRequest) throws HomeServerException {
-		return ResponseEntity.ok(this.fileService.createDirectory(creationRequest));
-	}
-	
-	/**
-	 * Retourne la liste des répertoires racines du filemanager.
-	 * @return -
-	 * @throws HomeServerException -
-	 */
-	@GetMapping("${homeserver.api.path:}/filemanager/rootdirectories")
-	public ResponseEntity<List<FileDirectoryDescriptor>> getRootDirectories() throws HomeServerException {
-		return ResponseEntity.ok(this.fileService.getRootDirectories());
-	}
-	
-	/**
-	 * Retourne le détail complet d'un répertoire donné.
-	 * @param id -
-	 * @return -
-	 * @throws HomeServerException -
-	 */
-	@GetMapping("${homeserver.api.path:}/filemanager/directories/{id}")
-	public ResponseEntity<FileDirectoryDescriptor> getDirectoryDetails(final @PathVariable("id") String id) throws HomeServerException {
-		return ResponseEntity.ok(this.fileService.getDirectoryDetail(id));
-	}
-	
-	/**
-	 * Permet de télécharger un fichier selon son encodage Bas64.
-	 * @param base64FileName nom du fichier
-	 * @param response -
-	 * @throws HomeServerException -
-	 */
-	@GetMapping("${homeserver.api.path:}/filemanager/files/{id}")
-	public void downloadFile(@PathVariable("id") final String base64FileName, final HttpServletResponse response) throws HomeServerException {
-		this.fileService.getFile(base64FileName, response);
-	}
+    private final FileManagerConfigurationService fileManagerConfigurationService;
 
-	/**
-	 * Retourne le file descriptor correspondant à l'id de fichier.
-	 * @param base64FileName -
-	 * @return -
-	 */
-	@GetMapping("${homeserver.api.path:}/filemanager/filedescriptors/{id}")
-	public ResponseEntity<FileDescriptor> getFileDescriptor(@PathVariable("id") final String base64FileName) {
-		return ResponseEntity.ok(this.fileService.getFileDescriptor(base64FileName));
-	}
+    /**
+     * Création d'un répertoire.
+     *
+     * @param creationRequest -
+     * @return -
+     * @throws HomeServerException -
+     */
+    @PostMapping("${homeserver.api.path:}/filemanager/directory")
+    public ResponseEntity<FileDescriptor> createNewDirectory(final @RequestBody DirectoryCreationRequest creationRequest) throws HomeServerException {
+        return ResponseEntity.ok(this.fileService.createDirectory(creationRequest));
+    }
 
-	/**
-	 * Upload d'un fichier sur le serveur
-	 * @param base64DirectoryName -
-	 * @return -
-	 */
-	@PostMapping("${homeserver.api.path:}/filemanager/files/{id}")
-	public ResponseEntity<List<FileDescriptor>> uploadFile(@PathVariable("id") final String base64DirectoryName, final HttpServletRequest request) throws HomeServerException {
-		return ResponseEntity.ok(this.fileService.uploadFiles(base64DirectoryName, request));
-	}
-	
-	/**
-	 * Permet de streamer un fichier multimédia.
-	 * @param base64FileName identifiant du fichier.
-	 * @param request -
-	 * @param response -
-	 * @throws HomeServerException -
-	 */
-	@GetMapping("${homeserver.api.path:}/filemanager/files/{id}/streaming")
-	public void streamFile(@PathVariable("id") final String base64FileName, 
-			HttpServletRequest request, HttpServletResponse response) throws HomeServerException {
-		this.fileService.streamFile(base64FileName, request, response);
-	}
-	
-	/**
-	 * Demande de suppression d'un fichier.
-	 * @param id -
-	 * @return -
-	 * @throws HomeServerException -
-	 */
-	@DeleteMapping("${homeserver.api.path:}/filemanager/files/{id}")
-	public ResponseEntity<FileOperationResult> deleteFile(final @PathVariable("id") String id) throws HomeServerException {
-		return ResponseEntity.ok(this.fileService.deleteFile(id));
-	}
-	
-	/**
-	 * Demande de renommage de fichier.
-	 * @param rfd -
-	 * @return -
-	 * @throws HomeServerException -
-	 */
-	@PatchMapping("${homeserver.api.path:}/filemanager/files")
-	public ResponseEntity<FileOperationResult> renameFile(final @RequestBody RenameFileDescriptor rfd) throws HomeServerException {
-		return ResponseEntity.ok(this.fileService.renameFile(rfd));
-	}
+    /**
+     * Retourne la liste des répertoires racines du filemanager.
+     *
+     * @return -
+     * @throws HomeServerException -
+     */
+    @GetMapping("${homeserver.api.path:}/filemanager/rootdirectories")
+    public ResponseEntity<List<FileDirectoryDescriptor>> getRootDirectories() throws HomeServerException {
+        return ResponseEntity.ok(this.fileService.getRootDirectories());
+    }
 
-	@GetMapping("${homeserver.api.path:}/filemanager/configuration/rootDirectories")
-	public ResponseEntity<List<RootDirectoryConfiguration>> getRootDirectoriesConfiguration() {
-		return ResponseEntity.ok(this.fileManagerConfigurationService.getRawRootDirectoriesConfiguration());
-	}
+    /**
+     * Retourne le détail complet d'un répertoire donné.
+     *
+     * @param id -
+     * @return -
+     * @throws HomeServerException -
+     */
+    @GetMapping("${homeserver.api.path:}/filemanager/directories/{id}")
+    public ResponseEntity<FileDirectoryDescriptor> getDirectoryDetails(final @PathVariable("id") String id) throws HomeServerException {
+        return ResponseEntity.ok(this.fileService.getDirectoryDetail(id));
+    }
 
-	@PostMapping("${homeserver.api.path:}/filemanager/configuration/rootDirectories")
-	public ResponseEntity<List<RootDirectoryConfiguration>> addRootDirectory(@RequestBody RootDirectoryConfigurationCreationRequest rootDirectoryConfigurationCreationRequest) {
-		return ResponseEntity.ok(this.fileManagerConfigurationService.addRootDirectoryConfiguration(rootDirectoryConfigurationCreationRequest));
-	}
+    /**
+     * Permet de télécharger un fichier selon son encodage Bas64.
+     *
+     * @param base64FileName nom du fichier
+     * @param response       -
+     * @throws HomeServerException -
+     */
+    @GetMapping("${homeserver.api.path:}/filemanager/files/{id}")
+    public void downloadFile(@PathVariable("id") final String base64FileName, final HttpServletResponse response) throws HomeServerException {
+        this.fileService.getFile(base64FileName, response);
+    }
 
-	@PatchMapping("${homeserver.api.path:}/filemanager/configuration/rootDirectories/{id}")
-	public ResponseEntity<List<RootDirectoryConfiguration>> addRootDirectory(@PathVariable("id") String id,  @RequestBody RootDirectoryConfiguration rootDirectoryConfiguration) {
-		return ResponseEntity.ok(this.fileManagerConfigurationService.updateRootDirectoryConfiguration(id, rootDirectoryConfiguration));
-	}
+    /**
+     * Retourne le file descriptor correspondant à l'id de fichier.
+     *
+     * @param base64FileName -
+     * @return -
+     */
+    @GetMapping("${homeserver.api.path:}/filemanager/filedescriptors/{id}")
+    public ResponseEntity<FileDescriptor> getFileDescriptor(@PathVariable("id") final String base64FileName) {
+        return ResponseEntity.ok(this.fileService.getFileDescriptor(base64FileName));
+    }
 
-	@DeleteMapping("${homeserver.api.path:}/filemanager/configuration/rootDirectories/{id}")
-	public ResponseEntity<List<RootDirectoryConfiguration>> addRootDirectory(@PathVariable("id") String id) {
-		return ResponseEntity.ok(this.fileManagerConfigurationService.deleteRootDirectoryConfiguration(id));
-	}
-	
-	
+    /**
+     * Upload d'un fichier sur le serveur
+     *
+     * @param base64DirectoryName -
+     * @return -
+     */
+    @PostMapping("${homeserver.api.path:}/filemanager/files/{id}")
+    public ResponseEntity<List<FileDescriptor>> uploadFile(@PathVariable("id") final String base64DirectoryName, final HttpServletRequest request) throws HomeServerException {
+        return ResponseEntity.ok(this.fileService.uploadFiles(base64DirectoryName, request));
+    }
+
+    /**
+     * Permet de streamer un fichier multimédia.
+     *
+     * @param base64FileName identifiant du fichier.
+     * @param request        -
+     * @param response       -
+     * @throws HomeServerException -
+     */
+    @GetMapping("${homeserver.api.path:}/filemanager/files/{id}/streaming")
+    public void streamFile(@PathVariable("id") final String base64FileName,
+                           HttpServletRequest request, HttpServletResponse response) throws HomeServerException {
+        this.fileService.streamFile(base64FileName, request, response);
+    }
+
+    /**
+     * Demande de suppression d'un fichier.
+     *
+     * @param id -
+     * @return -
+     * @throws HomeServerException -
+     */
+    @DeleteMapping("${homeserver.api.path:}/filemanager/files/{id}")
+    public ResponseEntity<FileOperationResult> deleteFile(final @PathVariable("id") String id) throws HomeServerException {
+        return ResponseEntity.ok(this.fileService.deleteFile(id));
+    }
+
+    @PostMapping("${homeserver.api.path:}/filemanager/files/batchdelete")
+    public ResponseEntity<List<FileOperationResult>> deleteFiles(@RequestBody List<String> ids) throws HomeServerException {
+        return ResponseEntity.ok(this.fileService.deleteFiles(ids));
+    }
+
+
+    /**
+     * Demande de renommage de fichier.
+     *
+     * @param rfd -
+     * @return -
+     * @throws HomeServerException -
+     */
+    @PatchMapping("${homeserver.api.path:}/filemanager/files")
+    public ResponseEntity<FileOperationResult> renameFile(final @RequestBody RenameFileDescriptor rfd) throws HomeServerException {
+        return ResponseEntity.ok(this.fileService.renameFile(rfd));
+    }
+
+    @GetMapping("${homeserver.api.path:}/filemanager/configuration/rootDirectories")
+    public ResponseEntity<List<RootDirectoryConfiguration>> getRootDirectoriesConfiguration() {
+        return ResponseEntity.ok(this.fileManagerConfigurationService.getRawRootDirectoriesConfiguration());
+    }
+
+    @PostMapping("${homeserver.api.path:}/filemanager/configuration/rootDirectories")
+    public ResponseEntity<List<RootDirectoryConfiguration>> addRootDirectory(@RequestBody RootDirectoryConfigurationCreationRequest rootDirectoryConfigurationCreationRequest) {
+        return ResponseEntity.ok(this.fileManagerConfigurationService.addRootDirectoryConfiguration(rootDirectoryConfigurationCreationRequest));
+    }
+
+    @PatchMapping("${homeserver.api.path:}/filemanager/configuration/rootDirectories/{id}")
+    public ResponseEntity<List<RootDirectoryConfiguration>> addRootDirectory(@PathVariable("id") String id, @RequestBody RootDirectoryConfiguration rootDirectoryConfiguration) {
+        return ResponseEntity.ok(this.fileManagerConfigurationService.updateRootDirectoryConfiguration(id, rootDirectoryConfiguration));
+    }
+
+    @DeleteMapping("${homeserver.api.path:}/filemanager/configuration/rootDirectories/{id}")
+    public ResponseEntity<List<RootDirectoryConfiguration>> addRootDirectory(@PathVariable("id") String id) {
+        return ResponseEntity.ok(this.fileManagerConfigurationService.deleteRootDirectoryConfiguration(id));
+    }
+
+
 }

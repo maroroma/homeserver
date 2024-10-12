@@ -1,18 +1,30 @@
 package maroroma.homeserverng.iot.controllers;
 
 import maroroma.homeserverng.iot.IotModuleDescriptor;
-import maroroma.homeserverng.iot.model.*;
+import maroroma.homeserverng.iot.model.AbstractIotComponent;
+import maroroma.homeserverng.iot.model.AlarmChangeStatusRequest;
+import maroroma.homeserverng.iot.model.BuzzRequest;
+import maroroma.homeserverng.iot.model.MiniSprite;
+import maroroma.homeserverng.iot.model.TestAlarmResults;
+import maroroma.homeserverng.iot.model.TriggerIotComponent;
+import maroroma.homeserverng.iot.model.TriggeringDescription;
+import maroroma.homeserverng.iot.model.UltraBasicIotComponentForRestExchange;
 import maroroma.homeserverng.iot.services.AlarmManager;
 import maroroma.homeserverng.iot.services.BuzzerService;
 import maroroma.homeserverng.iot.services.IotServiceImpl;
 import maroroma.homeserverng.iot.services.TriggerService;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import org.aspectj.weaver.ast.Test;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Endpoints pour la gestion des composants IOTs
@@ -89,8 +101,10 @@ public class IotController {
      * @param buzzRequest -
      */
     @PostMapping("${homeserver.api.path:}/iot/components/buzzers")
-    public void buzz(@RequestBody  BuzzRequest buzzRequest) {
+    public ResponseEntity<Boolean> buzz(@RequestBody  BuzzRequest buzzRequest) {
+
         this.buzzerService.buzz(buzzRequest);
+        return ResponseEntity.ok(true);
     }
 
     /**

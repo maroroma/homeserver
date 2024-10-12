@@ -1,0 +1,33 @@
+.serie-picture {
+    width: 100%;
+    height: 230px;
+    object-fit: contain;
+    object-position: center;
+    padding-top: 10px;
+    cursor: pointer;
+}
+
+.serie {
+    text-transform: uppercase;
+    margin: 5px;
+}
+
+.serie-title {
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important
+}
+
+.full-serie-header {
+    display: flex;
+}
+
+.full-serie-header-labels {
+    margin-left: var(--default-padding-and-margin);
+}
+
+.full-serie {
+    margin-top: var(--default-padding-and-margin);
+}
+
+

@@ -12,13 +12,13 @@
   "moduleId" : "kiosk"
 }, {
   "id" : "homeserver.kiosk.displayHour",
-  "value" : "true",
+  "value" : "false",
   "description" : "Détermine si on doit afficher l'heure",
   "readOnly" : false,
   "moduleId" : "kiosk"
 }, {
   "id" : "homeserver.kiosk.displayWeather",
-  "value" : "false",
+  "value" : "true",
   "description" : "Détermine si on doit afficher la météo",
   "readOnly" : false,
   "moduleId" : "kiosk"

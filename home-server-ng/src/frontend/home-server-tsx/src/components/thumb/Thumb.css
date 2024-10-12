@@ -1,0 +1,16 @@
+.thumb {
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: contain;
+    object-position: center;
+}
+
+.thumb-default {
+    width: 100px;
+    height: 100px;
+    display: inline-block!important;
+    padding-top: 10px;
+    padding-left: 10px;
+}

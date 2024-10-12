@@ -69,7 +69,7 @@ public class BooksController {
     }
 
     @DeleteMapping("${homeserver.api.path:}/books/{bookId}")
-    public ResponseEntity<Boolean> addBooksToLibrary(@PathVariable("bookId") String bookIdToDelete) {
+    public ResponseEntity<Boolean> deleteBook(@PathVariable("bookId") String bookIdToDelete) {
         return ResponseEntity.ok(this.bookService.deleteBook(bookIdToDelete));
     }
 

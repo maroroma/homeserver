@@ -100,6 +100,12 @@ public class FileManagerServiceImpl {
 				.deleteFile();
 	}
 
+	public List<FileOperationResult> deleteFiles(final List<String> ids) {
+		return ids.stream()
+				.map(this::deleteFile)
+				.toList();
+	}
+
 	/**
 	 * Upload d'une liste de fichiers
 	 * @param directoryId identifiant du répertoire dans lequel on veut faire la recopie

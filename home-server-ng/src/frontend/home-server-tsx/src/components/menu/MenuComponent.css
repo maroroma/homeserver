@@ -1,0 +1,12 @@
+.nav-link {
+    text-transform: capitalize;
+}
+
+/** surcharge des couleurs par défaut du theme */
+/* .dropdown-menu {
+    background-color: #0a58ca;
+    border-color: #0a58ca;
+}
+.dropdown-item:hover {
+    background-color: rgb(69, 130, 236);
+} */

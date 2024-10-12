@@ -1,0 +1,37 @@
+
+:root {
+    --round-button-size: 50px ;
+    --thumb-xsmall-size: 100px;
+    --thumb-large-size: 400px;
+}
+
+
+.action-menu .round-button {
+    border-radius: 50%;
+    width: var(--round-button-size);
+    height: var(--round-button-size);
+}
+
+.action-menu {
+    margin: 10px;
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+    z-index: 123;
+}
+
+.other-buttons {
+    position: fixed;
+}
+
+.other-buttons-hidden {
+    max-width: 0px !important;
+    padding-left: 0;
+    padding-right: 0;
+    transition: max-width 300ms;
+}
+
+.other-buttons-show {
+    max-width: 100% !important;
+    transition: max-width 300ms;
+}

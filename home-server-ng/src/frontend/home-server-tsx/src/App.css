@@ -1,0 +1,101 @@
+:root {
+  --default-padding-and-margin: 10px;
+}
+
+
+
+.App {
+  /* text-align: center; */
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.table-striped>tr:nth-child(even) {
+  background-color: rgba(120, 194, 173, 0.2) ! important;
+}
+
+.text-break-anywhere {
+  word-break: break-all;
+}
+
+.table .large-row {
+  height: 40px;
+}
+
+.table .large-row>td:first-child {
+
+  padding-left: var(--default-padding-and-margin);
+
+}
+
+.full-width {
+  width: 100%;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.vertically-centered {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.space-after-icon {
+  margin-right: var(--default-padding-and-margin);
+}
+
+.pull-right {
+  float: right;
+}
+
+.layout-with-margin {
+  margin: var(--default-padding-and-margin);
+}
+
+@media (max-width: 480px) {
+
+  .hide-on-small-devices {
+    display: none;
+  }
+}
+
+.ellipsis {
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  white-space: nowrap !important
+}
