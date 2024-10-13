@@ -24,6 +24,7 @@ import EndWIPAction from "../../context/actions/EndWIPAction";
 import YesNoModal from "../modals/YesNoModal";
 import ActionBookCompleteBookButton from "../actionmenu/ActionBookCompleteBookButton";
 import Serie from "../../model/books/Serie";
+import HomeServerRoutes from "../../HomeServerRoutes";
 
 
 const FullSerieComponent: FC = () => {
@@ -134,7 +135,7 @@ const FullSerieComponent: FC = () => {
                     onCompleteSerieClick={() => { updateSerie(true) }}
                     onUnCompleteSerieClick={() => { updateSerie(false) }}
                 />
-                {allBooksSubState.selectedSerie.serie.completed ? <></> : <ActionBookPlusButton onClick={() => navigate(`/books/add/serie/${allBooksSubState.selectedSerie.serie.id}`)} />}
+                {allBooksSubState.selectedSerie.serie.completed ? <></> : <ActionBookPlusButton onClick={() => navigate(HomeServerRoutes.BOOKS_ADD_BOOK_TO_SELECTED_SERIE_ID(allBooksSubState.selectedSerie.serie.id))} />}
                 <ActionDeleteButton onClick={() => setDisplayDeletePopup(true)} />
             </ActionMenuComponent>
         </SimpleMarginLayout>

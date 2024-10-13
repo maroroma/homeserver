@@ -15,6 +15,7 @@ import ActionBackButton from "../actionmenu/ActionBackButton";
 import {PencilSquare} from "react-bootstrap-icons";
 import {useNavigate} from "react-router-dom";
 import ActionPlusButton from "../actionmenu/ActionPlusButton";
+import HomeServerRoutes from "../../HomeServerRoutes";
 
 
 const BuzzerComponent: FC = () => {
@@ -56,7 +57,7 @@ const BuzzerComponent: FC = () => {
                 action
                 onClick={() => {
                     if (editMode) {
-                        navigate(`/buzzer/sprite/${aMiniSprite.name}`)
+                        navigate(HomeServerRoutes.IOT_BUZZER_SPRITE_ID(aMiniSprite.name))
                     } else {
                         sendBuzz(aMiniSprite)
                     }

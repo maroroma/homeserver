@@ -17,6 +17,7 @@ import AddBookOnSelectedSerieComponent from './components/books/addbooks/AddBook
 import FileManagerComponent from './components/filemanager/FileManagerComponent';
 import EditSpriteComponent from './components/iot/EditSpriteComponent';
 import LegoComponent from './components/lego/LegoComponent';
+import HomeServerRoutes from './HomeServerRoutes';
 
 function App() {
   const router = createHashRouter([
@@ -25,43 +26,43 @@ function App() {
       element: <HomeServerLayoutComponent />,
       children: [
         {
-          path: "administration/properties",
+          path: HomeServerRoutes.ADMINISTRATION_PROPERTIES,
           element: <AdministractionComponent></AdministractionComponent>
         },
         {
-          path: "administration/status",
+          path: HomeServerRoutes.ADMINISTRATION_STATUS,
           element: <StatusComponent />
         },
         {
-          path: "administration/events",
+          path: HomeServerRoutes.ADMINISTRATION_EVENTS,
           element: <EventsComponent />
         },
         {
-          path: "administration/tasks",
+          path: HomeServerRoutes.ADMINISTRATION_TASKS,
           element: <TasksComponent />
         },
         {
-          path: "buzzer",
+          path: HomeServerRoutes.IOT_BUZZER,
           element: <BuzzerComponent />
         },
         {
-          path: "buzzer/sprite/:spriteId",
+          path: HomeServerRoutes.IOT_BUZZER_SPRITE,
           element: <EditSpriteComponent />
         },
         {
-          path: "books/allbooks",
+          path: HomeServerRoutes.BOOKS_ALL,
           element: <AllBooksComponent />
         },
         {
-          path: "books/serieDetails/:serieId",
+          path: HomeServerRoutes.BOOKS_SERIE_DETAIL,
           element: <FullSerieComponent />
         },
         {
-          path: "books/add/serieselection",
+          path: HomeServerRoutes.BOOKS_SERIE_SELECTION,
           element: <AddBookSelectSerieComponent />
         },
         {
-          path: "books/add/serie/:serieId",
+          path: HomeServerRoutes.BOOKS_ADD_BOOK_TO_SELECTED_SERIE,
           element: <AddBookOnSelectedSerieComponent />
         },
         {

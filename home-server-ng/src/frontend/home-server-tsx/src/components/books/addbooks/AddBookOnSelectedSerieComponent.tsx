@@ -20,6 +20,7 @@ import ActionBookMinusButton from "../../actionmenu/ActionBookMinusButton";
 import ActionCheckButton from "../../actionmenu/ActionCheckButton";
 import {CustomClassNames} from "../../bootstrap/CssTools";
 import SimpleMarginLayout from "../../layouts/SimpleMarginLayout";
+import HomeServerRoutes from "../../../HomeServerRoutes";
 
 
 const AddBookOnSelectedSerieComponent: FC = () => {
@@ -68,7 +69,7 @@ const AddBookOnSelectedSerieComponent: FC = () => {
             bookProposals.selectedItems()
         )
             .then(response => {
-                navigate(`/books/serieDetails/${allBooksSubState.selectedSerie.serie.id}`)
+                navigate(HomeServerRoutes.BOOKS_SERIE_DETAIL_ID(allBooksSubState.selectedSerie.serie.id))
             })
             .catch(error => dispatch(new EndWIPInErrorAction("Une erreur est survenue lors de l'ajout des nouveaux tomes")))
     }
@@ -78,7 +79,7 @@ const AddBookOnSelectedSerieComponent: FC = () => {
             <SerieCardHeader
                 serieToDisplay={allBooksSubState.selectedSerie.serie}
                 onClick={() => {
-                    navigate(`/books/serieDetails/${allBooksSubState.selectedSerie.serie.id}`)
+                    navigate(HomeServerRoutes.BOOKS_SERIE_DETAIL_ID(allBooksSubState.selectedSerie.serie.id))
                 }} />
             <Card.Body>
                 <InputGroup className="mb-3">

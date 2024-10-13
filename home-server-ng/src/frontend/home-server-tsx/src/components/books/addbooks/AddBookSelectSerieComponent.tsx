@@ -15,6 +15,7 @@ import UpdateSearchStringAction from "../../../context/actions/UpdateSearchStrin
 import BlockingButton from "../../blockingbutton/BlockingButton";
 import {PlusCircle} from "react-bootstrap-icons";
 import EndWIPAction from "../../../context/actions/EndWIPAction";
+import HomeServerRoutes from "../../../HomeServerRoutes";
 
 const AddBookSelectSerieComponent: FC = () => {
 
@@ -47,7 +48,7 @@ const AddBookSelectSerieComponent: FC = () => {
             const createdSerie = response.find(Serie.equalsByTitle(newSerieName));
             if (createdSerie) {
                 dispatch(UpdateSearchStringAction.clear());
-                navigate(`/books/add/serie/${createdSerie.id}`);
+                navigate(HomeServerRoutes.BOOKS_ADD_BOOK_TO_SELECTED_SERIE_ID(createdSerie.id));
             } else {
                 dispatch(ToastAction.error("Impossible de retrouver la série créée"));
             }
@@ -84,7 +85,7 @@ const AddBookSelectSerieComponent: FC = () => {
                     className="serie-title"
                     onClick={() => {
                         dispatch(UpdateSearchStringAction.clear());
-                        navigate(`/books/add/serie/${aSerie.id}`);
+                        navigate(HomeServerRoutes.BOOKS_ADD_BOOK_TO_SELECTED_SERIE_ID(aSerie.id));
                     }}
                 >
                     <Thumb src={Serie.seriePicture(aSerie)} />
