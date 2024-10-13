@@ -49,6 +49,7 @@ const ImageViewerModal: FC<ImageViewerModalProps> = ({ show, onHide, imagesToDis
                         .then(CustomClassNames.VerticallyCentered)
                         .css()}>
                         <Image
+                            loading="lazy"
                             src={FileDescriptor.downloadUrl(anImage)}
                             className="image-viewer-image"
                             onClick={() => increaseIndex()}

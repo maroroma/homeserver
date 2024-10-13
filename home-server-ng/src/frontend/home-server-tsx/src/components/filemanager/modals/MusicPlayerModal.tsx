@@ -71,6 +71,7 @@ const MusicPlayerModal: FC<MusicPlayerModalProps> = ({ show, onHide, musicsToPla
                         .css()}>
                         {folderImage ?
                             <Image
+                                loading="lazy"
                                 src={FileDescriptor.downloadUrl(folderImage)}
                                 className="folder-image"
                                 onClick={() => increaseIndex()}
@@ -91,6 +92,7 @@ const MusicPlayerModal: FC<MusicPlayerModalProps> = ({ show, onHide, musicsToPla
                     <audio
                         controls={true}
                         autoPlay={true}
+                        onEnded={() => increaseIndex()}
                         src={FileDescriptor.downloadUrl(currentTrack)}></audio>
                     : <></>
                 }
@@ -98,7 +100,7 @@ const MusicPlayerModal: FC<MusicPlayerModalProps> = ({ show, onHide, musicsToPla
             </div>
 
             <div className="image-viewer-close-button">
-                <CloseButton onClick={() => onHide()} />
+                <h2><CloseButton onClick={() => onHide()} /></h2>
             </div>
             <div className="image-viewer-legend">
 
