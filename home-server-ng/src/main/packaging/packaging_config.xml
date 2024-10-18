@@ -157,7 +157,7 @@
 		<fileSet>
 
 			<!-- sortie react -->
-			<directory>${basedir}/src/main/webapp-react/build</directory>
+			<directory>${basedir}/src/frontend/home-server-tsx/build</directory>
 			<filtered>false</filtered>
 			<outputDirectory>/static</outputDirectory>
 			<fileMode>775</fileMode>

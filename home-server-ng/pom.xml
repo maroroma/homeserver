@@ -183,7 +183,7 @@
 						<configuration>
 							<target name="building">
 								<exec executable="cmd"
-									  dir="${project.basedir}/src/main/webapp-react" osfamily="windows"
+									  dir="${project.basedir}/src/frontend/home-server-tsx" osfamily="windows"
 									  resultproperty="cmdresult">
 									<arg line="/c npm run build" />
 								</exec>
