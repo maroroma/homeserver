@@ -1,4 +1,4 @@
-import {FC, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import {Container, Form, Nav, Navbar} from "react-bootstrap";
 import {ArrowLeftRight, Bell, Book, BookmarkPlus, Boxes, BoxSeam, FolderSymlink, InfoCircle, ListUl, Tools, UiRadios} from "react-bootstrap-icons";
 import SimpleMenuButton from "./SimpleMenuButton";
@@ -8,17 +8,29 @@ import "./MenuComponent.css";
 import {useHomeServerContext} from "../../context/HomeServerRootContext";
 import UpdateSearchStringAction from "../../context/actions/UpdateSearchStringAction";
 import HomeServerRoutes from "../../HomeServerRoutes";
+import {useLocation} from "react-router-dom";
+import {BootstrapText} from "../bootstrap/BootstrapText";
+import BrandRenderer from "./BrandRenderer";
+import HomeServerRoute from "../../HomeServerRoute";
 
 const MenuComponent: FC = () => {
 
     const { searchString, dispatch } = useHomeServerContext()
 
-    const [menuExpanded, setMenuExpanded] = useState(true);
+    const [menuExpanded, setMenuExpanded] = useState(false);
+
+    const location = useLocation();
+
+    const [currentLabeledRoute, setCurrentLabeledRoute] = useState(HomeServerRoute.default())
+
+    useEffect(() => {
+        setCurrentLabeledRoute(HomeServerRoutes.getLabeledRoute(location.pathname))
+    }, [location])
 
     const booksMenuButtons =
         DropDownButton.unique("ajouter", <BookmarkPlus />, HomeServerRoutes.BOOKS_SERIE_SELECTION)
 
-        
+
 
     const administrationMenuButtons = [
         DropDownButton.of("status", <InfoCircle />, HomeServerRoutes.ADMINISTRATION_STATUS),
@@ -26,7 +38,7 @@ const MenuComponent: FC = () => {
         DropDownButton.of("events", <ListUl />, HomeServerRoutes.ADMINISTRATION_EVENTS)
     ]
 
-    const seedBoxMenuButtons = DropDownButton.unique("todo", <ArrowLeftRight />, "/seedbox/todo")
+    const seedBoxMenuButtons = DropDownButton.unique("todo", <ArrowLeftRight />, HomeServerRoutes.SEEDBOX_TODO)
 
 
     return <Navbar bg="dark" data-bs-theme="dark" sticky="top"
@@ -35,15 +47,15 @@ const MenuComponent: FC = () => {
         onToggle={(value) => setMenuExpanded(value)}>
 
         <Container>
-            <Navbar.Brand href="#home">HomeServerTSX</Navbar.Brand>
+            <Navbar.Brand className={BootstrapText.ColorPrimary}><BrandRenderer labeledRoute={currentLabeledRoute} /></Navbar.Brand>
             <Navbar.Toggle></Navbar.Toggle>
             <Navbar.Collapse>
                 <Nav className="me-auto">
                     <DropDownMenuButton title="Administration" icon={<Tools />} path={HomeServerRoutes.ADMINISTRATION_PROPERTIES} dropDownButtons={administrationMenuButtons} onClick={() => setMenuExpanded(false)} />
                     <SimpleMenuButton icon={<Bell />} label="Buzzer" path={HomeServerRoutes.IOT_BUZZER} onClick={() => setMenuExpanded(false)}></SimpleMenuButton>
-                    <SimpleMenuButton icon={<FolderSymlink />} label="Files" path="/files/filemanager" onClick={() => setMenuExpanded(false)}></SimpleMenuButton>
-                    <SimpleMenuButton icon={<Boxes />} label="Lego" path="/legos" onClick={() => setMenuExpanded(false)}></SimpleMenuButton>
-                    <DropDownMenuButton title="Seedbox" icon={<BoxSeam />} path="/seedbox" dropDownButtons={seedBoxMenuButtons} onClick={() => setMenuExpanded(false)} />
+                    <SimpleMenuButton icon={<FolderSymlink />} label="Files" path={HomeServerRoutes.FILE_MANAGER} onClick={() => setMenuExpanded(false)}></SimpleMenuButton>
+                    <SimpleMenuButton icon={<Boxes />} label="Lego" path={HomeServerRoutes.LEGO} onClick={() => setMenuExpanded(false)}></SimpleMenuButton>
+                    <DropDownMenuButton title="Seedbox" icon={<BoxSeam />} path={HomeServerRoutes.SEEDBOX_TORRENTS} dropDownButtons={seedBoxMenuButtons} onClick={() => setMenuExpanded(false)} />
                     <DropDownMenuButton title="Books" icon={<Book />} path={HomeServerRoutes.BOOKS_ALL} dropDownButtons={booksMenuButtons} onClick={() => setMenuExpanded(false)} />
                 </Nav>
                 <Form className="d-flex" onSubmit={(event) => {

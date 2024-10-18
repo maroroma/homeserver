@@ -1,6 +1,6 @@
 [ {
   "id" : "homeserver.seedbox.target.directory.movies",
-  "value" : "C:\\temp\\homeserverwip\\FILMS",
+  "value" : "C:\\C\\VIDEOS\\FILMS",
   "description" : "Emplacement cible de base pour les fichiers de type films",
   "readOnly" : false,
   "moduleId" : "seedbox"
@@ -30,7 +30,7 @@
   "moduleId" : "seedbox"
 }, {
   "id" : "homeserver.seedbox.transmission.url",
-  "value" : "http://severus:9091/transmission",
+  "value" : "http://192.168.1.52:9091/transmission",
   "description" : "Url principale de l'api transmission",
   "readOnly" : false,
   "moduleId" : "seedbox"
@@ -48,13 +48,13 @@
   "moduleId" : "seedbox"
 }, {
   "id" : "homeserver.seedbox.todo.directory",
-  "value" : "C:\\temp\\homeserverwip\\COMPLETED",
+  "value" : "C:\\C\\COMPLETED",
   "description" : "Emplacement des fichiers à trier",
   "readOnly" : false,
   "moduleId" : "seedbox"
 }, {
   "id" : "homeserver.seedbox.target.directory.tvshows",
-  "value" : "C:\\temp\\homeserverwip\\SERIES",
+  "value" : "C:\\C\\VIDEOS\\SERIES",
   "description" : "Emplacement cible de base pour les fichiers de type series",
   "readOnly" : false,
   "moduleId" : "seedbox"

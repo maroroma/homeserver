@@ -6,6 +6,9 @@ import {AdministrationRequester} from "../../api/AdministrationRequester";
 import {AdministrationLoadedTasksAction} from "../../context/actions/administration/AdministrationLoadedTasksAction";
 import Task from "../../model/administration/Task";
 import {CustomClassNames} from "../bootstrap/CssTools";
+import StartWIPAction from "../../context/actions/StartWIPAction";
+import ToastAction from "../../context/actions/ToastAction";
+import EndWIPInErrorAction from "../../context/actions/EndWIPInErrorAction";
 
 
 const TasksComponent: FC = () => {
@@ -18,8 +21,15 @@ const TasksComponent: FC = () => {
         const intervalToRemove = setInterval(() => AdministrationRequester.getRunningTasks()
             .then(response => dispatch(new AdministrationLoadedTasksAction(response))), 3000);
 
+
+        dispatch(new StartWIPAction("récupération des taches en cours"));
+
         AdministrationRequester.getRunningTasks()
-            .then(response => dispatch(new AdministrationLoadedTasksAction(response)));
+            .then(response => {
+                dispatch(new AdministrationLoadedTasksAction(response))
+                dispatch(ToastAction.clear());
+            })
+            .catch(error => dispatch(new EndWIPInErrorAction("erreur lors de la récupération des taches")))
 
         return () => clearInterval(intervalToRemove);
     }, [dispatch]);
@@ -34,7 +44,7 @@ const TasksComponent: FC = () => {
             return <Display size={40} className={CustomClassNames.SpaceAfterIcon} />
         }
 
-        if (aTask.supplierType === "TORRENT") {
+        if (aTask.supplierType === "SEEDBOX") {
             return <BoxSeam size={40} className={CustomClassNames.SpaceAfterIcon} />
         }
 
@@ -51,8 +61,8 @@ const TasksComponent: FC = () => {
 
     return <div>
         <ListGroup data-bs-theme="light">
-            {administrationSubState.tasks.map(aTask => {
-                return <ListGroup.Item className="text-start">
+            {administrationSubState.tasks.map((aTask, index) => {
+                return <ListGroup.Item className="text-start" key={index}>
                     <h2>
                         {resolveIcon(aTask)}
                         {aTask.title}

@@ -69,6 +69,7 @@ const RootDirectoriesModal: FC<RootDirectoriesModalProps> = ({ show, onHide }) =
                 dispatch(new EndWIPAction())
                 console.log(response)
                 setRootDirectories(response.sort(RootDirectoryConfiguration.sorter()));
+                setNewRootDirectoryPath("");
             })
             .catch(error => dispatch(new EndWIPInErrorAction("erreur survenue lors de l'ajout")))
     }

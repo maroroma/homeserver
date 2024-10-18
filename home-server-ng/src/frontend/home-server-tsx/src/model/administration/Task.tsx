@@ -1,7 +1,7 @@
 export default class Task {
     constructor(
         public id: string,
-        public supplierType: "KODI" | "TORRENT",
+        public supplierType: "KODI" | "SEEDBOX",
         public title: string,
         public isRunning: boolean,
         public done: number,

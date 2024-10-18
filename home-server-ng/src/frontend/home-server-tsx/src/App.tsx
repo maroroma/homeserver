@@ -18,6 +18,8 @@ import FileManagerComponent from './components/filemanager/FileManagerComponent'
 import EditSpriteComponent from './components/iot/EditSpriteComponent';
 import LegoComponent from './components/lego/LegoComponent';
 import HomeServerRoutes from './HomeServerRoutes';
+import SeedBoxComponent from './components/seedbox/SeedBoxComponent';
+import SeedBoxTodoComponent from './components/seedbox/SeedBoxTodoComponent';
 
 function App() {
   const router = createHashRouter([
@@ -66,12 +68,21 @@ function App() {
           element: <AddBookOnSelectedSerieComponent />
         },
         {
-          path: "files/filemanager",
+          path: HomeServerRoutes.FILE_MANAGER,
           element: <FileManagerComponent />
         },
         {
-          path: "legos",
+          path: HomeServerRoutes.LEGO,
           element: <LegoComponent />
+        },
+        {
+          path: HomeServerRoutes.SEEDBOX_TORRENTS,
+          element: <SeedBoxComponent />
+        }
+        ,
+        {
+          path: HomeServerRoutes.SEEDBOX_TODO,
+          element: <SeedBoxTodoComponent />
         }
       ]
     }

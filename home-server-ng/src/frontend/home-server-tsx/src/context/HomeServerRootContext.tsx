@@ -7,6 +7,7 @@ import {BootstrapVariants} from "../components/bootstrap/BootstrapVariants";
 import SerieWithItsBooks from "../model/books/SerieWithItsBooks";
 import FileDirectoryDescriptor from "../model/filemanager/FileDirectoryDescriptor";
 import SelectableItems from "../model/SelectableItems";
+import {TodoSteps} from "../model/seedbox/TodoSteps";
 
 const initialState: HomeServerRootState = {
     dispatch: () => { },
@@ -33,6 +34,16 @@ const initialState: HomeServerRootState = {
         directoriesFromCurrentDirectory: SelectableItems.empty(),
         filesFromCurrentDirectory: SelectableItems.empty(),
         directoriesStack: []
+    },
+    seedboxTodoSubState: {
+        todoFiles: SelectableItems.empty(),
+        targetDirectories: [],
+        currentTargetDirectory: FileDirectoryDescriptor.emptyFileDirectoryDescriptor(),
+        currentStep: TodoSteps.SELECT_TODO_FILES,
+        backButtonDisabled: true,
+        nextButtonDisabled: true,
+        targetDirectoriesStack: [],
+        filesToMove: []
     }
 
 }

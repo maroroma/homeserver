@@ -3,7 +3,11 @@ package maroroma.homeserverng.seedbox.controllers;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import maroroma.homeserverng.seedbox.SeedboxModuleDescriptor;
-import maroroma.homeserverng.seedbox.model.*;
+import maroroma.homeserverng.seedbox.model.NewTorrents;
+import maroroma.homeserverng.seedbox.model.RunningTorrent;
+import maroroma.homeserverng.seedbox.model.TargetDirectory;
+import maroroma.homeserverng.seedbox.model.TodoFile;
+import maroroma.homeserverng.seedbox.model.TorrentsToDelete;
 import maroroma.homeserverng.seedbox.services.SeedBoxTodoServiceImpl;
 import maroroma.homeserverng.seedbox.services.SeedboxRemoteControlServiceImpl;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
@@ -13,10 +17,16 @@ import maroroma.homeserverng.tools.files.MoveRequest;
 import maroroma.homeserverng.tools.files.MovedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.io.IOException;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 /**
  * Controller pour la gestion de la seedbox.
@@ -119,6 +129,12 @@ public class SeedBoxController {
 	public ResponseEntity removeTorrents(@RequestBody TorrentsToDelete torrentsToDelete) {
 		this.seedBoxRemoteService.removeTorrents(torrentsToDelete);
 		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping("${homeserver.api.path:}/seedbox/torrents/{id}")
+	public ResponseEntity<Boolean> deleteTorrent(@PathVariable("id") final Integer torrentId) {
+		this.seedBoxRemoteService.removeTorrents(TorrentsToDelete.builder().idsToDelete(List.of(torrentId)).build());
+		return ResponseEntity.ok(true);
 	}
 	
 	

@@ -2,6 +2,7 @@ import {HomeServerAction} from "../actions/HomeServerAction";
 import {AdministrationSubState} from "./AdministrationSubState";
 import {AllBooksSubState} from "./AllBooksSubState";
 import {FileManagerSubState} from "./FileManagerSubState";
+import {SeedboxTodoSubState} from "./SeedboxTodoSubState";
 import {ToastSubState} from "./ToastSubState";
 
 
@@ -13,6 +14,7 @@ export type HomeServerRootState = {
     searchString: string,
     toastSubState: ToastSubState,
     allBooksSubState: AllBooksSubState,
-    fileManagerSubState: FileManagerSubState
+    fileManagerSubState: FileManagerSubState,
+    seedboxTodoSubState: SeedboxTodoSubState
 
 }

@@ -7,7 +7,9 @@ export enum CustomClassNames {
     PullRight = "pull-right",
     SpaceAfterIcon = "space-after-icon",
     LayoutWithMargin = "layout-with-margin",
-    Ellipsis = "ellipsis"
+    Ellipsis = "ellipsis",
+    HideOnSmallDevice= "hide-on-small-devices",
+    HideOnLargeDevice= "hide-on-large-devices"
 }
 
 export default class CssTools {

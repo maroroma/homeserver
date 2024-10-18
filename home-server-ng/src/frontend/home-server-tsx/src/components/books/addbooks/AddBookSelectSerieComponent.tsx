@@ -62,7 +62,7 @@ const AddBookSelectSerieComponent: FC = () => {
         <ListGroup>
             <ListGroup.Item>
                 <InputGroup size="lg">
-                    <InputGroup.Text id="inputGroup-sizing-lg">Nouvelle Série</InputGroup.Text>
+                    <InputGroup.Text id="inputGroup-sizing-lg">Nouvelle</InputGroup.Text>
                     <Form.Control
                         aria-label="Large"
                         aria-describedby="inputGroup-sizing-sm"

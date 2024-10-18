@@ -8,6 +8,7 @@ import ActionMenuComponent from "../actionmenu/ActionMenuComponent";
 import ActionDeleteButton from "../actionmenu/ActionDeleteButton";
 import ActionUpdateButton from "../actionmenu/ActionUpdateButton";
 import EndWIPInErrorAction from "../../context/actions/EndWIPInErrorAction";
+import StartWIPAction from "../../context/actions/StartWIPAction";
 
 
 const EventsComponent: FC = () => {
@@ -21,6 +22,7 @@ const EventsComponent: FC = () => {
     }, [])
 
     const reloadEvents = () => {
+        dispatch(new StartWIPAction("Chargements des events"))
         AdministrationRequester.getAllEvents()
             .then(response => {
                 dispatch(new AdministrationLoadedEventsAction(response))
@@ -36,7 +38,7 @@ const EventsComponent: FC = () => {
             setFilteredEvents([...administrationSubState.allLogEvents.persistantNotifications])
         }
 
-    }, [administrationSubState, searchString])
+    }, [administrationSubState.allLogEvents, searchString])
 
     const deleteEvents = () => {
         AdministrationRequester.deleteAllEvents(administrationSubState.allLogEvents)
@@ -48,7 +50,7 @@ const EventsComponent: FC = () => {
     if (filteredEvents.length === 0) {
         return <><h1>Aucun events</h1>
             <ActionMenuComponent alreadyOpen={true}>
-                <ActionUpdateButton onClick={() => reloadEvents()} toastMessage="Rechargement des events en cours"/>
+                <ActionUpdateButton blockingButton={true} onClick={() => reloadEvents()} toastMessage="Rechargement des events en cours"/>
             </ActionMenuComponent>
         </>
     }
@@ -76,8 +78,8 @@ const EventsComponent: FC = () => {
         </Table>
 
         <ActionMenuComponent alreadyOpen={true}>
-            <ActionUpdateButton onClick={() => reloadEvents()} toastMessage="Rechargement des events en cours"/>
-            <ActionDeleteButton onClick={() => deleteEvents()} toastMessage="Suppression des events en cours"/>
+            <ActionUpdateButton blockingButton={true} onClick={() => reloadEvents()} toastMessage="Rechargement des events en cours"/>
+            <ActionDeleteButton blockingButton={true} onClick={() => deleteEvents()} toastMessage="Suppression des events en cours"/>
         </ActionMenuComponent>
 
     </div>

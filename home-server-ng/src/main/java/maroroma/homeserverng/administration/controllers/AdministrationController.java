@@ -314,11 +314,6 @@ public class AdministrationController {
 	 */
 	@GetMapping(path="${homeserver.api.path:}/administration/logEvents")
 	public ResponseEntity<AllLogEvents> getAllLogEvents() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         return ResponseEntity.ok(this.logEventsNotifyer.getAllLogEvents());
 	}
 	
