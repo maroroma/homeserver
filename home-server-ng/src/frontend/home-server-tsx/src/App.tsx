@@ -20,6 +20,7 @@ import LegoComponent from './components/lego/LegoComponent';
 import HomeServerRoutes from './HomeServerRoutes';
 import SeedBoxComponent from './components/seedbox/SeedBoxComponent';
 import SeedBoxTodoComponent from './components/seedbox/SeedBoxTodoComponent';
+import HomeComponent from './components/home/HomeComponent';
 
 function App() {
   const router = createHashRouter([
@@ -83,6 +84,11 @@ function App() {
         {
           path: HomeServerRoutes.SEEDBOX_TODO,
           element: <SeedBoxTodoComponent />
+        }
+        ,
+        {
+          path: HomeServerRoutes.KIOSK,
+          element: <HomeComponent />
         }
       ]
     }

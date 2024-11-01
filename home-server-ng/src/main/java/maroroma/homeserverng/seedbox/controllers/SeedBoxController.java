@@ -120,15 +120,15 @@ public class SeedBoxController {
 	 * @return -
 	 */
 	@PostMapping("${homeserver.api.path:}/seedbox/torrents")
-	public ResponseEntity addTorrent(@RequestBody NewTorrents newTorrent) {
+	public ResponseEntity<Boolean> addTorrent(@RequestBody NewTorrents newTorrent) {
 		this.seedBoxRemoteService.addTorrent(newTorrent);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(true);
 	}
 
 	@DeleteMapping("${homeserver.api.path:}/seedbox/torrents")
-	public ResponseEntity removeTorrents(@RequestBody TorrentsToDelete torrentsToDelete) {
+	public ResponseEntity<Boolean> removeTorrents(@RequestBody TorrentsToDelete torrentsToDelete) {
 		this.seedBoxRemoteService.removeTorrents(torrentsToDelete);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(true);
 	}
 
 	@DeleteMapping("${homeserver.api.path:}/seedbox/torrents/{id}")

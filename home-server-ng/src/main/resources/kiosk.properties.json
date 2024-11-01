@@ -22,4 +22,16 @@
   "description" : "Détermine si on doit afficher la météo",
   "readOnly" : false,
   "moduleId" : "kiosk"
+}, {
+  "id" : "homeserver.kiosk.weather.weathercodes.store",
+  "value" : "${homeserver.config.dir}/weather.wmo.json",
+  "description" : "Listing des codes wmo et leur traduction",
+  "readOnly" : false,
+  "moduleId" : "kiosk"
+}, {
+  "id" : "homeserver.kiosk.weather.api.url",
+  "value" : "https://api.open-meteo.com/v1/forecast?latitude=47.2751&longitude=-2.2179&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=Europe/Berlin&models=meteofrance_seamless",
+  "description" : "Url de l'open api pour la météo",
+  "readOnly" : false,
+  "moduleId" : "kiosk"
 } ]

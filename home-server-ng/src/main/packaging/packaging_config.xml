@@ -145,6 +145,12 @@
 			<fileMode>775</fileMode>
 			<outputDirectory>/config/</outputDirectory>
 		</file>
+		<file>
+			<source>${basedir}/src/main/resources/weather.wmo.json</source>
+			<filtered>true</filtered>
+			<fileMode>775</fileMode>
+			<outputDirectory>/config/</outputDirectory>
+		</file>
 	</files>
 
 

@@ -22,10 +22,9 @@ import org.springframework.cache.support.CompositeCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 /**
  * Classe de configuration pour la mise en place du cache.
@@ -91,7 +90,7 @@ public class CacheConfiguration extends CachingConfigurerSupport {
 	 */
 	private CacheManager createFileCacheManager() {
 		return this.createFileCacheManager("[homeserver - caches] - Caches Fichiers simple demandés : {}",
-				cn -> cn.getFileCaches(),
+                CacheNeed::getFileCaches,
 				tuple -> new FileCache(tuple.getItem1(), tuple.getItem2()));
 	}
 
@@ -107,7 +106,7 @@ public class CacheConfiguration extends CachingConfigurerSupport {
 				.collect(CustomCollectors.toAgregatedList());
 
 
-		log.info("[homeserver - caches] - Caches demandés : {}", cacheNames.stream().collect(Collectors.joining(";")));
+		log.info("[homeserver - caches] - Caches demandés : {}", String.join(";", cacheNames));
 
 		return new ConcurrentMapCacheManager(cacheNames.toArray(new String[cacheNames.size()]));
 

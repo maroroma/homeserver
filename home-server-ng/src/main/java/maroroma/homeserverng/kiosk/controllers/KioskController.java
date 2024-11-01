@@ -1,10 +1,12 @@
 package maroroma.homeserverng.kiosk.controllers;
 
+import lombok.RequiredArgsConstructor;
 import maroroma.homeserverng.kiosk.KioskModuleDescriptor;
 import maroroma.homeserverng.kiosk.model.KioskDisplayOption;
+import maroroma.homeserverng.kiosk.model.weather.AllForeCasts;
 import maroroma.homeserverng.kiosk.services.KioskServiceImpl;
+import maroroma.homeserverng.kiosk.services.WeatherService;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -15,14 +17,15 @@ import org.springframework.web.bind.annotation.GetMapping;
  *
  */
 @HomeServerRestController(moduleDescriptor = KioskModuleDescriptor.class)
+@RequiredArgsConstructor
 public class KioskController {
 	
 	/**
 	 * SErvice sous jacent.
 	 */
-	@Autowired
-	private KioskServiceImpl service;
-	
+	private final KioskServiceImpl service;
+
+	private final WeatherService weatherService;
 	
 	/**
 	 * Retourne les options d'affichage du kiosk.
@@ -33,4 +36,9 @@ public class KioskController {
 		return ResponseEntity.ok(this.service.getOptions());
 	}
 
+
+	@GetMapping("${homeserver.api.path:}/kiosk/weather/allforecasts")
+	public ResponseEntity<AllForeCasts> getAllForecasts() {
+		return ResponseEntity.ok(this.weatherService.getAllForecasts());
+	}
 }

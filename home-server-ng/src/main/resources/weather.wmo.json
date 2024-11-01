@@ -1,0 +1,137 @@
+[
+  {
+    "wmoCode": 0,
+    "description": "Ensoleillé",
+    "imageUrl": "01d@2x.png"
+  },
+  {
+    "wmoCode": 1,
+    "description": "Généralement Ensoleillé",
+    "imageUrl": "01d@2x.png"
+  },
+  {
+    "wmoCode": 2,
+    "description": "Partiellement nuageux",
+    "imageUrl": "02d@2x.png"
+  },
+  {
+    "wmoCode": 3,
+    "description": "nuageux",
+    "imageUrl": "03d@2x.png"
+  },
+  {
+    "wmoCode": 45,
+    "description": "brumeux",
+    "imageUrl": "50d@2x.png"
+  },
+  {
+    "wmoCode": 51,
+    "description": "Légère bruine",
+    "imageUrl": "09d@2x.png"
+  },
+  {
+    "wmoCode": 53,
+    "description": "bruine",
+    "imageUrl": "09d@2x.png"
+  },
+  {
+    "wmoCode": 55,
+    "description": "forte bruine",
+    "imageUrl": "09d@2x.png"
+  },
+  {
+    "wmoCode": 56,
+    "description": "Légère bruine verglaçante",
+    "imageUrl": "09d@2x.png"
+  },
+  {
+    "wmoCode": 57,
+    "description": "bruine verglaçante",
+    "imageUrl": "09d@2x.png"
+  },
+  {
+    "wmoCode": 61,
+    "description": "pluie légère",
+    "imageUrl": "10d@2x.png"
+  },
+  {
+    "wmoCode": 63,
+    "description": "pluie",
+    "imageUrl": "10d@2x.png"
+  },
+  {
+    "wmoCode": 65,
+    "description": "forte pluie",
+    "imageUrl": "10d@2x.png"
+  },
+  {
+    "wmoCode": 66,
+    "description": "Légère pluie verglaçante",
+    "imageUrl": "10d@2x.png"
+  },
+  {
+    "wmoCode": 67,
+    "description": "pluie verglaçante",
+    "imageUrl": "10d@2x.png"
+  },
+  {
+    "wmoCode": 71,
+    "description": "Légère neige",
+    "imageUrl": "13d@2x.png"
+  },
+  {
+    "wmoCode": 73,
+    "description": "neige",
+    "imageUrl": "13d@2x.png"
+  },
+  {
+    "wmoCode": 75,
+    "description": "forte neige",
+    "imageUrl": "13d@2x.png"
+  },
+  {
+    "wmoCode": 77,
+    "description": "grains de neige",
+    "imageUrl": "13d@2x.png"
+  },
+  {
+    "wmoCode": 80,
+    "description": "Averses légères",
+    "imageUrl": "09d@2x.png"
+  },
+  {
+    "wmoCode": 81,
+    "description": "Averses",
+    "imageUrl": "09d@2x.png"
+  },
+  {
+    "wmoCode": 82,
+    "description": "fortes Averses",
+    "imageUrl": "09d@2x.png"
+  },
+  {
+    "wmoCode": 85,
+    "description": "Légères averses de neige",
+    "imageUrl": "13d@2x.png"
+  },
+  {
+    "wmoCode": 86,
+    "description": "averses de neige",
+    "imageUrl": "13d@2x.png"
+  },
+  {
+    "wmoCode": 95,
+    "description": "orages",
+    "imageUrl": "11d@2x.png"
+  },
+  {
+    "wmoCode": 96,
+    "description": "Orages légers avec grêle",
+    "imageUrl": "11d@2x.png"
+  },
+  {
+    "wmoCode": 99,
+    "description": "Orage avec grêle",
+    "imageUrl": "11d@2x.png"
+  }
+]

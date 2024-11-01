@@ -33,8 +33,11 @@ const SeedBoxComponent: FC = () => {
 
     useEffect(() => {
 
-        const intervalToRemove = setInterval(() => SeedboxRequester.getRunningTorrents()
-            .then(response => setRunningTorrents(response)), 10000);
+        const intervalToRemove = setInterval(
+            () => SeedboxRequester
+                .getRunningTorrents()
+                .then(response => setRunningTorrents(response)),
+            10000);
 
         SeedboxRequester.getRunningTorrents()
             .then(response => setRunningTorrents(response))

@@ -1,4 +1,4 @@
-import {Bell, Book, Boxes, BoxSeam, FolderSymlink, Tools} from "react-bootstrap-icons"
+import {Bell, Book, Boxes, BoxSeam, FolderSymlink, HouseFill, Tools} from "react-bootstrap-icons"
 import HomeServerRoute from "./HomeServerRoute"
 import {CustomClassNames} from "./components/bootstrap/CssTools"
 
@@ -36,6 +36,8 @@ export default class HomeServerRoutes {
     static readonly SEEDBOX_TORRENTS: string = "seedbox/torrents"
     static readonly SEEDBOX_TODO: string = "seedbox/todo"
 
+    static readonly KIOSK:string = "kiosk"
+
 
 
     static readonly LABELED_ROUTES = [
@@ -45,6 +47,7 @@ export default class HomeServerRoutes {
         new HomeServerRoute("Seedbox", "seedbox", <BoxSeam className={CustomClassNames.HideOnLargeDevice}/>),
         new HomeServerRoute("Books", "book", <Book className={CustomClassNames.HideOnLargeDevice}/>),
         new HomeServerRoute("Lego", "lego", <Boxes className={CustomClassNames.HideOnLargeDevice}/>),
+        new HomeServerRoute("Kiosk", "kiosk", <HouseFill className={CustomClassNames.HideOnLargeDevice}/>),
     ]
 
     static getLabeledRoute(aLocation: string): HomeServerRoute {

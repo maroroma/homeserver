@@ -1,0 +1,25 @@
+/* new Temperatures(-50, 3, "temperature-extra-cold", <ThermometerSnow />),
+        new Temperatures(3, 10, "temperature-cold", <ThermometerLow />),
+        new Temperatures(10, 17, "temperature-medium", <ThermometerHalf />),
+        new Temperatures(17, 23, "temperature-warm", <ThermometerHigh />),
+        new Temperatures(23, 100, "temperature-hot", <ThermometerHigh />), */
+
+.temperature-extra-cold {
+    color: rgb(0, 255, 255) !important;
+}
+
+.temperature-cold {
+    color: rgb(56, 56, 255) !important;
+}
+
+.temperature-medium {
+    color: green !important;
+}
+
+.temperature-warm {
+    color: orange !important;
+}
+
+.temperature-hot {
+    color: red !important;
+}

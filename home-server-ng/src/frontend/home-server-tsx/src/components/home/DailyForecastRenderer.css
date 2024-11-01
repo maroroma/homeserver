@@ -1,0 +1,33 @@
+.daily-forecast-renderer-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+}
+
+.daily-forecast-renderer-wrapper .daily-picto {
+    grid-row: 1 / 3;
+    grid-column: 1;
+    justify-self: end;
+
+}
+
+.daily-forecast-renderer-wrapper .daily-min {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: start;
+
+}
+
+.daily-forecast-renderer-wrapper .daily-max {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+
+}
+
+.daily-forecast-renderer-wrapper .daily-day {
+    grid-row: 3;
+    grid-column: 1 / 3;
+    justify-self: center;
+}

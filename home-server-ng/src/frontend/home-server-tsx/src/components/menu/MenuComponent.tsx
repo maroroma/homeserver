@@ -1,6 +1,6 @@
 import {FC, useEffect, useState} from "react";
 import {Container, Form, Nav, Navbar} from "react-bootstrap";
-import {ArrowLeftRight, Bell, Book, BookmarkPlus, Boxes, BoxSeam, FolderSymlink, InfoCircle, ListUl, Tools, UiRadios} from "react-bootstrap-icons";
+import {ArrowLeftRight, Bell, Book, BookmarkPlus, Boxes, BoxSeam, FolderSymlink, HouseFill, InfoCircle, ListUl, Tools, UiRadios} from "react-bootstrap-icons";
 import SimpleMenuButton from "./SimpleMenuButton";
 import BootstrapBreakPoints from "../bootstrap/BootstrapBreakPoints";
 import DropDownMenuButton, {DropDownButton} from "./DropDownMenuButton";
@@ -57,6 +57,7 @@ const MenuComponent: FC = () => {
                     <SimpleMenuButton icon={<Boxes />} label="Lego" path={HomeServerRoutes.LEGO} onClick={() => setMenuExpanded(false)}></SimpleMenuButton>
                     <DropDownMenuButton title="Seedbox" icon={<BoxSeam />} path={HomeServerRoutes.SEEDBOX_TORRENTS} dropDownButtons={seedBoxMenuButtons} onClick={() => setMenuExpanded(false)} />
                     <DropDownMenuButton title="Books" icon={<Book />} path={HomeServerRoutes.BOOKS_ALL} dropDownButtons={booksMenuButtons} onClick={() => setMenuExpanded(false)} />
+                    <SimpleMenuButton icon={<HouseFill />} path={HomeServerRoutes.KIOSK} label="Kiosk" onClick={() => setMenuExpanded(false)}/>
                 </Nav>
                 <Form className="d-flex" onSubmit={(event) => {
                     event.preventDefault();
