@@ -155,7 +155,7 @@ const FileManagerComponent: FC = () => {
             ? <>
                 <ListGroup>
                     {filteredDirectories.items.map((aDirectory, directoryIndex) => <FileDescriptorRenderer
-                        key={directoryIndex}
+                        key={aDirectory.item.id}
                         onCheck={(selectableItem) => dispatch(new SwitchSelectDirectoryAction(selectableItem))}
                         onClick={(selectableItem) => loadSubDirectory(selectableItem)}
                         selectableFileDescriptor={aDirectory}
@@ -164,7 +164,7 @@ const FileManagerComponent: FC = () => {
                     )}
 
                     {filteredFiles.items.map((aFile, fileIndex) => <FileDescriptorRenderer
-                        key={fileIndex}
+                        key={aFile.item.id}
                         onCheck={(selectableItem) => dispatch(new SwitchSelectFileAction(selectableItem))}
                         onClick={(selectableItem) => resolveViewerToUse(selectableItem.item)}
                         selectableFileDescriptor={aFile}
@@ -211,7 +211,7 @@ const FileManagerComponent: FC = () => {
                 <ListGroup>
 
                     {filteredDirectories.items.map((aDirectory, directoryIndex) => <DownloadableFileDescriptorRenderer
-                        key={directoryIndex}
+                        key={aDirectory.item.id}
                         selectableFileDescriptor={aDirectory}
                         fileIconResolver={new DirectoryDescriptorIconResolver()}
                         disabled
@@ -219,7 +219,7 @@ const FileManagerComponent: FC = () => {
                     )}
 
                     {filteredFiles.items.map((aFile, fileIndex) => <DownloadableFileDescriptorRenderer
-                        key={fileIndex}
+                        key={aFile.item.id}
                         selectableFileDescriptor={aFile}
                         fileIconResolver={new DownloadIconResolver()}
                     />)}

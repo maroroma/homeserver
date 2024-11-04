@@ -72,7 +72,7 @@ const AdministractionComponent: FC = () => {
                 </tr>
             </thead>
             {filteredProperties.map((aProperty, index) =>
-                <tr key={index}
+                <tr key={aProperty.id}
                     className="text-start large-row"
                     onClick={() => selectPropertyToEdit(aProperty)}>
                     <td>{aProperty.id.split(".")[1]}</td>

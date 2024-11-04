@@ -142,7 +142,7 @@ const SeedBoxTodoComponent: FC = () => {
                 <Accordion.Body>
                     <ListGroup>
                         {filteredTodoFiles.items.map((selectableTodoFile, index) => <FileDescriptorRenderer
-                            key={index}
+                            key={selectableTodoFile.item.id}
                             fileIconResolver={new FileDescriptorIconResolver()}
                             selectableFileDescriptor={selectableTodoFile}
                             onCheck={() => { switchTodoFileSelection(selectableTodoFile) }}
@@ -167,7 +167,7 @@ const SeedBoxTodoComponent: FC = () => {
                             />
                         </IfComponent>
                         {seedboxTodoSubState.currentTargetDirectory.directories.map((targetDirectory, index) => <FileDescriptorRenderer
-                            key={index}
+                            key={targetDirectory.id}
                             fileIconResolver={new DirectoryDescriptorIconResolver()}
                             selectableFileDescriptor={new SelectableItem(targetDirectory, false)}
                             onCheck={() => { }}
@@ -220,7 +220,7 @@ const SeedBoxTodoComponent: FC = () => {
                     <div>
                         <h3 className={BootstrapText.ColorSuccess}>Fichiers</h3>
                         <ListGroup>
-                            {seedboxTodoSubState.filesToMove.map((aFileToMove, index) => <ListGroupItem key={index}>
+                            {seedboxTodoSubState.filesToMove.map((aFileToMove, index) => <ListGroupItem key={aFileToMove.id}>
                                 <h4 className={BootstrapText.ColorLight}>
                                     {FileToMoveDescriptor.isRenamed(aFileToMove) ? <PencilSquare className={BootstrapText.ColorWarning} /> : <></>} {aFileToMove.newName}
                                 </h4>

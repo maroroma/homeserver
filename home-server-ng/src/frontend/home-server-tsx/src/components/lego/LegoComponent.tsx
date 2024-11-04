@@ -71,7 +71,7 @@ const LegoComponent: FC = () => {
                 </tr>
             </thead>
             {filteredBricks.map((aBrick, index) =>
-                <tr key={index}
+                <tr key={aBrick.id}
                     className={CssTools.of("large-row").then(CustomClassNames.Clickable).then(BootstrapText.AlignLeft).css()}
                     onClick={() => { editBrick(aBrick) }}>
                     <td>

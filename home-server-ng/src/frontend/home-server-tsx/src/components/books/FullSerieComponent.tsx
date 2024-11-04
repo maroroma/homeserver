@@ -113,7 +113,7 @@ const FullSerieComponent: FC = () => {
                 <Card.Body>
                     <Row xs={2} md={2} lg={6}>
                         {allBooksSubState.selectedSerie.books.sort(Book.sorter())?.map((aBook, idx) => (
-                            <Col key={idx}>
+                            <Col key={aBook.id}>
                                 <Card className={CustomClassNames.Clickable} onClick={() => {
                                     setFocusedBook(aBook)
                                     setDisplayBookPopup(true);

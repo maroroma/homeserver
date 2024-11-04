@@ -67,7 +67,7 @@ const EventsComponent: FC = () => {
                 </tr>
             </thead>
             {filteredEvents.map((anEvent, index) =>
-                <tr key={index}
+                <tr key={anEvent.id}
                     className="text-start large-row"
                     onClick={() => { }}>
                     <td>{anEvent.creationDate}</td>

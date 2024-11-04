@@ -35,7 +35,7 @@ const DirectoryStackComponent: FC = () => {
         {
             fileManagerSubState.directoriesStack
                 .map((aDirectory, index) => <BreadcrumbItem
-                    key={index}
+                    key={aDirectory.id}
                     active={index === fileManagerSubState.directoriesStack.length - 1}
                     className={BootstrapText.UpperCase}
                     onClick={() => loadSubDirectory(aDirectory)}

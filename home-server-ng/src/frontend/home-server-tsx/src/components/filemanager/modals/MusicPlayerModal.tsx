@@ -63,7 +63,7 @@ const MusicPlayerModal: FC<MusicPlayerModalProps> = ({ show, onHide, musicsToPla
                 nextIcon={<ChevronRight size={100} className={BootstrapText.ColorSecondary} />}
                 prevIcon={<ChevronLeft size={100} className={BootstrapText.ColorSecondary} />}
             >
-                {musicsToPlay.map((anImage, index) => <Carousel.Item key={index} >
+                {musicsToPlay.map((anImage, index) => <Carousel.Item key={anImage.id} >
                     <div className={CssTools.of("folder-container")
                         .then(CustomClassNames.FullWidth)
                         .then(BootstrapText.AlignCenter)

@@ -42,7 +42,7 @@ const DeleteFilesModal: FC<DeleteFilesModalProps> = ({ show, filesToDelete, onHi
         </Modal.Header>
         <Modal.Body>
             <ListGroup>
-                {filesToDelete.map((aFileToDelete, index) => <ListGroupItem key={index}>{aFileToDelete.name}</ListGroupItem>)}
+                {filesToDelete.map((aFileToDelete, index) => <ListGroupItem key={aFileToDelete.id}>{aFileToDelete.name}</ListGroupItem>)}
             </ListGroup>
         </Modal.Body>
         <Modal.Footer>

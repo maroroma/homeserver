@@ -113,7 +113,7 @@ const ManageCalendarEvents: FC = () => {
             </thead>
             {
                 calendarEvents.map((anEvent, index) =>
-                    <tr key={index}
+                    <tr key={anEvent.id}
                         className={
                             CssTools.of("large-row")
                                 .then(BootstrapText.AlignLeft)

@@ -62,7 +62,7 @@ const TasksComponent: FC = () => {
     return <div>
         <ListGroup data-bs-theme="light">
             {administrationSubState.tasks.map((aTask, index) => {
-                return <ListGroup.Item className="text-start" key={index}>
+                return <ListGroup.Item className="text-start" key={aTask.id}>
                     <h2>
                         {resolveIcon(aTask)}
                         {aTask.title}

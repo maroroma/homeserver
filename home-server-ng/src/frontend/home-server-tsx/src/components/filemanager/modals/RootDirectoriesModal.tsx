@@ -105,7 +105,7 @@ const RootDirectoriesModal: FC<RootDirectoriesModalProps> = ({ show, onHide }) =
         </Modal.Header>
         <Modal.Body>
             <ListGroup>
-                {rootDirectories.map((aRootDirectory, index) => <ListGroupItem key={index}>
+                {rootDirectories.map((aRootDirectory, index) => <ListGroupItem key={aRootDirectory.id}>
                     <div className="root-directory">
                         <div className={CssTools.of().then(CustomClassNames.Ellipsis).css()} >{aRootDirectory.rawPath}</div>
 

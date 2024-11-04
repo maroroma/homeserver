@@ -56,7 +56,7 @@ const AllBooksComponent: FC = () => {
     return <SimpleMarginLayout>
         <Row xs={2} md={2} lg={6}>
             {series.map((aSerie, idx) => (
-                <Col key={idx}>
+                <Col key={aSerie.id}>
                     <SimpleSerieWithBooksRenderer aSerieWithItsBooks={aSerie} />
                 </Col>
             ))}

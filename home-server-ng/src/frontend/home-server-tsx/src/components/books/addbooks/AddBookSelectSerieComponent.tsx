@@ -80,7 +80,7 @@ const AddBookSelectSerieComponent: FC = () => {
             </ListGroup.Item>
             {filteredExistingSeries
                 .map((aSerie, index) => <ListGroup.Item
-                    key={`selectable-serie${index}`}
+                    key={`selectable-serie${aSerie.id}`}
                     action
                     className="serie-title"
                     onClick={() => {

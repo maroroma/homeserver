@@ -42,7 +42,7 @@ const ImageViewerModal: FC<ImageViewerModalProps> = ({ show, onHide, imagesToDis
                 nextIcon={<ChevronRight size={100} className={BootstrapText.ColorSecondary} />}
                 prevIcon={<ChevronLeft size={100} className={BootstrapText.ColorSecondary} />}
             >
-                {imagesToDisplay.map((anImage, index) => <Carousel.Item key={index} >
+                {imagesToDisplay.map((anImage, index) => <Carousel.Item key={anImage.id} >
                     <div className={CssTools.of("image-viewer-container")
                         .then(CustomClassNames.FullWidth)
                         .then(BootstrapText.AlignCenter)
