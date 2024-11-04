@@ -1,4 +1,5 @@
 import AllLogEvents from "../model/administration/AllLogEvents";
+import {CalendarEvent} from "../model/administration/CalendarEvent";
 import {HomeServerProperty} from "../model/administration/HomeServerProperty";
 import ServerStatus from "../model/administration/ServerStatus";
 import Task from "../model/administration/Task";
@@ -22,7 +23,7 @@ export class AdministrationRequester {
         return RequesterUtils.get(`../api/administration/logEvents`);
     }
 
-    static deleteAllEvents(logEvents:AllLogEvents):Promise<boolean> {
+    static deleteAllEvents(logEvents: AllLogEvents): Promise<boolean> {
         return RequesterUtils.delete(`../api/administration/repo/${logEvents.repoId}`)
     }
 
@@ -36,5 +37,24 @@ export class AdministrationRequester {
 
     static getServerStatus(): Promise<ServerStatus> {
         return RequesterUtils.get("../api/administration/server/status");
+    }
+
+    static getCalendarEvents(): Promise<CalendarEvent[]> {
+        return RequesterUtils.get("/api/administration/calendarEvents")
+    }
+    static getActiveCalendarEvents(): Promise<CalendarEvent[]> {
+        return RequesterUtils.get("/api/administration/calendarEvents/active")
+    }
+
+    static addCalendarEvent(newEvent: CalendarEvent): Promise<CalendarEvent[]> {
+        return RequesterUtils.post("/api/administration/calendarEvents", newEvent);
+    }
+
+    static updateCalendarEvent(updateEvent: CalendarEvent): Promise<CalendarEvent[]> {
+        return RequesterUtils.update("/api/administration/calendarEvents", updateEvent);
+    }
+
+    static deleteCalendarEvent(eventToDelete: CalendarEvent): Promise<CalendarEvent[]> {
+        return RequesterUtils.delete(`/api/administration/calendarEvents/${eventToDelete.id}`);
     }
 }

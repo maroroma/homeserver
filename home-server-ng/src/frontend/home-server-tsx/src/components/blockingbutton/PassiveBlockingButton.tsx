@@ -3,19 +3,22 @@ import {Button} from "react-bootstrap";
 
 import "./BlockingButton.css";
 import {useHomeServerContext} from "../../context/HomeServerRootContext";
-import {BootstrapVariants} from "../bootstrap/BootstrapVariants";
+import {BlockingButtonProps} from "./BlockingButton";
 
-export type BlockingButtonProps = {
-    label: string
-    variant?: BootstrapVariants,
-    onClick?: () => void
-}
+// export type BlockingButtonProps = {
+//     label: string
+//     variant?: BootstrapVariants,
+//     onClick?: () => void
+// }
 
 
-const PassiveBlockingButton: FC<BlockingButtonProps> = ({ label, variant = "primary", onClick = () => { } }) => {
+const PassiveBlockingButton: FC<BlockingButtonProps> = ({ label, variant = "primary", onClick = () => { }, hidden = false }) => {
 
     const { workInProgress } = useHomeServerContext();
 
+    if (hidden) {
+        return <></>
+    }
 
     return <Button
         disabled={workInProgress}

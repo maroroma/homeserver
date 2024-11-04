@@ -1,6 +1,6 @@
 import {FC, useEffect, useState} from "react";
 import {Container, Form, Nav, Navbar} from "react-bootstrap";
-import {ArrowLeftRight, Bell, Book, BookmarkPlus, Boxes, BoxSeam, FolderSymlink, HouseFill, InfoCircle, ListUl, Tools, UiRadios} from "react-bootstrap-icons";
+import {ArrowLeftRight, Bell, Book, BookmarkPlus, Boxes, BoxSeam, CalendarHeart, FolderSymlink, HouseFill, InfoCircle, ListUl, Tools, UiRadios} from "react-bootstrap-icons";
 import SimpleMenuButton from "./SimpleMenuButton";
 import BootstrapBreakPoints from "../bootstrap/BootstrapBreakPoints";
 import DropDownMenuButton, {DropDownButton} from "./DropDownMenuButton";
@@ -12,6 +12,7 @@ import {useLocation} from "react-router-dom";
 import {BootstrapText} from "../bootstrap/BootstrapText";
 import BrandRenderer from "./BrandRenderer";
 import HomeServerRoute from "../../HomeServerRoute";
+import CalendarEventRenderer from "./CalendarEventRenderer";
 
 const MenuComponent: FC = () => {
 
@@ -35,7 +36,8 @@ const MenuComponent: FC = () => {
     const administrationMenuButtons = [
         DropDownButton.of("status", <InfoCircle />, HomeServerRoutes.ADMINISTRATION_STATUS),
         DropDownButton.of("tasks", <UiRadios />, HomeServerRoutes.ADMINISTRATION_TASKS),
-        DropDownButton.of("events", <ListUl />, HomeServerRoutes.ADMINISTRATION_EVENTS)
+        DropDownButton.of("events", <ListUl />, HomeServerRoutes.ADMINISTRATION_EVENTS),
+        DropDownButton.of("calendrier", <CalendarHeart />, HomeServerRoutes.ADMINISTRATION_CALENDAR_EVENTS)
     ]
 
     const seedBoxMenuButtons = DropDownButton.unique("todo", <ArrowLeftRight />, HomeServerRoutes.SEEDBOX_TODO)
@@ -47,8 +49,13 @@ const MenuComponent: FC = () => {
         onToggle={(value) => setMenuExpanded(value)}>
 
         <Container>
-            <Navbar.Brand className={BootstrapText.ColorPrimary}><BrandRenderer labeledRoute={currentLabeledRoute} /></Navbar.Brand>
-            <Navbar.Toggle></Navbar.Toggle>
+            <Navbar.Brand className={BootstrapText.ColorPrimary}>
+                <CalendarEventRenderer hideOnSmallDevice />
+                <BrandRenderer labeledRoute={currentLabeledRoute} />
+            </Navbar.Brand>
+            <Navbar.Toggle>
+                <CalendarEventRenderer defaultBehavior={() => <span className="navbar-toggler-icon" />} />
+            </Navbar.Toggle>
             <Navbar.Collapse>
                 <Nav className="me-auto">
                     <DropDownMenuButton title="Administration" icon={<Tools />} path={HomeServerRoutes.ADMINISTRATION_PROPERTIES} dropDownButtons={administrationMenuButtons} onClick={() => setMenuExpanded(false)} />
@@ -57,7 +64,7 @@ const MenuComponent: FC = () => {
                     <SimpleMenuButton icon={<Boxes />} label="Lego" path={HomeServerRoutes.LEGO} onClick={() => setMenuExpanded(false)}></SimpleMenuButton>
                     <DropDownMenuButton title="Seedbox" icon={<BoxSeam />} path={HomeServerRoutes.SEEDBOX_TORRENTS} dropDownButtons={seedBoxMenuButtons} onClick={() => setMenuExpanded(false)} />
                     <DropDownMenuButton title="Books" icon={<Book />} path={HomeServerRoutes.BOOKS_ALL} dropDownButtons={booksMenuButtons} onClick={() => setMenuExpanded(false)} />
-                    <SimpleMenuButton icon={<HouseFill />} path={HomeServerRoutes.KIOSK} label="Kiosk" onClick={() => setMenuExpanded(false)}/>
+                    <SimpleMenuButton icon={<HouseFill />} path={HomeServerRoutes.KIOSK} label="Kiosk" onClick={() => setMenuExpanded(false)} />
                 </Nav>
                 <Form className="d-flex" onSubmit={(event) => {
                     event.preventDefault();

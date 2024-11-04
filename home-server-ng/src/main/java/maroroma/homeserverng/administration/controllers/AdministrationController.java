@@ -4,13 +4,16 @@ package maroroma.homeserverng.administration.controllers;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import maroroma.homeserverng.administration.AdministrationModuleDescriptor;
 import maroroma.homeserverng.administration.model.AllLogEvents;
 import maroroma.homeserverng.administration.model.HomeServerStatus;
 import maroroma.homeserverng.administration.model.Task;
 import maroroma.homeserverng.administration.model.TaskCancelRequest;
 import maroroma.homeserverng.administration.model.UploadPropertiesResponse;
+import maroroma.homeserverng.administration.model.calendar.CalendarEvent;
 import maroroma.homeserverng.administration.services.AdministrationService;
+import maroroma.homeserverng.administration.services.CalendarEventService;
 import maroroma.homeserverng.administration.services.ServerStatusHolderImpl;
 import maroroma.homeserverng.administration.services.TasksManager;
 import maroroma.homeserverng.notifyer.services.LogEventsNotifyer;
@@ -22,11 +25,11 @@ import maroroma.homeserverng.tools.config.HomeServerModuleHandler;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.repositories.NanoRepositoryDescriptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,25 +46,18 @@ import java.util.*;
  *
  */
 @HomeServerRestController(moduleDescriptor = AdministrationModuleDescriptor.class)
+@RequiredArgsConstructor
 public class AdministrationController {
 
-	/**
-	 * Service sous jacent.
-	 */
-	@Autowired
-	private AdministrationService serviceAdministration;
+	private final AdministrationService serviceAdministration;
 
-	@Autowired
-	private LogEventsNotifyer logEventsNotifyer;
+	private final LogEventsNotifyer logEventsNotifyer;
 	
-	/**
-	 * Service pour la gestion du status du server.
-	 */
-	@Autowired
-	private ServerStatusHolderImpl statusHolder;
+	private final ServerStatusHolderImpl statusHolder;
 
-	@Autowired
-	private TasksManager tasksManager;
+	private final TasksManager tasksManager;
+
+	private final CalendarEventService calendarEventService;
 
 	@GetMapping("${homeserver.api.path:}/administration/tasks")
 	public ResponseEntity<List<Task>> getCurrentTasks() {
@@ -119,7 +115,7 @@ public class AdministrationController {
 	 * @return le module mise à jour
 	 * @throws HomeServerException 
 	 */
-	@RequestMapping(value = "${homeserver.api.path:}/administration/module/{id}", method = {RequestMethod.PATCH})
+	@PatchMapping(value = "${homeserver.api.path:}/administration/module/{id}")
 	public ResponseEntity<HomeServerModuleHandler> updateModuleStatus(@PathVariable("id") final String id,
 			@RequestBody final HomeServerModuleHandler newVersion) throws HomeServerException {
 		return ResponseEntity.ok(
@@ -133,7 +129,7 @@ public class AdministrationController {
 	 * @return le module mise à jour
 	 * @throws HomeServerException 
 	 */
-	@RequestMapping(value = "${homeserver.api.path:}/administration/modules", method = {RequestMethod.PATCH})
+	@PatchMapping(value = "${homeserver.api.path:}/administration/modules")
 	public ResponseEntity<List<HomeServerModuleHandler>> updateModuleStatuses(@RequestBody final List<HomeServerModuleActivationStatus> statuses)
 			throws HomeServerException {
 		return ResponseEntity.ok(
@@ -145,7 +141,7 @@ public class AdministrationController {
 	 * @return nouveau status.
 	 * @throws HomeServerException -
 	 */
-	@RequestMapping(value = "${homeserver.api.path:}/administration/server/stop", method = { RequestMethod.PATCH })
+	@PatchMapping(value = "${homeserver.api.path:}/administration/server/stop")
 	public ResponseEntity<HomeServerStatus> stop() 
 			throws HomeServerException {
 		return ResponseEntity.ok(
@@ -315,6 +311,32 @@ public class AdministrationController {
 	@GetMapping(path="${homeserver.api.path:}/administration/logEvents")
 	public ResponseEntity<AllLogEvents> getAllLogEvents() {
         return ResponseEntity.ok(this.logEventsNotifyer.getAllLogEvents());
+	}
+
+
+	@GetMapping( "${homeserver.api.path:}/administration/calendarEvents")
+	public ResponseEntity<List<CalendarEvent>> getAllCalendarEvents() {
+		return ResponseEntity.ok(this.calendarEventService.getAllCalendarEvents());
+	}
+
+	@GetMapping( "${homeserver.api.path:}/administration/calendarEvents/active")
+	public ResponseEntity<List<CalendarEvent>> getActiveCalendarEvents() {
+		return ResponseEntity.ok(this.calendarEventService.getActiveCalendarEvents());
+	}
+
+	@PostMapping("${homeserver.api.path:}/administration/calendarEvents")
+	public ResponseEntity<List<CalendarEvent>> addNewCalendarEvent(@RequestBody CalendarEvent newCalendarEvent) {
+		return ResponseEntity.ok(this.calendarEventService.addNewCalendarEvent(newCalendarEvent));
+	}
+
+	@PatchMapping("${homeserver.api.path:}/administration/calendarEvents")
+	public ResponseEntity<List<CalendarEvent>> updateCalendarEvent(@RequestBody CalendarEvent newCalendarEvent) {
+		return ResponseEntity.ok(this.calendarEventService.updateCalendarEvent(newCalendarEvent));
+	}
+
+	@DeleteMapping("${homeserver.api.path:}/administration/calendarEvents/{id}")
+	public ResponseEntity<List<CalendarEvent>> deleteCalendarEvent(@PathVariable String id) {
+		return ResponseEntity.ok(this.calendarEventService.deleteCalendarEvent(id));
 	}
 	
 	

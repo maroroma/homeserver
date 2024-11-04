@@ -12,7 +12,8 @@ export type BlockingButtonProps = {
     onClick?: () => void,
     disabled?: boolean,
     icon?: ReactElement,
-    toastMessage?: string
+    toastMessage?: string,
+    hidden?: boolean
 }
 
 
@@ -22,10 +23,15 @@ const BlockingButton: FC<BlockingButtonProps> = ({
     onClick = () => { },
     disabled = false,
     icon = <></>,
-    toastMessage = "" }) => {
+    toastMessage = "",
+    hidden = false
+}) => {
 
     const { workInProgress, dispatch } = useHomeServerContext();
 
+    if (hidden) {
+        return <></>
+    }
 
     return <Button
         disabled={workInProgress || disabled}

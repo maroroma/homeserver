@@ -15,7 +15,8 @@ const initialState: HomeServerRootState = {
     administrationSubState: {
         properties: [],
         tasks: [],
-        allLogEvents: new AllLogEvents("", [])
+        allLogEvents: new AllLogEvents("", []),
+        activeCalendarEvents: undefined
     },
     workInProgress: false,
     searchString: "",

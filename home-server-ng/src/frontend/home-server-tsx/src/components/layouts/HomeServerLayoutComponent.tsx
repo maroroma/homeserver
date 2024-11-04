@@ -5,16 +5,27 @@ import MenuComponent from "../menu/MenuComponent";
 import "./HomeServerLayoutComponent.css";
 import {Toast, ToastContainer} from "react-bootstrap";
 import {useHomeServerContext} from "../../context/HomeServerRootContext";
+import {AdministrationRequester} from "../../api/AdministrationRequester";
+import AdministrationLoadedActiveCalendarAction from "../../context/actions/administration/AdministrationLoadedActiveCalendarAction";
+import EndWIPInErrorAction from "../../context/actions/EndWIPInErrorAction";
 
 const HomeServerLayoutComponent: FC = () => {
 
-    const { toastSubState } = useHomeServerContext();
+    const { toastSubState, administrationSubState, dispatch } = useHomeServerContext();
 
     const [displayToast, setDisplayToast] = useState(false);
 
     useEffect(() => {
         setDisplayToast(toastSubState.toastMessage !== "")
     }, [toastSubState]);
+
+    useEffect(() => {
+        if (administrationSubState.activeCalendarEvents === undefined) {
+            AdministrationRequester.getActiveCalendarEvents()
+            .then(response => dispatch(new AdministrationLoadedActiveCalendarAction(response)))
+            .catch(error => dispatch(new EndWIPInErrorAction("Erreur rencontrée lors du chargement des events du jour")))
+        }
+    }, [administrationSubState])
 
 
     return <div className="home-server-layout" data-bs-theme="dark">

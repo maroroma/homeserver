@@ -8,6 +8,7 @@ export default class HomeServerRoutes {
     static readonly ADMINISTRATION_STATUS: string = "administration/status"
     static readonly ADMINISTRATION_EVENTS: string = "administration/events"
     static readonly ADMINISTRATION_TASKS: string = "administration/tasks"
+    static readonly ADMINISTRATION_CALENDAR_EVENTS: string = "administration/calendar"
 
     static readonly IOT_BUZZER: string = "buzzer"
     static readonly IOT_BUZZER_SPRITE: string = "buzzer/sprite/:spriteId"

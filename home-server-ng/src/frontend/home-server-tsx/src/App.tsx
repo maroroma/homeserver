@@ -21,6 +21,7 @@ import HomeServerRoutes from './HomeServerRoutes';
 import SeedBoxComponent from './components/seedbox/SeedBoxComponent';
 import SeedBoxTodoComponent from './components/seedbox/SeedBoxTodoComponent';
 import HomeComponent from './components/home/HomeComponent';
+import ManageCalendarEvents from './components/administration/ManageCalendarEvents';
 
 function App() {
   const router = createHashRouter([
@@ -43,6 +44,10 @@ function App() {
         {
           path: HomeServerRoutes.ADMINISTRATION_TASKS,
           element: <TasksComponent />
+        },
+        {
+          path: HomeServerRoutes.ADMINISTRATION_CALENDAR_EVENTS,
+          element: <ManageCalendarEvents />
         },
         {
           path: HomeServerRoutes.IOT_BUZZER,

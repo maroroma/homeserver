@@ -13,6 +13,10 @@ export default class Formatters {
         return selectedConverter?.convert(dataToFormat);
 
     }
+
+    static leadingZero(input: number, maxLength: number = 2): string {
+        return String(input).padStart(maxLength, "0");
+    }
 }
 
 class OctetConverter {

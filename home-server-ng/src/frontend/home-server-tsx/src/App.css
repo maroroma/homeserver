@@ -89,13 +89,13 @@
 
 @media (max-width: 480px) {
   .hide-on-small-devices {
-    display: none;
+    display: none!important;
   }
 }
 
 @media (min-width: 992px) {
   .hide-on-large-devices {
-    display: none;
+    display: none!important;
   }
 }
 

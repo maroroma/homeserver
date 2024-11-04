@@ -1,0 +1,27 @@
+[ {
+  "id" : "1b1a1c44-978a-4ff1-9efd-b6b9ad1b3e99",
+  "startDate" : {
+    "month" : 10,
+    "day" : 3
+  },
+  "endDate" : {
+    "month" : 10,
+    "day" : 30
+  },
+  "description" : "Anniversaire Simon",
+  "utf8IconsCode" : "\uD83C\uDF82",
+  "dayEvent" : false
+}, {
+  "id" : "1778914b-f8f5-4e33-b593-1a12c1f888fc",
+  "startDate" : {
+    "month" : 11,
+    "day" : 4
+  },
+  "endDate" : {
+    "month" : 11,
+    "day" : 4
+  },
+  "description" : "Halloween",
+  "utf8IconsCode" : "\uD83C\uDF83",
+  "dayEvent" : true
+} ]
