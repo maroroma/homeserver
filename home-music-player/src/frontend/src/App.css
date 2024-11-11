@@ -19,6 +19,7 @@ label {
 
 .clickable {
   cursor: pointer;
+  user-select: none;
 }
 
 .clickable:active {

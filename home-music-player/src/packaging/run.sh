@@ -1,0 +1,1 @@
+sudo java -Dspring.profiles.active=prod -jar home-music-player-${project.version}.jar

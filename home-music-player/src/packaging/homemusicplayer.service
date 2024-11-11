@@ -1,0 +1,12 @@
+[Unit]
+Description=homemusicplayer Java Service
+After=syslog.target
+
+[Service]
+WorkingDirectory=/home/luna/SHARE/musicplayer
+ExecStart=java -Dspring.profiles.active=prod -jar /home/luna/SHARE/musicplayer/home-music-player-${project.version}.jar
+SuccessExitStatus=143
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
