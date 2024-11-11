@@ -18,7 +18,7 @@ const AllArtistThumbComponent: FC<AllArtistThumbComponentProps> = ({artist}) => 
 
     return <div className="clickable" onClick={() => dispatch(new SelectArtistAction(artist))}>
         <Card border="light" bg="dark" text="light" className="text-center artist-thumb">
-            <Card.Img variant="top" src={`musicplayer/localresources/thumbs/${artist.libraryItemArts.thumbPath}`} className="artist-thumb-image" />
+            <Card.Img loading="lazy" variant="top" src={`musicplayer/localresources/thumbs/${artist.libraryItemArts.thumbPath}`} className="artist-thumb-image" />
             <Card.Body>
                 <Card.Text className="artist-thumb-name">
                     {artist.name.toUpperCase()}

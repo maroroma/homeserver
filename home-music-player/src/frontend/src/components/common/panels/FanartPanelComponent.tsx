@@ -22,7 +22,7 @@ const FanartPanelComponent: FC<FanartPanelComponentProps> = ({ fanart, mode = "b
 
 
     return <div className={`fanart-panel fanart-mode-${mode}`}>
-        <Image src={`musicplayer/localresources/fanarts/${fanart.fanartPath}`} ></Image>
+        <Image src={`musicplayer/localresources/fanarts/${fanart.fanartPath}`} loading="lazy" ></Image>
     </div>
 
 }

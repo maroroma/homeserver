@@ -31,6 +31,7 @@ const ThumbImage: FC<ThumbImageProps> = ({
     return <Image
         className={`${type}-thumb ${className} ${type === "description" ? "card-img-top" :""}`}
         rounded={rounded}
+        loading="lazy"
         src={`musicplayer/localresources/thumbs/${libraryItemArts.thumbPath}`}>
     </Image>
 
