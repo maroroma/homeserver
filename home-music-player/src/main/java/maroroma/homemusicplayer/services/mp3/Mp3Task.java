@@ -108,6 +108,10 @@ public class Mp3Task extends Thread {
         return this;
     }
 
+    public Mp3Task removeEndedEventListerner() {
+        return this.addEndedEventListener(null);
+    }
+
     public interface Mp3TaskEventListener extends Consumer<Mp3Task> {
 
     }

@@ -8,7 +8,8 @@ export class StoppedPlayerAction implements MusicPlayerContextAction {
             ...previousState,
             playerSubState: {
                 display: "none",
-                lastPlayerStatus: undefined
+                lastPlayerStatus: undefined,
+                isLoading: false
             },
             viewState: previousState.viewState === ViewState.FullScreenPlayer ? ViewState.AllArtists : previousState.viewState
         }

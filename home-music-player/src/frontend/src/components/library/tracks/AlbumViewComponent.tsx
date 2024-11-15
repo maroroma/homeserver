@@ -29,15 +29,15 @@ const AlbumViewComponent: FC = () => {
 
         if (albumWithTracksSubState.album) {
             PlayerRequester.startPlayer(albumWithTracksSubState.album, track)
-            // .then(response => dispatch(DisplayToastAction.info("Lecture en cours de démarrage")))
-            .catch(error => dispatch(DisplayToastAction.error("Erreur rencontrée lors du lancement de la lecture")))
+                // .then(response => dispatch(DisplayToastAction.info("Lecture en cours de démarrage")))
+                .catch(error => dispatch(DisplayToastAction.error("Erreur rencontrée lors du lancement de la lecture")))
         }
     }
 
     const addAlbumToPlayList = () => {
         if (albumWithTracksSubState.album) {
             PlayerRequester.addAlbumToPlayList(albumWithTracksSubState.album)
-            .then(response => dispatch(DisplayToastAction.info(`${albumWithTracksSubState.album?.name} ajouté à la playlist`)))
+                .then(response => dispatch(DisplayToastAction.info(`${albumWithTracksSubState.album?.name} ajouté à la playlist`)))
         }
     }
 
@@ -46,7 +46,10 @@ const AlbumViewComponent: FC = () => {
     return <div>
         <HeaderMenuComponent>
             <MenuBackButton onClick={() => dispatch(SimpleViewChangeAction.of(ViewState.Artist))} />
-            <MenuPlayAllButton onClick={() => addAlbumToPlayList()} disabled={albumWithTracksSubState.tracksToDisplay.length === 0}/>
+            <MenuPlayAllButton
+                onClick={() => addAlbumToPlayList()}
+                disabled={albumWithTracksSubState.tracksToDisplay.length === 0}
+            />
             <MenuDeleteButton onClick={() => askForDeletion()} />
         </HeaderMenuComponent>
         <DescriptionPanelComponent libraryItemArts={albumWithTracksSubState.album?.libraryItemArts}>

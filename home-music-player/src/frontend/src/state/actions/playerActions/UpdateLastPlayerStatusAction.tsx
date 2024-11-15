@@ -13,7 +13,8 @@ export class UpdateLastPlayerStatusAction implements MusicPlayerContextAction {
             // toastState: {...previousState.toastState, messages : []},
             playerSubState: {
                 display: "small",
-                lastPlayerStatus: this.lastEvent
+                lastPlayerStatus: this.lastEvent,
+                isLoading : this.lastEvent.playerStatus !== undefined && this.lastEvent.playerStatus === "LOADING"
             }
         }
     }

@@ -51,7 +51,8 @@ public class InputStreamCache {
 
     @Async
     public void populate(PlayList playList) {
-        playList.teaseNextTracks(this.teaseSize).stream()
+        playList.teaseNextTracks(this.teaseSize)
+                .stream()
                 .map(aTrack -> this.filesFactory.getFileFromBase64Path(aTrack.getLibraryItemPath()))
                 .forEach(this::populate);
 

@@ -37,7 +37,8 @@ const initialState: MusicPlayerState = {
         displaySearchBar: false
     },
     playerSubState: {
-        display: "none"
+        display: "none",
+        isLoading: false
     }
 }
 

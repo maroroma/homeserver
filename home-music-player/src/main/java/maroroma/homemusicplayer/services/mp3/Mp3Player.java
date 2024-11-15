@@ -63,7 +63,7 @@ public class Mp3Player {
         this.getCurrentTask().ifPresentOrElse(currentTask -> {
             // si lecture déjà en cours, on vire l'event de next, vu que l'on remplace le track
             currentTask
-                    .addEndedEventListener(null)
+                    .removeEndedEventListerner()
                     // on prépare la requete async d'arret en changeant l'event listener
                     .addStoppedEventListener(stoppedTrack -> {
                         // retrait de l'item
@@ -71,7 +71,6 @@ public class Mp3Player {
                         // ajout du nouveau, pour lequel on vient de demander l'arret
                         this.mp3Tasks.add(
                                 new Mp3Task(loadInputStream(currentTrack), this)
-//                                new Mp3Task(this.filesFactory.getFileFromBase64Path(currentTrack.getLibraryItemPath()))
                                         .addEndedEventListener(endedTask -> {
                                             this.mp3Tasks.poll();
                                             endedEventListener.accept(endedTask);
@@ -84,7 +83,7 @@ public class Mp3Player {
         }, () ->
 
         {
-            // si pas de lecture en cours création standard
+            // si pas de lecture en cours, création standard
             this.mp3Tasks.add(new Mp3Task(loadInputStream(currentTrack), this)
                     .addEndedEventListener(endedTask -> {
                         this.mp3Tasks.poll();
