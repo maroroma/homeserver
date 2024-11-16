@@ -22,9 +22,9 @@ const TrackItemRenderer: FC<TrackItemRendererProps> = ({ trackToDisplay, onClick
 
     return <div
         onClick={() => { if (playerSubState.isLoading !== true) { onClick(trackToDisplay) } }}
-        className={CssTools.of("track-item-renderer").disableOnPlayerStatus(playerSubState, "clickable").css()}
+        className={CssTools.of("track-item-renderer").disableOnLoading(playerSubState, "clickable").css()}
     >
-        <div className={CssTools.of("track-name").disableOnPlayerStatus(playerSubState).css()}> {trackToDisplay.trackNumber ? `${trackToDisplay.trackNumber.padStart(2, "0")} - ${trackToDisplay.name}` : trackToDisplay.name}</div>
+        <div className={CssTools.of("track-name").disableOnLoading(playerSubState).css()}> {trackToDisplay.trackNumber ? `${trackToDisplay.trackNumber.padStart(2, "0")} - ${trackToDisplay.name}` : trackToDisplay.name}</div>
     </div>
 }
 

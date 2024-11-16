@@ -35,7 +35,7 @@ const AllArtistsComponent: FC = () => {
     return <>
         <AllArtistsMenuComponent></AllArtistsMenuComponent>
         <div className="artists-grid">
-            {allArtistsSubState.displayedArtists.map((anArtist, key) => <AllArtistThumbComponent key={key} artist={anArtist}></AllArtistThumbComponent>)}
+            {allArtistsSubState.displayedArtists.map(anArtist => <AllArtistThumbComponent key={anArtist.id} artist={anArtist}></AllArtistThumbComponent>)}
         </div>
     </>
 }

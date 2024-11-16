@@ -57,8 +57,8 @@ const AllTracksForArtistComponent: FC = () => {
         </DescriptionPanelComponent>
 
         <ContentPanelComponents>
-            {allTracksForArtistSubState.tracksToDisplay.map((aTrack, trackIndex) =>
-                <TrackItemRenderer trackToDisplay={aTrack} key={`track-${trackIndex}`} onClick={() => startPlayer(aTrack)}/>
+            {allTracksForArtistSubState.tracksToDisplay.map(aTrack =>
+                <TrackItemRenderer trackToDisplay={aTrack} key={aTrack.id} onClick={() => startPlayer(aTrack)}/>
             )}
         </ContentPanelComponents>
         <FanartPanelComponent fanart={artistViewState.selectedArtist?.libraryItemArts} />

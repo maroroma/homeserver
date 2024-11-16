@@ -81,8 +81,8 @@ const ArtistView: FC = () => {
             </div>
 
 
-            {artistViewState.albums.map((anAlbum, albumIndex) =>
-                <div className="artist-album" key={`album-index${albumIndex}`} onClick={() => loadTracksForAlbum(anAlbum)}>
+            {artistViewState.albums.map(anAlbum =>
+                <div className="artist-album" key={`album-index${anAlbum.id}`} onClick={() => loadTracksForAlbum(anAlbum)}>
                     <ThumbImage rounded={true} libraryItemArts={anAlbum.libraryItemArts} className="artist-album-thumb" />
                     <span className="artist-album-name">{anAlbum.name}</span>
                 </div>

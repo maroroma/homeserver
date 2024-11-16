@@ -15,6 +15,8 @@ import {LeaveFullScreenAction} from "../../state/actions/playerActions/LeaveFull
 import {SelectArtistAction} from "../../state/actions/artistViewActions/SelectArtistAction";
 import {LibraryRequester} from "../../api/requesters/LibraryRequester";
 import {DisplayAlbumAction} from "../../state/actions/allTracksActions/DisplayAlbumAction";
+import CssTools from "../common/CssTools";
+import PlayerStatusTool from "../common/PlayerStatusTool";
 
 
 // https://www.npmjs.com/package/@fseehawer/react-circular-slider
@@ -43,11 +45,11 @@ const FullscreenPlayerComponent: FC = () => {
     const resolveButtonFromStatus = () => {
         switch (playerSubState.lastPlayerStatus?.playerStatus) {
             case "LOADING":
-                return <ArrowRepeat className="small-player-button endless-rotation"></ArrowRepeat>;
+                return <ArrowRepeat className="small-player-button endless-rotation disable"></ArrowRepeat>;
             case "PLAYING":
                 return <PauseCircle className="clickable fullscreen-player-button" onClick={() => PlayerRequester.pausePlayer()} />;
             default:
-                return <PlayCircle className="clickable fullscreen-player-button" onClick={() => PlayerRequester.resumePlayer()} />;
+                return <PlayCircle className="clickable fullscreen-player-button blinkable" onClick={() => PlayerRequester.resumePlayer()} />;
         }
     }
 
@@ -102,7 +104,11 @@ const FullscreenPlayerComponent: FC = () => {
             <ThumbImage rounded={true} libraryItemArts={playerSubState.lastPlayerStatus?.album.libraryItemArts} type="description" className="large-thumb-override large-thumb-default-override" />
         </div>
         <div className="fullscreen-player-scrolling-text">
-            <ScrollingTextComponent text={`${playerSubState.lastPlayerStatus?.track.name}`} scrolling={playerSubState.lastPlayerStatus?.playerStatus === "PLAYING"} />
+            <ScrollingTextComponent
+                text={PlayerStatusTool.of(playerSubState).fullScreenScrollingText()}
+                scrolling={PlayerStatusTool.of(playerSubState).shouldScroll()}
+                blinking={PlayerStatusTool.of(playerSubState).shouldBlink()}
+            />
         </div>
         {/* uniquement en small device */}
         <div className="fullscreen-player-volume-smalldevices">
@@ -121,13 +127,22 @@ const FullscreenPlayerComponent: FC = () => {
             </InputGroup>
         </div>
         <div className="fullscreen-player-buttons">
-            <ChevronDoubleLeft className="clickable fullscreen-player-button" onClick={() => PlayerRequester.previous()} />
+            <ChevronDoubleLeft
+                className={CssTools.fullScreenPlayerButton(playerSubState)}
+                onClick={() => PlayerStatusTool.of(playerSubState).then(() => PlayerRequester.previous())}
+            />
             {
                 resolveButtonFromStatus()
             }
-            <StopCircle className="clickable fullscreen-player-button" onClick={() => PlayerRequester.stopPlayer()} />
+            <StopCircle
+                className={CssTools.fullScreenPlayerButton(playerSubState)}
+                onClick={() => PlayerStatusTool.of(playerSubState).then(() => PlayerRequester.stopPlayer())}
+            />
 
-            <ChevronDoubleRight className=" clickable fullscreen-player-button" onClick={() => PlayerRequester.next()} />
+            <ChevronDoubleRight
+                className={CssTools.fullScreenPlayerButton(playerSubState)}
+                onClick={() => PlayerStatusTool.of(playerSubState).then(() => PlayerRequester.next())}
+            />
         </div>
         <FanartPanelComponent fanart={playerSubState.lastPlayerStatus?.artist.libraryItemArts}></FanartPanelComponent>
     </>

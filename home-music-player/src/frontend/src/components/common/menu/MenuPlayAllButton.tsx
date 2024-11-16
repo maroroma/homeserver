@@ -14,7 +14,7 @@ const MenuPlayAllButton: FC<MenuClick> = ({ onClick, disabled }) => {
         color="white"
         size="lg"
         variant="light"
-        className={CssTools.of().disableOnPlayerStatus(playerSubState).css()}
+        className={CssTools.of().disableOnLoading(playerSubState).css()}
         onClick={() => onClick()}
         disabled={disabled || playerSubState.isLoading}
     >

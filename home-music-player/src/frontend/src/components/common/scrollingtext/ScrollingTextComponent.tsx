@@ -4,11 +4,12 @@ import "./ScrollingTextComponent.css"
 
 export type ScrollingTextComponentProps = {
     text: string,
-    scrolling?: boolean
+    scrolling?: boolean,
+    blinking?: boolean
 }
 
-const ScrollingTextComponent: FC<ScrollingTextComponentProps> = ({ text, scrolling = true}) => {
-    return <div className="scrolling_text">
+const ScrollingTextComponent: FC<ScrollingTextComponentProps> = ({ text, scrolling = true, blinking = false }) => {
+    return <div className={`scrolling_text ${blinking ? "blinkable" : ""}`}>
         <div className={`text ${scrolling ? "" : "scrolling-off"}`}>
             <span>{text}</span>
             <span>{text}</span>

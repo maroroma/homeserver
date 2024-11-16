@@ -58,8 +58,8 @@ const AlbumViewComponent: FC = () => {
             <h3>{`${albumWithTracksSubState.tracksToDisplay.length} morceaux`}</h3>
         </DescriptionPanelComponent>
         <ContentPanelComponents>
-            {albumWithTracksSubState.tracksToDisplay.map((aTrack, trackIndex) =>
-                <TrackItemRenderer key={`track-${trackIndex}`} trackToDisplay={aTrack} onClick={(track => startPlayer(track))} />
+            {albumWithTracksSubState.tracksToDisplay.map(aTrack =>
+                <TrackItemRenderer key={aTrack.id} trackToDisplay={aTrack} onClick={(track => startPlayer(track))} />
             )}
         </ContentPanelComponents>
         <FanartPanelComponent fanart={artistViewState.selectedArtist?.libraryItemArts} />

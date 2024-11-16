@@ -27,6 +27,16 @@ label {
   cursor: default !important;
 }
 
+.blinkable {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
 .clickable:active {
   animation: ring 300ms normal;
 }

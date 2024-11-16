@@ -5,6 +5,20 @@ export default class CssTools {
         return new CssTools(css ? css : "");
     }
 
+    static smallPlayerButton(playerSubState: PlayerSubState): string {
+        return CssTools
+            .of("small-player-button")
+            .disableOnLoading(playerSubState, "clickable")
+            .css();
+    }
+
+    static fullScreenPlayerButton(playerSubState: PlayerSubState): string {
+        return CssTools
+            .of("fullscreen-player-button")
+            .disableOnLoading(playerSubState, "clickable")
+            .css();
+    }
+
     constructor(private className: string) {
         this.css = this.css.bind(this);
         this.then = this.then.bind(this);
@@ -46,7 +60,7 @@ export default class CssTools {
         return this.then("clickable");
     }
 
-    disableOnPlayerStatus(playerSubState: PlayerSubState, notDisableCss?: string) {
+    disableOnLoading(playerSubState: PlayerSubState, notDisableCss?: string) {
         return this.ifElse(playerSubState.isLoading, "disable", notDisableCss ? notDisableCss : "");
     }
 
