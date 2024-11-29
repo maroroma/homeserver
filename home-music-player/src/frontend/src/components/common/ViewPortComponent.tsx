@@ -2,6 +2,7 @@ import {FC} from "react";
 import {useMusicPlayerContext} from "../../state/MusicPlayerContext";
 import {ViewState} from "../../state/ViewState";
 
+import "./ViewPortComponent.css"
 
 export type ViewPortComponentProps = {
     children: any,
@@ -19,7 +20,7 @@ const ViewPortComponent: FC<ViewPortComponentProps> = ({view, children}) => {
         return <></>;
     }
 
-    return <>{ children }</>
+    return <div className="viewport">{ children }</div>
 
 }
 

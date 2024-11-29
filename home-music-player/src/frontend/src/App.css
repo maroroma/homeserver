@@ -3,11 +3,11 @@
 }
 
 :root {
-  --default-font-color: white;
+  --default-font-color: rgb(248, 249, 250);
 }
 
 label {
-  color: white;
+  color: var(--default-font-color);
   font-size: 2em;
 }
 
