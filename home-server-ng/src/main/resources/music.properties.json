@@ -16,4 +16,10 @@
   "description" : "Emplacement du store pour les albums",
   "readOnly" : false,
   "moduleId" : "music"
+}, {
+  "id" : "homeserver.music.player.url",
+  "value" : "http://localhost:8080",
+  "description" : "adresse du homemusicplayer",
+  "readOnly" : false,
+  "moduleId" : "music"
 } ]

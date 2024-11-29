@@ -13,6 +13,7 @@ import {BootstrapText} from "../bootstrap/BootstrapText";
 import BrandRenderer from "./BrandRenderer";
 import HomeServerRoute from "../../HomeServerRoute";
 import CalendarEventRenderer from "./CalendarEventRenderer";
+import MusicPlayerMenuButton from "./MusicPlayerMenuButton";
 
 const MenuComponent: FC = () => {
 
@@ -65,6 +66,7 @@ const MenuComponent: FC = () => {
                     <DropDownMenuButton title="Seedbox" icon={<BoxSeam />} path={HomeServerRoutes.SEEDBOX_TORRENTS} dropDownButtons={seedBoxMenuButtons} onClick={() => setMenuExpanded(false)} />
                     <DropDownMenuButton title="Books" icon={<Book />} path={HomeServerRoutes.BOOKS_ALL} dropDownButtons={booksMenuButtons} onClick={() => setMenuExpanded(false)} />
                     <SimpleMenuButton icon={<HouseFill />} path={HomeServerRoutes.KIOSK} label="Kiosk" onClick={() => setMenuExpanded(false)} />
+                    <MusicPlayerMenuButton/>
                 </Nav>
                 <Form className="d-flex" onSubmit={(event) => {
                     event.preventDefault();

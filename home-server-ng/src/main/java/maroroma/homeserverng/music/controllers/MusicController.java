@@ -1,35 +1,43 @@
 package maroroma.homeserverng.music.controllers;
 
+import lombok.RequiredArgsConstructor;
 import maroroma.homeserverng.music.MusicModuleDescriptor;
 import maroroma.homeserverng.music.model.AddTracksFromExistingSourceRequest;
 import maroroma.homeserverng.music.model.AlbumDescriptor;
 import maroroma.homeserverng.music.model.TrackDescriptor;
+import maroroma.homeserverng.music.model.musicplayer.MusicPlayerStatus;
 import maroroma.homeserverng.music.services.MusicServiceImpl;
+import maroroma.homeserverng.music.services.RemoteMusicPlayerService;
 import maroroma.homeserverng.seedbox.model.TodoFile;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * Controller pour la gestion des fichiers musicaux.
  * @author rlevexie
  *
  */
+@RequiredArgsConstructor
 @HomeServerRestController(moduleDescriptor = MusicModuleDescriptor.class)
 public class MusicController {
 
 	/**
 	 * Service sous jacent.
 	 */
-	@Autowired
-	private MusicServiceImpl service;
+	private final MusicServiceImpl service;
+
+	private final RemoteMusicPlayerService remoteMusicPlayerService;
 
 	/**
 	 * Création du répertoire de travail?
@@ -182,5 +190,11 @@ public class MusicController {
 	public ResponseEntity<List<AlbumDescriptor>> getCompletedAlbums() throws HomeServerException {
 		return ResponseEntity.ok(this.service.getCompletedAlbumDescriptors());
 	}
-	
+
+	@GetMapping("${homeserver.api.path:}/music/musicplayer/status")
+	public ResponseEntity<MusicPlayerStatus> getMusicPlayerStatus() {
+		return ResponseEntity.ok(this.remoteMusicPlayerService.getPlayerStatus());
+	}
+
+
 }
