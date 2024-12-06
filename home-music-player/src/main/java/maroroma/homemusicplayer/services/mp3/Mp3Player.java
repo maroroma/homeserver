@@ -1,6 +1,7 @@
 package maroroma.homemusicplayer.services.mp3;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
 import maroroma.homemusicplayer.model.player.api.PlayerStatus;
 import maroroma.homemusicplayer.services.FilesFactory;
@@ -16,6 +17,7 @@ import java.util.function.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class Mp3Player {
 
 
@@ -26,7 +28,7 @@ public class Mp3Player {
     private AtomicBoolean isPaused = new AtomicBoolean(false);
     private AtomicBoolean isLoading = new AtomicBoolean(false);
 
-    private Integer lastKnownVolume = null;
+    private int lastKnownVolume = 50;
 
     Queue<Mp3Task> mp3Tasks = new LinkedBlockingQueue<>();
 
@@ -96,29 +98,27 @@ public class Mp3Player {
     }
 
     private NaturalVolumeControl getVolumeControl() {
-        var volumeControle = this.getCurrentTask()
+        return this.getCurrentTask()
                 .flatMap(Mp3Task::getVolumeControl)
-                .orElseGet(() -> new NaturalVolumeControl.NoopNaturalVolumeControl(this.lastKnownVolume));
-        this.lastKnownVolume = volumeControle.getCurrentVolume();
-        return volumeControle;
+                .orElseGet(() -> new NaturalVolumeControl.NoopNaturalVolumeControl(this.getLastKnownVolume()));
     }
 
     public int getVolume() {
         return this.getVolumeControl().getCurrentVolume();
     }
 
-    public void doWithVolumeControl(Consumer<NaturalVolumeControl> naturalVolumeControlConsumer) {
-        this.lastKnownVolume = getVolumeControl().getCurrentVolume();
-
-        naturalVolumeControlConsumer.accept(getVolumeControl());
-
-        this.lastKnownVolume = getVolumeControl().getCurrentVolume();
+    public void setLastKnownVolume(int volume) {
+//        log.info("new volume:" + volume);
+        this.lastKnownVolume = volume;
     }
 
-    public Optional<Integer> getLastKnownVolume() {
-        return Optional.ofNullable(this.lastKnownVolume);
+    public void doWithVolumeControl(Function<NaturalVolumeControl, Integer> naturalVolumeControlConsumer) {
+        setLastKnownVolume(naturalVolumeControlConsumer.apply(getVolumeControl()));
     }
 
+    public Integer getLastKnownVolume() {
+        return this.lastKnownVolume;
+    }
 
 
     public PlayerStatus getPlayerStatus() {
@@ -131,10 +131,6 @@ public class Mp3Player {
                 .map(taks -> this.isPaused() ? PlayerStatus.PAUSED : PlayerStatus.PLAYING)
                 .orElse(PlayerStatus.STOPPED);
     }
-
-
-
-
 
 
     private Optional<Mp3Task> getCurrentTask() {

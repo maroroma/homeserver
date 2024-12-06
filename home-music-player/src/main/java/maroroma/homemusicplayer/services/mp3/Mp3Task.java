@@ -42,7 +42,7 @@ public class Mp3Task extends Thread {
     private Mp3TaskEventListener mp3TaskEndedEventListener;
 
     public Optional<NaturalVolumeControl> getVolumeControl() {
-        return NaturalVolumeControl.from(this.sourceDataLine);
+        return NaturalVolumeControl.from(this.sourceDataLine, this.mp3Player.getLastKnownVolume());
     }
 
     @Override
@@ -58,8 +58,11 @@ public class Mp3Task extends Thread {
             sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
             if (sourceDataLine != null) {
                 sourceDataLine.open(outFormat);
-                this.mp3Player.getLastKnownVolume()
-                        .ifPresent(knownVolume ->  this.getVolumeControl().ifPresent(control -> control.setCurrentVolume(knownVolume)));
+
+                // réapplication du dernier volume connu avant le rédémarrage de la piste
+                // ici peut être un bug, on constate des musiques trop fortes lors du parcours de la playlist....
+                this.getVolumeControl().ifPresent(NaturalVolumeControl::updateInnerVolumeValue);
+
                 sourceDataLine.start();
                 hasForciblyStopped = stream(getAudioInputStream(outFormat, audioInputStream), sourceDataLine);
                 sourceDataLine.drain();
