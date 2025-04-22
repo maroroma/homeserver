@@ -35,7 +35,7 @@ const FileDescriptorRenderer: FC<FileDescriptorRendererProps> = ({ selectableFil
             <div className={CssTools.of("h3").then("file-descriptor-icon").uppercase().css()} onClick={() => { onClick(selectableFileDescriptor) }}>
                 {fileIconResolver.toIcon(selectableFileDescriptor.item)}
             </div>
-            <div className={CssTools.of("h3").uppercase().css()} onClick={() => { onClick(selectableFileDescriptor) }}>
+            <div className={CssTools.of("h3").fullbreak().uppercase().css()} onClick={() => { onClick(selectableFileDescriptor) }}>
                 {selectableFileDescriptor.item.name}
             </div>
         </div>

@@ -66,4 +66,8 @@ export default class CssTools {
         return this.then(BootstrapText.UpperCase);
     }
 
+    fullbreak() : CssTools {
+        return this.then(BootstrapText.WordBreak)
+    }
+
 }
