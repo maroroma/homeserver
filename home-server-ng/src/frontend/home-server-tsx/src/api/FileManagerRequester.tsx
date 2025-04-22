@@ -3,8 +3,8 @@ import FileDescriptor from "../model/filemanager/FileDescriptor";
 import FileDirectoryDescriptor from "../model/filemanager/FileDirectoryDescriptor";
 import RenameFileDescriptor from "../model/filemanager/RenameFileDescriptor";
 import RootDirectoryConfiguration from "../model/filemanager/RootDirectoryConfiguration";
-import {RootDirectoryConfigurationCreationRequest} from "../model/filemanager/RootDirectoryConfigurationCreationRequest";
-import {RequesterUtils} from "./RequesterUtils";
+import { RootDirectoryConfigurationCreationRequest } from "../model/filemanager/RootDirectoryConfigurationCreationRequest";
+import { RequesterUtils } from "./RequesterUtils";
 
 export default class FileManagerRequester {
     static getRootDirectories(): Promise<FileDirectoryDescriptor[]> {
@@ -13,6 +13,12 @@ export default class FileManagerRequester {
 
     static getDirectoryDetails(directoryToLoad: FileDescriptor): Promise<FileDirectoryDescriptor> {
         return RequesterUtils.get(`/api/filemanager/directories/${directoryToLoad.id}`)
+    }
+
+    static uploadImageAsBase64(directoryToReload: FileDescriptor, imageAsBase64: string): Promise<FileDirectoryDescriptor> {
+        return RequesterUtils.post(`/api/filemanager/files/${directoryToReload.id}/imageAsBase64`, {
+            imageAsBAse64: imageAsBase64.replace("data:image/png;base64,", "")
+        })
     }
 
     static renameFile(renameFile: RenameFileDescriptor): Promise<any> {

@@ -3,6 +3,7 @@ package maroroma.homeserverng.filemanager.services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.filemanager.model.DirectoryCreationRequest;
+import maroroma.homeserverng.filemanager.model.ImageAsBase64CreationRequest;
 import maroroma.homeserverng.filemanager.model.RenameFileDescriptor;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.exceptions.Traper;
@@ -202,4 +203,17 @@ public class FileManagerServiceImpl {
 
 	}
 
+	public FileDirectoryDescriptor uploadImageAsBase64(String base64DirectoryName, ImageAsBase64CreationRequest request) {
+
+		FileDescriptor target = this.filesWithAccessManagementFactory
+				.directoryFromId(base64DirectoryName)
+				.combinePath(UUID.randomUUID() + ".png")
+				.asFile();
+
+		var data = Base64.getDecoder().decode(request.getImageAsBAse64());
+
+		target.copyFrom(new ByteArrayInputStream(data));
+
+		return this.getDirectoryDetail(base64DirectoryName);
+	}
 }

@@ -23,4 +23,9 @@
   "rawPath" : "${homeserver.config.dir}",
   "hidden" : true,
   "protected" : false
+}, {
+  "id" : "12f2872b-7860-43ed-bde6-42b42ecf6015",
+  "rawPath" : "D:\\temp\\homeserver\\upload",
+  "hidden" : false,
+  "protected" : false
 } ]

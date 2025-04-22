@@ -2,10 +2,7 @@ package maroroma.homeserverng.filemanager.controllers;
 
 import lombok.RequiredArgsConstructor;
 import maroroma.homeserverng.filemanager.FileManagerModuleDescriptor;
-import maroroma.homeserverng.filemanager.model.DirectoryCreationRequest;
-import maroroma.homeserverng.filemanager.model.RenameFileDescriptor;
-import maroroma.homeserverng.filemanager.model.RootDirectoryConfiguration;
-import maroroma.homeserverng.filemanager.model.RootDirectoryConfigurationCreationRequest;
+import maroroma.homeserverng.filemanager.model.*;
 import maroroma.homeserverng.filemanager.services.FileManagerConfigurationService;
 import maroroma.homeserverng.filemanager.services.FileManagerServiceImpl;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
@@ -109,6 +106,11 @@ public class FileManagerController {
     @PostMapping("${homeserver.api.path:}/filemanager/files/{id}")
     public ResponseEntity<List<FileDescriptor>> uploadFile(@PathVariable("id") final String base64DirectoryName, final HttpServletRequest request) throws HomeServerException {
         return ResponseEntity.ok(this.fileService.uploadFiles(base64DirectoryName, request));
+    }
+
+    @PostMapping("${homeserver.api.path:}/filemanager/files/{id}/imageAsBase64")
+    public ResponseEntity<FileDirectoryDescriptor> uploadImageAsBase64(@PathVariable("id") final String base64DirectoryName, @RequestBody final ImageAsBase64CreationRequest request) throws HomeServerException {
+        return ResponseEntity.ok(this.fileService.uploadImageAsBase64(base64DirectoryName, request));
     }
 
     /**
