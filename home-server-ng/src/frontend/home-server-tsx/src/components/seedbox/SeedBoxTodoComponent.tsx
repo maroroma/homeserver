@@ -215,7 +215,7 @@ const SeedBoxTodoComponent: FC = () => {
                 <Accordion.Body>
                     <div>
                         <h3 className={BootstrapText.ColorSuccess}>Cible</h3>
-                        <h2 className={BootstrapText.ColorLight}>{seedboxTodoSubState.currentTargetDirectory.fullName}</h2>
+                        <h2 className={CssTools.of(BootstrapText.ColorLight).fullbreak().css()}>{seedboxTodoSubState.currentTargetDirectory.fullName}</h2>
                     </div>
                     <div>
                         <h3 className={BootstrapText.ColorSuccess}>Fichiers</h3>
