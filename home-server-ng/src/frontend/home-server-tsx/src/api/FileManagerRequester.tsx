@@ -21,6 +21,12 @@ export default class FileManagerRequester {
         })
     }
 
+    static uploadFilesFromUrl(directoryToReload: FileDescriptor, urls: string[]): Promise<FileDirectoryDescriptor> {
+        return RequesterUtils.post(`/api/filemanager/files/${directoryToReload.id}/urlList`, {
+            urlList: urls
+        })
+    }
+
     static renameFile(renameFile: RenameFileDescriptor): Promise<any> {
         return RequesterUtils.update("/api/filemanager/files", renameFile)
     }

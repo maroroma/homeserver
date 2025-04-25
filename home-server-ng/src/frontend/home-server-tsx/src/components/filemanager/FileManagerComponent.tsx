@@ -100,20 +100,23 @@ const FileManagerComponent: FC = () => {
         }
     }
 
-    const loadImageFromNavigatorClipBoard = () =>  {
+    const loadImageFromNavigatorClipBoard = () => {
         navigator.clipboard.read()
-        .then(response => response[0])
-        .then((response:any) => response.getType("image/png"))
-        .then(blob => {
-            let reader = new FileReader();
-            reader.onloadend  = () => {
-                // setImagesFromClipBoard([...imagesFromClipBoard, reader.result as string])
-                // console.log("image as base64", reader.result)
-                FileManagerRequester.uploadImageAsBase64(fileManagerSubState.currentDirectory, reader.result as string)
-                .then(response => dispatch(new LoadedDirectoryAction(response, "Fichiers uploadés")))
-            }
-            reader.readAsDataURL(blob);
-        });
+            .then(response => {
+                console.log("clipclip", response);
+                return response[0]
+            })
+            .then((response: any) => response.getType("image/png"))
+            .then(blob => {
+                let reader = new FileReader();
+                reader.onloadend = () => {
+                    // setImagesFromClipBoard([...imagesFromClipBoard, reader.result as string])
+                    // console.log("image as base64", reader.result)
+                    FileManagerRequester.uploadImageAsBase64(fileManagerSubState.currentDirectory, reader.result as string)
+                        .then(response => dispatch(new LoadedDirectoryAction(response, "Fichiers uploadés")))
+                }
+                reader.readAsDataURL(blob);
+            });
     }
 
 

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.filemanager.model.DirectoryCreationRequest;
 import maroroma.homeserverng.filemanager.model.ImageAsBase64CreationRequest;
 import maroroma.homeserverng.filemanager.model.RenameFileDescriptor;
+import maroroma.homeserverng.filemanager.model.UrlListToUpload;
 import maroroma.homeserverng.tools.exceptions.HomeServerException;
 import maroroma.homeserverng.tools.exceptions.Traper;
 import maroroma.homeserverng.tools.files.FileDescriptor;
@@ -18,202 +19,243 @@ import maroroma.homeserverng.tools.streaming.ouput.StreamingFileSenderException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Base64;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * Implémentation du service pour la gestion des fichiers.
- * @author rlevexie
  *
+ * @author rlevexie
  */
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class FileManagerServiceImpl {
 
-	private final FilesWithAccessManagementFactory filesWithAccessManagementFactory;
+    private final FilesWithAccessManagementFactory filesWithAccessManagementFactory;
+    private final ExtensionFromUrlGenerator extensionFromUrlGenerator;
 
-	/**
-	 * Création d'un répertoir.
-	 * @param creationRequest -
-	 * @return -
-	 * @throws HomeServerException -
-	 */
-	public FileDescriptor createDirectory(final DirectoryCreationRequest creationRequest) throws HomeServerException {
+    /**
+     * Création d'un répertoir.
+     *
+     * @param creationRequest -
+     * @return -
+     * @throws HomeServerException -
+     */
+    public FileDescriptor createDirectory(final DirectoryCreationRequest creationRequest) throws HomeServerException {
 
-		// validation des entrées
-		Assert.notNull(creationRequest, "creationRequest can't be null");
-		Assert.notNull(creationRequest.getParentDirectory(), "creationRequest.getParentDirectory() can't be null");
-		Assert.hasLength(creationRequest.getParentDirectory().getId(), "creationRequest.getParentDirectory().getId() can't be null or empty");
-		Assert.hasLength(creationRequest.getDirectoryName(), "creationRequest.getDirectoryName() can't be null or empty");
+        // validation des entrées
+        Assert.notNull(creationRequest, "creationRequest can't be null");
+        Assert.notNull(creationRequest.getParentDirectory(), "creationRequest.getParentDirectory() can't be null");
+        Assert.hasLength(creationRequest.getParentDirectory().getId(), "creationRequest.getParentDirectory().getId() can't be null or empty");
+        Assert.hasLength(creationRequest.getDirectoryName(), "creationRequest.getDirectoryName() can't be null or empty");
 
-		FileDescriptor target = this.filesWithAccessManagementFactory
-				.directoryFromId(creationRequest.getParentDirectory().getId())
-				.combinePath(creationRequest.getDirectoryName())
-				.asFile();
+        FileDescriptor target = this.filesWithAccessManagementFactory
+                .directoryFromId(creationRequest.getParentDirectory().getId())
+                .combinePath(creationRequest.getDirectoryName())
+                .asFile();
 
-		// création physique du répertoire
-		if (!target.mkdir()) {
-			throw new HomeServerException("Le répertoire " + target.getFullName() + " n'a pas pu être créé");
-		}
+        // création physique du répertoire
+        if (!target.mkdir()) {
+            throw new HomeServerException("Le répertoire " + target.getFullName() + " n'a pas pu être créé");
+        }
 
-		// retour si succès
-		return target;
-	}
+        // retour si succès
+        return target;
+    }
 
-	/**
-	 * Retourne la liste des répertoires gérables directement par le filemanager.
-	 * @return -
-	 * @throws HomeServerException -
-	 */
-	public List<FileDirectoryDescriptor> getRootDirectories() throws HomeServerException {
-		return this.filesWithAccessManagementFactory.getRootDirectories();
-	}
-
-
-	/**
-	 * Retourne le détail d'un répertoire.
-	 * @param id -
-	 * @return -
-	 * @throws HomeServerException -
-	 */
-	public FileDirectoryDescriptor getDirectoryDetail(final String id) {
-		Assert.hasLength(id, "id can't be null or empty");
-		return this.filesWithAccessManagementFactory.directoryFromId(id,
-				FilesFactory.DirectoryParsingOptions.PARSE_FILES,
-				FilesFactory.DirectoryParsingOptions.PARSE_DIRECTORIES);
-	}
+    /**
+     * Retourne la liste des répertoires gérables directement par le filemanager.
+     *
+     * @return -
+     * @throws HomeServerException -
+     */
+    public List<FileDirectoryDescriptor> getRootDirectories() throws HomeServerException {
+        return this.filesWithAccessManagementFactory.getRootDirectories();
+    }
 
 
-	/**
-	 * Supprime un fichier.
-	 * @param id -
-	 * @return -
-	 */
-	public FileOperationResult deleteFile(final String id) {
-		Assert.hasLength(id, "id can't be null or empty");
-		return this.filesWithAccessManagementFactory
-				.fileFromId(id)
-				.deleteFile();
-	}
-
-	public List<FileOperationResult> deleteFiles(final List<String> ids) {
-		return ids.stream()
-				.map(this::deleteFile)
-				.toList();
-	}
-
-	/**
-	 * Upload d'une liste de fichiers
-	 * @param directoryId identifiant du répertoire dans lequel on veut faire la recopie
-	 * @param request requete à traiter
-	 * @return liste des fichiers copiés sur le serveur
-	 * @throws HomeServerException
-	 */
-	public List<FileDescriptor> uploadFiles(final String directoryId, final HttpServletRequest request) throws HomeServerException {
-		Assert.hasLength(directoryId, "id can't be null or empty");
-
-		return UploadFileStream.fromRequest(request)
-				.foreach(oneFile -> this.filesWithAccessManagementFactory
-						.directoryFromId(directoryId)
-						.combinePath(oneFile.getFileName())
-						.asFile()
-						.copyFrom(oneFile.getInputStream())
-						.getInitialFile()
-				)
-				.collect(Collectors.toList());
-	}
+    /**
+     * Retourne le détail d'un répertoire.
+     *
+     * @param id -
+     * @return -
+     * @throws HomeServerException -
+     */
+    public FileDirectoryDescriptor getDirectoryDetail(final String id) {
+        Assert.hasLength(id, "id can't be null or empty");
+        return this.filesWithAccessManagementFactory.directoryFromId(id,
+                FilesFactory.DirectoryParsingOptions.PARSE_FILES,
+                FilesFactory.DirectoryParsingOptions.PARSE_DIRECTORIES);
+    }
 
 
-	/**
-	 * Renomme un fichier.
-	 * @param rfd -
-	 * @return -
-	 */
-	public FileOperationResult renameFile(final RenameFileDescriptor rfd) {
-		Assert.notNull(rfd, "rfd can't be null or empty");
-		Assert.hasLength(rfd.getNewName(), "rfd.newName can't be null or emtpy");
-		Assert.notNull(rfd.getOriginalFile(), "rfd.originalFile can't be null or empty");
+    /**
+     * Supprime un fichier.
+     *
+     * @param id -
+     * @return -
+     */
+    public FileOperationResult deleteFile(final String id) {
+        Assert.hasLength(id, "id can't be null or empty");
+        return this.filesWithAccessManagementFactory
+                .fileFromId(id)
+                .deleteFile();
+    }
 
-		return this.filesWithAccessManagementFactory
-				.fileFromId(rfd.getOriginalFile().getId())
-				.renameFile(rfd.getNewName());
-	}
+    public List<FileOperationResult> deleteFiles(final List<String> ids) {
+        return ids.stream()
+                .map(this::deleteFile)
+                .toList();
+    }
 
-	/**
-	 * Permet de télécharger un fichier en écrivant directement dans le flux de retour.
-	 * @param base64FileName -
-	 * @param response port le flux à modifier.
-	 * @throws HomeServerException -
-	 */
-	public void getFile(final String base64FileName, final HttpServletResponse response) {
+    /**
+     * Upload d'une liste de fichiers
+     *
+     * @param directoryId identifiant du répertoire dans lequel on veut faire la recopie
+     * @param request     requete à traiter
+     * @return liste des fichiers copiés sur le serveur
+     * @throws HomeServerException
+     */
+    public List<FileDescriptor> uploadFiles(final String directoryId, final HttpServletRequest request) throws HomeServerException {
+        Assert.hasLength(directoryId, "id can't be null or empty");
 
-		// récupération du fichier
-		FileDescriptor toDownload = this.filesWithAccessManagementFactory.fileFromId(base64FileName);
+        return UploadFileStream.fromRequest(request)
+                .foreach(oneFile -> this.filesWithAccessManagementFactory
+                        .directoryFromId(directoryId)
+                        .combinePath(oneFile.getFileName())
+                        .asFile()
+                        .copyFrom(oneFile.getInputStream())
+                        .getInitialFile()
+                )
+                .collect(Collectors.toList());
+    }
 
-		if (toDownload.getSize() > 0) {
-			response.setHeader("Content-Length", "" + toDownload.getSize());
-		}
 
-		toDownload.copyTo(Traper.trap(response::getOutputStream));
-	}
+    /**
+     * Renomme un fichier.
+     *
+     * @param rfd -
+     * @return -
+     */
+    public FileOperationResult renameFile(final RenameFileDescriptor rfd) {
+        Assert.notNull(rfd, "rfd can't be null or empty");
+        Assert.hasLength(rfd.getNewName(), "rfd.newName can't be null or emtpy");
+        Assert.notNull(rfd.getOriginalFile(), "rfd.originalFile can't be null or empty");
 
-	public void getFile(Supplier<Optional<String>> fileIdSupplier, final HttpServletResponse httpServletResponse) {
-		fileIdSupplier.get()
-				.ifPresentOrElse(
-						fileID -> this.getFile(fileID, httpServletResponse),
-						() -> httpServletResponse.setStatus(HttpStatus.NOT_FOUND.value()));
-	}
+        return this.filesWithAccessManagementFactory
+                .fileFromId(rfd.getOriginalFile().getId())
+                .renameFile(rfd.getNewName());
+    }
 
-	/**
-	 * Retourne un file descriptor en fonction de l'id
-	 * @param base64FileName-
-	 * @return -
-	 */
-	public FileDescriptor getFileDescriptor(final String base64FileName) {
-		return this.filesWithAccessManagementFactory.fileFromId(base64FileName);
-	}
+    /**
+     * Permet de télécharger un fichier en écrivant directement dans le flux de retour.
+     *
+     * @param base64FileName -
+     * @param response       port le flux à modifier.
+     * @throws HomeServerException -
+     */
+    public void getFile(final String base64FileName, final HttpServletResponse response) {
 
-	/**
-	 * Permet de gérer le streaming d'un fichier multimédia (mp3 ou video).
-	 * @param base64FileName -
-	 * @param request -
-	 * @param response -
-	 * @throws HomeServerException -
-	 */
-	public void streamFile(final String base64FileName, final HttpServletRequest request,
-			final HttpServletResponse response) throws HomeServerException {
+        // récupération du fichier
+        FileDescriptor toDownload = this.filesWithAccessManagementFactory.fileFromId(base64FileName);
 
-		// décodage pour récupération du fichier
-		File toStream = FileAndDirectoryHLP.decodeFile(base64FileName);
+        if (toDownload.getSize() > 0) {
+            response.setHeader("Content-Length", "" + toDownload.getSize());
+        }
 
-		log.debug("Récupération en local du fichier {}", toStream.getAbsolutePath());
-			try {
-				StreamingFileSender.fromPath(toStream.toPath())
-				.with(request)
-				.with(response)
-				.serveResource();
-			} catch (IOException e) {
-				throw new StreamingFileSenderException("vautré", e);
-			}
+        toDownload.copyTo(Traper.trap(response::getOutputStream));
+    }
 
-	}
+    public void getFile(Supplier<Optional<String>> fileIdSupplier, final HttpServletResponse httpServletResponse) {
+        fileIdSupplier.get()
+                .ifPresentOrElse(
+                        fileID -> this.getFile(fileID, httpServletResponse),
+                        () -> httpServletResponse.setStatus(HttpStatus.NOT_FOUND.value()));
+    }
 
-	public FileDirectoryDescriptor uploadImageAsBase64(String base64DirectoryName, ImageAsBase64CreationRequest request) {
+    /**
+     * Retourne un file descriptor en fonction de l'id
+     *
+     * @param base64FileName-
+     * @return -
+     */
+    public FileDescriptor getFileDescriptor(final String base64FileName) {
+        return this.filesWithAccessManagementFactory.fileFromId(base64FileName);
+    }
 
-		FileDescriptor target = this.filesWithAccessManagementFactory
-				.directoryFromId(base64DirectoryName)
-				.combinePath(UUID.randomUUID() + ".png")
-				.asFile();
+    /**
+     * Permet de gérer le streaming d'un fichier multimédia (mp3 ou video).
+     *
+     * @param base64FileName -
+     * @param request        -
+     * @param response       -
+     * @throws HomeServerException -
+     */
+    public void streamFile(final String base64FileName, final HttpServletRequest request,
+                           final HttpServletResponse response) throws HomeServerException {
 
-		var data = Base64.getDecoder().decode(request.getImageAsBAse64());
+        // décodage pour récupération du fichier
+        File toStream = FileAndDirectoryHLP.decodeFile(base64FileName);
 
-		target.copyFrom(new ByteArrayInputStream(data));
+        log.debug("Récupération en local du fichier {}", toStream.getAbsolutePath());
+        try {
+            StreamingFileSender.fromPath(toStream.toPath())
+                    .with(request)
+                    .with(response)
+                    .serveResource();
+        } catch (IOException e) {
+            throw new StreamingFileSenderException("vautré", e);
+        }
 
-		return this.getDirectoryDetail(base64DirectoryName);
-	}
+    }
+
+    public FileDirectoryDescriptor uploadImageAsBase64(String base64DirectoryName, ImageAsBase64CreationRequest request) {
+
+        FileDescriptor target = this.filesWithAccessManagementFactory
+                .directoryFromId(base64DirectoryName)
+                .combinePath(UUID.randomUUID() + ".png")
+                .asFile();
+
+        var data = Base64.getDecoder().decode(request.getImageAsBAse64());
+
+        target.copyFrom(new ByteArrayInputStream(data));
+
+        return this.getDirectoryDetail(base64DirectoryName);
+    }
+
+    public FileDirectoryDescriptor uploadFilesFromUrl(String base64DirectoryName, UrlListToUpload request) {
+
+        FileDirectoryDescriptor commonDirectoryTarget = this.filesWithAccessManagementFactory
+                .directoryFromId(base64DirectoryName);
+
+        request.getUrlList()
+                .forEach(anUrlToUpload -> {
+
+                    extensionFromUrlGenerator.generateExtensionFromUrl(anUrlToUpload)
+                            .map(mappedExtension -> UUID.randomUUID() + "." + mappedExtension)
+                            .map(fileName -> commonDirectoryTarget.combinePath(fileName).asFile())
+                            .ifPresent(targetFile -> {
+                                Optional.of(anUrlToUpload)
+                                        .map(Traper.trapAndMap(URL::new))
+                                        .map(Traper.trapAndMap(URL::openStream))
+                                        .ifPresent(targetFile::copyFrom);
+                            });
+                });
+
+
+        return this.getDirectoryDetail(base64DirectoryName);
+
+    }
+
 }
