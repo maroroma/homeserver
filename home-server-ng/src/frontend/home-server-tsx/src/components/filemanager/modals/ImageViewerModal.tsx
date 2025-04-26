@@ -38,6 +38,7 @@ const ImageViewerModal: FC<ImageViewerModalProps> = ({ show, onHide, imagesToDis
                 variant="dark"
                 className="image-viewer-carousel"
                 activeIndex={currentIndex}
+                // onTouchEnd={event => console.log("touchend", event)}
                 onSelect={(newIndex) => setCurrentIndex(newIndex)}
                 nextIcon={<ChevronRight size={100} className={BootstrapText.ColorSecondary} />}
                 prevIcon={<ChevronLeft size={100} className={BootstrapText.ColorSecondary} />}
@@ -63,7 +64,6 @@ const ImageViewerModal: FC<ImageViewerModalProps> = ({ show, onHide, imagesToDis
                 <CloseButton onClick={() => onHide()} />
             </div>
             <div className="image-viewer-legend">
-
             </div>
 
         </Modal.Body>

@@ -103,7 +103,6 @@ const FileManagerComponent: FC = () => {
     const loadImageFromNavigatorClipBoard = () => {
         navigator.clipboard.read()
             .then(response => {
-                console.log("clipclip", response);
                 return response[0]
             })
             .then((response: any) => response.getType("image/png"))

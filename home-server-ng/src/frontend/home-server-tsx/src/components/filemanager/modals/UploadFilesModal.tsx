@@ -12,6 +12,7 @@ import { PlusCircle, Trash, Upload } from "react-bootstrap-icons";
 import { CustomClassNames } from "../../bootstrap/CssTools";
 import FileDescriptorIconResolver from "../../../model/filemanager/FileDescriptorIconResolver";
 import { BootstrapText } from "../../bootstrap/BootstrapText";
+import ActionFromClipBoard from "../../actionmenu/ActionFromClipBoard";
 
 
 export type UploadFilesModalProps = {
@@ -40,7 +41,7 @@ const UploadFilesModal: FC<UploadFilesModalProps> = ({ show, onHide, parentDirec
         if (filesToUpload.length > 0) {
             promises.push(FileManagerRequester.uploadFiles(parentDirectory, filesToUpload));
         }
-        
+
         if (urlsToUpload.length > 0) {
             promises.push(FileManagerRequester.uploadFilesFromUrl(parentDirectory, urlsToUpload));
         }
@@ -55,10 +56,18 @@ const UploadFilesModal: FC<UploadFilesModalProps> = ({ show, onHide, parentDirec
             })
             .catch(error => dispatch(new EndWIPInErrorAction("Erreur recontrée lors de l'upload des fichiers")));
 
+    }
 
-
-
-
+    const extractNewUrlFromClipboard = () => {
+         navigator.clipboard.read()
+                    .then(response => {
+                        return response[0]
+                    })
+                    .then((response: any) => response.getType("text/plain"))
+                    .then(blob => blob.text())
+                    .then(blob => {
+                        setUrlsToUpload([...urlsToUpload, blob])
+                    });
     }
 
 
@@ -84,22 +93,26 @@ const UploadFilesModal: FC<UploadFilesModalProps> = ({ show, onHide, parentDirec
                 </ListGroupItem>)}
             </ListGroup>
 
+
+            <Form.Group controlId="formFileMultiple" className="mb-3">
+                <Form.Label>Urls à télécharger</Form.Label>
+            </Form.Group>
+
             <ListGroup data-bs-theme="light">
-                {urlsToUpload.map(aTorrent => {
-                    return <ListGroup.Item className={BootstrapText.AlignLeft}>
-                        <h2>
-                            {aTorrent}
+                {urlsToUpload.map(anUrlToUpload => {
+                    return <ListGroup.Item className={BootstrapText.AlignLeft} key={anUrlToUpload}>
+                        <h5>
+                            {anUrlToUpload}
                             <Button
                                 variant={BootstrapVariants.Danger}
                                 className={CustomClassNames.PullRight}
                                 onClick={() => {
-                                    setUrlsToUpload(urlsToUpload.filter(anUrl => anUrl !== aTorrent))
-
+                                    setUrlsToUpload(urlsToUpload.filter(anUrl => anUrl !== anUrlToUpload))
                                 }}
                             >
                                 <Trash />
                             </Button>
-                        </h2>
+                        </h5>
 
                     </ListGroup.Item>
                 })
@@ -107,11 +120,18 @@ const UploadFilesModal: FC<UploadFilesModalProps> = ({ show, onHide, parentDirec
                 <ListGroupItem>
                     <InputGroup className="mb-3">
                         <Form.Control
-                            placeholder="Url à télécharger"
+                            placeholder="ajouter une url"
                             value={urlToAdd}
                             onChange={(event) => {
                                 setUrlToAdd(event.target.value)
                             }}
+                        />
+                        <ActionFromClipBoard 
+                        blockingButton={false} 
+                        disabled={urlToAdd !== ""} 
+                        onClick={() => {
+                            extractNewUrlFromClipboard()
+                        }}
                         />
                         <Button
                             onClick={() => {
