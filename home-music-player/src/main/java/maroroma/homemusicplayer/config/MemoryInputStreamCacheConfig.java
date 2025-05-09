@@ -9,13 +9,13 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@ConditionalOnMissingBean(LocalFileSystemInputStreamCache.class)
-@Configuration
+//@ConditionalOnMissingBean(LocalFileSystemInputStreamCache.class)
+//@Configuration
 @Slf4j
 public class MemoryInputStreamCacheConfig {
 
-    @Bean
-    MemoryInputStreamCache localFileSystemCache(
+    //@Bean
+    MemoryInputStreamCache memoryInputStreamCache(
             FilesFactory filesFactory,
             @Value("${musicplayer.caches.inpustream.tease}") int teaseSize,
             @Value("${musicplayer.caches.inpustream.max-size}")int cacheMaxSize) {
