@@ -1,11 +1,11 @@
-import { FC, useEffect, useState } from "react";
-import { useHomeServerContext } from "../../context/HomeServerRootContext";
+import {FC, useEffect, useState} from "react";
+import {useHomeServerContext} from "../../context/HomeServerRootContext";
 import StartWIPAction from "../../context/actions/StartWIPAction";
 import FileManagerRequester from "../../api/FileManagerRequester";
 import LoadedRootDirectoriesAction from "../../context/actions/filemanager/LoadedRootDirectoriesAction";
 import EndWIPInErrorAction from "../../context/actions/EndWIPInErrorAction";
 import DirectoryStackComponent from "./DirectoryStackComponent";
-import { ListGroup } from "react-bootstrap";
+import {ListGroup} from "react-bootstrap";
 import SwitchSelectDirectoryAction from "../../context/actions/filemanager/SwitchSelectDirectoryAction";
 import SelectableItem from "../../model/SelectableItem";
 import LoadedDirectoryAction from "../../context/actions/filemanager/LoadedDirectoryAction";
@@ -34,13 +34,14 @@ import ActionBackButton from "../actionmenu/ActionBackButton";
 import UploadFilesModal from "./modals/UploadFilesModal";
 import ImageViewerModal from "./modals/ImageViewerModal";
 import FileExtension from "../../model/filemanager/FileExtension";
-import { FileViewers } from "../../model/filemanager/FileViewers";
+import {FileViewers} from "../../model/filemanager/FileViewers";
 import ActionConfigButton from "../actionmenu/ActionConfigButton";
 import RootDirectoriesModal from "./modals/RootDirectoriesModal";
 import ActionPlusButton from "../actionmenu/ActionPlusButton";
 import AddDirectoryModal from "./modals/AddDirectoryModal";
 import MusicPlayerModal from "./modals/MusicPlayerModal";
 import ActionFromClipBoard from "../actionmenu/ActionFromClipBoard";
+import TextEditorModal from "./modals/TextEditorModal";
 
 const FileManagerComponent: FC = () => {
 
@@ -67,6 +68,9 @@ const FileManagerComponent: FC = () => {
     const [displayMusicPlayer, setDisplayMusicPlayer] = useState(false);
     const [musicsToPlay, setMusicsToPlay] = useState<FileDescriptor[]>([]);
     const [selectedMusic, setSelectedMusic] = useState(FileDescriptor.emptyFileDescriptor());
+
+    const [displayTextViewer, setDisplayTextViewer] = useState(false);
+    const [selectedTextFile, setSelectedTextFile] = useState(FileDescriptor.emptyFileDescriptor());
 
     const [displayRootConfig, setDisplayRootConfig] = useState(false);
 
@@ -96,6 +100,10 @@ const FileManagerComponent: FC = () => {
                     .sort(FileDescriptor.sorter())
                 )
                 setSelectedMusic(fileDescriptor)
+                break;
+            case FileViewers.TXT:
+                setDisplayTextViewer(true);
+                setSelectedTextFile(fileDescriptor);
                 break;
         }
     }
@@ -291,6 +299,11 @@ const FileManagerComponent: FC = () => {
             musicsToPlay={musicsToPlay}
             selectedMusic={selectedMusic}
             currentDirectory={fileManagerSubState.currentDirectory}
+        />
+
+        <TextEditorModal show={displayTextViewer}
+            onHide={() => {setDisplayTextViewer(false)}}
+            textToEdit={selectedTextFile}
         />
 
         <RootDirectoriesModal

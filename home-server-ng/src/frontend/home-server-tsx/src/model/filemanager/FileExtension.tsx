@@ -8,7 +8,7 @@ export default class FileExtension {
     static readonly IMAGES = new FileExtension(["jpg", "jpeg", "png", "bmp", "bookpicture", "brickpicture", "gif"], <FileEarmarkImage />, FileViewers.IMAGE);
     static readonly VIDEOS = new FileExtension(["avi", "mpeg", "mkv", "mp4"], <FileEarmarkPlay />);
     static readonly MUSIC = new FileExtension(["mp3", "ogg", "wav", "flac"], <FileEarmarkMusic />, FileViewers.MUSIC);
-    static readonly TEXT = new FileExtension(["txt", "log"], <FileEarmarkText />);
+    static readonly TEXT = new FileExtension(["txt", "log"], <FileEarmarkText />, FileViewers.TXT);
     static readonly UNKNOWN = new FileExtension([], <FileEarmark />);
 
     static readonly KNOWN_FILE_EXTENSIONS: FileExtension[] = [

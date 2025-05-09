@@ -2,7 +2,13 @@ package maroroma.homeserverng.filemanager.controllers;
 
 import lombok.RequiredArgsConstructor;
 import maroroma.homeserverng.filemanager.FileManagerModuleDescriptor;
-import maroroma.homeserverng.filemanager.model.*;
+import maroroma.homeserverng.filemanager.model.DirectoryCreationRequest;
+import maroroma.homeserverng.filemanager.model.EditableTextFile;
+import maroroma.homeserverng.filemanager.model.ImageAsBase64CreationRequest;
+import maroroma.homeserverng.filemanager.model.RenameFileDescriptor;
+import maroroma.homeserverng.filemanager.model.RootDirectoryConfiguration;
+import maroroma.homeserverng.filemanager.model.RootDirectoryConfigurationCreationRequest;
+import maroroma.homeserverng.filemanager.model.UrlListToUpload;
 import maroroma.homeserverng.filemanager.services.FileManagerConfigurationService;
 import maroroma.homeserverng.filemanager.services.FileManagerServiceImpl;
 import maroroma.homeserverng.tools.annotations.HomeServerRestController;
@@ -117,6 +123,17 @@ public class FileManagerController {
     public ResponseEntity<FileDirectoryDescriptor> uploadFilesFromUrl(@PathVariable("id") final String base64DirectoryName, @RequestBody final UrlListToUpload request) throws HomeServerException {
         return ResponseEntity.ok(this.fileService.uploadFilesFromUrl(base64DirectoryName, request));
     }
+
+    @GetMapping("${homeserver.api.path:}/filemanager/files/{id}/content/text")
+    public ResponseEntity<EditableTextFile> getTextFileContent(@PathVariable("id") final String base64FileName) {
+        return ResponseEntity.ok(this.fileService.getEditableTextFile(base64FileName));
+    }
+
+    @PostMapping("${homeserver.api.path:}/filemanager/files/{id}/content/text")
+    public ResponseEntity<EditableTextFile> saveTextFileContent(@PathVariable("id") final String base64FileName, @RequestBody EditableTextFile editableTextFile) {
+        return ResponseEntity.ok(this.fileService.saveEditableTextFile(base64FileName, editableTextFile));
+    }
+
 
     /**
      * Permet de streamer un fichier multimédia.

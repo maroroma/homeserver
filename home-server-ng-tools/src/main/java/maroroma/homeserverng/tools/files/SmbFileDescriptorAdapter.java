@@ -141,6 +141,18 @@ public class SmbFileDescriptorAdapter extends AbstractFileDescriptorAdapter {
         return new SmbFileDescriptorPath(this);
     }
 
+    @Override
+    public String readAsString() {
+        var outputStream = new ByteArrayOutputStream();
+        this.copyTo(outputStream);
+        return outputStream.toString();
+    }
+
+    @Override
+    public void writeAllString(String content) {
+        throw new UnsupportedOperationException();
+    }
+
 
     public interface SambaUserSupplier {
         SimpleUser generateSambaUser();

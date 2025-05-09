@@ -3,6 +3,7 @@ package maroroma.homeserverng.filemanager.services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.filemanager.model.DirectoryCreationRequest;
+import maroroma.homeserverng.filemanager.model.EditableTextFile;
 import maroroma.homeserverng.filemanager.model.ImageAsBase64CreationRequest;
 import maroroma.homeserverng.filemanager.model.RenameFileDescriptor;
 import maroroma.homeserverng.filemanager.model.UrlListToUpload;
@@ -19,18 +20,13 @@ import maroroma.homeserverng.tools.streaming.ouput.StreamingFileSenderException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
+import java.net.*;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 /**
  * Implémentation du service pour la gestion des fichiers.
@@ -257,5 +253,23 @@ public class FileManagerServiceImpl {
         return this.getDirectoryDetail(base64DirectoryName);
 
     }
+
+    public EditableTextFile getEditableTextFile(String base64FileDescriptor) {
+        FileDescriptor textToEdit = this.filesWithAccessManagementFactory.fileFromId(base64FileDescriptor);
+
+        return EditableTextFile.builder()
+                .fileDescriptor(textToEdit)
+                .content(textToEdit.readAsString())
+                .build();
+    }
+
+    public EditableTextFile saveEditableTextFile(String base64FileDescriptor, EditableTextFile editableTextFile) {
+        FileDescriptor textToEdit = this.filesWithAccessManagementFactory.fileFromId(base64FileDescriptor);
+
+        textToEdit.writeAllString(editableTextFile.getContent());
+
+        return getEditableTextFile(base64FileDescriptor);
+    }
+
 
 }

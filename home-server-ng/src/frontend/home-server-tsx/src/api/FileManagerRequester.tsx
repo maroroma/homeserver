@@ -1,14 +1,23 @@
 import DirectoryCreationRequest from "../model/filemanager/DirectoryCreationRequest";
+import EditableTextFile from "../model/filemanager/EditableTextFile";
 import FileDescriptor from "../model/filemanager/FileDescriptor";
 import FileDirectoryDescriptor from "../model/filemanager/FileDirectoryDescriptor";
 import RenameFileDescriptor from "../model/filemanager/RenameFileDescriptor";
 import RootDirectoryConfiguration from "../model/filemanager/RootDirectoryConfiguration";
-import { RootDirectoryConfigurationCreationRequest } from "../model/filemanager/RootDirectoryConfigurationCreationRequest";
-import { RequesterUtils } from "./RequesterUtils";
+import {RootDirectoryConfigurationCreationRequest} from "../model/filemanager/RootDirectoryConfigurationCreationRequest";
+import {RequesterUtils} from "./RequesterUtils";
 
 export default class FileManagerRequester {
     static getRootDirectories(): Promise<FileDirectoryDescriptor[]> {
         return RequesterUtils.get("/api/filemanager/rootdirectories")
+    }
+
+    static getEditableText(fileDescriptor:FileDescriptor): Promise<EditableTextFile> {
+        return RequesterUtils.get(`/api/filemanager/files/${fileDescriptor.id}/content/text`)
+    }
+    
+    static saveEditableText(editableText:EditableTextFile):Promise<EditableTextFile> {
+        return RequesterUtils.post(`/api/filemanager/files/${editableText.fileDescriptor.id}/content/text`, editableText);
     }
 
     static getDirectoryDetails(directoryToLoad: FileDescriptor): Promise<FileDirectoryDescriptor> {

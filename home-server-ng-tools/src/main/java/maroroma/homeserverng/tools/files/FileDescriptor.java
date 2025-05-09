@@ -280,4 +280,12 @@ public class FileDescriptor {
 			throw new RuntimeHomeServerException("File " + this.getFullName() + " is protected, can't be delete");
 		}
 	}
+
+	public String readAsString() {
+		return this.getAdapter().readAsString();
+	}
+
+	public void writeAllString(String content) {
+		this.getAdapter().writeAllString(content);
+	}
 }

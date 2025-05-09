@@ -132,5 +132,15 @@ public class LocalFileDescriptorAdapter extends AbstractFileDescriptorAdapter {
         return new LocalFileDescriptorPath(this);
     }
 
+    @Override
+    public String readAsString() {
+        return Traper.trap(() -> Files.readString(this.toPath()), "impossible de lire le fichier");
+    }
+
+    @Override
+    public void writeAllString(String content) {
+        Traper.trap(() -> Files.writeString(this.toPath(), content, StandardOpenOption.WRITE), "impossible d'écrire dans le fichier");
+    }
+
 
 }

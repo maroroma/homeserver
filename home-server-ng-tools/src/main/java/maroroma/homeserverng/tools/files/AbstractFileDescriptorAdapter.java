@@ -195,4 +195,7 @@ public abstract class AbstractFileDescriptorAdapter {
 
     public abstract FileDescriptorPath toFileDescriptorPath();
 
+    public abstract String readAsString();
+
+    public abstract void writeAllString(String content);
 }
