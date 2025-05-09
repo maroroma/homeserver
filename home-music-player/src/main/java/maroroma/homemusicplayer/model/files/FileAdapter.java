@@ -20,6 +20,7 @@ public interface FileAdapter {
 
     boolean isLowPerformanceFile();
 
+    long createTimeAsMillis();
 
     boolean delete();
 
@@ -41,6 +42,8 @@ public interface FileAdapter {
 
     InputStream getInputStream();
 
+    void mkdirs();
+
     default ByteArrayInputStream getInMemoryInputStream() {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         this.copyTo(byteArrayOutputStream);
@@ -57,6 +60,10 @@ public interface FileAdapter {
 
     default void copyTo(OutputStream outputStream) {
         Traper.trap(() -> FileCopyUtils.copy(this.getInputStream(), outputStream));
+    }
+
+    default String getExtension() {
+        return this.getFileName().split("\\.")[this.getFileName().split("\\.").length - 1];
     }
 
 

@@ -8,16 +8,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import maroroma.homemusicplayer.model.files.FileAdapter;
 
 import java.util.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder(toBuilder = true)
 @Entity
 @Table(name = "TRACK")
 public class TrackEntity extends AbstractLibraryEntity {
@@ -37,5 +38,9 @@ public class TrackEntity extends AbstractLibraryEntity {
     @ManyToOne
     @JoinColumn(name = "ALBUM_ID")
     private AlbumEntity album;
+
+    public TrackEntity replaceLibraryItemPath(FileAdapter newFileAdapter) {
+        return this.toBuilder().libraryItemPath(newFileAdapter.pathAsBase64()).build();
+    }
 
 }

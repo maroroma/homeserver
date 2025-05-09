@@ -73,6 +73,11 @@ public class SmbFileAdapter implements FileAdapter {
     }
 
     @Override
+    public long createTimeAsMillis() {
+        return 0;
+    }
+
+    @Override
     public boolean delete() {
         return Traper.trapToBoolean(this.smbFile::delete);
 
@@ -115,6 +120,14 @@ public class SmbFileAdapter implements FileAdapter {
 
 
         return Traper.trap(() -> new SmbFileInputStream(this.smbFile));
+    }
+
+    @Override
+    public void mkdirs() {
+        Traper.trap(() -> {
+            this.smbFile.mkdirs();
+            return null;
+        });
     }
 
     @Override

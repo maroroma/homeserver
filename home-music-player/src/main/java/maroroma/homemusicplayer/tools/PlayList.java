@@ -1,6 +1,7 @@
 package maroroma.homemusicplayer.tools;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
 
@@ -15,6 +16,8 @@ import static maroroma.homemusicplayer.tools.StreamUtils.shuffle;
 public class PlayList {
 
     private final int currentIndex;
+
+    @Getter
     private final List<TrackEntity> trackEntityList;
 
     public static PlayList empty() {

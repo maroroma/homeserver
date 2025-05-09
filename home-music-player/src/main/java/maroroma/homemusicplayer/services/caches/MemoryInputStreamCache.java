@@ -1,40 +1,27 @@
-package maroroma.homemusicplayer.services;
+package maroroma.homemusicplayer.services.caches;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 import maroroma.homemusicplayer.model.files.FileAdapter;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
 import maroroma.homemusicplayer.tools.PlayList;
 import maroroma.homemusicplayer.tools.Traper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.time.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-@Service
+@SuperBuilder
 @Slf4j
-public class InputStreamCache {
+public class MemoryInputStreamCache extends AbstractInputStreamCache {
 
     private final Map<String, TimestampedInputStream> innerCache = new ConcurrentHashMap<>();
 
-    private final FilesFactory filesFactory;
-
-    private final int teaseSize;
-    private final int cacheMaxSize;
-
-    public InputStreamCache(FilesFactory filesFactory,
-                            @Value("${musicplayer.caches.inpustream.tease}") int teaseSize,
-                            @Value("${musicplayer.caches.inpustream.max-size}")int cacheMaxSize) {
-        this.filesFactory = filesFactory;
-        this.teaseSize = teaseSize;
-        this.cacheMaxSize = cacheMaxSize;
-    }
-
+    @Override
     public InputStream getInputStream(TrackEntity trackEntity) {
         return this.getInputStream(this.filesFactory.getFileFromBase64Path(trackEntity.getLibraryItemPath()));
     }
@@ -49,6 +36,7 @@ public class InputStreamCache {
         }).getInputStream();
     }
 
+    @Override
     @Async
     public void populate(PlayList playList) {
         playList.teaseNextTracks(this.teaseSize)
@@ -56,8 +44,13 @@ public class InputStreamCache {
                 .map(aTrack -> this.filesFactory.getFileFromBase64Path(aTrack.getLibraryItemPath()))
                 .forEach(this::populate);
 
+        cleanOversizedCache();
+    }
+
+    @Override
+    public void cleanOversizedCache() {
         if (this.innerCache.size() > this.cacheMaxSize) {
-            log.info("cache full : {} to remove", this.innerCache.size() - this.cacheMaxSize);
+            log.info("memorycache full : {} to remove", this.innerCache.size() - this.cacheMaxSize);
             var itemKeysToRemove = this.innerCache.entrySet().stream()
                     .sorted(Comparator.comparing(entry -> entry.getValue().getLocalDateTime()))
                     .limit(this.innerCache.size() - this.cacheMaxSize)
@@ -67,10 +60,10 @@ public class InputStreamCache {
             itemKeysToRemove
                     .forEach(aKeyToRemove -> {
                         var removedItem = this.innerCache.remove(aKeyToRemove);
-                        log.info("removed from cache -> {}", removedItem.readableItemName);
+                        log.info("removed from memorycache -> {}", removedItem.readableItemName);
                     });
 
-            log.info("cache cleaned : {} items remaining", this.innerCache.size());
+            log.info("memorycache cleaned : {} items remaining", this.innerCache.size());
 
         }
     }
@@ -92,12 +85,12 @@ public class InputStreamCache {
         static TimestampedInputStream init(FileAdapter inputStream) {
             var start = System.currentTimeMillis();
             var memoryInputStream = inputStream.getInMemoryInputStream();
-            InputStreamCache.log.info("added in {} ms in cache -> {}", System.currentTimeMillis() - start, inputStream.getFileName());
+            MemoryInputStreamCache.log.info("added in {} ms in memorycache -> {}", System.currentTimeMillis() - start, inputStream.getFileName());
             return new TimestampedInputStream(inputStream.getFileName(), memoryInputStream, LocalDateTime.now());
         }
 
         TimestampedInputStream reset() {
-            InputStreamCache.log.info("{} refreshed", this.readableItemName);
+            MemoryInputStreamCache.log.info("{} refreshed in memorycache", this.readableItemName);
             this.localDateTime = LocalDateTime.now();
             Traper.trapToBoolean(inputStream::reset);
             return this;

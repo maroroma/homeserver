@@ -8,7 +8,9 @@ import org.springframework.util.Assert;
 
 import java.io.*;
 import java.nio.file.*;
+import java.nio.file.attribute.*;
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.stream.*;
 
 @Data
@@ -53,6 +55,14 @@ public class LocalFileAdapter implements FileAdapter {
     }
 
     @Override
+    public long createTimeAsMillis() {
+        return Traper.trapWithOptional(() -> Files.readAttributes(this.localFile.toPath(), BasicFileAttributes.class))
+                .map(BasicFileAttributes::creationTime)
+                .map(fileTime -> fileTime.to(TimeUnit.MILLISECONDS))
+                .orElse(0L);
+    }
+
+    @Override
     public boolean delete() {
         return Traper.trapToBoolean(() -> Files.deleteIfExists(this.localFile.toPath()));
     }
@@ -92,6 +102,11 @@ public class LocalFileAdapter implements FileAdapter {
     @Override
     public InputStream getInputStream() {
         return Traper.trap(() -> new FileInputStream(this.localFile));
+    }
+
+    @Override
+    public void mkdirs() {
+        this.localFile.mkdirs();
     }
 
     @Override

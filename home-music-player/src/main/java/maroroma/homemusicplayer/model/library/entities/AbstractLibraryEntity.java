@@ -5,12 +5,14 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import maroroma.homemusicplayer.model.library.api.LibraryItemArts;
 
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
+@SuperBuilder(toBuilder = true)
 public abstract class AbstractLibraryEntity {
 
 

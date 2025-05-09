@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
 import maroroma.homemusicplayer.model.player.api.PlayerStatus;
 import maroroma.homemusicplayer.services.FilesFactory;
-import maroroma.homemusicplayer.services.InputStreamCache;
+import maroroma.homemusicplayer.services.caches.InputStreamCache;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
