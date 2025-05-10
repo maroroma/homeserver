@@ -16,6 +16,7 @@ import AllTracksForArtistComponent from './components/library/tracks/AllTracksFo
 import WebSocketHandlerComponent from './components/websocket/WebSocketHandlerComponent';
 import SmallPlayerComponent from './components/player/SmallPlayerComponent';
 import FullscreenPlayerComponent from './components/player/FullscreenPlayerComponent';
+import UploadNewTrackPopupComponent from './components/library/artist/UploadNewTrackPopupComponent';
 
 function App() {
   return (
@@ -52,6 +53,9 @@ function App() {
         </ViewPortComponent>
         <ViewPortComponent view={ViewState.FullScreenPlayer}>
           <FullscreenPlayerComponent></FullscreenPlayerComponent>
+        </ViewPortComponent>
+        <ViewPortComponent view={ViewState.AddFileToAlbum}>
+          <UploadNewTrackPopupComponent></UploadNewTrackPopupComponent>
         </ViewPortComponent>
 
       

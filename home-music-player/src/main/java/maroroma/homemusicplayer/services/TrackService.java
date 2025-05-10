@@ -1,5 +1,6 @@
 package maroroma.homemusicplayer.services;
 
+import maroroma.homemusicplayer.model.files.FileAdapter;
 import maroroma.homemusicplayer.model.files.FileAdapterFilter;
 import maroroma.homemusicplayer.model.library.entities.AlbumEntity;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
@@ -52,27 +53,29 @@ public class TrackService {
 
         return artistDirectory.streamFiles()
                 .filter(FileAdapterFilter.extensionIn(this.supportedMusicExtensions))
-                .map(aMusicFile -> {
-                    var trackEntity = new TrackEntity();
-                    trackEntity.setAlbum(albumEntity);
-
-
-                    var tags = mp3TagReader.extractTags(aMusicFile);
-
-                    Optional.ofNullable(tags.get(Mp3TagReader.Mp3Tags.TITLE))
-                            .map(Mp3TagReader.TagReadingResult::getValue)
-                            .ifPresentOrElse(trackEntity::setName, () -> trackEntity.setName(aMusicFile.getFileName()));
-                    Optional.ofNullable(tags.get(Mp3TagReader.Mp3Tags.TRACK_NUMBER))
-                            .map(Mp3TagReader.TagReadingResult::getValue)
-                            .ifPresent(trackEntity::setTrackNumber);
-
-
-                    trackEntity.setLibraryItemPath(aMusicFile.pathAsBase64());
-                    return trackEntity;
-                })
+                .map(aMusicFile -> this.scanAFile(aMusicFile, albumEntity))
                 .toList();
 
 
+    }
+
+    public TrackEntity scanAFile(FileAdapter aMusicFile, AlbumEntity albumEntity) {
+        var trackEntity = new TrackEntity();
+        trackEntity.setAlbum(albumEntity);
+
+
+        var tags = mp3TagReader.extractTags(aMusicFile);
+
+        Optional.ofNullable(tags.get(Mp3TagReader.Mp3Tags.TITLE))
+                .map(Mp3TagReader.TagReadingResult::getValue)
+                .ifPresentOrElse(trackEntity::setName, () -> trackEntity.setName(aMusicFile.getFileName()));
+        Optional.ofNullable(tags.get(Mp3TagReader.Mp3Tags.TRACK_NUMBER))
+                .map(Mp3TagReader.TagReadingResult::getValue)
+                .ifPresent(trackEntity::setTrackNumber);
+
+
+        trackEntity.setLibraryItemPath(aMusicFile.pathAsBase64());
+        return trackEntity;
     }
 
 

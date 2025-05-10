@@ -10,7 +10,7 @@ import java.util.regex.*;
 import java.util.stream.*;
 
 @Component
-public class FileNameTagParser implements TagParser{
+public class FileNameTagParser implements TagParser {
 
     private static final String TRACK_REGEX = "^(\\d*) - (.+)\\.mp3";
 
@@ -23,6 +23,8 @@ public class FileNameTagParser implements TagParser{
         if (matcher.find()) {
             results.add(Mp3TagReader.Mp3Tags.TRACK_NUMBER.result(matcher.group(1)));
             results.add(Mp3TagReader.Mp3Tags.TITLE.result(matcher.group(2)));
+        } else {
+            results.add(Mp3TagReader.Mp3Tags.TITLE.result(aMusicFile.getFileNameWithoutExtension()));
         }
 
         return StreamUtils.of(results).collect(Collectors.toMap(Mp3TagReader.TagReadingResult::getType, Function.identity()));

@@ -8,5 +8,6 @@ export enum ViewState {
     DeleteAlbum,
     AddAlbum,
     AllTracksForArtist,
-    FullScreenPlayer
+    FullScreenPlayer,
+    AddFileToAlbum
 }

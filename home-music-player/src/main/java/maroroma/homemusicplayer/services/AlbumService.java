@@ -1,11 +1,13 @@
 package maroroma.homemusicplayer.services;
 
+import jakarta.servlet.http.HttpServletRequest;
 import maroroma.homemusicplayer.model.files.FileAdapter;
 import maroroma.homemusicplayer.model.files.FileAdapterFilter;
 import maroroma.homemusicplayer.model.library.api.LibraryItemArts;
 import maroroma.homemusicplayer.model.library.entities.AlbumEntity;
 import maroroma.homemusicplayer.model.library.entities.ArtistEntity;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
+import maroroma.homemusicplayer.model.upload.UploadFileStream;
 import maroroma.homemusicplayer.repositories.AlbumRepository;
 import maroroma.homemusicplayer.tools.CustomAssert;
 import maroroma.homemusicplayer.tools.StreamUtils;
@@ -102,18 +104,25 @@ public class AlbumService {
         return albumEntity;
     }
 
-    public AlbumEntity parseForNewTracks(UUID albumId) {
+    public List<TrackEntity> addNewFilesToAlbum(UUID albumId, final HttpServletRequest request) {
         var albumToUpdate = this.albumRepository.getReferenceById(albumId);
-        var allTracksFromDataBase = this.trackService.findTracksForAlbum(albumToUpdate);
-        var allTracksInDirectory = trackService.scanDirectoryForTracks(albumToUpdate);
 
-        allTracksInDirectory.stream()
-                .filter(aTrackFromDirectory -> allTracksFromDataBase.stream().noneMatch(aTrackFromDataBase -> aTrackFromDataBase.getLibraryItemPath().equalsIgnoreCase(aTrackFromDirectory.getLibraryItemPath())))
+
+        UploadFileStream.fromRequest(request)
+                .foreach(oneFile ->
+                        this.filesFactory
+                                .getFileFromBase64Path(albumToUpdate.getLibraryItemPath())
+                                .combine(oneFile.getFileName())
+                                .copyFrom(oneFile.getInputStream())
+                )
+                .map(aNewFile -> trackService.scanAFile(aNewFile, albumToUpdate))
                 .forEach(albumToUpdate::addTrack);
 
         this.albumRepository.saveAndFlush(albumToUpdate);
 
-        return albumToUpdate;
+        return this.trackService.findTracksForAlbum(albumToUpdate);
+
+
     }
 
     /**

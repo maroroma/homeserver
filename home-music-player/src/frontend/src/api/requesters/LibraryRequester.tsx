@@ -59,6 +59,13 @@ export class LibraryRequester {
         return RequesterUtils.delete(`musicplayer/library/artists/${artistOwner.id}/albums/${albumToDelete.id}`);
     }
 
+    public static addNewTrackToAlbum(albumToUpdate:Album, fileToUpload:File):Promise<Track[]> {
+        const request = new FormData();
+        request.append("file", fileToUpload);
+        
+        return RequesterUtils.upload(`musicplayer/library/albums/${albumToUpdate.id}/tracks`, request);
+    }
+
     public static getAllTracksForArtist(artistOwner: Artist): Promise<Track[]> {
         return fetch(`musicplayer/library/artists/${artistOwner.id}/tracks`)
             .then(reponse => RequesterUtils.handleErrors(reponse))
@@ -116,4 +123,6 @@ export class LibraryRequester {
                 dispatch(DisplayToastAction.error("Erreur rencontrée lors de la récupération des artistes à rajouter"))
             });
     }
+
+   
 }

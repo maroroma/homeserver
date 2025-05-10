@@ -64,6 +64,13 @@
             <version>1.0.3.3</version>
         </dependency>
 
+        <!-- upload amélioré des fichiers-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-fileupload2-jakarta</artifactId>
+            <version>2.0.0-M1</version>
+        </dependency>
+
         <!-- tags mp3 -->
         <dependency>
             <groupId>org.apache.tika</groupId>

@@ -73,4 +73,13 @@ export class RequesterUtils {
 
     }
 
+    public static upload<OUTPUT>(uri: string, body: any): Promise<OUTPUT> {
+        return fetch(uri, {
+            method: HttpMethods.POST,
+            body: body
+        })
+            .then(response => RequesterUtils.handleErrors(response))
+
+    }
+
 }

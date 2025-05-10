@@ -62,10 +62,17 @@ public interface FileAdapter {
         Traper.trap(() -> FileCopyUtils.copy(this.getInputStream(), outputStream));
     }
 
+    default FileAdapter copyFrom(InputStream inputStream) {
+        Traper.trapToBoolean(() ->  FileCopyUtils.copy(inputStream, this.getOutputStream()));
+        return this;
+    }
     default String getExtension() {
         return FileUtils.getExtension(this).orElse(".mp3");
     }
 
+    default String getFileNameWithoutExtension() {
+        return this.getFileName().replace("." + this.getExtension(), "");
+    }
 
 
 }

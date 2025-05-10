@@ -14,6 +14,7 @@ import TrackItemRenderer from "../../common/tracks/TrackItemRenderer";
 import {PlayerRequester} from "../../../api/requesters/PlayerRequester";
 import {Track} from "../../../api/model/library/Track";
 import {DisplayToastAction} from "../../../state/actions/toastActions/DisplayToastAction";
+import MenuUploadButton from "../../common/menu/MenuUploadButton";
 
 
 const AlbumViewComponent: FC = () => {
@@ -50,6 +51,7 @@ const AlbumViewComponent: FC = () => {
                 onClick={() => addAlbumToPlayList()}
                 disabled={albumWithTracksSubState.tracksToDisplay.length === 0}
             />
+            <MenuUploadButton onClick={() => dispatch(SimpleViewChangeAction.of(ViewState.AddFileToAlbum))}/>
             <MenuDeleteButton onClick={() => askForDeletion()} />
         </HeaderMenuComponent>
         <DescriptionPanelComponent libraryItemArts={albumWithTracksSubState.album?.libraryItemArts}>
