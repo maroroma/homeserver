@@ -102,6 +102,20 @@ public class AlbumService {
         return albumEntity;
     }
 
+    public AlbumEntity parseForNewTracks(UUID albumId) {
+        var albumToUpdate = this.albumRepository.getReferenceById(albumId);
+        var allTracksFromDataBase = this.trackService.findTracksForAlbum(albumToUpdate);
+        var allTracksInDirectory = trackService.scanDirectoryForTracks(albumToUpdate);
+
+        allTracksInDirectory.stream()
+                .filter(aTrackFromDirectory -> allTracksFromDataBase.stream().noneMatch(aTrackFromDataBase -> aTrackFromDataBase.getLibraryItemPath().equalsIgnoreCase(aTrackFromDirectory.getLibraryItemPath())))
+                .forEach(albumToUpdate::addTrack);
+
+        this.albumRepository.saveAndFlush(albumToUpdate);
+
+        return albumToUpdate;
+    }
+
     /**
      * Si le nom de l'artiste est présent dans le nom de l'album on le vire
      * @param artist

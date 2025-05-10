@@ -62,7 +62,7 @@ public class LocalFileSystemInputStreamCache extends AbstractInputStreamCache {
             if (!localCacheFileAdapter.exists()) {
                 log.info("<{}> loading into localcache", FileUtils.convertBase64ToPath(localCacheFileAdapter.getFileName()));
                 var start = System.currentTimeMillis();
-                trackFileAdapter.createFile();
+                localCacheFileAdapter.createFile();
                 trackFileAdapter.copyTo(localCacheFileAdapter);
                 log.info("<{}> added in {} ms in localfilecache",
                         FileUtils.convertBase64ToPath(localCacheFileAdapter.getFileName()),

@@ -1,11 +1,14 @@
 package maroroma.homemusicplayer.tools;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.*;
 import java.util.function.*;
 
 /**
  * Classe utilitaire pour faciliter la gestion des exceptions qui ne sont pas des {@link RuntimeException}
  */
+@Slf4j
 public abstract class Traper {
 
     public static<T, U> Function<T, U> trapAndMap(WithExceptionFunction<T, U> supplier) {
@@ -34,6 +37,7 @@ public abstract class Traper {
         try {
             return supplier.supply();
         } catch (Exception e) {
+            log.warn("Trap exception", e);
             return orSupplier.get();
         }
     }
@@ -43,6 +47,7 @@ public abstract class Traper {
             emptyConsumer.apply();
             return true;
         } catch(Exception exception) {
+            log.warn("Trap exception", exception);
             return false;
         }
     }
