@@ -63,7 +63,7 @@ public interface FileAdapter {
     }
 
     default String getExtension() {
-        return this.getFileName().split("\\.")[this.getFileName().split("\\.").length - 1];
+        return FileUtils.getExtension(this).orElse(".mp3");
     }
 
 

@@ -13,4 +13,5 @@ public interface InputStreamCache {
     void populate(PlayList playList);
 
     void cleanOversizedCache();
+    void cleanOnStop();
 }

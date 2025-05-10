@@ -2,6 +2,7 @@ package maroroma.homemusicplayer.services;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homemusicplayer.model.library.entities.AlbumEntity;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
 import maroroma.homemusicplayer.model.messaging.api.SimpleBroadcastNotification;
@@ -30,6 +31,7 @@ import static maroroma.homemusicplayer.tools.CustomAssert.trackIdNotNull;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PlayerService {
 
     private final AlbumService albumService;
@@ -107,6 +109,7 @@ public class PlayerService {
     public void stop() {
         this.playList = PlayList.empty();
         this.mp3Player.stop();
+        this.inputStreamCache.cleanOnStop();
     }
 
     public void pause() {
@@ -118,12 +121,14 @@ public class PlayerService {
     }
 
     public void next() {
+        log.info("PLAYER -> NEXT TRACK");
         this.playList = this.playList.next();
         this.mp3Player.play(this.playList.getCurrentTrack(), endedTrack -> this.next());
         this.inputStreamCache.populate(this.playList);
     }
 
     public void previous() {
+        log.info("PLAYER -> PREVIOUS TRACK");
         this.playList = this.playList.previous();
         this.mp3Player.play(this.playList.getCurrentTrack(), endedTrack -> this.next());
     }

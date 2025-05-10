@@ -4,6 +4,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 import maroroma.homemusicplayer.model.files.FileAdapter;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
+import maroroma.homemusicplayer.tools.FileUtils;
 import maroroma.homemusicplayer.tools.PlayList;
 import org.springframework.scheduling.annotation.Async;
 
@@ -16,16 +17,25 @@ public class LocalFileSystemInputStreamCache extends AbstractInputStreamCache {
 
     private final MemoryInputStreamCache memoryInputStreamCache;
     private final String localFileSystemCachePath;
+    private final ParameterizedLock parameterizedLock = new ParameterizedLock();
 
 
     @Override
     public InputStream getInputStream(TrackEntity trackEntity) {
+
+        log.info("<{}> requested for playing right now", trackEntity.getName());
+
+        // tentative de recopie du fichier en local si inexistant
         var localCacheFileAdapter = this.copyToLocalFile(trackEntity);
 
+        // création d'un inputstream à partir de ce fichier
         return this.memoryInputStreamCache.getInputStream(trackEntity.replaceLibraryItemPath(localCacheFileAdapter));
 
     }
 
+    /**
+     * @return Répertoire de base du cache
+     */
     private FileAdapter localFileSystemCacheDirectory() {
         var result = this.filesFactory.getFileFromPath(this.localFileSystemCachePath);
         if (!result.exists()) {
@@ -34,37 +44,48 @@ public class LocalFileSystemInputStreamCache extends AbstractInputStreamCache {
         return result;
     }
 
+    private FileAdapter generateLocalCacheFileAdapter(FileAdapter trackFileAdapter) {
+        return localFileSystemCacheDirectory().combine(FileUtils.convertPathToBase64(trackFileAdapter.getFileName()));
+    }
+
     private FileAdapter copyToLocalFile(TrackEntity trackEntity) {
-        var localFileCacheDirectory = localFileSystemCacheDirectory();
+        // c un peu la fête sur le multithreading, du coup on lock par fichier histoire qu'on est pas une recopie en cours
+        // qui renvoie sur un deuxieme appel que le fichier est ok, et le charge en mémoire en mode tout pourri
+        synchronized(parameterizedLock.getLock(trackEntity)) {
 
-        var trackFileAdapter = this.filesFactory.getFileFromBase64Path(trackEntity.getLibraryItemPath());
+            // fichier initial
+            var trackFileAdapter = this.filesFactory.getFileFromBase64Path(trackEntity.getLibraryItemPath());
 
-        var localCacheFileAdapter = localFileCacheDirectory.combine(trackEntity.getId().toString() + "." + trackFileAdapter.getExtension());
+            // fichier au niveau cache (on utilise l'identifiant)
+            var localCacheFileAdapter = generateLocalCacheFileAdapter(trackFileAdapter);
 
-        if (!localCacheFileAdapter.exists()) {
-            var start = System.currentTimeMillis();
-            trackFileAdapter.createFile();
-            trackFileAdapter.copyTo(localCacheFileAdapter);
-            log.info("added in {} ms in localfilecache -> {}", System.currentTimeMillis() - start, localCacheFileAdapter.getFileName());
-        } else {
-            log.info("{} already in localfilecache",  localCacheFileAdapter.getFileName());
+            if (!localCacheFileAdapter.exists()) {
+                log.info("<{}> loading into localcache", FileUtils.convertBase64ToPath(localCacheFileAdapter.getFileName()));
+                var start = System.currentTimeMillis();
+                trackFileAdapter.createFile();
+                trackFileAdapter.copyTo(localCacheFileAdapter);
+                log.info("<{}> added in {} ms in localfilecache",
+                        FileUtils.convertBase64ToPath(localCacheFileAdapter.getFileName()),
+                        System.currentTimeMillis() - start
+                );
+            } else {
+                log.info("<{}> already in localfilecache", FileUtils.convertBase64ToPath(localCacheFileAdapter.getFileName()));
+            }
+
+            return localCacheFileAdapter;
         }
-
-        return localCacheFileAdapter;
     }
 
     @Async
     @Override
     public void populate(PlayList playList) {
-
+        log.info("START POPULATE by teasing {} elements", this.teaseSize);
+        // on ne fait plus la copie mémoire sur le teasing, l'écriture en fichier
+        // accélère suffisament le process
         playList.teaseNextTracks(this.teaseSize)
-                .stream()
-                .map(aTrackEntity -> aTrackEntity.replaceLibraryItemPath(this.copyToLocalFile(aTrackEntity)))
-                .forEach(this::getInputStream);
-
-        this.memoryInputStreamCache.cleanOversizedCache();
+                .forEach(this::copyToLocalFile);
         this.cleanOversizedCache();
-
+        log.info("END POPULATE by teasing {} elements", this.teaseSize);
     }
 
     @Override
@@ -73,18 +94,23 @@ public class LocalFileSystemInputStreamCache extends AbstractInputStreamCache {
 
         var actualCacheSize = localFileCacheDirectory.getFiles().size();
 
-
         if (localFileCacheDirectory.getFiles().size() > this.cacheMaxSize) {
             localFileCacheDirectory.getFiles().stream()
                     .sorted(Comparator.comparing(FileAdapter::createFile))
                     .limit(actualCacheSize - this.cacheMaxSize)
                     .forEach(aFileToRemove -> {
                         aFileToRemove.delete();
-                        log.info("removed from localfilecache -> {}", aFileToRemove.getFileName());
+                        log.info("<{}> removed from localfilecache", FileUtils.convertBase64ToPath(aFileToRemove.getFileName()));
                     });
         } else {
-            log.info("localfilecache à {} éléments, pas de purge", actualCacheSize);
+            log.info("localfilecache à <{}> éléments, pas de purge", actualCacheSize);
         }
 
+    }
+
+    @Override
+    public void cleanOnStop() {
+        this.memoryInputStreamCache.cleanOnStop();
+        this.parameterizedLock.clear();
     }
 }

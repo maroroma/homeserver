@@ -6,6 +6,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 import maroroma.homemusicplayer.model.files.FileAdapter;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
+import maroroma.homemusicplayer.tools.FileUtils;
 import maroroma.homemusicplayer.tools.PlayList;
 import maroroma.homemusicplayer.tools.Traper;
 import org.springframework.scheduling.annotation.Async;
@@ -60,7 +61,7 @@ public class MemoryInputStreamCache extends AbstractInputStreamCache {
             itemKeysToRemove
                     .forEach(aKeyToRemove -> {
                         var removedItem = this.innerCache.remove(aKeyToRemove);
-                        log.info("removed from memorycache -> {}", removedItem.readableItemName);
+                        log.info("<{}> removed from memorycache", FileUtils.convertBase64ToPath(removedItem.readableItemName));
                     });
 
             log.info("memorycache cleaned : {} items remaining", this.innerCache.size());
@@ -68,7 +69,12 @@ public class MemoryInputStreamCache extends AbstractInputStreamCache {
         }
     }
 
-    private void populate(FileAdapter fileAdapter) {
+    @Override
+    public void cleanOnStop() {
+        this.innerCache.clear();
+    }
+
+    public void populate(FileAdapter fileAdapter) {
         this.innerCache.computeIfAbsent(fileAdapter.pathAsBase64(), key -> TimestampedInputStream.init(fileAdapter));
     }
 
@@ -85,12 +91,15 @@ public class MemoryInputStreamCache extends AbstractInputStreamCache {
         static TimestampedInputStream init(FileAdapter inputStream) {
             var start = System.currentTimeMillis();
             var memoryInputStream = inputStream.getInMemoryInputStream();
-            MemoryInputStreamCache.log.info("added in {} ms in memorycache -> {}", System.currentTimeMillis() - start, inputStream.getFileName());
+            MemoryInputStreamCache.log.info("<{}> added in {} ms in memorycache",
+                    FileUtils.convertBase64ToPath(inputStream.getFileName()),
+                    System.currentTimeMillis() - start
+            );
             return new TimestampedInputStream(inputStream.getFileName(), memoryInputStream, LocalDateTime.now());
         }
 
         TimestampedInputStream reset() {
-            MemoryInputStreamCache.log.info("{} refreshed in memorycache", this.readableItemName);
+            MemoryInputStreamCache.log.info("<{}> refreshed in memorycache", FileUtils.convertBase64ToPath(this.readableItemName));
             this.localDateTime = LocalDateTime.now();
             Traper.trapToBoolean(inputStream::reset);
             return this;
