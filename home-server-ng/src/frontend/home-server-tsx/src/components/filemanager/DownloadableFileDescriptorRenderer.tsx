@@ -34,7 +34,7 @@ const DownloadableFileDescriptorRenderer: FC<DownloadableFileDescriptorRendererP
             <div className={CssTools.of("h3").then("file-descriptor-icon").if(disabled, "text-dark").uppercase().css()}>
                 {fileIconResolver.toIcon(selectableFileDescriptor.item)}
             </div>
-            <div className={CssTools.of("h3").if(disabled, "text-dark").uppercase().css()}>
+            <div className={CssTools.of("h3").fullbreak().if(disabled, "text-dark").uppercase().css()}>
                 {selectableFileDescriptor.item.name}
             </div>
         </div>

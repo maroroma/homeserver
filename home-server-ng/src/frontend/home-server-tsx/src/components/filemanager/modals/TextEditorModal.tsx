@@ -11,6 +11,7 @@ import BlockingButton from "../../blockingbutton/BlockingButton";
 import {useHomeServerContext} from "../../../context/HomeServerRootContext";
 import EndWIPAction from "../../../context/actions/EndWIPAction";
 import EndWIPInErrorAction from "../../../context/actions/EndWIPInErrorAction";
+import {BootstrapText} from "../../bootstrap/BootstrapText";
 
 export type TextEditorModalProps = {
   show: boolean;
@@ -52,7 +53,7 @@ const TextEditorModal: FC<TextEditorModalProps> = ({
     <Modal show={show} fullscreen={true} onHide={() => onHide()}>
       <Modal.Body>
         <Form.Group className="text-editor-group">
-          <Form.Label>Edition de {editableFile.fileDescriptor.name}</Form.Label>
+          <Form.Label className={BootstrapText.WordBreak}>Edition de {editableFile.fileDescriptor.name}</Form.Label>
           <Form.Control
             className="text-editor-textarea"
             as="textarea"
