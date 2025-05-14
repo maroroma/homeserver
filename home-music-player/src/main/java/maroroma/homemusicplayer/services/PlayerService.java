@@ -55,6 +55,8 @@ public class PlayerService {
     }
 
     public void play(CreatePlayerRequest createPlayerRequest) {
+        log.info("PLAYER -> PLAY");
+
         Assert.notNull(createPlayerRequest, "createPlayerRequest can't be null");
         trackIdNotNull(createPlayerRequest.getTrackId());
 
@@ -70,6 +72,7 @@ public class PlayerService {
                     this.mp3Player.play(this.playList.getCurrentTrack(), endedTrack -> this.next());
                     this.inputStreamCache.populate(this.playList);
                 }, () -> this.applicationEventPublisher.publishEvent(SimpleBroadcastNotification.error("Aucun morceau n'est accessible")));
+
 
     }
 
@@ -107,16 +110,21 @@ public class PlayerService {
 
 
     public void stop() {
+        log.info("PLAYER -> STOP");
+        this.applicationEventPublisher.publishEvent(SimpleBroadcastNotification.info("Arrêt de la lecture demandé"));
+
         this.playList = PlayList.empty();
         this.mp3Player.stop();
         this.inputStreamCache.cleanOnStop();
     }
 
     public void pause() {
+        log.info("PLAYER -> PAUSE");
         this.mp3Player.pause();
     }
 
     public void resume() {
+        log.info("PLAYER -> RESUME");
         this.mp3Player.resume();
     }
 

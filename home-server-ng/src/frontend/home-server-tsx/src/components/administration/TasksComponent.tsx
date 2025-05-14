@@ -1,6 +1,6 @@
 import {FC, ReactElement, useEffect} from "react";
 import {Button, ListGroup, ProgressBar} from "react-bootstrap";
-import {BoxSeam, Display, Question, Trash} from "react-bootstrap-icons";
+import {BoxSeam, DiscFill, Display, Question, Trash} from "react-bootstrap-icons";
 import {useHomeServerContext} from "../../context/HomeServerRootContext";
 import {AdministrationRequester} from "../../api/AdministrationRequester";
 import {AdministrationLoadedTasksAction} from "../../context/actions/administration/AdministrationLoadedTasksAction";
@@ -46,6 +46,10 @@ const TasksComponent: FC = () => {
 
         if (aTask.supplierType === "SEEDBOX") {
             return <BoxSeam size={40} className={CustomClassNames.SpaceAfterIcon} />
+        }
+
+        if (aTask.supplierType === "REMOTE_MUSIC") {
+            return <DiscFill size={40} className={CustomClassNames.SpaceAfterIcon} />
         }
 
         return <Question />

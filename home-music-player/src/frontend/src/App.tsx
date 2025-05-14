@@ -17,6 +17,7 @@ import WebSocketHandlerComponent from './components/websocket/WebSocketHandlerCo
 import SmallPlayerComponent from './components/player/SmallPlayerComponent';
 import FullscreenPlayerComponent from './components/player/FullscreenPlayerComponent';
 import UploadNewTrackPopupComponent from './components/library/artist/UploadNewTrackPopupComponent';
+import PullStatusComponent from './components/pullstatus/PullStatusComponent';
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
         <SmallPlayerComponent></SmallPlayerComponent>
 
         <WebSocketHandlerComponent></WebSocketHandlerComponent>
+        <PullStatusComponent />
 
         <ToasterComponent></ToasterComponent>
       </MusicPlayerProvider>

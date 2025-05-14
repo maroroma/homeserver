@@ -8,8 +8,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Builder
+@Builder(toBuilder = true)
 public class MusicPlayerStatus {
     private PlayerStatus playerStatus;
+
+    private NamedMusicItem track;
+
+    private NamedMusicItem artist;
+
+    private NamedMusicItem album;
+
+    private int volume;
     private String musicPlayerUrl;
 }

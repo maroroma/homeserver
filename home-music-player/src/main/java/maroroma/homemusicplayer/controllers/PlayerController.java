@@ -3,7 +3,9 @@ package maroroma.homemusicplayer.controllers;
 import lombok.RequiredArgsConstructor;
 import maroroma.homemusicplayer.model.player.api.AddAlbumToPlayListRequest;
 import maroroma.homemusicplayer.model.player.api.CreatePlayerRequest;
+import maroroma.homemusicplayer.model.player.api.FullPlayerStatus;
 import maroroma.homemusicplayer.model.player.api.PlayerStatus;
+import maroroma.homemusicplayer.services.PlayerMonitor;
 import maroroma.homemusicplayer.services.PlayerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +22,7 @@ public class PlayerController {
 
 
     private final PlayerService playerService;
+    private final PlayerMonitor playerMonitor;
 
 
     @PostMapping("musicplayer/player")
@@ -79,6 +82,11 @@ public class PlayerController {
     @GetMapping("musicplayer/player/status")
     public ResponseEntity<PlayerStatus> getPlayerStatus() {
         return ResponseEntity.ok(playerService.getPlayerStatus());
+    }
+
+    @GetMapping("musicplayer/player/status/full")
+    public ResponseEntity<FullPlayerStatus> getCurrentTrach() {
+        return ResponseEntity.ok(playerMonitor.generatePlayerStatus());
     }
 
 

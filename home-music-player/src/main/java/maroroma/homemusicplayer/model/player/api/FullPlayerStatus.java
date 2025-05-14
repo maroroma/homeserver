@@ -12,7 +12,14 @@ import maroroma.homemusicplayer.model.library.api.Track;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PlayerStatusEvent {
+public class FullPlayerStatus {
+
+    public static FullPlayerStatus stopped() {
+        return FullPlayerStatus.builder()
+                .playerStatus(PlayerStatus.STOPPED)
+                .build();
+    }
+
     private PlayerStatus playerStatus;
 
     private Track track;

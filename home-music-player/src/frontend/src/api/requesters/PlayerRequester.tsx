@@ -1,6 +1,7 @@
 import {Album} from "../model/library/Album";
 import {Artist} from "../model/library/Artist";
 import {Track} from "../model/library/Track";
+import {PlayerStatusEvent} from "../model/player/PlayerStatusEvent";
 import {RequesterUtils} from "./RequesterUtils";
 
 export class CreatePlayerRequest {
@@ -66,5 +67,9 @@ export class PlayerRequester {
 
     public static setVolume(newVolumeValue: number): Promise<any> {
         return RequesterUtils.update(`musicplayer/player/volume/${newVolumeValue}`);
+    }
+
+    public static getFullPlayerStatus():Promise<PlayerStatusEvent> {
+        return RequesterUtils.get("musicplayer/player/status/full");
     }
 }

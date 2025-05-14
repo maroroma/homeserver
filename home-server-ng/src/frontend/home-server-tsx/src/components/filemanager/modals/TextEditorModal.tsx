@@ -29,9 +29,11 @@ const TextEditorModal: FC<TextEditorModalProps> = ({
   const [editableFile, setEditableFile] = useState(EditableTextFile.empty());
 
   useEffect(() => {
-    FileManagerRequester.getEditableText(textToEdit).then((response) =>
-      setEditableFile(response)
-    );
+    if (textToEdit.id !== "") {
+      FileManagerRequester.getEditableText(textToEdit).then((response) =>
+        setEditableFile(response)
+      ).catch(error => dispatch(new EndWIPInErrorAction("Erreur lors du chargement du fichier")));
+    }
   }, [textToEdit]);
 
   const saveFile = () => {
@@ -53,7 +55,9 @@ const TextEditorModal: FC<TextEditorModalProps> = ({
     <Modal show={show} fullscreen={true} onHide={() => onHide()}>
       <Modal.Body>
         <Form.Group className="text-editor-group">
-          <Form.Label className={BootstrapText.WordBreak}>Edition de {editableFile.fileDescriptor.name}</Form.Label>
+          <Form.Label className={BootstrapText.WordBreak}>
+            Edition de {editableFile.fileDescriptor.name}
+          </Form.Label>
           <Form.Control
             className="text-editor-textarea"
             as="textarea"
@@ -81,7 +85,9 @@ const TextEditorModal: FC<TextEditorModalProps> = ({
         <BlockingButton
           label="Sauvegarder"
           variant={BootstrapVariants.Primary}
-          onClick={() => {saveFile()}}
+          onClick={() => {
+            saveFile();
+          }}
           toastMessage="Sauvegarde En cours"
         />
       </Modal.Footer>

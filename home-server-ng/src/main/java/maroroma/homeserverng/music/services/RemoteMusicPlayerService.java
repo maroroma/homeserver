@@ -4,6 +4,7 @@ import maroroma.homeserverng.music.model.musicplayer.MusicPlayerStatus;
 import maroroma.homeserverng.music.model.musicplayer.PlayerStatus;
 import maroroma.homeserverng.tools.annotations.Property;
 import maroroma.homeserverng.tools.config.HomeServerPropertyHolder;
+import maroroma.homeserverng.tools.exceptions.Traper;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -27,21 +28,17 @@ public class RemoteMusicPlayerService {
     public MusicPlayerStatus getPlayerStatus() {
         RestTemplate rt = new RestTemplate(this.simpleClientHttpRequestFactory);
 
-        try {
-            return MusicPlayerStatus.builder()
-                    .playerStatus(rt.getForObject(this.homeserverMusicPlayerUrl.getResolvedValue() + "/musicplayer/player/status", PlayerStatus.class))
-                    .musicPlayerUrl(this.homeserverMusicPlayerUrl.getResolvedValue())
-                    .build();
-
-        } catch (Exception e) {
-            return MusicPlayerStatus.builder()
-                    .playerStatus(PlayerStatus.STOPPED)
-                    .musicPlayerUrl(this.homeserverMusicPlayerUrl.getResolvedValue())
-                    .build();
-        }
-
+        return Traper.trapWithOptional(() -> rt.getForObject(this.homeserverMusicPlayerUrl.getResolvedValue() + "/musicplayer/player/status/full", MusicPlayerStatus.class))
+                .orElse(MusicPlayerStatus.builder()
+                        .playerStatus(PlayerStatus.STOPPED).build())
+                .toBuilder()
+                .musicPlayerUrl(this.homeserverMusicPlayerUrl.getResolvedValue())
+                .build();
     }
 
 
-
+    public boolean stop() {
+        RestTemplate rt = new RestTemplate(this.simpleClientHttpRequestFactory);
+        return Traper.trapToBoolean(()  -> rt.delete(this.homeserverMusicPlayerUrl.getResolvedValue() + "/musicplayer/player"));
+    }
 }

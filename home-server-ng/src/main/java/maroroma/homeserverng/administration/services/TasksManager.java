@@ -1,30 +1,25 @@
 package maroroma.homeserverng.administration.services;
 
+import lombok.RequiredArgsConstructor;
 import maroroma.homeserverng.administration.model.Task;
 import maroroma.homeserverng.administration.model.TaskCancelRequest;
 import maroroma.homeserverng.tools.exceptions.Traper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
 
 /**
  * Gestion de l'affichage et de la suppression des taches en cours
  */
 @Service
+@RequiredArgsConstructor
 public class TasksManager {
 
     /**
      * Les fournisseurs de taches de l'appli
      */
     private final List<TasksSupplier> tasksSuppliers;
-
-
-    public TasksManager(List<TasksSupplier> tasksSuppliers) {
-        this.tasksSuppliers = tasksSuppliers;
-    }
-
     /**
      * REtourne l'ensemble des taches en cours
      * @return

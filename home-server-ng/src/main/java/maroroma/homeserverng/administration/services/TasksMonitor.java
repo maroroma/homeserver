@@ -1,5 +1,7 @@
 package maroroma.homeserverng.administration.services;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homeserverng.administration.model.Task;
 import maroroma.homeserverng.notifyer.services.CommonNotificatonTypes;
 import maroroma.homeserverng.tools.annotations.Property;
@@ -9,15 +11,11 @@ import maroroma.homeserverng.tools.notifications.NotificationEvent;
 import maroroma.homeserverng.tools.notifications.NotifyerContainer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.stream.*;
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ScheduledFuture;
-import java.util.stream.Collectors;
 
 /**
  * Controle à intervalle régulier les taches en cours remontées par le {@link TasksManager}
@@ -25,6 +23,8 @@ import java.util.stream.Collectors;
  * Si le service détecte des différences, on notifie
  */
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class TasksMonitor {
 
     public static final String HOMESERVER_TASK_MONITOR_REFRESH_FREQUENCY = "homeserver.administration.tasks.monitor.refresh.frequency";
@@ -56,14 +56,6 @@ public class TasksMonitor {
      */
     private ScheduledFuture<?> scheduledFuture;
 
-    public TasksMonitor(TasksManager tasksManager,
-                        ThreadPoolTaskScheduler adminTaskScheduler,
-                        NotifyerContainer notifyerContainer) {
-        this.tasksManager = tasksManager;
-        this.adminTaskScheduler = adminTaskScheduler;
-        this.notifyerContainer = notifyerContainer;
-    }
-
 
     @PostConstruct
     public void startScheduling() {
@@ -85,25 +77,22 @@ public class TasksMonitor {
         List<Task> newCurrentTasksList = this.tasksManager.getCurrentTasks();
 
         // pour la comparaison, on va générer un "hash" pour chaque liste et comparer le tout
-        String newListHash = this.generateKeyFromTaskList(newCurrentTasksList);
-        String lastCurrentHash = this.generateKeyFromTaskList(this.lastCurrentTaskList);
+        String newListHash = this.generateGlobalHashFromTaskList(newCurrentTasksList);
+        String lastCurrentHash = this.generateGlobalHashFromTaskList(this.lastCurrentTaskList);
 
         // si les deux hash sont différents
         if (!lastCurrentHash.equals(newListHash)) {
-            System.out.println("lastCurrentHash: " + lastCurrentHash);
-            System.out.println("newListHash: " + newListHash);
-
-            List<String> newListHashes = newCurrentTasksList.stream().map(Task::generateKey).toList();
-            List<String> lastListHashes = lastCurrentTaskList.stream().map(Task::generateKey).toList();
+            log.info("lastCurrentHash: {}", lastCurrentHash);
+            log.info("newListHash: {}", newListHash);
 
             // qui est nouveau
-            List<Task> newTasks = newCurrentTasksList.stream()
-                    .filter(oneTask -> !lastListHashes.contains(oneTask.generateKey()))
+            List<Task> newTasksForNotification = newCurrentTasksList.stream()
+                    .filter(oneTask -> oneTask.isNotInTaskList(lastCurrentTaskList))
                     .toList();
 
             // qui a disparu
-            List<Task> deletedTasks = lastCurrentTaskList.stream()
-                    .filter(oneTask -> !newCurrentTasksList.contains(oneTask.generateKey()))
+            List<Task> deletedTasksForNotification = lastCurrentTaskList.stream()
+                    .filter(oneTask -> oneTask.isNotInTaskList(newCurrentTasksList))
                     .toList();
 
             this.notifyerContainer.notify(NotificationEvent.builder()
@@ -112,9 +101,9 @@ public class TasksMonitor {
                             .title("Modification des taches en cours")
                             .message("Une modification des taches en cours a été détectée via le serveur")
                             .properties(Map.of("newTasks",
-                                    newTasks,
+                                    newTasksForNotification,
                                     "deletedTasks",
-                                    deletedTasks))
+                                    deletedTasksForNotification))
                     .build());
         }
 
@@ -123,7 +112,7 @@ public class TasksMonitor {
         this.lastCurrentTaskList = newCurrentTasksList;
     }
 
-    private String generateKeyFromTaskList(List<Task> taskList) {
+    private String generateGlobalHashFromTaskList(List<Task> taskList) {
         return taskList.stream()
                 .map(Task::generateKey)
                 .sorted()
