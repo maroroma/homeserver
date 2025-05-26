@@ -22,6 +22,7 @@ import SeedBoxComponent from './components/seedbox/SeedBoxComponent';
 import SeedBoxTodoComponent from './components/seedbox/SeedBoxTodoComponent';
 import HomeComponent from './components/home/HomeComponent';
 import ManageCalendarEvents from './components/administration/ManageCalendarEvents';
+import DefaultStartComponent from './components/layouts/DefaultStartComponent';
 
 function App() {
   const router = createHashRouter([
@@ -29,6 +30,10 @@ function App() {
       path: "/",
       element: <HomeServerLayoutComponent />,
       children: [
+        {
+          path:"/",
+          element:<DefaultStartComponent />
+        },
         {
           path: HomeServerRoutes.ADMINISTRATION_PROPERTIES,
           element: <AdministractionComponent></AdministractionComponent>

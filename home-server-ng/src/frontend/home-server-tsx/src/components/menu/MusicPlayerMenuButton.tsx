@@ -1,42 +1,22 @@
-import {FC, useEffect, useState} from "react";
+import {FC} from "react";
 import {Nav} from "react-bootstrap";
 import {DiscFill} from "react-bootstrap-icons";
-import MusicPlayerStatus from "../../model/musicplayer/MusicPlayerStatus";
-import MusicPlayerRequester from "../../api/MusicPlayerRequester";
 import CssTools from "../bootstrap/CssTools";
 import {PlayerStatus} from "../../model/musicplayer/PlayerStatus";
+import {useHomeServerContext} from "../../context/HomeServerRootContext";
 
 
 const MusicPlayerMenuButton: FC = () => {
 
 
-
-    const [musicPlayerStatus, setMusicPlayerStatus] = useState(MusicPlayerStatus.empty())
-
-    useEffect(() => {
-        const intervalToRemove = setInterval(
-            () => MusicPlayerRequester
-                .getMusicPlayerStatus()
-                .then(response =>
-                    setMusicPlayerStatus(response)
-                )
-                .catch(error => console.log("Erreur rencontrée lors de la récupération du status du musicPlayer"))
-            ,
-            2000);
-
-        MusicPlayerRequester.getMusicPlayerStatus()
-            .then(response => setMusicPlayerStatus(response))
-            .catch(error => console.log("Erreur rencontrée lors de la récupération du status du musicPlayer"))
-
-        return () => clearInterval(intervalToRemove);
-    }, []);
+    const {musicPlayerSubState} = useHomeServerContext();
 
 
-    return <Nav.Link href={musicPlayerStatus.musicPlayerUrl} target="_blank">
+    return <Nav.Link href={musicPlayerSubState.musicPlayerStatus.musicPlayerUrl} target="_blank">
         <DiscFill className={CssTools
             .of("space-after-icon")
-            .if(musicPlayerStatus.playerStatus === PlayerStatus.PLAYING, "endless-rotation")
-            .if(musicPlayerStatus.playerStatus === PlayerStatus.PAUSED, "blinkable")
+            .if(musicPlayerSubState.musicPlayerStatus.playerStatus === PlayerStatus.PLAYING, "endless-rotation")
+            .if(musicPlayerSubState.musicPlayerStatus.playerStatus === PlayerStatus.PAUSED, "blinkable")
             .css()} size={20} />
         MusicPlayer
     </Nav.Link>

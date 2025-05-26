@@ -8,6 +8,7 @@ import {useHomeServerContext} from "../../context/HomeServerRootContext";
 import {AdministrationRequester} from "../../api/AdministrationRequester";
 import AdministrationLoadedActiveCalendarAction from "../../context/actions/administration/AdministrationLoadedActiveCalendarAction";
 import EndWIPInErrorAction from "../../context/actions/EndWIPInErrorAction";
+import BackgroundTasksComponent from "./BackgroundTasksComponent";
 
 const HomeServerLayoutComponent: FC = () => {
 
@@ -36,6 +37,7 @@ const HomeServerLayoutComponent: FC = () => {
                 <Toast.Body className="text-white">{toastSubState.toastMessage}</Toast.Body>
             </Toast>
         </ToastContainer>
+        <BackgroundTasksComponent/>
     </div>
 }
 

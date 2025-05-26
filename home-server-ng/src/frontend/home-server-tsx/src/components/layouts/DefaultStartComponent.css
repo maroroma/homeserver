@@ -1,0 +1,8 @@
+.start-button {
+    width: 100%;
+    text-align: center;
+}
+
+.start-button button {
+    border-radius: 15px;
+}
