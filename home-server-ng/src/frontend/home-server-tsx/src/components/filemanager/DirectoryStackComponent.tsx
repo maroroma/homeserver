@@ -1,4 +1,4 @@
-import {FC} from "react";
+import {FC, useEffect} from "react";
 import {Breadcrumb, BreadcrumbItem} from "react-bootstrap";
 import {useHomeServerContext} from "../../context/HomeServerRootContext";
 import {BootstrapText} from "../bootstrap/BootstrapText";
@@ -9,6 +9,7 @@ import LoadedDirectoryAction from "../../context/actions/filemanager/LoadedDirec
 import EndWIPInErrorAction from "../../context/actions/EndWIPInErrorAction";
 import FileDirectoryDescriptor from "../../model/filemanager/FileDirectoryDescriptor";
 import LoadedRootDirectoriesAction from "../../context/actions/filemanager/LoadedRootDirectoriesAction";
+import WindowTool from "../layouts/WindowTool";
 
 const DirectoryStackComponent: FC = () => {
 
@@ -30,6 +31,10 @@ const DirectoryStackComponent: FC = () => {
                 .catch(error => dispatch(new EndWIPInErrorAction("Erreur rencontrée lors du chargement du répertoire")))
         }
     }
+
+    useEffect(() => {
+       WindowTool.scrollToTop()
+    }, [fileManagerSubState.directoriesStack])
 
     return <><Breadcrumb>
         {

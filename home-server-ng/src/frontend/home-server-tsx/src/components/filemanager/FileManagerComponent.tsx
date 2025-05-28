@@ -42,6 +42,7 @@ import AddDirectoryModal from "./modals/AddDirectoryModal";
 import MusicPlayerModal from "./modals/MusicPlayerModal";
 import ActionFromClipBoard from "../actionmenu/ActionFromClipBoard";
 import TextEditorModal from "./modals/TextEditorModal";
+import ActionScrollToTopButton from "../actionmenu/ActionScrollToTopButton";
 
 const FileManagerComponent: FC = () => {
 
@@ -236,6 +237,7 @@ const FileManagerComponent: FC = () => {
                         onClick={() => dispatch(SwitchAllDirectoryContentAction.selectAll())}
                         hidden={FileDirectoryDescriptor.isRoot(fileManagerSubState.currentDirectory) || (filteredDirectories.allSelected() && filteredFiles.allSelected())}
                     />
+                    <ActionScrollToTopButton/>
                     <ActionConfigButton onClick={() => setDisplayRootConfig(true)} />
                 </ActionMenuComponent>
             </>
