@@ -2,6 +2,7 @@ package maroroma.homemusicplayer.services;
 
 import lombok.RequiredArgsConstructor;
 import maroroma.homemusicplayer.model.player.api.FullPlayerStatus;
+import maroroma.homemusicplayer.model.player.api.MemoryStatus;
 import maroroma.homemusicplayer.model.player.api.PlayerStatus;
 import maroroma.homemusicplayer.services.mappers.entities.AlbumMapper;
 import maroroma.homemusicplayer.services.mappers.entities.ArtistMapper;
@@ -22,7 +23,7 @@ public class PlayerMonitor {
 
     public FullPlayerStatus generatePlayerStatus() {
         if (this.playerService.getPlayerStatus() == PlayerStatus.STOPPED) {
-            return FullPlayerStatus.stopped();
+            return FullPlayerStatus.stopped(generateMemoryStatus());
         } else {
 
             return Traper.trap(() -> this.playerService.getPlayList()
@@ -37,10 +38,19 @@ public class PlayerMonitor {
                                 .artist(artistMapper.lazyMapToModel(currentArtist))
                                 .album(albumMapper.mapToModel(currentAlbum))
                                 .volume(this.playerService.getVolume())
+                                .memoryStatus(generateMemoryStatus())
                                 .build();
-                    })).orElse(FullPlayerStatus.stopped());
+                    })).orElse(FullPlayerStatus.stopped(generateMemoryStatus()));
 
         }
+    }
+
+    private MemoryStatus generateMemoryStatus() {
+        return MemoryStatus.builder()
+                .heapFreeSize(Runtime.getRuntime().freeMemory())
+                .heapSize(Runtime.getRuntime().totalMemory())
+                .heapMaxSize(Runtime.getRuntime().maxMemory())
+                .build();
     }
 
 }

@@ -85,7 +85,7 @@ public class PlayerController {
     }
 
     @GetMapping("musicplayer/player/status/full")
-    public ResponseEntity<FullPlayerStatus> getCurrentTrach() {
+    public ResponseEntity<FullPlayerStatus> getFullPlayerStatus() {
         return ResponseEntity.ok(playerMonitor.generatePlayerStatus());
     }
 

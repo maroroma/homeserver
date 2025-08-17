@@ -65,7 +65,6 @@ public class PlayerService {
 
         this.applicationEventPublisher.publishEvent(SimpleBroadcastNotification.info("Playlist en cours de chargement"));
 
-
         extractTracks(createPlayerRequest)
                 .ifPresentOrElse(tracks -> {
                     this.playList = PlayList.of(createPlayerRequest.getTrackId(), tracks);

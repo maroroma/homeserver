@@ -71,13 +71,14 @@ public class Mp3Player {
                         // retrait de l'item
                         this.mp3Tasks.poll();
                         // ajout du nouveau, pour lequel on vient de demander l'arret
-                        this.mp3Tasks.add(
-                                new Mp3Task(loadInputStream(currentTrack), this)
-                                        .addEndedEventListener(endedTask -> {
-                                            this.mp3Tasks.poll();
-                                            endedEventListener.accept(endedTask);
-                                        })
-                                        .startThen());
+                        loadInputStream(currentTrack)
+                                .map(inputStream -> new Mp3Task(inputStream, this))
+                                .map(mp3Task -> mp3Task.addEndedEventListener(endedTask -> {
+                                    this.mp3Tasks.poll();
+                                    endedEventListener.accept(endedTask);
+                                }))
+                                .map(Mp3Task::startThen)
+                                .ifPresent(this.mp3Tasks::add);
                     })
                     // demande d'arret du morceau en cours (propre), pour laisser le prochain morceau démarré
                     .stopRequested();
@@ -86,12 +87,14 @@ public class Mp3Player {
 
         {
             // si pas de lecture en cours, création standard
-            this.mp3Tasks.add(new Mp3Task(loadInputStream(currentTrack), this)
-                    .addEndedEventListener(endedTask -> {
+            loadInputStream(currentTrack)
+                    .map(inputStream -> new Mp3Task(inputStream, this))
+                    .map(mp3Task -> mp3Task.addEndedEventListener(endedTask -> {
                         this.mp3Tasks.poll();
                         endedEventListener.accept(endedTask);
-                    })
-                    .startThen());
+                    }))
+                    .map(Mp3Task::startThen)
+                    .ifPresent(this.mp3Tasks::add);
         });
 
 
@@ -137,10 +140,20 @@ public class Mp3Player {
         return Optional.ofNullable(this.mp3Tasks.peek());
     }
 
-    private InputStream loadInputStream(TrackEntity trackEntity) {
-        this.isLoading.set(true);
-        var loadedStream = this.inputStreamCache.getInputStream(trackEntity);
-        this.isLoading.set(false);
-        return loadedStream;
+    private Optional<InputStream> loadInputStream(TrackEntity trackEntity) {
+        try {
+            this.isLoading.set(true);
+            var loadedStream = this.inputStreamCache.getInputStream(trackEntity);
+            this.isLoading.set(false);
+            return Optional.of(loadedStream);
+        } catch (Exception throwable) {
+            log.error("Failed to generate inputstream from <{}>", trackEntity.getName());
+            log.error("Exception occured while loading stream", throwable);
+        } finally {
+            this.isLoading.set(false);
+        }
+
+        return Optional.empty();
+
     }
 }

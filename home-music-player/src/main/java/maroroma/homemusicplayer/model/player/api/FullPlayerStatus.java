@@ -14,9 +14,10 @@ import maroroma.homemusicplayer.model.library.api.Track;
 @Builder
 public class FullPlayerStatus {
 
-    public static FullPlayerStatus stopped() {
+    public static FullPlayerStatus stopped(MemoryStatus memoryStatus) {
         return FullPlayerStatus.builder()
                 .playerStatus(PlayerStatus.STOPPED)
+                .memoryStatus(memoryStatus)
                 .build();
     }
 
@@ -29,6 +30,8 @@ public class FullPlayerStatus {
     private Album album;
 
     private int volume;
+
+    private MemoryStatus memoryStatus;
 }
 
 
