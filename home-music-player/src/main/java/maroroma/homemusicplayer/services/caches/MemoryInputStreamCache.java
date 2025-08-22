@@ -65,13 +65,21 @@ public class MemoryInputStreamCache extends AbstractInputStreamCache {
                     });
 
             log.info("memorycache cleaned : {} items remaining", this.innerCache.size());
+        } else {
+            log.info("memorycache à <{}> éléments, pas de purge", this.innerCache.size());
 
         }
+
     }
 
     @Override
     public void cleanOnStop() {
         this.innerCache.clear();
+    }
+
+    @Override
+    public int getCacheCurrentSize() {
+        return this.innerCache.size();
     }
 
     public void populate(FileAdapter fileAdapter) {

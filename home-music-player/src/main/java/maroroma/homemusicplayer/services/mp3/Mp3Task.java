@@ -27,6 +27,7 @@ public class Mp3Task extends Thread {
     private final InputStream inputStream;
 
     private final Mp3Player mp3Player;
+    private final String trackName;
     private AudioInputStream audioInputStream;
 
     private SourceDataLine sourceDataLine;

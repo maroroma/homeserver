@@ -14,4 +14,5 @@ public interface InputStreamCache {
 
     void cleanOversizedCache();
     void cleanOnStop();
+    int getCacheCurrentSize();
 }

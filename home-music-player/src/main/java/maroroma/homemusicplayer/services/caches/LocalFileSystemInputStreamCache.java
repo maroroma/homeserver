@@ -90,6 +90,8 @@ public class LocalFileSystemInputStreamCache extends AbstractInputStreamCache {
 
     @Override
     public void cleanOversizedCache() {
+        this.memoryInputStreamCache.cleanOversizedCache();
+
         var localFileCacheDirectory = localFileSystemCacheDirectory();
 
         var actualCacheSize = localFileCacheDirectory.getFiles().size();
@@ -112,5 +114,10 @@ public class LocalFileSystemInputStreamCache extends AbstractInputStreamCache {
     public void cleanOnStop() {
         this.memoryInputStreamCache.cleanOnStop();
         this.parameterizedLock.clear();
+    }
+
+    @Override
+    public int getCacheCurrentSize() {
+        return this.memoryInputStreamCache.getCacheCurrentSize();
     }
 }

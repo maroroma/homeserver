@@ -72,7 +72,7 @@ public class Mp3Player {
                         this.mp3Tasks.poll();
                         // ajout du nouveau, pour lequel on vient de demander l'arret
                         loadInputStream(currentTrack)
-                                .map(inputStream -> new Mp3Task(inputStream, this))
+                                .map(inputStream -> new Mp3Task(inputStream, this, currentTrack.getName()))
                                 .map(mp3Task -> mp3Task.addEndedEventListener(endedTask -> {
                                     this.mp3Tasks.poll();
                                     endedEventListener.accept(endedTask);
@@ -88,7 +88,7 @@ public class Mp3Player {
         {
             // si pas de lecture en cours, création standard
             loadInputStream(currentTrack)
-                    .map(inputStream -> new Mp3Task(inputStream, this))
+                    .map(inputStream -> new Mp3Task(inputStream, this, currentTrack.getName()))
                     .map(mp3Task -> mp3Task.addEndedEventListener(endedTask -> {
                         this.mp3Tasks.poll();
                         endedEventListener.accept(endedTask);
@@ -155,5 +155,9 @@ public class Mp3Player {
 
         return Optional.empty();
 
+    }
+
+    public List<String> getTaskNames() {
+        return this.mp3Tasks.stream().map(Thread::getName).toList();
     }
 }

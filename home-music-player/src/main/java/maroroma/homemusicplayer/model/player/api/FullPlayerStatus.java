@@ -8,10 +8,12 @@ import maroroma.homemusicplayer.model.library.api.Album;
 import maroroma.homemusicplayer.model.library.api.Artist;
 import maroroma.homemusicplayer.model.library.api.Track;
 
+import java.util.*;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class FullPlayerStatus {
 
     public static FullPlayerStatus stopped(MemoryStatus memoryStatus) {
@@ -32,6 +34,9 @@ public class FullPlayerStatus {
     private int volume;
 
     private MemoryStatus memoryStatus;
+
+    private List<String> mp3TaskNames;
+
 }
 
 
