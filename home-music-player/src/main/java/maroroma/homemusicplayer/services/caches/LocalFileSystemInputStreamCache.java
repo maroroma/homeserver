@@ -98,8 +98,11 @@ public class LocalFileSystemInputStreamCache extends AbstractInputStreamCache {
 
         if (localFileCacheDirectory.getFiles().size() > this.cacheMaxSize) {
             localFileCacheDirectory.getFiles().stream()
-                    .sorted(Comparator.comparing(FileAdapter::createFile))
+                    .sorted(Comparator.comparing(FileAdapter::createTimeAsMillis))
                     .limit(actualCacheSize - this.cacheMaxSize)
+                    .peek(aFileToRemove -> log.info("[{}] <{}> will be removed from localfilecache",
+                            aFileToRemove.createTimeAsMillis(),
+                            FileUtils.convertBase64ToPath(aFileToRemove.getFileName())))
                     .forEach(aFileToRemove -> {
                         aFileToRemove.delete();
                         log.info("<{}> removed from localfilecache", FileUtils.convertBase64ToPath(aFileToRemove.getFileName()));
