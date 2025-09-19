@@ -42,7 +42,7 @@ public class ArtistController {
         return ResponseEntity.ok(this.artistMapper.mapToModel(artistService.getAllArtists()));
     }
 
-    @GetMapping("musicplayer/library/artists/{artistId}")
+    @GetMapping("api/musicplayer/library/artists/{artistId}")
     ResponseEntity<Artist> getOneArtist(@PathVariable("artistId") UUID artistId) {
         return this.artistService.getArtist(artistId)
                 .map(artistMapper::mapToModel)
@@ -50,57 +50,57 @@ public class ArtistController {
                 .orElseThrow();
     }
 
-    @GetMapping("musicplayer/library/artists/{artistId}/tracks")
+    @GetMapping("api/musicplayer/library/artists/{artistId}/tracks")
     ResponseEntity<List<Track>> getTracksFromArtist(@PathVariable("artistId") UUID artistId) {
         return ResponseEntity.ok(this.trackMapper.mapToModel(this.artistService.getTracksFromArtist(artistId)));
     }
 
-    @GetMapping("musicplayer/library/artists/{artistId}/albums")
+    @GetMapping("api/musicplayer/library/artists/{artistId}/albums")
     ResponseEntity<List<Album>> getAlbumsFromArtist(@PathVariable("artistId") UUID artistId) {
         return ResponseEntity.ok(this.albumMapper.mapToModel(this.artistService.getArtistAlbums(artistId)));
     }
 
-    @DeleteMapping("musicplayer/library/artists/{artistId}/albums/{albumId}")
+    @DeleteMapping("api/musicplayer/library/artists/{artistId}/albums/{albumId}")
     ResponseEntity<Artist> removeAlbumFromArtist(@PathVariable("artistId") UUID artistId, @PathVariable("albumId") UUID albumId) {
         return ResponseEntity.ok(this.artistMapper.mapToModel(this.artistService.removeAlbumFromArtist(artistId, albumId)));
     }
 
-    @PatchMapping("musicplayer/library/artists/{artistId}/albums")
+    @PatchMapping("api/musicplayer/library/artists/{artistId}/albums")
     ResponseEntity<Artist> addAlbumToArtist(@PathVariable("artistId") UUID artistId, @RequestBody AddAlbumToArtistRequest addAlbumToArtistRequest) {
         return ResponseEntity.ok(this.artistMapper.mapToModel(this.artistService.addAlbumToArtist(artistId, addAlbumToArtistRequest)));
     }
 
-    @PatchMapping("musicplayer/library/artists/{artistId}/albums/scan")
+    @PatchMapping("api/musicplayer/library/artists/{artistId}/albums/scan")
     ResponseEntity<Artist> scanAlbumsForArtist(@PathVariable("artistId") UUID artistId) {
         return ResponseEntity.ok(this.artistMapper.mapToModel(this.artistService.scanAndAddNewAlbumsForArtist(artistId)));
     }
 
-    @DeleteMapping("musicplayer/library/artists/{artistId}")
+    @DeleteMapping("api/musicplayer/library/artists/{artistId}")
     ResponseEntity<List<Artist>> deleteArtist(@PathVariable("artistId") UUID artistId) {
         return ResponseEntity.ok(this.artistMapper.mapToModel(artistService.deleteArtist(artistId)));
     }
 
-    @DeleteMapping("musicplayer/library/artists")
+    @DeleteMapping("api/musicplayer/library/artists")
     ResponseEntity<List<Artist>> deleteArtist() {
         return ResponseEntity.ok(this.artistMapper.mapToModel(artistService.deleteArtists()));
     }
 
-    @PostMapping("musicplayer/library/artists")
+    @PostMapping("api/musicplayer/library/artists")
     ResponseEntity<List<Artist>> createArtist(@RequestBody CreateArtistRequest createArtistRequest) {
         return ResponseEntity.ok(this.artistMapper.mapToModel(artistService.addArtist(createArtistRequest)));
     }
 
-    @PatchMapping("musicplayer/library/artists/{artistId}")
+    @PatchMapping("api/musicplayer/library/artists/{artistId}")
     ResponseEntity<Artist> updateArtist(@PathVariable("artistId") UUID artistId, @RequestBody UpdateArtistRequest updateArtistRequest) {
         return ResponseEntity.ok(this.artistMapper.mapToModel(artistService.updateArtist(artistId, updateArtistRequest)));
     }
 
-    @GetMapping("musicplayer/library/artists/candidates")
+    @GetMapping("api/musicplayer/library/artists/candidates")
     ResponseEntity<List<SimpleFile>> getArtistCandidates() {
         return ResponseEntity.ok(this.fileAdapterMapper.map(artistService.getArtistCandidates()));
     }
 
-    @GetMapping("musicplayer/library/artists/{artistId}/albums/candidates")
+    @GetMapping("api/musicplayer/library/artists/{artistId}/albums/candidates")
     ResponseEntity<List<SimpleFile>> getAlbumCandidates(@PathVariable("artistId") UUID artistId) {
         return ResponseEntity.ok(this.fileAdapterMapper.map(artistService.getAlbumCandidates(artistId)));
     }

@@ -24,12 +24,12 @@ public class AlbumController {
 
     private final TrackMapper trackMapper;
 
-    @GetMapping("musicplayer/library/albums")
+    @GetMapping("api/musicplayer/library/albums")
     ResponseEntity<List<Album>> getAllAlbums() {
         return ResponseEntity.ok(this.albumMapper.mapToModel(albumService.getAllAlbums()));
     }
 
-    @GetMapping("musicplayer/library/albums/{albumId}")
+    @GetMapping("api/musicplayer/library/albums/{albumId}")
     ResponseEntity<Album> getOneAlbum(@PathVariable("albumId") UUID albumId) {
         return this.albumService.getAlbum(albumId)
                 .map(albumMapper::mapToModel)
@@ -37,12 +37,12 @@ public class AlbumController {
                 .orElseThrow();
     }
 
-    @GetMapping("musicplayer/library/albums/{albumId}/tracks")
+    @GetMapping("api/musicplayer/library/albums/{albumId}/tracks")
     ResponseEntity<List<Track>> getTracksFromAlbum(@PathVariable("albumId") UUID albumId) {
         return ResponseEntity.ok(this.trackMapper.mapToModel(this.albumService.findTracksForAlbum(albumId)));
     }
 
-    @PostMapping("musicplayer/library/albums/{albumId}/tracks")
+    @PostMapping("api/musicplayer/library/albums/{albumId}/tracks")
     ResponseEntity<List<Track>> addTrackToAlbum(@PathVariable("albumId") UUID albumId, HttpServletRequest request) {
         return ResponseEntity.ok(this.trackMapper.mapToModel(this.albumService.addNewFilesToAlbum(albumId, request)));
     }

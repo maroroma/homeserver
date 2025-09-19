@@ -13,12 +13,12 @@ public class LocalResourcesController {
 
     private final LocalResourcesService localResourcesService;
 
-    @GetMapping("musicplayer/localresources/thumbs/{base64Path}")
+    @GetMapping("api/musicplayer/localresources/thumbs/{base64Path}")
     public void getThumb(@PathVariable("base64Path") final String base64FileName, final HttpServletResponse response) {
         this.localResourcesService.getThumb(base64FileName, response);
     }
 
-    @GetMapping("musicplayer/localresources/fanarts/{base64Path}")
+    @GetMapping("api/musicplayer/localresources/fanarts/{base64Path}")
     public void getFanart(@PathVariable("base64Path") final String base64FileName, final HttpServletResponse response) {
         this.localResourcesService.getFanart(base64FileName, response);
     }

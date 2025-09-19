@@ -13,11 +13,11 @@ import java.util.*;
 @RequiredArgsConstructor
 public class TrackController {
 
-    @GetMapping("musicplayer/library/tracks")
+    @GetMapping("api/musicplayer/library/tracks")
     ResponseEntity<List<Artist>> getAllTracks() {
         return null;
     }
-    @GetMapping("musicplayer/library/tracks/{trackId}")
+    @GetMapping("api/musicplayer/library/tracks/{trackId}")
     ResponseEntity<Artist> getOneArtist(@PathVariable("trackId") UUID trackId) {
         return null;
     }
