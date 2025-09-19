@@ -1,0 +1,14 @@
+.player-component {
+    margin-top: calc(var(--default-padding) * 2)
+}
+
+.player-component .static-label {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.player-component .volume {
+    text-transform: uppercase;
+    font-size: xx-large;
+}

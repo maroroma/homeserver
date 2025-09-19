@@ -1,0 +1,14 @@
+.menu {
+    height: var(--menu-height);
+    position: fixed;
+    padding: var(--default-padding);
+    bottom: 0;
+}
+
+.menu .menu-items {
+    height: 100%;
+}
+
+.menu .menu-item {
+    height: 100%;
+}

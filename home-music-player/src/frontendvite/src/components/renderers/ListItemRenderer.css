@@ -1,0 +1,11 @@
+.list-item-renderer {
+    text-transform: uppercase;
+    margin: var(--default-padding);
+    max-width: 100%;
+}
+
+.list-item-renderer .label {
+    padding-left: var(--default-padding);
+    text-overflow: clip;
+    font-weight: bold;
+}

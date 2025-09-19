@@ -13,7 +13,7 @@
 
     <groupId>maro.roma</groupId>
     <artifactId>home-music-player</artifactId>
-    <version>1.15-SNAPSHOT</version>
+    <version>1.16-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -109,7 +109,7 @@
                             <outputDirectory>${basedir}/target/classes/static</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>src/frontend/build</directory>
+                                    <directory>src/frontendvite/dist</directory>
                                 </resource>
                             </resources>
                         </configuration>
@@ -121,7 +121,7 @@
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>${frontend-maven-plugin.version}</version>
                 <configuration>
-                    <workingDirectory>src/frontend</workingDirectory>
+                    <workingDirectory>src/frontendvite</workingDirectory>
                 </configuration>
                 <executions>
                     <execution>
