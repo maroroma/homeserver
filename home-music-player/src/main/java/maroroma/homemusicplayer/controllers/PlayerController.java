@@ -79,12 +79,12 @@ public class PlayerController {
         return ResponseEntity.ok(true);
     }
 
-    @GetMapping("musicplayer/player/status")
+    @GetMapping("api/musicplayer/player/status")
     public ResponseEntity<PlayerStatus> getPlayerStatus() {
         return ResponseEntity.ok(playerService.getPlayerStatus());
     }
 
-    @GetMapping("musicplayer/player/status/full")
+    @GetMapping("api/musicplayer/player/status/full")
     public ResponseEntity<FullPlayerStatus> getFullPlayerStatus() {
         return ResponseEntity.ok(playerMonitor.generatePlayerStatus());
     }

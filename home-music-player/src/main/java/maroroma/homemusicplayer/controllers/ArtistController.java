@@ -37,7 +37,7 @@ public class ArtistController {
 
     private final FileAdapterMapper fileAdapterMapper;
 
-    @GetMapping("musicplayer/library/artists")
+    @GetMapping("api/musicplayer/library/artists")
     ResponseEntity<List<Artist>> getAllArtists() {
         return ResponseEntity.ok(this.artistMapper.mapToModel(artistService.getAllArtists()));
     }
