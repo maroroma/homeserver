@@ -2,8 +2,10 @@ package maroroma.homemusicplayer.services.mp3;
 
 import lombok.AllArgsConstructor;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
+import java.util.concurrent.atomic.*;
 import java.util.stream.*;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.SourceDataLine;
@@ -16,13 +18,14 @@ import javax.sound.sampled.SourceDataLine;
  */
 @ToString
 @AllArgsConstructor
+@Slf4j
 public class NaturalVolumeControl {
     private final FloatControl innerVolumeControl;
     private final List<Float> mappingVolume;
     private int currentIndexVolume;
 
 
-    public static Optional<NaturalVolumeControl> from(SourceDataLine sourceDataLine, int lastKnownVolume) {
+    public static Optional<NaturalVolumeControl> from(SourceDataLine sourceDataLine, AtomicInteger lastKnownVolume) {
         return Optional.ofNullable(sourceDataLine)
                 .filter(notNullSourceDataLine -> notNullSourceDataLine.isControlSupported(FloatControl.Type.MASTER_GAIN))
                 .map(notNullSourceDataLine -> notNullSourceDataLine.getControl(FloatControl.Type.MASTER_GAIN))
@@ -48,7 +51,7 @@ public class NaturalVolumeControl {
 //                            .findFirst()
 //                            .orElseThrow(() -> new IllegalStateException("cant resolve current value as natural value"));
 
-                    return new NaturalVolumeControl(volumeControl, steps, lastKnownVolume);
+                    return new NaturalVolumeControl(volumeControl, steps, lastKnownVolume.get());
                 });
 
     }
@@ -76,6 +79,7 @@ public class NaturalVolumeControl {
 
     public void updateInnerVolumeValue() {
         this.innerVolumeControl.setValue(this.mappingVolume.get(this.currentIndexVolume));
+        log.info("new volume :" + this.innerVolumeControl.getValue());
     }
 
 

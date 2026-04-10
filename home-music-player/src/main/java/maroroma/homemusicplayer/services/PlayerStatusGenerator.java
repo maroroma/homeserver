@@ -5,62 +5,61 @@ import lombok.extern.slf4j.Slf4j;
 import maroroma.homemusicplayer.model.player.api.FullPlayerStatus;
 import maroroma.homemusicplayer.model.player.api.MemoryStatus;
 import maroroma.homemusicplayer.model.player.api.PlayerStatus;
-import maroroma.homemusicplayer.services.caches.InputStreamCache;
 import maroroma.homemusicplayer.services.mappers.entities.AlbumMapper;
 import maroroma.homemusicplayer.services.mappers.entities.ArtistMapper;
 import maroroma.homemusicplayer.services.mappers.entities.TrackMapper;
-import maroroma.homemusicplayer.services.mp3.Mp3Player;
+import maroroma.homemusicplayer.services.mp3.InputStreamManager;
+import maroroma.homemusicplayer.services.mp3.Mp3SimplePlayerTask;
 import maroroma.homemusicplayer.tools.Traper;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import java.util.concurrent.*;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class PlayerMonitor {
+public class PlayerStatusGenerator {
 
-    private final PlayerService playerService;
-    private final Mp3Player mp3Player;
+    private final SynchronizedPlayList synchronizedPlayList;
+    private final Mp3SimplePlayerTask mp3SimplePlayerTask;
+    private final InputStreamManager inputStreamManager;
 
     private final ArtistMapper artistMapper;
     private final TrackMapper trackMapper;
     private final AlbumMapper albumMapper;
-    private final InputStreamCache streamCache;
-
-    @Scheduled(fixedRate = 1, timeUnit = TimeUnit.MINUTES)
-    public void test() {
-        log.info("start scheduled cleanOversizedCache");
-        streamCache.cleanOversizedCache();
-        log.info("stop scheduled cleanOversizedCache");
-    }
-
 
     public FullPlayerStatus generatePlayerStatus() {
-        if (this.playerService.getPlayerStatus() == PlayerStatus.STOPPED) {
+        if (this.synchronizedPlayList.isEmpty()) {
             return FullPlayerStatus.stopped(generateMemoryStatus()).toBuilder()
-                    .mp3TaskNames(mp3Player.getTaskNames())
                     .build();
         } else {
 
-            return Traper.trap(() -> this.playerService.getPlayList()
+            return Traper.trap(() -> this.synchronizedPlayList
                     .getOptionalCurrentTrack()
                     .map(currentTrack -> {
                         var currentAlbum = currentTrack.getAlbum();
                         var currentArtist = currentAlbum.getArtist();
 
                         return FullPlayerStatus.builder()
-                                .playerStatus(this.playerService.getPlayerStatus())
+                                .playerStatus(resolvePlayerStatus())
                                 .track(trackMapper.mapToModel(currentTrack))
                                 .artist(artistMapper.lazyMapToModel(currentArtist))
                                 .album(albumMapper.mapToModel(currentAlbum))
-                                .volume(this.playerService.getVolume())
+                                .volume(this.mp3SimplePlayerTask.volumeValue())
                                 .memoryStatus(generateMemoryStatus())
-                                .mp3TaskNames(mp3Player.getTaskNames())
                                 .build();
                     })).orElse(FullPlayerStatus.stopped(generateMemoryStatus()));
 
+        }
+    }
+
+    public PlayerStatus resolvePlayerStatus() {
+        if (this.synchronizedPlayList.isEmpty()) {
+            return PlayerStatus.STOPPED;
+        } else if (this.inputStreamManager.isLoadingCurrentTrack()) {
+            return PlayerStatus.LOADING;
+        } else if (this.mp3SimplePlayerTask.isPaused()) {
+            return PlayerStatus.PAUSED;
+        } else {
+            return PlayerStatus.PLAYING;
         }
     }
 
@@ -74,7 +73,6 @@ public class PlayerMonitor {
                 .heapSize(currentHeapSize)
                 .heapMaxSize(maxHeapSize)
                 .percentageUsedMemory(percentageUSe)
-                .memoryCacheSize(this.streamCache.getCacheCurrentSize())
                 .build();
     }
 
