@@ -25,8 +25,6 @@ public class TrackService {
 
     private final Mp3TagReader mp3TagReader;
 
-
-
     public TrackService(@Value("${musicplayer.music.supported-extensions}") List<String> supportedMusicExtensions,
                         TrackRepository trackRepository,
                         FilesFactory filesFactory,
@@ -73,9 +71,16 @@ public class TrackService {
                 .map(Mp3TagReader.TagReadingResult::getValue)
                 .ifPresent(trackEntity::setTrackNumber);
 
-
         trackEntity.setLibraryItemPath(aMusicFile.pathAsBase64());
         return trackEntity;
+    }
+
+    public List<TrackEntity> findTrackEntities(List<UUID> trackIds) {
+        return this.trackRepository.findAllById(trackIds);
+    }
+
+    public Optional<TrackEntity> findTrackById(UUID trackId) {
+        return this.trackRepository.findById(trackId);
     }
 
 

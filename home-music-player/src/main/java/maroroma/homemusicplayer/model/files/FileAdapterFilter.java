@@ -14,6 +14,10 @@ public interface FileAdapterFilter extends Predicate<FileAdapter> {
                 .anyMatch(anAcceptedName -> aFileAdapter.getFileName().toLowerCase().startsWith(anAcceptedName));
     }
 
+    static FileAdapterFilter jsonFile() {
+        return FileAdapterFilter.extensionIn(List.of("json"));
+    }
+
     static FileAdapterFilter extensionIn(List<String> acceptedExtensions) {
         return aFileAdapter -> StreamUtils.of(acceptedExtensions)
                 .map(String::toLowerCase)
