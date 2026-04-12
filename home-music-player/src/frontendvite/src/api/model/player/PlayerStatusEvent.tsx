@@ -1,6 +1,7 @@
-import {Album} from "../library/Album";
-import {Artist} from "../library/Artist";
-import {Track} from "../library/Track";
+import { Album } from "../library/Album";
+import { Artist } from "../library/Artist";
+import { Track } from "../library/Track";
+import { MemoryStatus } from "./MemoryStatus";
 
 export type PlayerStatus = "PLAYING" | "PAUSED" | "STOPPED" | "LOADING";
 
@@ -11,7 +12,8 @@ export class PlayerStatusEvent {
       Track.empty(),
       Artist.empty(),
       Album.empty(),
-      0
+      0,
+      MemoryStatus.empty()
     );
   }
   constructor(
@@ -23,6 +25,9 @@ export class PlayerStatusEvent {
 
     public album: Album,
 
-    public volume: number
-  ) {}
+    public volume: number,
+
+    public memoryStatus: MemoryStatus
+
+  ) { }
 }

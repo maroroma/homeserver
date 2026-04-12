@@ -44,6 +44,10 @@ export class PlayerRequester {
         return RequesterUtils.delete("/api/musicplayer/player");
     }
 
+    public static clearCache():Promise<any> {
+        return RequesterUtils.delete("/api/musicplayer/cache");
+    }
+
     public static pausePlayer(): Promise<any> {
         return RequesterUtils.update("/api/musicplayer/player/status/pause");
     }

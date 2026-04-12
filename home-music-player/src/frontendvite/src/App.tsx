@@ -16,7 +16,8 @@ function App() {
         Paths.ALL_TRACKS_FOR_ARTIST.toRoute(),
         Paths.ADD_ARTIST.toRoute(),
         Paths.PLAYER.toRoute(),
-        Paths.ADD_ALBUM.toRoute()
+        Paths.ADD_ALBUM.toRoute(),
+        Paths.ADMIN.toRoute()
       ],
     },
   ]);

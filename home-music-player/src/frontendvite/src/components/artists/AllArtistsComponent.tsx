@@ -8,6 +8,7 @@ import FadeInPage from "../FadeInPage";
 import LibraryListItemRenderer from "../renderers/LibraryListItemRenderer";
 import {Comparators} from "../../tools/Comparators";
 import MenuItemAddArtistComponent from "../menu/MenuItemAddArtistComponent";
+import MenuItemAdminComponent from "../menu/MenuItemAdminComponent";
 
 const AllArtistsComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -32,6 +33,7 @@ const AllArtistsComponent: FC = () => {
       ))}
       <MenuComponent>
         <MenuItemAddArtistComponent onClick={() => navigate(Paths.ADD_ARTIST.resolve())}/>
+        <MenuItemAdminComponent onClick={() => navigate(Paths.ADMIN.resolve())} />
       </MenuComponent>
     </FadeInPage>
   );

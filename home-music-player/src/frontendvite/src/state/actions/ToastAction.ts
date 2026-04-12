@@ -1,6 +1,6 @@
-import type {MusicPlayerState} from "../MusicPlayerState";
-import {ToastMessage} from "../ToastState";
-import type {MusicPlayerContextAction} from "./MusicPlayerContextActions";
+import type { MusicPlayerState } from "../MusicPlayerState";
+import { ToastMessage } from "../ToastState";
+import type { MusicPlayerContextAction } from "./MusicPlayerContextActions";
 
 export class ToastAction implements MusicPlayerContextAction {
 
@@ -14,6 +14,10 @@ export class ToastAction implements MusicPlayerContextAction {
 
     static autoHide(message: string): ToastAction {
         return new ToastAction("Chargement", message, true);
+    }
+
+    static clearCache(): ToastAction {
+        return new ToastAction("Info", "Nettoyage du cache demandé", false);
     }
 
     static close(): MusicPlayerContextAction {

@@ -1,3 +1,4 @@
+import AdminComponent from "../../components/admin/AdminComponent";
 import AddAlbumComponent from "../../components/album/AddAlbumComponent";
 import OneAlbumComponent from "../../components/album/OneAlbumComponent";
 import AddArtistComponent from "../../components/artists/AddArtistComponent";
@@ -15,5 +16,6 @@ export default class Paths {
     public static readonly ADD_ARTIST = new Path("/artists/add", () =>  <AddArtistComponent />); 
     public static readonly ADD_ALBUM = new Path("/artists/:artistId/albums/add", () =>  <AddAlbumComponent />, ["artistId"]); 
     public static readonly PLAYER = new Path("/player", () =>  <PlayerComponent />); 
+    public static readonly ADMIN = new Path("/admin", () =>  <AdminComponent />); 
 
 }
