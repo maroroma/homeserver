@@ -13,6 +13,8 @@ public abstract class AbstractAlbumOrArtistSourceRequest {
 
     private UUID artistId;
 
+    private UUID playListId;
+
 
     public Optional<UUID> withAlbumId() {
         return Optional.ofNullable(this.getAlbumId());
@@ -21,4 +23,6 @@ public abstract class AbstractAlbumOrArtistSourceRequest {
     public Optional<UUID> withArtistId() {
         return Optional.ofNullable(this.getArtistId());
     }
+
+    public Optional<UUID> withPlayListId() {return  Optional.ofNullable(this.getPlayListId());}
 }

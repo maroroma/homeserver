@@ -24,6 +24,7 @@ public class SimplePlayerService implements PlayerService {
 
     private final AlbumService albumService;
     private final ArtistService artistService;
+    private final PlayListService playListService;
     private final FilesFactory filesFactory;
     private final Mp3SimplePlayerTask mp3SimplePlayerTask;
     private final SynchronizedPlayList synchronizedPlayList;
@@ -35,8 +36,16 @@ public class SimplePlayerService implements PlayerService {
         Assert.notNull(createPlayerRequest, "createPlayerRequest can't be null");
         trackIdNotNull(createPlayerRequest.getTrackId());
 
-        CustomAssert.notAllNotNull("artistId AND albumId can't be both given", createPlayerRequest.getAlbumId(), createPlayerRequest.getArtistId());
-        CustomAssert.notAllNull("artistId AND albumId can't be both null", createPlayerRequest.getAlbumId(), createPlayerRequest.getArtistId());
+        CustomAssert.notAllNotNull("artistId AND albumId AND playListId can't be all given",
+                createPlayerRequest.getAlbumId(),
+                createPlayerRequest.getArtistId(),
+                createPlayerRequest.getPlayListId()
+                );
+        CustomAssert.notAllNull("artistId AND albumId AND playListId can't be all null",
+                createPlayerRequest.getAlbumId(),
+                createPlayerRequest.getArtistId(),
+                createPlayerRequest.getPlayListId()
+                );
 
         extractTracks(createPlayerRequest)
                 .ifPresent(tracksToPlay -> this.synchronizedPlayList.clearAndAdd(createPlayerRequest.getTrackId(), tracksToPlay));
@@ -111,6 +120,10 @@ public class SimplePlayerService implements PlayerService {
 
         abstractAlbumOrArtistSourceRequest.withArtistId()
                 .map(artistService::getTracksFromArtist)
+                .ifPresent(tracks::addAll);
+
+        abstractAlbumOrArtistSourceRequest.withPlayListId()
+                .map(playListService::getTracksFromPlayList)
                 .ifPresent(tracks::addAll);
 
         return Optional.of(tracks.stream()

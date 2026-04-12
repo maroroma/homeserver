@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.*;
+
 @RestController
 @RequiredArgsConstructor
 public class LocalResourcesController {
@@ -18,11 +20,13 @@ public class LocalResourcesController {
         this.localResourcesService.getThumb(base64FileName, response);
     }
 
+    @GetMapping("api/musicplayer/localresources/albums/{albumId}/thumb")
+    public void getThumbByAlbum(@PathVariable("albumId") final UUID albumid, final HttpServletResponse response) {
+        this.localResourcesService.getThumb(albumid, response);
+    }
+
     @GetMapping("api/musicplayer/localresources/fanarts/{base64Path}")
     public void getFanart(@PathVariable("base64Path") final String base64FileName, final HttpServletResponse response) {
         this.localResourcesService.getFanart(base64FileName, response);
     }
-
-
-
 }
