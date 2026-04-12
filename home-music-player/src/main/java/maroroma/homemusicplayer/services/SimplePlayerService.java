@@ -108,8 +108,6 @@ public class SimplePlayerService implements PlayerService {
     }
 
     private Optional<List<TrackEntity>> extractTracks(AbstractAlbumOrArtistSourceRequest abstractAlbumOrArtistSourceRequest) {
-        CustomAssert.notAllNotNull("album and artist can't be both requested", abstractAlbumOrArtistSourceRequest.getAlbumId(), abstractAlbumOrArtistSourceRequest.getArtistId());
-        CustomAssert.notAllNull("album and artist can't be both null", abstractAlbumOrArtistSourceRequest.getAlbumId(), abstractAlbumOrArtistSourceRequest.getArtistId());
 
         List<TrackEntity> tracks = new ArrayList<>();
 

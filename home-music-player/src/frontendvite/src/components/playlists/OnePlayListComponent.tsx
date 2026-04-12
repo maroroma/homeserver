@@ -16,6 +16,8 @@ import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
 import { PlayListRequester } from "../../api/requesters/PlayListRequester";
 import LibraryListItemRenderer from "../renderers/LibraryListItemRenderer";
 import { Button, Stack } from "react-bootstrap";
+import { LibraryItemArts } from "../../api/model/library/LibraryItemArts";
+import { PlayerRequester } from "../../api/requesters/PlayerRequester";
 
 const OnePlayListComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -62,12 +64,20 @@ const OnePlayListComponent: FC = () => {
       onClick={() => navigate(Paths.ALL_PLAYLISTS.resolve())}
     >
       {allTracks.map((aTrack) => (
-        <Stack direction="horizontal">
+        <Stack direction="horizontal" className="list-item-renderer">
           <LibraryListItemRenderer
-            // label={aTrack.albumId}
             label={NameTransformer.trackName(aTrack)}
             key={aTrack.id}
-            libraryItemArts={aTrack.libraryItemArts}
+            size="medium"
+            libraryItemArts={new LibraryItemArts(null, null, aTrack.albumId)}
+            onClick={() => {
+              dispatch(ToastAction.loadingTrack());
+              PlayerRequester.startPlayerForPlayList(playList, aTrack)
+                .then(() => {
+                  navigate(Paths.PLAYER.resolve());
+                  dispatch(ToastAction.close());
+                })
+            }}
           />
           <Button variant="danger" onClick={() => {
             setSelectedTrackToRemove(aTrack);

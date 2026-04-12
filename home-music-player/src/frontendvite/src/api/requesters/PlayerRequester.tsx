@@ -1,12 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {Album} from "../model/library/Album";
-import {Artist} from "../model/library/Artist";
-import {Track} from "../model/library/Track";
-import {PlayerStatusEvent} from "../model/player/PlayerStatusEvent";
-import {RequesterUtils} from "./RequesterUtils";
+import { Album } from "../model/library/Album";
+import { Artist } from "../model/library/Artist";
+import { Track } from "../model/library/Track";
+import { PlayerStatusEvent } from "../model/player/PlayerStatusEvent";
+import type { PlayList } from "../model/playlists/PlayList";
+import { RequesterUtils } from "./RequesterUtils";
 
 export class CreatePlayerRequest {
-    constructor(public albumId: string | undefined, public trackId: string, public artistId: string | undefined = undefined) { }
+    constructor(public albumId: string | undefined,
+        public trackId: string,
+        public artistId: string | undefined = undefined,
+        public playListId: string | undefined = undefined,
+    ) { }
 
     public static forAlbum(albumId: string, trackId: string): CreatePlayerRequest {
         return new CreatePlayerRequest(albumId, trackId);
@@ -14,6 +19,10 @@ export class CreatePlayerRequest {
 
     public static forArtist(artistId: string, trackId: string): CreatePlayerRequest {
         return new CreatePlayerRequest(undefined, trackId, artistId);
+    }
+
+    public static forPlayList(playListId: string, trackId: string): CreatePlayerRequest {
+        return new CreatePlayerRequest(undefined, trackId, undefined, playListId)
     }
 }
 
@@ -32,6 +41,10 @@ export class PlayerRequester {
         return RequesterUtils.post("/api/musicplayer/player", CreatePlayerRequest.forArtist(artist.id, track.id))
     }
 
+    public static startPlayerForPlayList(playList: PlayList, track: Track): Promise<any> {
+        return RequesterUtils.post("/api/musicplayer/player", CreatePlayerRequest.forPlayList(playList.playListId, track.id))
+    }
+
     public static addAlbumToPlayList(album: Album): Promise<any> {
         return RequesterUtils.put("/api/musicplayer/player/playlist", new AddAlbumToPlayListRequest(album.id))
     }
@@ -44,7 +57,7 @@ export class PlayerRequester {
         return RequesterUtils.delete("/api/musicplayer/player");
     }
 
-    public static clearCache():Promise<any> {
+    public static clearCache(): Promise<any> {
         return RequesterUtils.delete("/api/musicplayer/cache");
     }
 
@@ -74,7 +87,7 @@ export class PlayerRequester {
         return RequesterUtils.update(`/api/musicplayer/player/volume/${newVolumeValue}`);
     }
 
-    public static getFullPlayerStatus():Promise<PlayerStatusEvent> {
+    public static getFullPlayerStatus(): Promise<PlayerStatusEvent> {
         return RequesterUtils.get("/api/musicplayer/player/status/full");
     }
 }

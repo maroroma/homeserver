@@ -1,8 +1,8 @@
 export class LibraryItemArts {
 
-    static empty() : LibraryItemArts {
-        return new LibraryItemArts(null, null);
+    static empty(): LibraryItemArts {
+        return new LibraryItemArts(null, null, null);
     }
 
-    constructor(public thumbPath: string|null, public fanartPath: string|null) { }
+    constructor(public thumbPath: string | null, public fanartPath: string | null, public albumId: string | null) { }
 }
