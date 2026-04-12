@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import type { MenuItemComponentProps } from "./MenuItemComponent";
 import MenuItemComponent from "./MenuItemComponent";
-import { BookmarkPlus, BookmarkStar } from "react-bootstrap-icons";
+import { BookmarkPlus } from "react-bootstrap-icons";
 import { useCustomNavigate } from "../hooks/CustomHooks";
 import Paths from "../../tools/routes/Paths";
 import type { Track } from "../../api/model/library/Track";
