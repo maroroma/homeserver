@@ -55,13 +55,6 @@ const OnePlayListComponent: FC = () => {
       .then(() => setSelectedTrackToRemove(Track.empty()))
   }
 
-  const addCustomPlayListToCurrentPlayList = () => {
-    // dispatch(ToastAction.loading("Album en cours d'ajout à la playlist"));
-    // PlayerRequester.addAlbumToPlayList(album).then(() =>
-    //   dispatch(ToastAction.close())
-    // );
-  };
-
   return (
     <FadeInPage
       label={playList.name}

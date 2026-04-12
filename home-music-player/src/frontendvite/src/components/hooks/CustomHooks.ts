@@ -6,8 +6,8 @@ import { Artist } from "../../api/model/library/Artist";
 import { LibraryRequester } from "../../api/requesters/LibraryRequester";
 import { Album } from "../../api/model/library/Album";
 import WindowTool from "../../tools/WindowTool";
-import { PlayList } from "../../api/model/playlists/Playlist";
 import { PlayListRequester } from "../../api/requesters/PlayListRequester";
+import { PlayList } from "../../api/model/playlists/PlayList";
 
 const useLoadingEffect = <T>(message: string, promiseSupplier: () => Promise<T>, deps: DependencyList = []) => {
   const { dispatch } = useMusicPlayerContext();

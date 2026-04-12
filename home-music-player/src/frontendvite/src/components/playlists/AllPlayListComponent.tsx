@@ -6,7 +6,6 @@ import Paths from "../../tools/routes/Paths";
 import MenuComponent from "../menu/MenuComponent";
 import MenuItemBackComponent from "../menu/MenuItemBackComponent";
 
-import ListItemRenderer from "../renderers/ListItemRenderer";
 import IconListItemRenderer from "../renderers/IconListItemRenderer";
 
 const AllPlayListComponent: FC = () => {

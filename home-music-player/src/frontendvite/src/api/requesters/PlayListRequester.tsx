@@ -1,5 +1,5 @@
 import type { Track } from "../model/library/Track";
-import { PlayList } from "../model/playlists/Playlist";
+import { PlayList } from "../model/playlists/PlayList";
 import { RequesterUtils } from "./RequesterUtils";
 
 export class PlayListRequester {

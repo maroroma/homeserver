@@ -9,15 +9,13 @@ import { PlayerStatusEvent } from "../../api/model/player/PlayerStatusEvent";
 import { PlayerRequester } from "../../api/requesters/PlayerRequester";
 import { Button, Form, InputGroup } from "react-bootstrap";
 
-import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
 import LibraryListItemRenderer from "../renderers/LibraryListItemRenderer";
 import { PlayListRequester } from "../../api/requesters/PlayListRequester";
 import ListItemRenderer from "../renderers/ListItemRenderer";
-import type { PlayList } from "../../api/model/playlists/Playlist";
+import type { PlayList } from "../../api/model/playlists/PlayList";
 
 const AddToPlayList: FC = () => {
     const navigate = useCustomNavigate();
-    const { dispatch } = useMusicPlayerContext();
 
 
     const [fullPlayerStatus, setFullPlayerStatus] = useState(PlayerStatusEvent.empty());
