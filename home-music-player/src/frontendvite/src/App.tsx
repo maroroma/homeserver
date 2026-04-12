@@ -1,8 +1,8 @@
 import "./App.css";
-import {createHashRouter, RouterProvider} from "react-router";
+import { createHashRouter, RouterProvider } from "react-router";
 import MusicPlayerLayoutComponent from "./components/MusicPlayerLayoutComponent";
 import Paths from "./tools/routes/Paths";
-import {MusicPlayerProvider} from "./state/MusicPlayerContext";
+import { MusicPlayerProvider } from "./state/MusicPlayerContext";
 
 function App() {
   const router = createHashRouter([
@@ -17,7 +17,10 @@ function App() {
         Paths.ADD_ARTIST.toRoute(),
         Paths.PLAYER.toRoute(),
         Paths.ADD_ALBUM.toRoute(),
-        Paths.ADMIN.toRoute()
+        Paths.ADMIN.toRoute(),
+        Paths.ADD_TO_PLAYLIST.toRoute(),
+        Paths.ALL_PLAYLISTS.toRoute(),
+        Paths.ONE_PLAYLIST.toRoute()
       ],
     },
   ]);

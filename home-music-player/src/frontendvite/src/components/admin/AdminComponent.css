@@ -1,0 +1,8 @@
+.all-status {
+    padding: var(--default-padding);
+    margin: var(--default-padding);
+}
+
+.all-status td {
+    padding: var(--default-padding);
+}

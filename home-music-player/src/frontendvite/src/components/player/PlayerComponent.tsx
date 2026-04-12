@@ -15,6 +15,7 @@ import LibraryListItemRenderer from "../renderers/LibraryListItemRenderer";
 import IconListItemRenderer from "../renderers/IconListItemRenderer";
 import {ChevronDoubleLeft, ChevronDoubleRight, MusicNoteBeamed, Pause, Play, Stop, VolumeDown, VolumeUp,} from "react-bootstrap-icons";
 import CssTools from "../../tools/CssTools";
+import MenuItemAddToPlaylistsComponent from "../menu/MenuItemAddToPlaylistsComponent";
 
 const PlayerComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -148,6 +149,7 @@ const PlayerComponent: FC = () => {
       <FanArtComponent fanart={playerStatus.artist.libraryItemArts} />
       <MenuComponent displayGoToPlayer={false}>
         <MenuItemGoToAllArtistComponent />
+        <MenuItemAddToPlaylistsComponent currentTrack={playerStatus.track}/>
       </MenuComponent>
     </FadeInPage>
   );
