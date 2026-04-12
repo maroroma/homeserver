@@ -23,5 +23,6 @@ export default class Paths {
     public static readonly ADD_TO_PLAYLIST = new Path("/playlists/add/:trackIdToAdd", () =>  <AddToPlayList />, ["trackIdToAdd"]); 
     public static readonly ALL_PLAYLISTS = new Path("/playlists", () =>  <AllPlayListComponent />); 
     public static readonly ONE_PLAYLIST = new Path("/playLists/:playListId", () => <OnePlayListComponent />, ["playListId"]); 
+    public static readonly ADD_TO_PLAYLIST_FROM_ALBUM = new Path("/playlists/add/:trackIdToAdd/from/:artistId/album/:albumId", () =>  <AddToPlayList />, ["trackIdToAdd", "artistId", "albumId"]); 
 
 }

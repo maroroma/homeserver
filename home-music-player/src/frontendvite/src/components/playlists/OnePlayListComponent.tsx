@@ -4,7 +4,7 @@ import { useCustomNavigate, useLoadingEffect, usePlayList, } from "../hooks/Cust
 import { Track } from "../../api/model/library/Track";
 import FadeInPage from "../FadeInPage";
 import { NameTransformer } from "../../tools/NameTransformer";
-import { BookmarkStar, Trash } from "react-bootstrap-icons";
+import { BookmarkCheck, BookmarkStar, BookmarkX, Trash } from "react-bootstrap-icons";
 import MenuComponent from "../menu/MenuComponent";
 import MenuItemBackComponent from "../menu/MenuItemBackComponent";
 import MenuItemAddToPlayListComponent from "../menu/MenuItemAddToPlayListComponent";
@@ -18,6 +18,8 @@ import LibraryListItemRenderer from "../renderers/LibraryListItemRenderer";
 import { Button, Stack } from "react-bootstrap";
 import { LibraryItemArts } from "../../api/model/library/LibraryItemArts";
 import { PlayerRequester } from "../../api/requesters/PlayerRequester";
+import MenuItemComponent from "../menu/MenuItemComponent";
+import IconListItemRenderer from "../renderers/IconListItemRenderer";
 
 const OnePlayListComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -28,6 +30,8 @@ const OnePlayListComponent: FC = () => {
 
   const [displayRemovePopup, setDisplayRemovePopup] = useState(false);
   const [selectedTrackToRemove, setSelectedTrackToRemove] = useState(Track.empty());
+
+  const [displayRemoveButtons, setDisplayRemoveButtons] = useState(false);
 
   const [allTracks, setAllTracks] = useState<Track[]>([]);
 
@@ -64,8 +68,18 @@ const OnePlayListComponent: FC = () => {
       onClick={() => navigate(Paths.ALL_PLAYLISTS.resolve())}
     >
       {allTracks.map((aTrack) => (
-        <Stack direction="horizontal" className="list-item-renderer">
-          <LibraryListItemRenderer
+
+        displayRemoveButtons ?
+          <IconListItemRenderer
+            icon={<BookmarkX />}
+            size="medium"
+            label={NameTransformer.trackName(aTrack)}
+            onClick={() => {
+              setDisplayRemovePopup(true);
+              setSelectedTrackToRemove(aTrack)
+            }}
+
+          /> : <LibraryListItemRenderer
             label={NameTransformer.trackName(aTrack)}
             key={aTrack.id}
             size="medium"
@@ -79,11 +93,8 @@ const OnePlayListComponent: FC = () => {
                 })
             }}
           />
-          <Button variant="danger" onClick={() => {
-            setSelectedTrackToRemove(aTrack);
-            setDisplayRemovePopup(true);
-          }}><Trash /></Button>
-        </Stack>
+
+
       ))}
       {/* <FanArtComponent fanart={artist.libraryItemArts} /> */}
       <MenuComponent>
@@ -91,7 +102,11 @@ const OnePlayListComponent: FC = () => {
           onClick={() => navigate(Paths.ALL_PLAYLISTS.resolve())}
         />
 
-        <MenuItemAddToPlayListComponent />
+        <MenuItemComponent icon={displayRemoveButtons ? <BookmarkCheck size={40} /> : <BookmarkX size={40} />} onClick={() => {
+          setDisplayRemoveButtons(!displayRemoveButtons)
+        }} />
+
+        {/* <MenuItemAddToPlayListComponent /> */}
 
         <MenuItemRemoveAlbumComponent
           onClick={() => setDisplayDeletePopup(true)}

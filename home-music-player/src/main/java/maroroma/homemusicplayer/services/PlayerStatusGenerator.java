@@ -42,7 +42,7 @@ public class PlayerStatusGenerator {
                                 .playerStatus(resolvePlayerStatus())
                                 .track(trackMapper.mapToModel(currentTrack))
                                 .artist(artistMapper.lazyMapToModel(currentArtist))
-                                .album(albumMapper.mapToModel(currentAlbum))
+                                .album(albumMapper.lazyMapToModel(currentAlbum))
                                 .volume(this.mp3SimplePlayerTask.volumeValue())
                                 .memoryStatus(generateMemoryStatus())
                                 .build();

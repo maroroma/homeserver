@@ -1,19 +1,19 @@
-import type {SimpleFile} from "../model/files/SimpleFile";
-import type {Album} from "../model/library/Album";
-import type {Artist} from "../model/library/Artist";
-import type {Track} from "../model/library/Track";
-import {RequesterUtils} from "./RequesterUtils";
+import type { SimpleFile } from "../model/files/SimpleFile";
+import type { Album } from "../model/library/Album";
+import type { Artist } from "../model/library/Artist";
+import type { Track } from "../model/library/Track";
+import { RequesterUtils } from "./RequesterUtils";
 
 export class CreateArtistRequest {
-  constructor(public artistDirectoryPath: string, public scanAlbums: boolean) {}
+  constructor(public artistDirectoryPath: string, public scanAlbums: boolean) { }
 }
 
 export class UpdateArtistRequest {
-  constructor(public newName: string, public autoUpdateArts: boolean) {}
+  constructor(public newName: string, public autoUpdateArts: boolean) { }
 }
 
 export class AddAlbumToArtistRequest {
-  constructor(public albumToAddPath: string) {}
+  constructor(public albumToAddPath: string) { }
 }
 
 export class LibraryRequester {
@@ -95,6 +95,12 @@ export class LibraryRequester {
 
   public static getAllTracksForArtist(artistOwner: Artist): Promise<Track[]> {
     return fetch(`/api/musicplayer/library/artists/${artistOwner.id}/tracks`)
+      .then((reponse) => RequesterUtils.handleErrors(reponse))
+      .then((response) => response);
+  }
+
+  public static getTrack(trackId: string): Promise<Track> {
+    return fetch(`/api/musicplayer/library/tracks/${trackId}`)
       .then((reponse) => RequesterUtils.handleErrors(reponse))
       .then((response) => response);
   }

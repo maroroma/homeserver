@@ -18,6 +18,14 @@ public class AlbumMapper extends AbstractLibraryItemMapper<Album, AlbumEntity> {
         return album;
     }
 
+    public Album lazyMapToModel(AlbumEntity libraryEntity) {
+        var album = new Album();
+        album.setId(libraryEntity.getId());
+        album.setArtistId(libraryEntity.getArtist().getId());
+        this.basicMapToModel(libraryEntity, album);
+        return album;
+    }
+
     @Override
     public AlbumEntity mapToEntity(Album libraryItem) {
         return null;

@@ -1,22 +1,23 @@
-import {type FC, useState} from "react";
+import { type FC, useState } from "react";
 import Paths from "../../tools/routes/Paths";
-import {useAlbum, useArtist, useCustomNavigate, useLoadingEffect,} from "../hooks/CustomHooks";
-import {LibraryRequester} from "../../api/requesters/LibraryRequester";
-import {Track} from "../../api/model/library/Track";
+import { useAlbum, useArtist, useCustomNavigate, useLoadingEffect, } from "../hooks/CustomHooks";
+import { LibraryRequester } from "../../api/requesters/LibraryRequester";
+import { Track } from "../../api/model/library/Track";
 import FadeInPage from "../FadeInPage";
 import IconListItemRenderer from "../renderers/IconListItemRenderer";
-import {NameTransformer} from "../../tools/NameTransformer";
-import {Play} from "react-bootstrap-icons";
+import { NameTransformer } from "../../tools/NameTransformer";
+import { BookmarkCheck, BookmarkPlus, BookmarkX, Play } from "react-bootstrap-icons";
 import FanArtComponent from "../fanart/FanArtComponent";
 import MenuComponent from "../menu/MenuComponent";
 import MenuItemBackComponent from "../menu/MenuItemBackComponent";
 import MenuItemAddToPlayListComponent from "../menu/MenuItemAddToPlayListComponent";
-import {Comparators} from "../../tools/Comparators";
+import { Comparators } from "../../tools/Comparators";
 import MenuItemRemoveAlbumComponent from "../menu/MenuItemRemoveAlbumComponent";
 import YesNoModal from "../modals/YesNoModal";
-import {ToastAction} from "../../state/actions/ToastAction";
-import {useMusicPlayerContext} from "../../state/MusicPlayerContext";
-import {PlayerRequester} from "../../api/requesters/PlayerRequester";
+import { ToastAction } from "../../state/actions/ToastAction";
+import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
+import { PlayerRequester } from "../../api/requesters/PlayerRequester";
+import MenuItemComponent from "../menu/MenuItemComponent";
 
 const OneAlbumComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -27,6 +28,8 @@ const OneAlbumComponent: FC = () => {
   const [displayDeletePopup, setDisplayDeletePopup] = useState(false);
 
   const [allTracks, setAllTracks] = useState<Track[]>([]);
+
+  const [playListDisplayMode, setPlayListDisplayMode] = useState(false);
 
   useLoadingEffect(
     "Morceaux en cours de chargement",
@@ -60,15 +63,19 @@ const OneAlbumComponent: FC = () => {
       {allTracks.map((aTrack) => (
         <IconListItemRenderer
           size="xsmall"
-          icon={<Play />}
+          icon={playListDisplayMode ? <BookmarkPlus /> : <Play />}
           label={NameTransformer.trackName(aTrack)}
           key={aTrack.id}
           onClick={() => {
-            dispatch(ToastAction.loadingTrack());
-            PlayerRequester.startPlayer(album, aTrack).then(() => {
-              navigate(Paths.PLAYER.resolve());
-              dispatch(ToastAction.close());
-            });
+            if (playListDisplayMode) {
+              navigate(Paths.ADD_TO_PLAYLIST_FROM_ALBUM.resolve([aTrack.id, artist.id, album.id]))
+            } else {
+              dispatch(ToastAction.loadingTrack());
+              PlayerRequester.startPlayer(album, aTrack).then(() => {
+                navigate(Paths.PLAYER.resolve());
+                dispatch(ToastAction.close());
+              });
+            }
           }}
         />
       ))}
@@ -78,7 +85,10 @@ const OneAlbumComponent: FC = () => {
           onClick={() => navigate(Paths.ONE_ARTIST.resolve(artistId))}
         />
 
-        <MenuItemAddToPlayListComponent onClick={() => addAlbumToPlayList()}/>
+        <MenuItemAddToPlayListComponent onClick={() => addAlbumToPlayList()} />
+        <MenuItemComponent icon={playListDisplayMode ? <BookmarkX size={40} /> : <BookmarkCheck size={40} />} onClick={() => {
+          setPlayListDisplayMode(!playListDisplayMode)
+        }} />
 
         <MenuItemRemoveAlbumComponent
           onClick={() => setDisplayDeletePopup(true)}

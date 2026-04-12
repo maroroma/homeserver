@@ -19,6 +19,7 @@ function App() {
         Paths.ADD_ALBUM.toRoute(),
         Paths.ADMIN.toRoute(),
         Paths.ADD_TO_PLAYLIST.toRoute(),
+        Paths.ADD_TO_PLAYLIST_FROM_ALBUM.toRoute(),
         Paths.ALL_PLAYLISTS.toRoute(),
         Paths.ONE_PLAYLIST.toRoute()
       ],
