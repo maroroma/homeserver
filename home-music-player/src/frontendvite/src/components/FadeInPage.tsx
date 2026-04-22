@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type {FC} from "react";
-import type {LibraryItemArts} from "../api/model/library/LibraryItemArts";
+import type { FC } from "react";
+import type { LibraryItemArts } from "../api/model/library/LibraryItemArts";
 
 import "./FadeInPage.css";
 import CssTools from "../tools/CssTools";
 import LibraryListItemRenderer from "./renderers/LibraryListItemRenderer";
-import type {Icon} from "react-bootstrap-icons";
+import type { Icon } from "react-bootstrap-icons";
 import IconListItemRenderer from "./renderers/IconListItemRenderer";
 
 type FadeInPageProps = {
@@ -14,6 +14,7 @@ type FadeInPageProps = {
   libraryItemArts?: LibraryItemArts;
   icon?: React.ReactElement<Icon>;
   onClick?: () => void;
+  className?: string;
 };
 
 const FadeInPage: FC<FadeInPageProps> = ({
@@ -22,9 +23,10 @@ const FadeInPage: FC<FadeInPageProps> = ({
   libraryItemArts,
   icon,
   onClick,
+  className = ""
 }) => {
   return (
-    <div className="fadein-page">
+    <div className={CssTools.of("fadein-page").then(className).css()}>
       {label && libraryItemArts ? (
         <div className="fixed-header">
           <LibraryListItemRenderer

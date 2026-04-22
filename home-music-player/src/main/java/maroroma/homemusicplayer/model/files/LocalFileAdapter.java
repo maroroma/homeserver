@@ -105,8 +105,9 @@ public class LocalFileAdapter implements FileAdapter {
     }
 
     @Override
-    public void mkdirs() {
+    public FileAdapter mkdirs() {
         this.localFile.mkdirs();
+        return this;
     }
 
     @Override

@@ -42,7 +42,7 @@ public interface FileAdapter {
 
     InputStream getInputStream();
 
-    void mkdirs();
+    FileAdapter mkdirs();
 
     default ByteArrayInputStream getInMemoryInputStream() {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

@@ -4,10 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import maroroma.homemusicplayer.model.files.FileAdapter;
 import maroroma.homemusicplayer.model.files.FileAdapterFilter;
-import maroroma.homemusicplayer.model.library.api.AddAlbumToArtistRequest;
-import maroroma.homemusicplayer.model.library.api.CreateArtistRequest;
-import maroroma.homemusicplayer.model.library.api.LibraryItemArts;
-import maroroma.homemusicplayer.model.library.api.UpdateArtistRequest;
+import maroroma.homemusicplayer.model.library.api.*;
 import maroroma.homemusicplayer.model.library.entities.AlbumEntity;
 import maroroma.homemusicplayer.model.library.entities.ArtistEntity;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
@@ -21,16 +18,16 @@ import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
-import static maroroma.homemusicplayer.tools.CustomAssert.albumIdNotNull;
-import static maroroma.homemusicplayer.tools.CustomAssert.artistIdNotNull;
-import static maroroma.homemusicplayer.tools.CustomAssert.fileExists;
+import static maroroma.homemusicplayer.tools.CustomAssert.*;
+import static org.springframework.util.Assert.*;
 import static org.springframework.util.Assert.hasLength;
-import static org.springframework.util.Assert.isTrue;
-import static org.springframework.util.Assert.notNull;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +39,8 @@ public class ArtistService {
     private final FilesFactory filesFactory;
 
     private final AlbumService albumService;
+
+    private final UploadResourcesService uploadResourcesService;
 
     public List<ArtistEntity> getAllArtists() {
         return this.artistRepository.findAll();
@@ -64,6 +63,35 @@ public class ArtistService {
 
         return this.getAllArtists();
     }
+
+    public List<ArtistEntity> addNewArtistFolder(AddNewArtistFolderRequest addNewArtistFolderRequest) {
+        notNull(addNewArtistFolderRequest, "createArtistRequest should not be null");
+
+        CustomAssert.hasLength(addNewArtistFolderRequest.getArtistName(),
+                addNewArtistFolderRequest.getFanartAsBase64File(),
+                addNewArtistFolderRequest.getThumbAsBase64File());
+
+        var newArtistFolder = filesFactory.musicSourceDirectory()
+                .combine(addNewArtistFolderRequest.getArtistName())
+                .combine("/"); // smb peut raper les noyaux si pas de slash.... pas évident à gérer sans différencier l'implémentation
+
+        if (newArtistFolder.isDirectory()) {
+            throw new MusicPlayerException("Already existing artist");
+        } else {
+            newArtistFolder.mkdirs();
+        }
+
+
+        uploadResourcesService.uploadThumb(newArtistFolder, addNewArtistFolderRequest.getThumbAsBase64File());
+        uploadResourcesService.uploadFanart(newArtistFolder, addNewArtistFolderRequest.getFanartAsBase64File());
+
+        return addArtist(CreateArtistRequest.builder()
+                .artistDirectoryPath(newArtistFolder.pathAsBase64())
+                .scanAlbums(false)
+                .build());
+    }
+
+
 
 
     public List<ArtistEntity> addArtist(CreateArtistRequest createArtistRequest) {

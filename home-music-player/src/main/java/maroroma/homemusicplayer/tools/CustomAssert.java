@@ -1,6 +1,7 @@
 package maroroma.homemusicplayer.tools;
 
 import maroroma.homemusicplayer.model.files.FileAdapter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
 import java.util.*;
@@ -19,6 +20,11 @@ public abstract class CustomAssert extends Assert {
     public static void notAllNotNull(String message, Object... toBeTested) {
         isFalse(Stream.of(toBeTested)
                 .allMatch(Objects::nonNull), message);
+    }
+
+    public static void hasLength(String... toBeTested) {
+        isTrue(Stream.of(toBeTested)
+                .allMatch(StringUtils::isNotEmpty), "all string must not be empty");
     }
 
     public static void isFalse(boolean actual, String message) {

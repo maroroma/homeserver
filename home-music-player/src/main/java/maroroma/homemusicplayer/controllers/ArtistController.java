@@ -2,12 +2,7 @@ package maroroma.homemusicplayer.controllers;
 
 import lombok.RequiredArgsConstructor;
 import maroroma.homemusicplayer.model.files.api.SimpleFile;
-import maroroma.homemusicplayer.model.library.api.AddAlbumToArtistRequest;
-import maroroma.homemusicplayer.model.library.api.Album;
-import maroroma.homemusicplayer.model.library.api.Artist;
-import maroroma.homemusicplayer.model.library.api.CreateArtistRequest;
-import maroroma.homemusicplayer.model.library.api.Track;
-import maroroma.homemusicplayer.model.library.api.UpdateArtistRequest;
+import maroroma.homemusicplayer.model.library.api.*;
 import maroroma.homemusicplayer.services.ArtistService;
 import maroroma.homemusicplayer.services.mappers.entities.AlbumMapper;
 import maroroma.homemusicplayer.services.mappers.entities.ArtistMapper;
@@ -88,6 +83,11 @@ public class ArtistController {
     @PostMapping("api/musicplayer/library/artists")
     ResponseEntity<List<Artist>> createArtist(@RequestBody CreateArtistRequest createArtistRequest) {
         return ResponseEntity.ok(this.artistMapper.mapToModel(artistService.addArtist(createArtistRequest)));
+    }
+
+    @PostMapping("api/musicplayer/library/artists/folder")
+    ResponseEntity<List<Artist>> createArtistFolder(@RequestBody AddNewArtistFolderRequest addNewArtistFolderRequest) {
+        return ResponseEntity.ok(this.artistMapper.mapToModel(artistService.addNewArtistFolder(addNewArtistFolderRequest)));
     }
 
     @PatchMapping("api/musicplayer/library/artists/{artistId}")

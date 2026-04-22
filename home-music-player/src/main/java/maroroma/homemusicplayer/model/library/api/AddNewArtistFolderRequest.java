@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateArtistRequest {
-    private String artistDirectoryPath;
-
-    private boolean scanAlbums;
+@NoArgsConstructor
+public class AddNewArtistFolderRequest {
+    private String artistName;
+    private String thumbAsBase64File;
+    private String fanartAsBase64File;
 }

@@ -63,8 +63,6 @@ public class LibraryItemArtsScrapper {
 
     }
 
-
-
     private Optional<String> getFileAndImportLocally(FileAdapter directoryToScan,
                                                      List<String> supportedFileNames,
                                                      String localImportPath) {
@@ -73,7 +71,15 @@ public class LibraryItemArtsScrapper {
                 .filter(FileAdapterFilter.nameStartingBy(supportedFileNames))
                 .findFirst()
                 .map(remoteFileAdapter -> {
-                    var fanartDestination = this.filesFactory.getFileFromPath(localImportPath).combine(UUID.randomUUID().toString());
+
+                    var localImportDirectory = this.filesFactory.getFileFromPath(localImportPath);
+
+                    if (!localImportDirectory.exists()) {
+                        localImportDirectory.mkdirs();
+                    }
+
+                    var fanartDestination = localImportDirectory.combine(UUID.randomUUID().toString());
+
                     remoteFileAdapter.copyTo(fanartDestination);
                     return fanartDestination;
                 })

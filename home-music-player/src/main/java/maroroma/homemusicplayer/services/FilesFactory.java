@@ -75,6 +75,10 @@ public class FilesFactory {
                 .toList();
     }
 
+    public FileAdapter musicSourceDirectory() {
+        return this.getFileFromPath(this.musicSource);
+    }
+
     private FileAdapter validateAsChildForSource(String source, String base64PathToValidate) {
         var sourceFileAdapter = this.getFileFromPath(source);
         var filePathToValidate = this.getFileFromBase64Path(base64PathToValidate);

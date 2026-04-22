@@ -3,9 +3,21 @@
   --menu-height: 100px;
 }
 
+.default-padding {
+  padding: var(--default-padding);
+}
+
 .clickable {
   cursor: pointer;
   user-select: none;
+}
+
+.red {
+  color: var(--bs-form-invalid-color);
+}
+
+.green {
+  color: var(--bs-form-valid-color);
 }
 
 .endless-rotation {
@@ -32,6 +44,3 @@
     transform: rotate(360deg);
   }
 }
-
-
-

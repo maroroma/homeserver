@@ -1,0 +1,7 @@
+.image-to-upload {
+    max-height: 100px;
+}
+
+.hidden-input-file {
+    display: none;
+}

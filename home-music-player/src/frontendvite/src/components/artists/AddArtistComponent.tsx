@@ -11,6 +11,7 @@ import MenuComponent from "../menu/MenuComponent";
 import MenuItemBackComponent from "../menu/MenuItemBackComponent";
 import {useMusicPlayerContext} from "../../state/MusicPlayerContext";
 import {ToastAction} from "../../state/actions/ToastAction";
+import MenuItemCreateArtistFolderComponent from "../menu/MenuItemCreateArtistFolderComponent";
 
 const AddArtistComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -56,6 +57,8 @@ const AddArtistComponent: FC = () => {
       <MenuComponent>
         <MenuItemBackComponent
           onClick={() => navigate(Paths.ALL_ARTISTS.resolve())}
+        />
+        <MenuItemCreateArtistFolderComponent
         />
       </MenuComponent>
     </FadeInPage>

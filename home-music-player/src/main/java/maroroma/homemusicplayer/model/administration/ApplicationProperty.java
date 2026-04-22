@@ -1,4 +1,4 @@
-package maroroma.homemusicplayer.model.library.api;
+package maroroma.homemusicplayer.model.administration;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateArtistRequest {
-    private String artistDirectoryPath;
-
-    private boolean scanAlbums;
+public class ApplicationProperty {
+    private String propertyName;
+    private String propertyValue;
 }

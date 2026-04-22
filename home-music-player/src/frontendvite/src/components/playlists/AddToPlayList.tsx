@@ -70,10 +70,6 @@ const AddToPlayList: FC = () => {
             onClick={() => navigate(Paths.PLAYER.resolve())}
         >
 
-            {Paths.ONE_ALBUM.resolve([artistId, albumId])}
-
-
-
             <LibraryListItemRenderer
                 label={`Choisir une playlist pour <${track.name}>`}
                 libraryItemArts={new LibraryItemArts(null, null, track.albumId)}
@@ -95,7 +91,6 @@ const AddToPlayList: FC = () => {
                     isValid={validNewPlayListName}
                 />
                 <Button
-                    variant="outline-secondary"
                     id="button-addon2"
                     disabled={!validNewPlayListName}
                     onClick={() => createAndAddToPlayList()}

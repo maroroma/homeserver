@@ -68,6 +68,10 @@ export default class CssTools {
     return this.then("clickable");
   }
 
+  defaultPadding(): CssTools {
+    return this.then("default-padding");
+  }
+
   // disableOnLoading(playerSubState: PlayerSubState, notDisableCss?: string) {
   //     return this.ifElse(playerSubState.isLoading, "disable", notDisableCss ? notDisableCss : "");
   // }

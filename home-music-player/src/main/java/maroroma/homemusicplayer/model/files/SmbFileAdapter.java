@@ -123,10 +123,10 @@ public class SmbFileAdapter implements FileAdapter {
     }
 
     @Override
-    public void mkdirs() {
-        Traper.trap(() -> {
+    public FileAdapter mkdirs() {
+        return Traper.trap(() -> {
             this.smbFile.mkdirs();
-            return null;
+            return this;
         });
     }
 

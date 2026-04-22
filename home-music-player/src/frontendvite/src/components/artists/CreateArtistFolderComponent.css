@@ -1,0 +1,10 @@
+.create-artist-folder-thumb {
+    width: 150px;
+    height: 150px;
+    min-width: 150px;
+}
+
+.create-artist-folder-fanart {
+    height: 150px;
+    max-height: 150px;
+}

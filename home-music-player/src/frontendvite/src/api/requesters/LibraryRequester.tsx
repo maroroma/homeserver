@@ -16,6 +16,12 @@ export class AddAlbumToArtistRequest {
   constructor(public albumToAddPath: string) { }
 }
 
+export class AddNewArtistFolderRequest {
+  constructor(public artistName: string,
+    public thumbAsBase64File: string,
+    public fanartAsBase64File: string) { }
+}
+
 export class LibraryRequester {
   public static createArtist(selectedDirectory: SimpleFile): Promise<Artist[]> {
     console.log(
@@ -32,6 +38,10 @@ export class LibraryRequester {
     })
       .then((reponse) => RequesterUtils.handleErrors(reponse))
       .then((response) => response);
+  }
+
+  public static createArtistFolder(request: AddNewArtistFolderRequest): Promise<any> {
+    return RequesterUtils.post("/api/musicplayer/library/artists/folder", request)
   }
 
   public static deleteArtist(artistToDelete: Artist): Promise<Artist[]> {
