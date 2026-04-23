@@ -22,7 +22,9 @@ function App() {
         Paths.ADD_TO_PLAYLIST_FROM_ALBUM.toRoute(),
         Paths.ALL_PLAYLISTS.toRoute(),
         Paths.ONE_PLAYLIST.toRoute(),
-        Paths.CREATE_ARTIST_FOLDER.toRoute()
+        Paths.CREATE_ARTIST_FOLDER.toRoute(),
+        Paths.CREATE_ALBUM_PROJECT.toRoute(),
+        Paths.ADD_TRACKS_TO_PROJECT.toRoute()
       ],
     },
   ]);

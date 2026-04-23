@@ -3,10 +3,12 @@ package maroroma.homemusicplayer.services;
 import jakarta.servlet.http.HttpServletRequest;
 import maroroma.homemusicplayer.model.files.FileAdapter;
 import maroroma.homemusicplayer.model.files.FileAdapterFilter;
+import maroroma.homemusicplayer.model.library.api.CreateAlbumProjectRequest;
 import maroroma.homemusicplayer.model.library.api.LibraryItemArts;
 import maroroma.homemusicplayer.model.library.entities.AlbumEntity;
 import maroroma.homemusicplayer.model.library.entities.ArtistEntity;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
+import maroroma.homemusicplayer.model.library.api.AlbumProject;
 import maroroma.homemusicplayer.model.upload.UploadFileStream;
 import maroroma.homemusicplayer.repositories.AlbumRepository;
 import maroroma.homemusicplayer.tools.CustomAssert;
@@ -70,8 +72,6 @@ public class AlbumService {
                 .filter(FileAdapterFilter.isDirectory())
                 .toList();
 
-
-
         var alreadyIntegratedDirectories = StreamUtils.of(artistEntity.getAlbums())
                 .map(AlbumEntity::getLibraryItemPath)
                 .map(this.filesFactory::getFileFromBase64Path)
@@ -121,12 +121,14 @@ public class AlbumService {
         this.albumRepository.saveAndFlush(albumToUpdate);
 
         return this.trackService.findTracksForAlbum(albumToUpdate);
-
-
     }
+
+
+
 
     /**
      * Si le nom de l'artiste est présent dans le nom de l'album on le vire
+     *
      * @param artist
      * @param albumDirectory
      * @return

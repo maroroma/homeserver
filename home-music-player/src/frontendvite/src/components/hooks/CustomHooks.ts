@@ -8,6 +8,8 @@ import { Album } from "../../api/model/library/Album";
 import WindowTool from "../../tools/WindowTool";
 import { PlayListRequester } from "../../api/requesters/PlayListRequester";
 import { PlayList } from "../../api/model/playlists/PlayList";
+import { AlbumProjectRequester } from "../../api/requesters/AlbumProjectRequester";
+import { AlbumProject } from "../../api/model/albumproject/AlbumProject";
 
 const useLoadingEffect = <T>(message: string, promiseSupplier: () => Promise<T>, deps: DependencyList = []) => {
   const { dispatch } = useMusicPlayerContext();
@@ -73,6 +75,25 @@ const useArtist = () => {
   return { artistId, artist, setArtist }
 }
 
+const useAlbumProject = () => {
+  const { projectId } = useParams();
+  const { dispatch } = useMusicPlayerContext();
+  const [albumProject, setAlbumProject] = useState(AlbumProject.empty());
+
+  useEffect(() => {
+    if (projectId) {
+      dispatch(ToastAction.loading("Chargement du projet en cours"))
+      AlbumProjectRequester.getOneProject(projectId)
+        .then(result => setAlbumProject(result))
+        .then(() => dispatch(ToastAction.close()))
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectId]);
+
+  return { projectId, albumProject, setAlbumProject }
+}
+
 const useAlbum = () => {
   const { albumId } = useParams();
   const { dispatch } = useMusicPlayerContext();
@@ -103,4 +124,4 @@ const useCustomNavigate: (() => ((to: To) => void)) = () => {
 }
 
 
-export { useLoadingEffect, useArtist, useAlbum, useCustomNavigate, useAllPlayLists, usePlayList };
+export { useLoadingEffect, useArtist, useAlbum, useCustomNavigate, useAllPlayLists, usePlayList, useAlbumProject };

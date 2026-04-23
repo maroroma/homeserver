@@ -6,7 +6,7 @@ import { FolderPlus } from "react-bootstrap-icons";
 import MenuComponent from "../menu/MenuComponent";
 import MenuItemBackComponent from "../menu/MenuItemBackComponent";
 import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
-import { Form, Image, InputGroup } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 import "./CreateArtistFolderComponent.css";
 import ImageUploadComponent from "../uploaders/ImageUploadComponent";

@@ -22,16 +22,20 @@ public class FilesFactory {
     private final String musicSource;
     private final String thumbsSource;
     private final String fanartsSource;
+    private final String albumProjectsDirectory;
 
     public FilesFactory(
             SmbFileAdapter.SambaUserSupplier sambaUserSupplier,
             @Value("${musicplayer.music-source}") String musicSource,
             @Value("${musicplayer.localresources.images.artist.thumbs}") String thumbsSource,
-            @Value("${musicplayer.localresources.images.artist.fanarts}") String fanartsSource) {
+            @Value("${musicplayer.localresources.images.artist.fanarts}") String fanartsSource,
+            @Value("${musicplayer.music.album-projects.directory}") String albumProjectsDirectory
+            ) {
         this.sambaUserSupplier = sambaUserSupplier;
         this.musicSource = musicSource;
         this.thumbsSource = thumbsSource;
         this.fanartsSource = fanartsSource;
+        this.albumProjectsDirectory = albumProjectsDirectory;
     }
 
 
@@ -77,6 +81,14 @@ public class FilesFactory {
 
     public FileAdapter musicSourceDirectory() {
         return this.getFileFromPath(this.musicSource);
+    }
+
+    public FileAdapter albumProjectDirectory() {
+        var result = this.getFileFromPath(this.albumProjectsDirectory);
+        if (!result.exists()) {
+            return result.mkdirs();
+        }
+        return result;
     }
 
     private FileAdapter validateAsChildForSource(String source, String base64PathToValidate) {

@@ -20,7 +20,6 @@ const ImageUploadComponent: FC<ImageUploadComponentProps> = ({ title, onImageAsB
 
     useEffect(() => {
         if (imageFileToUpload) {
-            console.log("thumbToUpload", imageFileToUpload);
             const reader = new FileReader();
             reader.readAsDataURL(imageFileToUpload);
             reader.addEventListener("load", () => {

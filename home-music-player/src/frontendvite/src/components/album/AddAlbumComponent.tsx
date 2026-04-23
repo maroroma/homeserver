@@ -12,6 +12,8 @@ import MenuItemBackComponent from "../menu/MenuItemBackComponent";
 import {useMusicPlayerContext} from "../../state/MusicPlayerContext";
 import {ToastAction} from "../../state/actions/ToastAction";
 import {Alert} from "react-bootstrap";
+import MenuItemCreateArtistFolderComponent from "../menu/MenuItemCreateArtistFolderComponent";
+import MenuItemCreateAlbumComponent from "../menu/MenuItemCreateAlbumComponent";
 
 const AddAlbumComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -65,6 +67,7 @@ const AddAlbumComponent: FC = () => {
         <MenuItemBackComponent
           onClick={() => navigate(Paths.ONE_ARTIST.resolve(artist.id))}
         />
+        <MenuItemCreateAlbumComponent />
       </MenuComponent>
     </FadeInPage>
   );
