@@ -45,16 +45,21 @@ public class TrackService {
 
 
     public List<TrackEntity> scanDirectoryForTracks(AlbumEntity albumEntity) {
-        var artistDirectory = this.filesFactory.getFileFromLibraryItem(albumEntity);
+        var albumDirectory = this.filesFactory.getFileFromLibraryItem(albumEntity);
 
-        isDirectory(artistDirectory);
+        isDirectory(albumDirectory);
 
-        return artistDirectory.streamFiles()
+        return albumDirectory.streamFiles()
                 .filter(FileAdapterFilter.extensionIn(this.supportedMusicExtensions))
                 .map(aMusicFile -> this.scanAFile(aMusicFile, albumEntity))
                 .toList();
+    }
 
-
+    public List<FileAdapter> scanDirectoryForEligibileFiles(AlbumEntity albumEntity) {
+        var albumDirectory = this.filesFactory.getFileFromLibraryItem(albumEntity);
+        return albumDirectory.streamFiles()
+                .filter(FileAdapterFilter.extensionIn(this.supportedMusicExtensions))
+                .toList();
     }
 
     public TrackEntity scanAFile(FileAdapter aMusicFile, AlbumEntity albumEntity) {

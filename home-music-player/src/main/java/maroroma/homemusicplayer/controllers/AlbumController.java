@@ -10,7 +10,8 @@ import maroroma.homemusicplayer.services.mappers.entities.TrackMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,9 +46,19 @@ public class AlbumController {
         return ResponseEntity.ok(this.trackMapper.mapToModel(this.albumService.addNewFilesToAlbum(albumId, request)));
     }
 
+    @PatchMapping("api/musicplayer/library/albums/{albumId}/tracks")
+    ResponseEntity<Album> addTrackFromDirectoryToAlbum(@PathVariable("albumId") UUID albumId) {
+        return ResponseEntity.ok(this.albumMapper.mapToModel(this.albumService.updateAlbumTracks(albumId)));
+    }
+
     @PostMapping("api/musicplayer/library/albums/projects")
     ResponseEntity<AlbumProject> createAlbumProject(@RequestBody CreateAlbumProjectRequest createAlbumProjectRequest) {
         return ResponseEntity.ok(this.albumProjectService.startAlbumProject(createAlbumProjectRequest));
+    }
+
+    @PostMapping("api/musicplayer/library/albums/projects/{albumId}")
+    ResponseEntity<AlbumProject> createAlbumProject(@PathVariable("albumId") UUID albumId) {
+        return ResponseEntity.ok(this.albumProjectService.startAlbumProjectFromExistingAlbum(albumId));
     }
 
     @PostMapping("api/musicplayer/library/albums/projects/{projectId}/tracks")
@@ -84,5 +95,11 @@ public class AlbumController {
     ResponseEntity<AlbumProject> deleteAlbumProject(@PathVariable UUID projectId) {
         return ResponseEntity.ok(this.albumProjectService.deleteAlbumProject(projectId));
     }
+
+    @DeleteMapping("api/musicplayer/library/albums/projects")
+    ResponseEntity<Boolean> deleteAllAlbumProject() {
+        return ResponseEntity.ok(this.albumProjectService.deleteAllAlbumProjects());
+    }
+
 
 }

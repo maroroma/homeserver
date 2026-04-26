@@ -13,6 +13,7 @@ import FilesUploadComponent, { type FileWithNewName } from "../uploaders/FilesUp
 import FileInProgressRenderer from "./FileInProgressRenderer";
 import { FileInProgress } from "../../api/model/albumproject/FileInProgress";
 import WindowTool from "../../tools/WindowTool";
+import { LibraryRequester } from "../../api/requesters/LibraryRequester";
 
 
 const AddTracksToAlbumProjectComponent: FC = () => {
@@ -32,15 +33,18 @@ const AddTracksToAlbumProjectComponent: FC = () => {
 
     const createAlbumDirectoryOnMusicSource = () => {
 
-        setFileInProgressForAlbumUpload(FileInProgress.fromAlbum(albumProject))
+        if (!albumProject.fromExistingAlbum) {
+            setFileInProgressForAlbumUpload(FileInProgress.fromAlbum(albumProject))
+            AlbumProjectRequester.createAlbumOnMusicSource(albumProject.projectId)
+                .then(() => {
+                    setFileInProgressForAlbumUpload(FileInProgress.albumSuccessFull(albumProject))
+                    launchUploadOfAllFiles()
+                });
+        } else {
+            launchUploadOfAllFiles()
+        }
 
 
-
-        AlbumProjectRequester.createAlbumOnMusicSource(albumProject.projectId)
-            .then(() => {
-                setFileInProgressForAlbumUpload(FileInProgress.albumSuccessFull(albumProject))
-                launchUploadOfAllFiles()
-            });
     }
 
 
@@ -64,7 +68,14 @@ const AddTracksToAlbumProjectComponent: FC = () => {
 
 
             AlbumProjectRequester.deleteProject(albumProject.projectId)
-                .then(() => navigate(Paths.ADD_ALBUM.resolve(albumProject.artistId)));
+                .then(() => {
+                    if (albumProject.fromExistingAlbum) {
+                        LibraryRequester.addNewTrackToAlbumFromMusicSourceDirectory(albumProject.albumId)
+                            .then(() => navigate(Paths.ONE_ALBUM.resolve([albumProject.artistId, albumProject.albumId])))
+                    } else {
+                        navigate(Paths.ADD_ALBUM.resolve(albumProject.artistId))
+                    }
+                });
 
             return;
         }
@@ -105,7 +116,7 @@ const AddTracksToAlbumProjectComponent: FC = () => {
 
     return (
         <FadeInPage
-            label={`Uploader les tracks à l'album ${albumProject.albumName}`}
+            label={`Rajout des tracks à l'album ${albumProject.albumName} ${albumProject.fromExistingAlbum ? "(existant)" : ""}`}
             icon={<ConeStriped />}
             onClick={() => navigate(Paths.ONE_ARTIST.resolve(albumProject.artistId))}
         >

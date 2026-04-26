@@ -1,11 +1,16 @@
 import type { AlbumProject } from "../model/albumproject/AlbumProject";
 import type { CreateAlbumProjectRequest } from "../model/albumproject/CreateAlbumProjectRequest";
 import type { FileInProgress } from "../model/albumproject/FileInProgress";
+import type { Album } from "../model/library/Album";
 import { RequesterUtils } from "./RequesterUtils";
 
 export class AlbumProjectRequester {
   public static createProject(projectRequest: CreateAlbumProjectRequest): Promise<AlbumProject> {
     return RequesterUtils.post("/api/musicplayer/library/albums/projects", projectRequest);
+  }
+
+  public static createProjectFromExistingAlbum(existingAlbum: Album): Promise<AlbumProject> {
+    return RequesterUtils.post(`/api/musicplayer/library/albums/projects/${existingAlbum.id}`);
   }
 
   public static getOneProject(projectId: string): Promise<AlbumProject> {
@@ -14,6 +19,10 @@ export class AlbumProjectRequester {
 
   public static deleteProject(projectId: string): Promise<AlbumProject> {
     return RequesterUtils.delete(`/api/musicplayer/library/albums/projects/${projectId}`)
+  }
+
+    public static deleteAllProject(): Promise<AlbumProject> {
+    return RequesterUtils.delete(`/api/musicplayer/library/albums/projects`)
   }
 
   public static uploadTrackToAlbumProject(

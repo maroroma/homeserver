@@ -14,8 +14,10 @@ import java.util.UUID;
 public class AlbumProject {
     private UUID projectId;
     private UUID artistId;
+    private UUID albumId;
     private String albumName;
     private String albumArtBase64Path;
     private String projectPath;
     private String albumDirectoryOnMusicSource;
+    private boolean fromExistingAlbum;
 }

@@ -57,7 +57,7 @@ export class RequesterUtils {
             .then(response => RequesterUtils.handleErrors(response))
     }
 
-    public static post<OUTPUT>(uri: string, body: any): Promise<OUTPUT> {
+    public static post<OUTPUT>(uri: string, body: any = undefined): Promise<OUTPUT> {
         return fetch(uri, this.options(HttpMethods.POST, body))
             .then(response => RequesterUtils.handleErrors(response))
 

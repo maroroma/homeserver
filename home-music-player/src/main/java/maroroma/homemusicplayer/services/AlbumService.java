@@ -5,6 +5,7 @@ import maroroma.homemusicplayer.model.files.FileAdapter;
 import maroroma.homemusicplayer.model.files.FileAdapterFilter;
 import maroroma.homemusicplayer.model.library.api.CreateAlbumProjectRequest;
 import maroroma.homemusicplayer.model.library.api.LibraryItemArts;
+import maroroma.homemusicplayer.model.library.entities.AbstractLibraryEntity;
 import maroroma.homemusicplayer.model.library.entities.AlbumEntity;
 import maroroma.homemusicplayer.model.library.entities.ArtistEntity;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.regex.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AlbumService {
@@ -102,6 +104,26 @@ public class AlbumService {
         tracks.forEach(albumEntity::addTrack);
 
         return albumEntity;
+    }
+
+    public AlbumEntity updateAlbumTracks(UUID albumId) {
+        var albumToUpdate = this.albumRepository.getReferenceById(albumId);
+
+        var alreadyRegisteredTracksAsBase64Path = albumToUpdate.getTracks().stream()
+                .map(AbstractLibraryEntity::getLibraryItemPath)
+                .collect(Collectors.toSet());
+
+        var allFilesFromAlbumDirectory = this.trackService.scanDirectoryForEligibileFiles(albumToUpdate);
+
+        allFilesFromAlbumDirectory
+                .stream()
+                .filter(aFileFromDirectory -> !alreadyRegisteredTracksAsBase64Path.contains(aFileFromDirectory.pathAsBase64()))
+                .map(eligibleNewFile -> trackService.scanAFile(eligibleNewFile, albumToUpdate))
+                .forEach(albumToUpdate::addTrack);
+
+        albumRepository.saveAndFlush(albumToUpdate);
+
+        return albumToUpdate;
     }
 
     public List<TrackEntity> addNewFilesToAlbum(UUID albumId, final HttpServletRequest request) {

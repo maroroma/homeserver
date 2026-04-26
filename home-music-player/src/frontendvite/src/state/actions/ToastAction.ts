@@ -20,6 +20,10 @@ export class ToastAction implements MusicPlayerContextAction {
         return new ToastAction("Info", "Nettoyage du cache demandé", false);
     }
 
+    static clearProjects(): ToastAction {
+        return new ToastAction("Info", "Nettoyage des projets d'imports demandé", false);
+    }
+
     static close(): MusicPlayerContextAction {
         return {
             applyToState: (previousState) => {

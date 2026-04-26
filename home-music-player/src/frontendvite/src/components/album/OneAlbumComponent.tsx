@@ -18,6 +18,8 @@ import { ToastAction } from "../../state/actions/ToastAction";
 import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
 import { PlayerRequester } from "../../api/requesters/PlayerRequester";
 import MenuItemComponent from "../menu/MenuItemComponent";
+import MenuItemAddComponent from "../menu/MenuItemAddComponent";
+import { AlbumProjectRequester } from "../../api/requesters/AlbumProjectRequester";
 
 const OneAlbumComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -54,6 +56,12 @@ const OneAlbumComponent: FC = () => {
     );
   };
 
+  const createAlbumUpdateProject = () => {
+    dispatch(ToastAction.loading("Préparation de l'ajout"));
+    AlbumProjectRequester.createProjectFromExistingAlbum(album)
+      .then(response => navigate(Paths.ADD_TRACKS_TO_PROJECT.resolve(response.projectId)))
+  }
+
   return (
     <FadeInPage
       label={NameTransformer.albumName(album, artist)}
@@ -89,6 +97,9 @@ const OneAlbumComponent: FC = () => {
         <MenuItemComponent icon={playListDisplayMode ? <BookmarkX size={40} /> : <BookmarkCheck size={40} />} onClick={() => {
           setPlayListDisplayMode(!playListDisplayMode)
         }} />
+        <MenuItemAddComponent
+          onClick={() => createAlbumUpdateProject()}
+        />
 
         <MenuItemRemoveAlbumComponent
           onClick={() => setDisplayDeletePopup(true)}

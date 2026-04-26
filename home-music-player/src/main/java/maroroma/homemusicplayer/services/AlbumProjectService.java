@@ -9,6 +9,7 @@ import maroroma.homemusicplayer.model.library.api.AlbumProject;
 import maroroma.homemusicplayer.model.library.api.CreateAlbumProjectRequest;
 import maroroma.homemusicplayer.model.library.api.RenameOneFileRequest;
 import maroroma.homemusicplayer.model.library.api.TargetedFileByName;
+import maroroma.homemusicplayer.model.library.entities.AbstractLibraryEntity;
 import maroroma.homemusicplayer.model.upload.UploadFileStream;
 import maroroma.homemusicplayer.services.mp3.tags.FileNameTagParser;
 import maroroma.homemusicplayer.services.mp3.tags.Mp3TagReader;
@@ -37,6 +38,7 @@ public class AlbumProjectService {
     private final UploadResourcesService uploadResourcesService;
     private final CustomObjectMapper customObjectMapper;
     private final FileNameTagParser fileNameTagParser;
+    private final AlbumService albumService;
 
     public AlbumProject getAlbumProject(UUID albumProjectId) {
 
@@ -44,6 +46,14 @@ public class AlbumProjectService {
         CustomAssert.fileExists(projectFile);
 
         return customObjectMapper.read(AlbumProject.class, projectFile);
+    }
+
+    public boolean deleteAllAlbumProjects() {
+        this.filesFactory.albumProjectDirectory()
+                .getFiles()
+                .forEach(FileAdapter::delete);
+
+        return true;
     }
 
     public AlbumProject deleteAlbumProject(UUID albumProjectId) {
@@ -56,6 +66,28 @@ public class AlbumProjectService {
         resolveProjectFile(albumProjectId).delete();
 
         return albumProject;
+    }
+
+    public AlbumProject startAlbumProjectFromExistingAlbum(UUID albumId) {
+        var existingAlbum = albumService.getAlbum(albumId).orElseThrow();
+
+        var projectID = UUID.randomUUID();
+
+        var projectDirectory = filesFactory.albumProjectDirectory()
+                .combine(projectID.toString())
+                .mkdirs();
+
+        var albumProject = AlbumProject.builder()
+                .projectId(projectID)
+                .projectPath(projectDirectory.pathAsBase64())
+                .albumName(existingAlbum.getName())
+                .albumId(existingAlbum.getId())
+                .artistId(existingAlbum.getArtist().getId())
+                .albumDirectoryOnMusicSource(existingAlbum.getLibraryItemPath())
+                .fromExistingAlbum(true)
+                .build();
+
+        return customObjectMapper.save(albumProject, resolveProjectFile(projectID));
     }
 
     public AlbumProject startAlbumProject(CreateAlbumProjectRequest createAlbumProjectRequest) {
@@ -79,9 +111,7 @@ public class AlbumProjectService {
                 .albumArtBase64Path(albumArt.pathAsBase64())
                 .build();
 
-        customObjectMapper.save(projectToSave, resolveProjectFile(projectID));
-
-        return projectToSave;
+        return customObjectMapper.save(projectToSave, resolveProjectFile(projectID));
     }
 
     public AlbumProject addNewFilesToProject(UUID projectId, final HttpServletRequest request) {
@@ -112,6 +142,7 @@ public class AlbumProjectService {
 
     public AlbumProject applyMp3Tags(UUID projectId, TargetedFileByName fileToApplyTagsTo) {
         var albumProject = getAlbumProject(projectId);
+
 
         var initialFile = this.filesFactory.getFileFromBase64Path(albumProject.getProjectPath())
                 .combine(fileToApplyTagsTo.getFileName());
@@ -206,8 +237,19 @@ public class AlbumProjectService {
     }
 
     private Optional<Artwork> createArtWork(AlbumProject albumProject) {
-        var albumArtFromProject = this.filesFactory.getFileFromBase64Path(albumProject.getAlbumArtBase64Path());
-        CustomAssert.fileExists(albumArtFromProject);
+        FileAdapter albumArtFromProject;
+        if (albumProject.isFromExistingAlbum()) {
+            albumArtFromProject = this.albumService.getAlbum(albumProject.getAlbumId())
+                    .map(AbstractLibraryEntity::getThumbPath)
+                    .map(this.filesFactory::getFileFromBase64Path)
+                    .orElseThrow();
+        } else {
+            albumArtFromProject = this.filesFactory.getFileFromBase64Path(albumProject.getAlbumArtBase64Path());
+            CustomAssert.fileExists(albumArtFromProject);
+        }
+
+
+
 
         if (albumArtFromProject instanceof LocalFileAdapter localFileAdapter) {
             return Traper.trap(() -> Optional.of(Artwork.createArtworkFromFile(localFileAdapter.getLocalFile())));

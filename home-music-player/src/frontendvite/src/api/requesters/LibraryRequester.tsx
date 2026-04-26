@@ -103,6 +103,13 @@ export class LibraryRequester {
     );
   }
 
+  public static addNewTrackToAlbumFromMusicSourceDirectory(
+    albumToUpdate: string,
+  ): Promise<Album> {
+    return RequesterUtils.update(
+      `/api/musicplayer/library/albums/${albumToUpdate}/tracks`);
+  }
+
   public static getAllTracksForArtist(artistOwner: Artist): Promise<Track[]> {
     return fetch(`/api/musicplayer/library/artists/${artistOwner.id}/tracks`)
       .then((reponse) => RequesterUtils.handleErrors(reponse))

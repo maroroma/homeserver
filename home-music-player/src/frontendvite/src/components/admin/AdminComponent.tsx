@@ -12,6 +12,7 @@ import { Button, Table } from "react-bootstrap";
 import "./AdminComponent.css"
 import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
 import { ToastAction } from "../../state/actions/ToastAction";
+import { AlbumProjectRequester } from "../../api/requesters/AlbumProjectRequester";
 
 const AdminComponent: FC = () => {
     const navigate = useCustomNavigate();
@@ -56,20 +57,28 @@ const AdminComponent: FC = () => {
                     <td>MEMORY</td>
                     <td>{`${fullPlayerStatus.memoryStatus.percentageUsedMemory} %`}</td>
                 </tr>
-                <tr>
-                    <td>CLEAR CACHE</td>
-                    <td>
-                        <Button variant="danger" onClick={() => {
-                            dispatch(ToastAction.clearCache())
-                            PlayerRequester.clearCache().then(() => { dispatch(ToastAction.close()); });
-                        }}>
-                            <Trash2Fill size={30} />
-                            clear local cache content
-                        </Button>
-                    </td>
-                </tr>
             </Table>
 
+            <div className="all-status">
+                <div className="all-status">
+                    <Button variant="danger" onClick={() => {
+                        dispatch(ToastAction.clearCache())
+                        PlayerRequester.clearCache().then(() => { dispatch(ToastAction.close()); });
+                    }}>
+                        <Trash2Fill size={30} />
+                        Clear local track cache
+                    </Button>
+                </div>
+                <div className="all-status">
+                    <Button variant="danger" onClick={() => {
+                        dispatch(ToastAction.clearProjects())
+                        AlbumProjectRequester.deleteAllProject().then(() => { dispatch(ToastAction.close()); });
+                    }}>
+                        <Trash2Fill size={30} />
+                        Clear Dead Projects
+                    </Button>
+                </div>
+            </div>
             <MenuComponent>
                 <MenuItemBackComponent
                     onClick={() => navigate(Paths.ALL_ARTISTS.resolve())}
