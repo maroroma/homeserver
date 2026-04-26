@@ -56,7 +56,7 @@ const OneAlbumComponent: FC = () => {
 
   return (
     <FadeInPage
-      label={album.name}
+      label={NameTransformer.albumName(album, artist)}
       libraryItemArts={album.libraryItemArts}
       onClick={() => navigate(Paths.ONE_ARTIST.resolve(artistId))}
     >

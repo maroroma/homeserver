@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import maroroma.homemusicplayer.tools.Traper;
 import org.springframework.util.Assert;
+import org.springframework.util.FileSystemUtils;
 
 import java.io.*;
 import java.nio.file.*;
@@ -64,6 +65,9 @@ public class LocalFileAdapter implements FileAdapter {
 
     @Override
     public boolean delete() {
+        if (this.localFile.isDirectory()) {
+            return FileSystemUtils.deleteRecursively(this.localFile);
+        }
         return Traper.trapToBoolean(() -> Files.deleteIfExists(this.localFile.toPath()));
     }
 
@@ -122,5 +126,12 @@ public class LocalFileAdapter implements FileAdapter {
         }
 
         return false;
+    }
+
+    @Override
+    public FileAdapter rename(String newName) {
+        File dest = new File(this.localFile.getParent(), newName);
+        this.localFile.renameTo(dest);
+        return this;
     }
 }

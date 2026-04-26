@@ -13,7 +13,7 @@
 
     <groupId>maro.roma</groupId>
     <artifactId>home-music-player</artifactId>
-    <version>1.23-SNAPSHOT</version>
+    <version>1.24-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -81,6 +81,12 @@
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-parsers-standard-package</artifactId>
             <version>2.9.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jaudiotagger</groupId>
+            <artifactId>jaudiotagger</artifactId>
+            <version>2.0.1</version>
         </dependency>
 
         <!-- accès samba -->

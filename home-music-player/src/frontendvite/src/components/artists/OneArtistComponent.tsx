@@ -15,6 +15,7 @@ import YesNoModal from "../modals/YesNoModal";
 import {useMusicPlayerContext} from "../../state/MusicPlayerContext";
 import {ToastAction} from "../../state/actions/ToastAction";
 import {Comparators} from "../../tools/Comparators";
+import { NameTransformer } from "../../tools/NameTransformer";
 
 const OneArtistComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -53,7 +54,7 @@ const OneArtistComponent: FC = () => {
       />
       {albums.map((anAlbum) => (
         <LibraryListItemRenderer
-          label={anAlbum.name}
+          label={NameTransformer.albumName(anAlbum, artist)}
           libraryItemArts={anAlbum.libraryItemArts}
           key={anAlbum.id}
           onClick={() =>

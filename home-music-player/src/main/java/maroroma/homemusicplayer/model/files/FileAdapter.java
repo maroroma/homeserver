@@ -54,6 +54,9 @@ public interface FileAdapter {
 
     boolean isSameFile(FileAdapter anotherFileAdapter);
 
+    FileAdapter rename(String newName);
+
+
     default void copyTo(FileAdapter target) {
         this.copyTo(target.getOutputStream());
     }

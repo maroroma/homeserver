@@ -145,6 +145,15 @@ public class SmbFileAdapter implements FileAdapter {
         return false;
     }
 
+    @Override
+    public FileAdapter rename(String newName) {
+        SmbFile dest = Traper.trap(() -> new SmbFile(this.smbFile.getParent(), newName, mapSmbUser()));
+        return Traper.trap(() -> {
+            this.smbFile.renameTo(dest);
+            return this;
+        });
+    }
+
 
     public interface SambaUserSupplier {
         SmbUser generateSambaUser();

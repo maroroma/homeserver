@@ -10,11 +10,12 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class AlbumProject {
     private UUID projectId;
     private UUID artistId;
     private String albumName;
     private String albumArtBase64Path;
     private String projectPath;
+    private String albumDirectoryOnMusicSource;
 }
