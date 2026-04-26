@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+/node/node.exe
+/node/npm.cmd
+/node/npx
+/node/npx.cmd
