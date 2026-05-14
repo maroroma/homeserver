@@ -13,12 +13,14 @@ type ThumbComponentProps = {
   libraryItemArts: LibraryItemArts;
   rounded?: boolean;
   sizeOnScroll?: ThumbSize;
+  additionalCss?: string;
 };
 
 const ThumbComponent: FC<ThumbComponentProps & ThumbProps> = ({
   libraryItemArts,
   size = "small",
   rounded = true,
+  additionalCss = "",
   sizeOnScroll,
 }) => {
   const { isScrollOnTop } = useMusicPlayerContext();
@@ -32,11 +34,12 @@ const ThumbComponent: FC<ThumbComponentProps & ThumbProps> = ({
   }
   return (
     <Image
-      src={ libraryItemArts.thumbPath ? `/api/musicplayer/localresources/thumbs/${libraryItemArts.thumbPath}` : `/api/musicplayer/localresources/albums/${libraryItemArts.albumId}/thumb`}
+      src={libraryItemArts.thumbPath ? `/api/musicplayer/localresources/thumbs/${libraryItemArts.thumbPath}` : `/api/musicplayer/localresources/albums/${libraryItemArts.albumId}/thumb`}
       loading="lazy"
       className={CssTools.of(`thumb-${size}`)
         .if(!isScrollOnTop && sizeOnScroll !== undefined, `thumb-${sizeOnScroll}`)
         .defined(sizeOnScroll, "thumb-scroll-transitioning")
+        .then(additionalCss)
         .css()}
       rounded={rounded}
     />

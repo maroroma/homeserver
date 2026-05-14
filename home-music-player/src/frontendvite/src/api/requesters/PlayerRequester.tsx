@@ -3,7 +3,7 @@ import { Album } from "../model/library/Album";
 import { Artist } from "../model/library/Artist";
 import { Track } from "../model/library/Track";
 import { PlayerStatusEvent } from "../model/player/PlayerStatusEvent";
-import type { PlayList } from "../model/playlists/PlayList";
+import { PlayList } from "../model/playlists/PlayList";
 import { RequesterUtils } from "./RequesterUtils";
 
 export class CreatePlayerRequest {
@@ -27,7 +27,22 @@ export class CreatePlayerRequest {
 }
 
 export class AddAlbumToPlayListRequest {
-    constructor(public albumId: string | undefined, public artistId: string | undefined = undefined) { }
+
+
+    static allTrackFromArtist(artist: Artist): AddAlbumToPlayListRequest {
+        return new AddAlbumToPlayListRequest(undefined, artist.id, undefined);
+    }
+
+    static allTrackFromalbum(album: Album): AddAlbumToPlayListRequest {
+        return new AddAlbumToPlayListRequest(album.id, undefined, undefined);
+    }
+
+    static allTrackFromPlayList(playList: PlayList): AddAlbumToPlayListRequest {
+        return new AddAlbumToPlayListRequest(undefined, undefined, playList.playListId);
+    }
+
+
+    constructor(public albumId: string | undefined, public artistId: string | undefined = undefined, public playListId: string | undefined) { }
 
 
 }
@@ -46,11 +61,15 @@ export class PlayerRequester {
     }
 
     public static addAlbumToPlayList(album: Album): Promise<any> {
-        return RequesterUtils.put("/api/musicplayer/player/playlist", new AddAlbumToPlayListRequest(album.id))
+        return RequesterUtils.put("/api/musicplayer/player/playlist", AddAlbumToPlayListRequest.allTrackFromalbum(album))
+    }
+
+    public static addPlayListToPlayList(playList: PlayList): Promise<any> {
+        return RequesterUtils.put("/api/musicplayer/player/playlist", AddAlbumToPlayListRequest.allTrackFromPlayList(playList))
     }
 
     public static addAllTracksFromArtistToPlayList(artist: Artist): Promise<any> {
-        return RequesterUtils.put("/api/musicplayer/player/playlist", new AddAlbumToPlayListRequest(undefined, artist.id))
+        return RequesterUtils.put("/api/musicplayer/player/playlist", AddAlbumToPlayListRequest.allTrackFromArtist(artist))
     }
 
     public static stopPlayer(): Promise<any> {

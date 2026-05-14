@@ -1,0 +1,35 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fond du disque -->
+  <circle cx="200" cy="200" r="185" fill="#080808" />
+  
+  <!-- Sillons avec opacités et épaisseurs variables -->
+  <g stroke="#2a2a2a" fill="none" opacity="0.6">
+    <circle cx="200" cy="200" r="170" stroke-width="1.5" />
+    <circle cx="200" cy="200" r="165" stroke-width="0.8" />
+    <circle cx="200" cy="200" r="158" stroke-width="2" />
+    <circle cx="200" cy="200" r="150" stroke-width="1" />
+    <circle cx="200" cy="200" r="142" stroke-width="1.2" />
+    <circle cx="200" cy="200" r="135" stroke-width="0.5" />
+    <circle cx="200" cy="200" r="128" stroke-width="1.8" />
+    <circle cx="200" cy="200" r="115" stroke-width="1" />
+    <circle cx="200" cy="200" r="105" stroke-width="0.7" />
+  </g>
+
+  <!-- Texture de bruit/grain (irrégularités) -->
+  <!-- <filter id="grain">
+    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+    <feColorMatrix type="saturate" values="0"/>
+  </filter> -->
+  <circle cx="200" cy="200" r="180" fill="white" filter="url(#grain)" opacity="0.03" />
+
+  <!-- Étiquette (Label) -->
+  <circle cx="200" cy="200" r="65" fill="#d35400" />
+  <circle cx="200" cy="200" r="60" fill="#f39c12" />
+  
+  <!-- Trou central -->
+  <circle cx="200" cy="200" r="7" fill="#111" />
+
+  <!-- Reflets asymétriques -->
+  <path d="M 200 30 A 170 170 0 0 1 350 150" stroke="white" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.1" />
+  <path d="M 50 250 A 170 170 0 0 0 150 370" stroke="white" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.05" />
+</svg>

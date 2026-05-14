@@ -1,11 +1,11 @@
-import {type FC, useEffect} from "react";
+import { type FC, useEffect } from "react";
 import FadeInPage from "../FadeInPage";
 import MenuComponent from "../menu/MenuComponent";
 import MenuItemGoToAllArtistComponent from "../menu/MenuItemGoToAllArtistComponent";
-import {PlayerRequester} from "../../api/requesters/PlayerRequester";
-import {Button, ButtonGroup, Carousel, Stack} from "react-bootstrap";
-import {useMusicPlayerContext} from "../../state/MusicPlayerContext";
-import {useCustomNavigate} from "../hooks/CustomHooks";
+import { PlayerRequester } from "../../api/requesters/PlayerRequester";
+import { Button, ButtonGroup, Carousel, Image, Stack } from "react-bootstrap";
+import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
+import { useCustomNavigate } from "../hooks/CustomHooks";
 import Paths from "../../tools/routes/Paths";
 import ThumbComponent from "../thumb/ThumbComponent";
 import FanArtComponent from "../fanart/FanArtComponent";
@@ -13,9 +13,11 @@ import FanArtComponent from "../fanart/FanArtComponent";
 import "./PlayerComponent.css";
 import LibraryListItemRenderer from "../renderers/LibraryListItemRenderer";
 import IconListItemRenderer from "../renderers/IconListItemRenderer";
-import {ChevronDoubleLeft, ChevronDoubleRight, MusicNoteBeamed, Pause, Play, Stop, VolumeDown, VolumeUp,} from "react-bootstrap-icons";
+import { ChevronDoubleLeft, ChevronDoubleRight, MusicNoteBeamed, Pause, Play, Stop, VolumeDown, VolumeUp, } from "react-bootstrap-icons";
 import CssTools from "../../tools/CssTools";
 import MenuItemAddToPlaylistsComponent from "../menu/MenuItemAddToPlaylistsComponent";
+import { NameTransformer } from "../../tools/NameTransformer";
+import VynilComponent from "../thumb/VynilComponent";
 
 const PlayerComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -46,17 +48,17 @@ const PlayerComponent: FC = () => {
               )
             }
           >
-            <ThumbComponent
+            <VynilComponent
               libraryItemArts={playerStatus.album.libraryItemArts}
-              size="xl"
-            />
+              artistArt={playerStatus.artist?.libraryItemArts}
+              album={playerStatus.album} />
           </div>
           <Carousel controls={false} indicators={false} className="carousel">
             <Carousel.Item>
               <IconListItemRenderer
                 icon={<MusicNoteBeamed />}
                 size="small"
-                label={playerStatus.track.name}
+                label={NameTransformer.trackName(playerStatus.track)}
                 onClick={() =>
                   navigate(
                     Paths.ONE_ALBUM.resolve([
@@ -149,7 +151,7 @@ const PlayerComponent: FC = () => {
       <FanArtComponent fanart={playerStatus.artist.libraryItemArts} />
       <MenuComponent displayGoToPlayer={false}>
         <MenuItemGoToAllArtistComponent />
-        <MenuItemAddToPlaylistsComponent currentTrack={playerStatus.track}/>
+        <MenuItemAddToPlaylistsComponent currentTrack={playerStatus.track} />
       </MenuComponent>
     </FadeInPage>
   );

@@ -1,0 +1,52 @@
+:root {
+    --vinyl-z-index: 666;
+    --menu-height: 100px;
+}
+
+.vynil-component {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 200px;
+    width: 200px;
+    text-align: initial !important;
+}
+
+.vynil-component .album-art {
+    border-radius: 5px !important;
+    z-index: calc(var(--vinyl-z-index) + 3);
+    position: absolute;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.vynil-component .center-art {
+    border-radius: 50% !important;
+    z-index: calc(var(--vinyl-z-index) + 1);
+    position: absolute;
+    height: 65px;
+    width: 65px;
+    min-height: 65px;
+    min-width: 65px;
+    left: 182px;
+    top: 67px;
+}
+
+.vynil-component .disk {
+    z-index: var(--vinyl-z-index);
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    left: 115px;
+}
+
+.vynil-component .pin {
+    z-index: calc(var(--vinyl-z-index) + 5);
+    border-radius: 50%;
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    background-color: black;
+    left: 210px;
+    top: 95px
+}

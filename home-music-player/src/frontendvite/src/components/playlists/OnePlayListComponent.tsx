@@ -18,6 +18,7 @@ import { LibraryItemArts } from "../../api/model/library/LibraryItemArts";
 import { PlayerRequester } from "../../api/requesters/PlayerRequester";
 import MenuItemComponent from "../menu/MenuItemComponent";
 import IconListItemRenderer from "../renderers/IconListItemRenderer";
+import MenuItemAddToPlayListComponent from "../menu/MenuItemAddToPlayListComponent";
 
 const OnePlayListComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -59,6 +60,13 @@ const OnePlayListComponent: FC = () => {
       .then(() => setSelectedTrackToRemove(Track.empty()))
   }
 
+  const addPlayListToPlayList = () => {
+    dispatch(ToastAction.loading("Playlist en cours d'ajout à l'actuelle playlist"));
+    PlayerRequester.addPlayListToPlayList(playList).then(() =>
+      dispatch(ToastAction.close())
+    );
+  };
+
   return (
     <FadeInPage
       label={playList.name}
@@ -99,6 +107,9 @@ const OnePlayListComponent: FC = () => {
         <MenuItemBackComponent
           onClick={() => navigate(Paths.ALL_PLAYLISTS.resolve())}
         />
+
+        <MenuItemAddToPlayListComponent onClick={() => addPlayListToPlayList()} />
+
 
         <MenuItemComponent icon={displayRemoveButtons ? <BookmarkCheck size={40} /> : <BookmarkX size={40} />} onClick={() => {
           setDisplayRemoveButtons(!displayRemoveButtons)

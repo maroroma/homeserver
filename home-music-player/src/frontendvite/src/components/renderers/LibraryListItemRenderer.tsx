@@ -7,7 +7,7 @@ import type {ListItemRendererProps} from "./ListItemRendererProps";
 import "./ListItemRenderer.css";
 import type {ThumbSize} from "../thumb/ThumbProps";
 
-type LibraryListItemRendererProps = {
+export type LibraryListItemRendererProps = {
   libraryItemArts: LibraryItemArts;
   sizeOnScroll?: ThumbSize;
   size?:ThumbSize;
