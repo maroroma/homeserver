@@ -3,11 +3,10 @@ import FadeInPage from "../FadeInPage";
 import MenuComponent from "../menu/MenuComponent";
 import MenuItemGoToAllArtistComponent from "../menu/MenuItemGoToAllArtistComponent";
 import { PlayerRequester } from "../../api/requesters/PlayerRequester";
-import { Button, ButtonGroup, Carousel, Image, Stack } from "react-bootstrap";
+import { Button, ButtonGroup, Carousel, Stack } from "react-bootstrap";
 import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
 import { useCustomNavigate } from "../hooks/CustomHooks";
 import Paths from "../../tools/routes/Paths";
-import ThumbComponent from "../thumb/ThumbComponent";
 import FanArtComponent from "../fanart/FanArtComponent";
 
 import "./PlayerComponent.css";

@@ -1,6 +1,5 @@
 import type { FC } from "react";
 import { Image } from "react-bootstrap";
-import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
 import type { LibraryListItemRendererProps } from "../renderers/LibraryListItemRenderer";
 import ThumbComponent from "./ThumbComponent";
 
@@ -9,14 +8,13 @@ import "./VynilComponent.css";
 import CssTools from "../../tools/CssTools";
 import { LibraryItemArts } from "../../api/model/library/LibraryItemArts";
 import type { Album } from "../../api/model/library/Album";
-import { NameTransformer } from "../../tools/NameTransformer";
 
 type VynilComponentProps = {
     artistArt?: LibraryItemArts;
     album: Album;
 }
 
-const VynilComponent: FC<LibraryListItemRendererProps & VynilComponentProps> = ({ libraryItemArts, artistArt = undefined, album }) => {
+const VynilComponent: FC<LibraryListItemRendererProps & VynilComponentProps> = ({ libraryItemArts }) => {
     return (
         <div>
             <div className="vynil-component">
