@@ -8,6 +8,7 @@ import "./VynilComponent.css";
 import CssTools from "../../tools/CssTools";
 import { LibraryItemArts } from "../../api/model/library/LibraryItemArts";
 import type { Album } from "../../api/model/library/Album";
+import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
 
 type VynilComponentProps = {
     artistArt?: LibraryItemArts;
@@ -15,13 +16,30 @@ type VynilComponentProps = {
 }
 
 const VynilComponent: FC<LibraryListItemRendererProps & VynilComponentProps> = ({ libraryItemArts }) => {
+
+    const { playerStatus } = useMusicPlayerContext();
+
     return (
-        <div>
-            <div className="vynil-component">
-                <Image src="/vynil.svg" className={CssTools.of("disk").then("endless-rotation").css()} />
-                <Image src="/icochan.png" className="center-art endless-rotation" />
+        <div className="vynil-container">
+            <div className={CssTools.of("vynil-component")
+                .if(playerStatus.playerStatus !== "PLAYING", "vynil-component-paused")
+                .css()}>
+                <Image
+                    src="/vynil.svg"
+                    className={
+                        CssTools.of("disk")
+                            .if(playerStatus.playerStatus === "PLAYING", "endless-rotation")
+                            .if(playerStatus.playerStatus !== "PLAYING", "disk-paused")
+                            .css()} />
+                <Image src="/icochan.png" className={
+                    CssTools.of("center-art")
+                        .if(playerStatus.playerStatus === "PLAYING", "endless-rotation")
+                        .if(playerStatus.playerStatus !== "PLAYING", "center-art-paused")
+                        .css()} />
                 <ThumbComponent libraryItemArts={libraryItemArts} size="xl" rounded={false} additionalCss="album-art" />
-                <div className="pin"></div>
+                <div className={CssTools.of("pin")
+                    .if(playerStatus.playerStatus !== "PLAYING", "pin-paused")
+                    .css()}></div>
             </div>
         </div>
     )
