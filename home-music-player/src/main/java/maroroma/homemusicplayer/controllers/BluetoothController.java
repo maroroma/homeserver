@@ -21,8 +21,8 @@ public class BluetoothController {
 
 
     @GetMapping("api/musicplayer/bluetooth/power/{status}")
-    public ResponseEntity<BluetoothStatus> power(@PathVariable boolean session) {
-        if (session) {
+    public ResponseEntity<BluetoothStatus> power(@PathVariable boolean status) {
+        if (status) {
             return ResponseEntity.ok(bluetoothManager.powerOn());
         } else {
             return ResponseEntity.ok(bluetoothManager.powerOff());
