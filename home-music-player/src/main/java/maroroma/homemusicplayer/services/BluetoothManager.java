@@ -3,6 +3,7 @@ package maroroma.homemusicplayer.services;
 import com.github.hypfvieh.bluetooth.DeviceManager;
 import com.github.hypfvieh.bluetooth.wrapper.AgentManager;
 import com.github.hypfvieh.bluetooth.wrapper.BluetoothAdapter;
+import com.github.hypfvieh.bluetooth.wrapper.BluetoothDevice;
 import lombok.extern.slf4j.Slf4j;
 import maroroma.homemusicplayer.model.bluetooth.BluetoothStatus;
 import org.bluez.Agent1;
@@ -14,6 +15,8 @@ import org.freedesktop.dbus.types.UInt32;
 import org.springframework.stereotype.Service;
 
 
+// TODO : factoriser le code de récupération de l'adapter
+// voir si on peut pas jouer avec AgentHandler, qui introduit la notion d'events
 @Slf4j
 @Service
 public class BluetoothManager {
@@ -28,6 +31,8 @@ public class BluetoothManager {
             // 1. Initialiser le gestionnaire BlueZ
             DeviceManager deviceManager = DeviceManager.createInstance(false);
 
+            // TODO : lister device connectés via deviceManager.getDevices(), alterer le  BluetoothStatus en ce sens
+
             // 2. Récupérer le premier adaptateur disponible (ex: hci0)
             BluetoothAdapter adapter = deviceManager.getAdapter();
 
@@ -40,9 +45,13 @@ public class BluetoothManager {
             // 3. Vérifier si le Bluetooth est activé (Powered)
             if (adapter.isPowered()) {
                 return BluetoothStatus.builder()
-                        .on(true)
+                        .on(adapter.isPowered())
                         .discoverable(adapter.isDiscoverable())
                         .pairable(adapter.isPairable())
+                        .connectedDevices(deviceManager.getDevices().stream().map(aDevice -> maroroma.homemusicplayer.model.bluetooth.BluetoothDevice.builder()
+                                .connected(aDevice.isConnected())
+                                .name(aDevice.getAlias())
+                                .build()).toList())
                         .build();
             } else {
                 return BluetoothStatus.off("Le Bluetooth est actuellement DÉSACTIVÉ.");
@@ -73,9 +82,10 @@ public class BluetoothManager {
             adapter.setDiscoverable(true);
             adapter.setPairable(true);
 
+
             // Optionnel : Temps de visibilité illimité (0) ou défini (ex: 120 secondes)
             // TODO : rendre paramétrable
-            adapter.setDiscoverableTimeout(0);
+            adapter.setDiscoverableTimeout(120);
 
             // 4. Utiliser l'agent "NoInputNoOutput" fourni par la bibliothèque !
             // Cet agent accepte tout par défaut sans interaction utilisateur.
@@ -93,6 +103,10 @@ public class BluetoothManager {
                     .on(adapter.isPowered())
                     .discoverable(adapter.isDiscoverable())
                     .pairable(adapter.isPairable())
+                    .connectedDevices(deviceManager.getDevices().stream().map(aDevice -> maroroma.homemusicplayer.model.bluetooth.BluetoothDevice.builder()
+                            .connected(aDevice.isConnected())
+                            .name(aDevice.getAlias())
+                            .build()).toList())
                     .build();
 
         } catch (Exception e) {
@@ -119,11 +133,16 @@ public class BluetoothManager {
             adapter.setPowered(false);
             adapter.setDiscoverable(false);
             adapter.setPairable(false);
+            deviceManager.getDevices().forEach(BluetoothDevice::disconnect);
 
             return BluetoothStatus.builder()
                     .on(adapter.isPowered())
                     .discoverable(adapter.isDiscoverable())
                     .pairable(adapter.isPairable())
+                    .connectedDevices(deviceManager.getDevices().stream().map(aDevice -> maroroma.homemusicplayer.model.bluetooth.BluetoothDevice.builder()
+                            .connected(aDevice.isConnected())
+                            .name(aDevice.getAlias())
+                            .build()).toList())
                     .build();
 
         } catch (Exception e) {

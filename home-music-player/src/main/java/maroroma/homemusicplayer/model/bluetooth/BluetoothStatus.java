@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +19,7 @@ public class BluetoothStatus {
                 .on(false)
                 .pairable(false)
                 .detail(detail)
+                .connectedDevices(List.of())
                 .build();
     }
 
@@ -24,4 +27,5 @@ public class BluetoothStatus {
     private boolean on;
     private boolean pairable;
     private String detail;
+    private List<BluetoothDevice> connectedDevices;
 }
