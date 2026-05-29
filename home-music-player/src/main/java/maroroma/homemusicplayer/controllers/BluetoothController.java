@@ -1,6 +1,7 @@
 package maroroma.homemusicplayer.controllers;
 
 import lombok.RequiredArgsConstructor;
+import maroroma.homemusicplayer.model.bluetooth.BluetoothStatus;
 import maroroma.homemusicplayer.services.BluetoothManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +14,19 @@ public class BluetoothController {
 
     private final BluetoothManager bluetoothManager;
 
-    @GetMapping("api/musicplayer/bluetooth/status/{session}")
-    public ResponseEntity<String> getFullPlayerStatus(@PathVariable boolean session) {
-        return ResponseEntity.ok("result1" + bluetoothManager.getstatus(session) + " result 2 " + bluetoothManager.bluetoothStatus());
+    @GetMapping("api/musicplayer/bluetooth/status")
+    public ResponseEntity<BluetoothStatus> getFullPlayerStatus() {
+        return ResponseEntity.ok(bluetoothManager.getStatus());
+    }
+
+
+    @GetMapping("api/musicplayer/bluetooth/power/{status}")
+    public ResponseEntity<BluetoothStatus> power(@PathVariable boolean session) {
+        if (session) {
+            return ResponseEntity.ok(bluetoothManager.powerOn());
+        } else {
+            return ResponseEntity.ok(bluetoothManager.powerOff());
+        }
     }
 
 }
