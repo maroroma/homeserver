@@ -13,7 +13,7 @@
 
     <groupId>maro.roma</groupId>
     <artifactId>home-music-player</artifactId>
-    <version>1.27-SNAPSHOT</version>
+    <version>1.28-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -25,6 +25,24 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.github.hypfvieh</groupId>
+            <artifactId>bluez-dbus</artifactId>
+            <version>0.3.2</version>
+        </dependency>
+        <!-- Bibliothèque DBus pour Java -->
+        <dependency>
+            <groupId>com.github.hypfvieh</groupId>
+            <artifactId>dbus-java-osgi</artifactId>
+            <version>5.2.0</version> <!-- Utilisez la dernière version stable -->
+        </dependency>
+        <!-- Transport Unix Socket pour Linux -->
+        <dependency>
+            <groupId>com.github.hypfvieh</groupId>
+            <artifactId>dbus-java-transport-native-unixsocket</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
