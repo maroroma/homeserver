@@ -1,15 +1,14 @@
 package maroroma.homemusicplayer.services;
 
 import com.github.hypfvieh.bluetooth.DeviceManager;
+import com.github.hypfvieh.bluetooth.wrapper.AgentManager;
 import com.github.hypfvieh.bluetooth.wrapper.BluetoothAdapter;
 import lombok.extern.slf4j.Slf4j;
 import maroroma.homemusicplayer.model.bluetooth.BluetoothStatus;
 import org.bluez.Agent1;
-import org.bluez.AgentManager1;
 import org.bluez.exceptions.BluezCanceledException;
 import org.bluez.exceptions.BluezRejectedException;
 import org.freedesktop.dbus.DBusPath;
-import org.freedesktop.dbus.ObjectPath;
 import org.freedesktop.dbus.types.UInt16;
 import org.freedesktop.dbus.types.UInt32;
 import org.springframework.stereotype.Service;
@@ -84,16 +83,11 @@ public class BluetoothManager {
 
             deviceManager.getDbusConnection().exportObject(autoAcceptAgent);
 
-            AgentManager1 agentManager = deviceManager.getDbusConnection().getRemoteObject(
-                    "org.bluez",
-                    "/org/bluez",
-                    AgentManager1.class
-            );
+            AgentManager agentManager = new AgentManager(deviceManager.getDbusConnection());
 
 //            ObjectPath agentPath = new ObjectPath(customAgent.getObjectPath());
-            var dbusPathForAgent = DBusPath.of(autoAcceptAgent.getObjectPath());
-            agentManager.RegisterAgent(dbusPathForAgent, "NoInputNoOutput");
-            agentManager.RequestDefaultAgent(dbusPathForAgent);
+            agentManager.registerAgent(autoAcceptAgent.getObjectPath(), "NoInputNoOutput");
+            agentManager.requestDefaultAgent(autoAcceptAgent.getObjectPath());
 
             return BluetoothStatus.builder()
                     .on(adapter.isPowered())
