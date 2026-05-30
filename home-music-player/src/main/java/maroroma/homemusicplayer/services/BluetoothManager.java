@@ -6,7 +6,10 @@ import com.github.hypfvieh.bluetooth.wrapper.BluetoothAdapter;
 import com.github.hypfvieh.bluetooth.wrapper.BluetoothDevice;
 import lombok.extern.slf4j.Slf4j;
 import maroroma.homemusicplayer.model.bluetooth.BluetoothStatus;
+import maroroma.homemusicplayer.tools.Traper;
 import org.bluez.Agent1;
+import org.bluez.MediaControl1;
+import org.bluez.MediaPlayer1;
 import org.bluez.exceptions.BluezCanceledException;
 import org.bluez.exceptions.BluezRejectedException;
 import org.freedesktop.dbus.DBusPath;
@@ -82,7 +85,6 @@ public class BluetoothManager {
             adapter.setDiscoverable(true);
             adapter.setPairable(true);
 
-
             // Optionnel : Temps de visibilité illimité (0) ou défini (ex: 120 secondes)
             // TODO : rendre paramétrable
             adapter.setDiscoverableTimeout(120);
@@ -91,13 +93,25 @@ public class BluetoothManager {
             // Cet agent accepte tout par défaut sans interaction utilisateur.
             AutoAcceptAgent autoAcceptAgent = new AutoAcceptAgent();
 
-            deviceManager.getDbusConnection().exportObject(autoAcceptAgent);
+            if (Traper.trapToBoolean(() -> deviceManager.getDbusConnection().exportObject(autoAcceptAgent))) {
+                log.info("autoAcceptAgent exported");
+            } else {
+                log.warn("autoAcceptAgent already exported");
+            }
 
             AgentManager agentManager = new AgentManager(deviceManager.getDbusConnection());
 
 //            ObjectPath agentPath = new ObjectPath(customAgent.getObjectPath());
-            agentManager.registerAgent(autoAcceptAgent.getObjectPath(), "NoInputNoOutput");
-            agentManager.requestDefaultAgent(autoAcceptAgent.getObjectPath());
+            if (agentManager.registerAgent(autoAcceptAgent.getObjectPath(), "NoInputNoOutput")) {
+                log.info("agent registered");
+            } else {
+                log.warn("agent not registered");
+            }
+            if (agentManager.requestDefaultAgent(autoAcceptAgent.getObjectPath())) {
+                log.info("agent requested as default");
+            } else {
+                log.warn("agent not requested as default");
+            }
 
             return BluetoothStatus.builder()
                     .on(adapter.isPowered())
@@ -129,11 +143,16 @@ public class BluetoothManager {
 
             log.info("ℹ️ Adaptateur trouvé : " + adapter.getDeviceName() + " [" + adapter.getAddress() + "]");
 
+            if (!adapter.isPowered()) {
+                return BluetoothStatus.off("Bluetooth déjà off");
+            }
+
             // 3. Activer l'adaptateur, la visibilité et l'appairage
             adapter.setPowered(false);
-            adapter.setDiscoverable(false);
-            adapter.setPairable(false);
-            deviceManager.getDevices().forEach(BluetoothDevice::disconnect);
+            // à priori pas besoin une fois que le bluetooth est off
+//            adapter.setDiscoverable(false);
+//            adapter.setPairable(false);
+//            deviceManager.getDevices().forEach(BluetoothDevice::disconnect);
 
             return BluetoothStatus.builder()
                     .on(adapter.isPowered())
@@ -151,9 +170,51 @@ public class BluetoothManager {
         }
     }
 
+    public boolean next() {
+        try {
+            // 1. Initialiser le gestionnaire BlueZ
+            DeviceManager deviceManager = DeviceManager.createInstance(false);
+
+            // 2. Récupérer le premier adaptateur disponible (ex: hci0)
+            BluetoothAdapter adapter = deviceManager.getAdapter();
+
+            if (adapter == null) {
+                return false;
+            }
+
+            log.info("ℹ️ Adaptateur trouvé : " + adapter.getDeviceName() + " [" + adapter.getAddress() + "]");
+
+            var firstConnectedDevice = deviceManager.getDevices()
+                    .stream()
+                    .filter(BluetoothDevice::isConnected)
+                    .findFirst();
+
+            if (firstConnectedDevice.isEmpty()) {
+                return false;
+            }
+
+            var connectedDevice = firstConnectedDevice.get();
+
+            String deviceDbusPath = connectedDevice.getRawDevice().getObjectPath();
+
+            // 2. Récupérer l'interface de contrôle des médias (MediaControl1) liée à cet appareil
+            MediaPlayer1 mediaControl = deviceManager.getDbusConnection().getRemoteObject(
+                    "org.bluez",
+                    deviceDbusPath,
+                    MediaPlayer1.class
+            );
+
+            mediaControl.Next();
+            return true;
+
+        } catch (Exception e) {
+            log.error("❌ Erreur lors changement de track ", e);
+            return false;
+        }
+    }
+
     // 1. On implémente directement l'interface "Agent1" fournie par bluez-dbus
     public static class AutoAcceptAgent implements Agent1 {
-
 
 
         @Override
@@ -215,5 +276,6 @@ public class BluetoothManager {
             return "/app/bluetooth/agent";
         }
     }
+
 
 }
