@@ -102,15 +102,15 @@ public class BluetoothManager {
             AgentManager agentManager = new AgentManager(deviceManager.getDbusConnection());
 
 //            ObjectPath agentPath = new ObjectPath(customAgent.getObjectPath());
-            if (agentManager.registerAgent(autoAcceptAgent.getObjectPath(), "NoInputNoOutput")) {
+            if (Traper.trapToBoolean(() -> agentManager.registerAgent(autoAcceptAgent.getObjectPath(), "NoInputNoOutput"))) {
                 log.info("agent registered");
             } else {
-                log.warn("agent not registered");
+                log.warn("agent not registered or already registered");
             }
-            if (agentManager.requestDefaultAgent(autoAcceptAgent.getObjectPath())) {
+            if (Traper.trapToBoolean(() -> agentManager.requestDefaultAgent(autoAcceptAgent.getObjectPath()))) {
                 log.info("agent requested as default");
             } else {
-                log.warn("agent not requested as default");
+                log.warn("agent not requested as default or already registered");
             }
 
             return BluetoothStatus.builder()
