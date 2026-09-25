@@ -1,20 +1,21 @@
-import {type FC, useState} from "react";
+import { type FC, useState } from "react";
 import Paths from "../../tools/routes/Paths";
-import {useArtist, useCustomNavigate, useLoadingEffect,} from "../hooks/CustomHooks";
-import {LibraryRequester} from "../../api/requesters/LibraryRequester";
-import type {Track} from "../../api/model/library/Track";
+import { useArtist, useCustomNavigate, useLoadingEffect, } from "../hooks/CustomHooks";
+import { LibraryRequester } from "../../api/requesters/LibraryRequester";
+import type { Track } from "../../api/model/library/Track";
 import FadeInPage from "../FadeInPage";
 import IconListItemRenderer from "../renderers/IconListItemRenderer";
 import FanArtComponent from "../fanart/FanArtComponent";
 import MenuComponent from "../menu/MenuComponent";
 import MenuItemBackComponent from "../menu/MenuItemBackComponent";
-import {Play} from "react-bootstrap-icons";
-import {NameTransformer} from "../../tools/NameTransformer";
-import {Comparators} from "../../tools/Comparators";
+import { Play } from "react-bootstrap-icons";
+import { NameTransformer } from "../../tools/NameTransformer";
+import { Comparators } from "../../tools/Comparators";
 import MenuItemAddToPlayListComponent from "../menu/MenuItemAddToPlayListComponent";
-import {useMusicPlayerContext} from "../../state/MusicPlayerContext";
-import {ToastAction} from "../../state/actions/ToastAction";
-import {PlayerRequester} from "../../api/requesters/PlayerRequester";
+import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
+import { EmbeddedPlayerRequester } from "../../api/requesters/EmbeddedPlayerRequester";
+import { LoadNewTrackListAction } from "../../state/actions/LoadNewTrackListAction";
+import { AddTracksToTrackListAction } from "../../state/actions/AddTracksToTrackListAction";
 
 const AllTracksForArtistComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -26,17 +27,17 @@ const AllTracksForArtistComponent: FC = () => {
   useLoadingEffect(
     "Morceaux en cours de chargement",
     async () => {
-      const results = await LibraryRequester.getAllTracksForArtist(artist);
-      return setAllTracks(results.sort(Comparators.byTrackName()));
+      if (artist && artist.id) {
+        const results = await LibraryRequester.getAllTracksForArtist(artist);
+        return setAllTracks(results.sort(Comparators.byTrackName()));
+      }
     },
     [artist]
   );
 
   const addAllTracksToPlayList = () => {
-    dispatch(ToastAction.autoHide("Morceaux en cours d'ajout à la playlist"));
-    PlayerRequester.addAllTracksFromArtistToPlayList(artist).then(() => {}
-      // dispatch(ToastAction.close())
-    );
+    EmbeddedPlayerRequester.generareTrackListFromArtist(artist)
+      .then(response => dispatch(new AddTracksToTrackListAction(response)));
   };
 
   return (
@@ -52,10 +53,8 @@ const AllTracksForArtistComponent: FC = () => {
           label={NameTransformer.trackName(aTrack)}
           key={aTrack.id}
           onClick={() => {
-            dispatch(ToastAction.loadingTrack());
-            PlayerRequester.startPlayerForArtist(artist, aTrack).then(() =>
-              dispatch(ToastAction.close())
-            );
+            EmbeddedPlayerRequester.generareTrackListFromArtist(artist)
+              .then(response => dispatch(new LoadNewTrackListAction(response, aTrack.id)))
           }}
         />
       ))}

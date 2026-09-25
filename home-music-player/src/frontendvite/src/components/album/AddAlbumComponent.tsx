@@ -1,17 +1,17 @@
-import {type FC, useState} from "react";
+import { type FC, useState } from "react";
 import FadeInPage from "../FadeInPage";
-import {Plus} from "react-bootstrap-icons";
+import { Plus } from "react-bootstrap-icons";
 import Paths from "../../tools/routes/Paths";
-import {useArtist, useCustomNavigate, useLoadingEffect} from "../hooks/CustomHooks";
-import {LibraryRequester} from "../../api/requesters/LibraryRequester";
-import type {SimpleFile} from "../../api/model/files/SimpleFile";
-import {Comparators} from "../../tools/Comparators";
+import { useArtist, useCustomNavigate, useLoadingEffect } from "../hooks/CustomHooks";
+import { LibraryRequester } from "../../api/requesters/LibraryRequester";
+import type { SimpleFile } from "../../api/model/files/SimpleFile";
+import { Comparators } from "../../tools/Comparators";
 import IconListItemRenderer from "../renderers/IconListItemRenderer";
 import MenuComponent from "../menu/MenuComponent";
 import MenuItemBackComponent from "../menu/MenuItemBackComponent";
-import {useMusicPlayerContext} from "../../state/MusicPlayerContext";
-import {ToastAction} from "../../state/actions/ToastAction";
-import {Alert} from "react-bootstrap";
+import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
+import { ToastAction } from "../../state/actions/ToastAction";
+import { Alert } from "react-bootstrap";
 import MenuItemCreateAlbumComponent from "../menu/MenuItemCreateAlbumComponent";
 
 const AddAlbumComponent: FC = () => {
@@ -19,18 +19,23 @@ const AddAlbumComponent: FC = () => {
   const { dispatch } = useMusicPlayerContext();
 
 
-  const {artist} = useArtist();
+  const { artist } = useArtist();
 
   const [allAlbums, setAllAlbums] = useState<SimpleFile[]>([]);
 
-  useLoadingEffect("Nouveaux Albums en cours de chargement", () =>
-    LibraryRequester.getAlbumCandidates(artist).then((result) =>
-      setAllAlbums(
-        result.sort(Comparators.by((simpleFile) => simpleFile.name))
-      )
-    ),
+  useLoadingEffect(
+    "Nouveaux Albums en cours de chargement",
+    async () => {
+      if (artist && artist.id) {
+        const results = await LibraryRequester.getAlbumCandidates(artist);
+        return setAllAlbums(
+          results.sort(Comparators.by((simpleFile) => simpleFile.name))
+        )
+      }
+    },
     [artist]
   );
+
 
   const scanAlbum = (selectedDirectory: SimpleFile) => {
     dispatch(
@@ -53,6 +58,7 @@ const AddAlbumComponent: FC = () => {
     >
       {allAlbums.map((anAlbumCandidate) => (
         <IconListItemRenderer
+          key={anAlbumCandidate.base64Path}
           icon={<Plus />}
           label={anAlbumCandidate.name}
           size="xsmall"
@@ -60,8 +66,8 @@ const AddAlbumComponent: FC = () => {
         />
       ))}
       {allAlbums.length === 0 ? <Alert className="clickable" variant="warning" onClick={() => navigate(Paths.ONE_ARTIST.resolve(artist.id))}>
-          Pas de nouvel album à scanner....
-        </Alert> : <></>}
+        Pas de nouvel album à scanner....
+      </Alert> : <></>}
       <MenuComponent>
         <MenuItemBackComponent
           onClick={() => navigate(Paths.ONE_ARTIST.resolve(artist.id))}

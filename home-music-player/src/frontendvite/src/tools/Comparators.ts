@@ -1,5 +1,5 @@
-import type {Artist} from "../api/model/library/Artist";
-import type {Track} from "../api/model/library/Track";
+import type { Artist } from "../api/model/library/Artist";
+import type { Track } from "../api/model/library/Track";
 
 export class Comparators {
     static byArtistsName(): (a1: Artist, a2: Artist) => number {
@@ -12,6 +12,10 @@ export class Comparators {
 
     static byTrackName(): (a1: Track, a2: Track) => number {
         return Comparators.by(aTrack => `${aTrack.trackNumber?.padStart(2, "0")} - ${aTrack.name}`)
+    }
+
+    static shuffle(): (e1: any, e2: any) => number {
+        return () => Math.random() - 0.5;
     }
 
 }

@@ -50,6 +50,7 @@ const AddArtistComponent: FC = () => {
         <IconListItemRenderer
           icon={<Plus />}
           label={anArtistCandidate.name}
+          key={anArtistCandidate.base64Path}
           size="xsmall"
           onClick={() => scanArtist(anArtistCandidate)}
         />

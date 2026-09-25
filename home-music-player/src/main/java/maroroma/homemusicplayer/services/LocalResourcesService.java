@@ -17,6 +17,7 @@ import java.util.*;
 public class LocalResourcesService {
     private final FilesFactory filesFactory;
     private final AlbumService albumService;
+    private final TrackService trackService;
 
 
     public void getThumb(String base64ThumbFileName, HttpServletResponse response) {
@@ -43,6 +44,12 @@ public class LocalResourcesService {
         response.setHeader(HttpHeaders.CACHE_CONTROL, CacheControl.maxAge(Duration.ofDays(5)).getHeaderValue());
 
         fileToDownload.copyTo(Traper.trap(response::getOutputStream));
+    }
+
+    public void streamTrack(UUID trackId, HttpServletResponse response) {
+        var track = this.trackService.findTrackById(trackId)
+                .orElseThrow(() -> new MusicPlayerException("Track with id " + trackId + " not found"));
+        this.getFile(this.filesFactory.getFileFromBase64Path(track.getLibraryItemPath()), response);
     }
 
 }

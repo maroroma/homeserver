@@ -1,20 +1,20 @@
-import {type FC, useState} from "react";
+import { type FC, useState } from "react";
 import Paths from "../../tools/routes/Paths";
 import FadeInPage from "../FadeInPage";
-import {useArtist, useCustomNavigate, useLoadingEffect,} from "../hooks/CustomHooks";
-import {LibraryRequester} from "../../api/requesters/LibraryRequester";
-import {Album} from "../../api/model/library/Album";
+import { useArtist, useCustomNavigate, useLoadingEffect, } from "../hooks/CustomHooks";
+import { LibraryRequester } from "../../api/requesters/LibraryRequester";
+import { Album } from "../../api/model/library/Album";
 import LibraryListItemRenderer from "../renderers/LibraryListItemRenderer";
 import IconListItemRenderer from "../renderers/IconListItemRenderer";
-import {List, Plus} from "react-bootstrap-icons";
+import { List, Plus } from "react-bootstrap-icons";
 import MenuComponent from "../menu/MenuComponent";
 import MenuItemBackComponent from "../menu/MenuItemBackComponent";
 import FanArtComponent from "../fanart/FanArtComponent";
 import MenuItemRemoveArtistComponent from "../menu/MenuItemRemoveArtistComponent";
 import YesNoModal from "../modals/YesNoModal";
-import {useMusicPlayerContext} from "../../state/MusicPlayerContext";
-import {ToastAction} from "../../state/actions/ToastAction";
-import {Comparators} from "../../tools/Comparators";
+import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
+import { ToastAction } from "../../state/actions/ToastAction";
+import { Comparators } from "../../tools/Comparators";
 import { NameTransformer } from "../../tools/NameTransformer";
 
 const OneArtistComponent: FC = () => {
@@ -28,8 +28,10 @@ const OneArtistComponent: FC = () => {
   useLoadingEffect(
     "Albums de l'artiste en cours de chargement",
     async () => {
-      const results = await LibraryRequester.getAlbumsForArtist(artist);
-      return setAlbums(results.sort(Comparators.by((album) => album.name)));
+      if (artist && artist.id) {
+        const results = await LibraryRequester.getAlbumsForArtist(artist);
+        return setAlbums(results.sort(Comparators.by((album) => album.name)));
+      }
     },
     [artist]
   );
@@ -68,7 +70,8 @@ const OneArtistComponent: FC = () => {
         onClick={() => {
           const test = Paths.ADD_ALBUM.resolve(artist.id);
           console.log("test", test)
-          navigate(Paths.ADD_ALBUM.resolve(artist.id))}
+          navigate(Paths.ADD_ALBUM.resolve(artist.id))
+        }
         }
       />
       <FanArtComponent fanart={artist.libraryItemArts} />

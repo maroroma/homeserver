@@ -16,10 +16,12 @@ import MenuItemRemoveAlbumComponent from "../menu/MenuItemRemoveAlbumComponent";
 import YesNoModal from "../modals/YesNoModal";
 import { ToastAction } from "../../state/actions/ToastAction";
 import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
-import { PlayerRequester } from "../../api/requesters/PlayerRequester";
 import MenuItemComponent from "../menu/MenuItemComponent";
 import MenuItemAddComponent from "../menu/MenuItemAddComponent";
 import { AlbumProjectRequester } from "../../api/requesters/AlbumProjectRequester";
+import { EmbeddedPlayerRequester } from "../../api/requesters/EmbeddedPlayerRequester";
+import { LoadNewTrackListAction } from "../../state/actions/LoadNewTrackListAction";
+import { AddTracksToTrackListAction } from "../../state/actions/AddTracksToTrackListAction";
 
 const OneAlbumComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -36,8 +38,10 @@ const OneAlbumComponent: FC = () => {
   useLoadingEffect(
     "Morceaux en cours de chargement",
     async () => {
-      const results = await LibraryRequester.getTracksForAlbum(album);
-      return setAllTracks(results.sort(Comparators.byTrackName()));
+      if (album && album.id) {
+        const results = await LibraryRequester.getTracksForAlbum(album);
+        return setAllTracks(results.sort(Comparators.byTrackName()));
+      }
     },
     [album]
   );
@@ -50,10 +54,12 @@ const OneAlbumComponent: FC = () => {
   };
 
   const addAlbumToPlayList = () => {
-    dispatch(ToastAction.loading("Album en cours d'ajout à la playlist"));
-    PlayerRequester.addAlbumToPlayList(album).then(() =>
-      dispatch(ToastAction.close())
-    );
+
+    EmbeddedPlayerRequester.generareTrackListFromAlbum(album)
+      .then(trackList => {
+        dispatch(new AddTracksToTrackListAction(trackList))
+      })
+
   };
 
   const createAlbumUpdateProject = () => {
@@ -78,11 +84,8 @@ const OneAlbumComponent: FC = () => {
             if (playListDisplayMode) {
               navigate(Paths.ADD_TO_PLAYLIST_FROM_ALBUM.resolve([aTrack.id, artist.id, album.id]))
             } else {
-              dispatch(ToastAction.loadingTrack());
-              PlayerRequester.startPlayer(album, aTrack).then(() => {
-                navigate(Paths.PLAYER.resolve());
-                dispatch(ToastAction.close());
-              });
+              EmbeddedPlayerRequester.generareTrackListFromAlbum(album)
+                .then(response => dispatch(new LoadNewTrackListAction(response, aTrack.id)));
             }
           }}
         />

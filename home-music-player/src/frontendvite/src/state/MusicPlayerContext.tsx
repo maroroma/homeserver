@@ -1,15 +1,20 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {createContext, type FC, useContext, useReducer} from "react";
-import type {MusicPlayerState} from "./MusicPlayerState";
-import type {MusicPlayerContextAction} from "./actions/MusicPlayerContextActions";
-import {PlayerStatusEvent} from "../api/model/player/PlayerStatusEvent";
+import { createContext, type FC, useContext, useReducer } from "react";
+import type { MusicPlayerState } from "./MusicPlayerState";
+import type { MusicPlayerContextAction } from "./actions/MusicPlayerContextActions";
+import { PlayerStatusEvent } from "../api/model/player/PlayerStatusEvent";
+import { TrackList } from "../api/model/embedded/TrackList";
 
 const initialState: MusicPlayerState = {
-  dispatch: () => {},
+  dispatch: () => { },
   toastState: {},
   isScrollOnTop: true,
   playerStatus: PlayerStatusEvent.empty(),
+  embeddedPlayerState: {
+    trackList: TrackList.empty(),
+    currentIndex: -1
+  }
 };
 
 const reducer = (

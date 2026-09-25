@@ -12,7 +12,7 @@ export class PlayerStatusEvent {
       Track.empty(),
       Artist.empty(),
       Album.empty(),
-      0,
+      50,
       MemoryStatus.empty()
     );
   }

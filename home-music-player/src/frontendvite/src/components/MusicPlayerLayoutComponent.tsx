@@ -6,6 +6,7 @@ import {useMusicPlayerContext} from "../state/MusicPlayerContext";
 import "./MusicPlayerLayoutComponent.css";
 import ScrollHandlerComponent from "./ScrollHandlerComponent";
 import PlayerStatusHandlerComponent from "./player/PlayerStatusHandlerComponent";
+import EmbeddedPlayerHandler from "./player/EmbeddedPlayerHandler";
 
 const MusicPlayerLayoutComponent: FC = () => {
   const { toastState } = useMusicPlayerContext();
@@ -16,7 +17,8 @@ const MusicPlayerLayoutComponent: FC = () => {
         <Outlet></Outlet>
       </div>
       <ScrollHandlerComponent />
-      <PlayerStatusHandlerComponent />
+      {/* <PlayerStatusHandlerComponent /> */}
+      <EmbeddedPlayerHandler />
 
       <ToastContainer position="middle-end">
         <Toast

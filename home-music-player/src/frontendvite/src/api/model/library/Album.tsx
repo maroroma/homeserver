@@ -1,10 +1,10 @@
-import {LibraryItemArts} from "./LibraryItemArts";
+import { LibraryItemArts } from "./LibraryItemArts";
 
 export class Album {
 
-    static empty() : Album {
-        return new Album("", "", LibraryItemArts.empty())
+    static empty(): Album {
+        return new Album("", "", LibraryItemArts.empty(), "")
     }
 
-    constructor(public id: string, public name: string, public libraryItemArts: LibraryItemArts) { }
+    constructor(public id: string, public name: string, public libraryItemArts: LibraryItemArts, public artistId: string) { }
 }

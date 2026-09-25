@@ -15,10 +15,12 @@ import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
 import { PlayListRequester } from "../../api/requesters/PlayListRequester";
 import LibraryListItemRenderer from "../renderers/LibraryListItemRenderer";
 import { LibraryItemArts } from "../../api/model/library/LibraryItemArts";
-import { PlayerRequester } from "../../api/requesters/PlayerRequester";
 import MenuItemComponent from "../menu/MenuItemComponent";
 import IconListItemRenderer from "../renderers/IconListItemRenderer";
 import MenuItemAddToPlayListComponent from "../menu/MenuItemAddToPlayListComponent";
+import { EmbeddedPlayerRequester } from "../../api/requesters/EmbeddedPlayerRequester";
+import { LoadNewTrackListAction } from "../../state/actions/LoadNewTrackListAction";
+import { AddTracksToTrackListAction } from "../../state/actions/AddTracksToTrackListAction";
 
 const OnePlayListComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -37,8 +39,10 @@ const OnePlayListComponent: FC = () => {
   useLoadingEffect(
     "Morceaux en cours de chargement",
     async () => {
-      const results = await PlayListRequester.getTracksForPlayList(playList);
-      return setAllTracks(results.sort(Comparators.byTrackName()));
+      if (playList && playList.playListId) {
+        const results = await PlayListRequester.getTracksForPlayList(playList);
+        return setAllTracks(results.sort(Comparators.byTrackName()));
+      }
     },
     [playList]
   );
@@ -61,10 +65,8 @@ const OnePlayListComponent: FC = () => {
   }
 
   const addPlayListToPlayList = () => {
-    dispatch(ToastAction.loading("Playlist en cours d'ajout à l'actuelle playlist"));
-    PlayerRequester.addPlayListToPlayList(playList).then(() =>
-      dispatch(ToastAction.close())
-    );
+    EmbeddedPlayerRequester.generareTrackListFromPlayList(playList)
+      .then(response => dispatch(new AddTracksToTrackListAction(response)));
   };
 
   return (
@@ -91,12 +93,8 @@ const OnePlayListComponent: FC = () => {
             size="medium"
             libraryItemArts={new LibraryItemArts(null, null, aTrack.albumId)}
             onClick={() => {
-              dispatch(ToastAction.loadingTrack());
-              PlayerRequester.startPlayerForPlayList(playList, aTrack)
-                .then(() => {
-                  navigate(Paths.PLAYER.resolve());
-                  dispatch(ToastAction.close());
-                })
+              EmbeddedPlayerRequester.generareTrackListFromPlayList(playList)
+                .then(response => dispatch(new LoadNewTrackListAction(response, aTrack.id)))
             }}
           />
 

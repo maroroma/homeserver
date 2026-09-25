@@ -8,6 +8,7 @@ import AllArtistsComponent from "../../components/artists/AllArtistsComponent";
 import AllTracksForArtistComponent from "../../components/artists/AllTracksForArtistComponent";
 import CreateArtistFolderComponent from "../../components/artists/CreateArtistFolderComponent";
 import OneArtistComponent from "../../components/artists/OneArtistComponent";
+import CurrentTrackListComponent from "../../components/player/CurrentTrackListComponent";
 import PlayerComponent from "../../components/player/PlayerComponent";
 import AddToPlayList from "../../components/playlists/AddToPlayList";
 import AllPlayListComponent from "../../components/playlists/AllPlayListComponent";
@@ -33,6 +34,7 @@ export default class Paths {
     public static readonly ADD_TO_PLAYLIST_FROM_ALBUM = new Path("/playlists/add/:trackIdToAdd/from/:artistId/album/:albumId", () =>  <AddToPlayList />, ["trackIdToAdd", "artistId", "albumId"]); 
     
     public static readonly PLAYER = new Path("/player", () =>  <PlayerComponent />); 
+    public static readonly CURRENT_TRACK_LIST = new Path("/currenttracklist", () =>  <CurrentTrackListComponent />); 
     public static readonly ADMIN = new Path("/admin", () =>  <AdminComponent />); 
 
 }
