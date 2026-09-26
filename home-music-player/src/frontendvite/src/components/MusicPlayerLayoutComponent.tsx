@@ -5,7 +5,6 @@ import {useMusicPlayerContext} from "../state/MusicPlayerContext";
 
 import "./MusicPlayerLayoutComponent.css";
 import ScrollHandlerComponent from "./ScrollHandlerComponent";
-import PlayerStatusHandlerComponent from "./player/PlayerStatusHandlerComponent";
 import EmbeddedPlayerHandler from "./player/EmbeddedPlayerHandler";
 
 const MusicPlayerLayoutComponent: FC = () => {

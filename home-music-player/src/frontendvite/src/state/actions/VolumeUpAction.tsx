@@ -1,5 +1,3 @@
-import { TrackList } from "../../api/model/embedded/TrackList";
-import { PlayerStatusEvent } from "../../api/model/player/PlayerStatusEvent";
 import type { MusicPlayerState } from "../MusicPlayerState";
 import type { MusicPlayerContextAction } from "./MusicPlayerContextActions";
 
