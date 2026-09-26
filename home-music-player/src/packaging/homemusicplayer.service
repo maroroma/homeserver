@@ -1,6 +1,7 @@
 [Unit]
 Description=homemusicplayer Java Service
-After=syslog.target
+After=network.target network-online.target syslog.target
+Wants=network-online.target
 
 [Service]
 WorkingDirectory=/home/luna/SHARE/musicplayer
