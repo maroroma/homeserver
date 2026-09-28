@@ -30,7 +30,7 @@ const ThumbComponent: FC<ThumbComponentProps & ThumbProps> = ({
       libraryItemArts.thumbPath === null)
     && (libraryItemArts.albumId === undefined || libraryItemArts.albumId === null)
   ) {
-    return <ThumbIconComponent size={size} icon={<Question />} />;
+    return <ThumbIconComponent size={!isScrollOnTop && sizeOnScroll !== undefined ? sizeOnScroll : size} icon={<Question />} />;
   }
   return (
     <Image

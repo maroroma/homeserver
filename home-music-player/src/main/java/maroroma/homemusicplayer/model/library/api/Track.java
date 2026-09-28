@@ -17,4 +17,5 @@ public class Track extends AbstractLibraryItem {
     private int durationInSeconds;
 
     private UUID albumId;
+    private String shortFileName;
 }

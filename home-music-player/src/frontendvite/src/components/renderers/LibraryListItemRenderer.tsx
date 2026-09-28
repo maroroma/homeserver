@@ -10,7 +10,7 @@ import type {ThumbSize} from "../thumb/ThumbProps";
 export type LibraryListItemRendererProps = {
   libraryItemArts: LibraryItemArts;
   sizeOnScroll?: ThumbSize;
-  size?:ThumbSize;
+
 };
 
 const LibraryListItemRenderer: FC<

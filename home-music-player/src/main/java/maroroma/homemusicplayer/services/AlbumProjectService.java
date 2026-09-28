@@ -23,6 +23,7 @@ import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.datatype.Artwork;
+import org.jaudiotagger.tag.id3.ID3v24Tag;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -158,6 +159,11 @@ public class AlbumProjectService {
                 AudioFile f = AudioFileIO.read(localFile);
 
                 var artist = this.artistService.getArtist(albumProject.getArtistId()).orElseThrow();
+
+                // si jamais le fichier est bien bien vide, faut remettre un tag avant d'aller plus loin
+                if (f.getTag() == null) {
+                    f.setTag(new ID3v24Tag());
+                }
 
                 Tag tag = f.getTag();
 

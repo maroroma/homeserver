@@ -15,12 +15,14 @@ import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
 import { PlayListRequester } from "../../api/requesters/PlayListRequester";
 import LibraryListItemRenderer from "../renderers/LibraryListItemRenderer";
 import { LibraryItemArts } from "../../api/model/library/LibraryItemArts";
-import MenuItemComponent from "../menu/MenuItemComponent";
 import IconListItemRenderer from "../renderers/IconListItemRenderer";
 import MenuItemAddToPlayListComponent from "../menu/MenuItemAddToPlayListComponent";
 import { EmbeddedPlayerRequester } from "../../api/requesters/EmbeddedPlayerRequester";
 import { LoadNewTrackListAction } from "../../state/actions/LoadNewTrackListAction";
 import { AddTracksToTrackListAction } from "../../state/actions/AddTracksToTrackListAction";
+import MenuItemSubMenu from "../menu/MenuItemSubMenu";
+import MenuItemSwitchDownloadComponent from "../menu/MenuItemSwitchDownloadComponent";
+import MenuItemSwitchComponent from "../menu/MenuItemSwitchComponent";
 
 const OnePlayListComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -33,6 +35,7 @@ const OnePlayListComponent: FC = () => {
   const [selectedTrackToRemove, setSelectedTrackToRemove] = useState(Track.empty());
 
   const [displayRemoveButtons, setDisplayRemoveButtons] = useState(false);
+  const [displayDownloadButtons, setDisplayDownloadButtons] = useState(false);
 
   const [allTracks, setAllTracks] = useState<Track[]>([]);
 
@@ -92,6 +95,9 @@ const OnePlayListComponent: FC = () => {
             key={aTrack.id}
             size="medium"
             libraryItemArts={new LibraryItemArts(null, null, aTrack.albumId)}
+            enableDownload={displayDownloadButtons}
+            downloadLink={EmbeddedPlayerRequester.trackDownloadUrl(aTrack)}
+            downloadTitle={aTrack.shortFileName}
             onClick={() => {
               EmbeddedPlayerRequester.generareTrackListFromPlayList(playList)
                 .then(response => dispatch(new LoadNewTrackListAction(response, aTrack.id)))
@@ -109,15 +115,31 @@ const OnePlayListComponent: FC = () => {
         <MenuItemAddToPlayListComponent onClick={() => addPlayListToPlayList()} />
 
 
-        <MenuItemComponent icon={displayRemoveButtons ? <BookmarkCheck size={40} /> : <BookmarkX size={40} />} onClick={() => {
-          setDisplayRemoveButtons(!displayRemoveButtons)
-        }} />
+        <MenuItemSubMenu>
 
-        {/* <MenuItemAddToPlayListComponent /> */}
+          <MenuItemSwitchDownloadComponent
+            on={displayDownloadButtons}
+            onClick={() => {
+              setDisplayDownloadButtons(!displayDownloadButtons)
+              setDisplayRemoveButtons(false)
+            }}
+          />
 
-        <MenuItemRemoveAlbumComponent
-          onClick={() => setDisplayDeletePopup(true)}
-        />
+          <MenuItemSwitchComponent
+            on={displayRemoveButtons}
+            onElement={<BookmarkX />}
+            offElement={<BookmarkCheck />}
+            onClick={() => {
+              setDisplayRemoveButtons(!displayRemoveButtons)
+              setDisplayDownloadButtons(false);
+            }}
+          />
+
+          <MenuItemRemoveAlbumComponent
+            onClick={() => setDisplayDeletePopup(true)}
+          />
+
+        </MenuItemSubMenu>
       </MenuComponent>
 
 

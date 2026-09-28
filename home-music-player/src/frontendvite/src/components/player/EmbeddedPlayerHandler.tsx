@@ -5,6 +5,7 @@ import { UpdateAlbumOnPlayerStatusAction } from "../../state/actions/UpdateAlbum
 import { UpdateArtistOnPlayerStatusAction } from "../../state/actions/UpdateArtistOnPlayerStatusAction";
 import { NextTrackAction } from "../../state/actions/NextTrackAction";
 import { ToastAction } from "../../state/actions/ToastAction";
+import { EmbeddedPlayerRequester } from "../../api/requesters/EmbeddedPlayerRequester";
 
 const EmbeddedPlayerHandler: FC = () => {
 
@@ -42,7 +43,7 @@ const EmbeddedPlayerHandler: FC = () => {
             }
         }
     }, [playerStatus.playerStatus])
-    
+
     return <h1>
         {embeddedPlayerState.trackList.tracks.length > 0 && embeddedPlayerState.currentIndex !== -1 ?
             <audio
@@ -53,9 +54,7 @@ const EmbeddedPlayerHandler: FC = () => {
                 onLoadedData={() => dispatch(ToastAction.close())}
                 onEnded={() => dispatch(new NextTrackAction())}
                 // onTimeUpdate={(value) => console.log("timeupdate", value.timeStamp, value.currentTarget.currentTime)}
-                src={
-                    `api/musicplayer/embedded/track/${playerStatus.track.id}/stream`
-                }
+                src={EmbeddedPlayerRequester.trackDownloadUrl(playerStatus.track)}
             ></audio>
             : <></>
         }

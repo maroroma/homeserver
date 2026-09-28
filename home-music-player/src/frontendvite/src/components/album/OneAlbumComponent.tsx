@@ -6,7 +6,7 @@ import { Track } from "../../api/model/library/Track";
 import FadeInPage from "../FadeInPage";
 import IconListItemRenderer from "../renderers/IconListItemRenderer";
 import { NameTransformer } from "../../tools/NameTransformer";
-import { BookmarkCheck, BookmarkPlus, BookmarkX, Play } from "react-bootstrap-icons";
+import { BookmarkPlus, Play } from "react-bootstrap-icons";
 import FanArtComponent from "../fanart/FanArtComponent";
 import MenuComponent from "../menu/MenuComponent";
 import MenuItemBackComponent from "../menu/MenuItemBackComponent";
@@ -16,12 +16,14 @@ import MenuItemRemoveAlbumComponent from "../menu/MenuItemRemoveAlbumComponent";
 import YesNoModal from "../modals/YesNoModal";
 import { ToastAction } from "../../state/actions/ToastAction";
 import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
-import MenuItemComponent from "../menu/MenuItemComponent";
 import MenuItemAddComponent from "../menu/MenuItemAddComponent";
 import { AlbumProjectRequester } from "../../api/requesters/AlbumProjectRequester";
 import { EmbeddedPlayerRequester } from "../../api/requesters/EmbeddedPlayerRequester";
 import { LoadNewTrackListAction } from "../../state/actions/LoadNewTrackListAction";
 import { AddTracksToTrackListAction } from "../../state/actions/AddTracksToTrackListAction";
+import MenuItemSubMenu from "../menu/MenuItemSubMenu";
+import MenuItemSwitchPlayListComponent from "../menu/MenuItemSwitchPlayListComponent";
+import MenuItemSwitchDownloadComponent from "../menu/MenuItemSwitchDownloadComponent";
 
 const OneAlbumComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -34,6 +36,7 @@ const OneAlbumComponent: FC = () => {
   const [allTracks, setAllTracks] = useState<Track[]>([]);
 
   const [playListDisplayMode, setPlayListDisplayMode] = useState(false);
+  const [downloadDisplayMode, setDownloadDisplayMode] = useState(false);
 
   useLoadingEffect(
     "Morceaux en cours de chargement",
@@ -68,6 +71,7 @@ const OneAlbumComponent: FC = () => {
       .then(response => navigate(Paths.ADD_TRACKS_TO_PROJECT.resolve(response.projectId)))
   }
 
+
   return (
     <FadeInPage
       label={NameTransformer.albumName(album, artist)}
@@ -78,6 +82,9 @@ const OneAlbumComponent: FC = () => {
         <IconListItemRenderer
           size="xsmall"
           icon={playListDisplayMode ? <BookmarkPlus /> : <Play />}
+          enableDownload={downloadDisplayMode}
+          downloadTitle={aTrack.shortFileName}
+          downloadLink={EmbeddedPlayerRequester.trackDownloadUrl(aTrack)}
           label={NameTransformer.trackName(aTrack)}
           key={aTrack.id}
           onClick={() => {
@@ -97,16 +104,34 @@ const OneAlbumComponent: FC = () => {
         />
 
         <MenuItemAddToPlayListComponent onClick={() => addAlbumToPlayList()} />
-        <MenuItemComponent icon={playListDisplayMode ? <BookmarkX size={40} /> : <BookmarkCheck size={40} />} onClick={() => {
-          setPlayListDisplayMode(!playListDisplayMode)
-        }} />
-        <MenuItemAddComponent
-          onClick={() => createAlbumUpdateProject()}
-        />
 
-        <MenuItemRemoveAlbumComponent
-          onClick={() => setDisplayDeletePopup(true)}
-        />
+        <MenuItemSubMenu>
+
+          <MenuItemSwitchPlayListComponent
+            on={playListDisplayMode}
+            onClick={() => {
+              setPlayListDisplayMode(!playListDisplayMode)
+              setDownloadDisplayMode(false)
+            }}
+          />
+
+          <MenuItemSwitchDownloadComponent
+            on={downloadDisplayMode}
+            onClick={() => {
+              setDownloadDisplayMode(!downloadDisplayMode)
+              setPlayListDisplayMode(false)
+            }}
+          />
+
+          <MenuItemAddComponent
+            onClick={() => createAlbumUpdateProject()}
+          />
+          <MenuItemRemoveAlbumComponent
+            onClick={() => setDisplayDeletePopup(true)}
+          />
+        </MenuItemSubMenu>
+
+
       </MenuComponent>
       <YesNoModal
         message={

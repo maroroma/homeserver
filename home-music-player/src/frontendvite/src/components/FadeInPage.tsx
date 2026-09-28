@@ -46,6 +46,7 @@ const FadeInPage: FC<FadeInPageProps> = ({
             label={label}
             icon={icon}
             onClick={onClick}
+            sizeOnScroll="xsmall"
           />
         </div>
       ) : (

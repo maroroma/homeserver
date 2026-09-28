@@ -16,6 +16,7 @@ import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
 import { EmbeddedPlayerRequester } from "../../api/requesters/EmbeddedPlayerRequester";
 import { LoadNewTrackListAction } from "../../state/actions/LoadNewTrackListAction";
 import { AddTracksToTrackListAction } from "../../state/actions/AddTracksToTrackListAction";
+import MenuItemSwitchDownloadComponent from "../menu/MenuItemSwitchDownloadComponent";
 
 const AllTracksForArtistComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -23,6 +24,8 @@ const AllTracksForArtistComponent: FC = () => {
   const { artist } = useArtist();
 
   const [allTracks, setAllTracks] = useState<Track[]>([]);
+  const [displayDownloadButtons, setDisplayDownloadButtons] = useState(false);
+
 
   useLoadingEffect(
     "Morceaux en cours de chargement",
@@ -52,6 +55,9 @@ const AllTracksForArtistComponent: FC = () => {
           icon={<Play />}
           label={NameTransformer.trackName(aTrack)}
           key={aTrack.id}
+          enableDownload={displayDownloadButtons}
+          downloadLink={EmbeddedPlayerRequester.trackDownloadUrl(aTrack)}
+          downloadTitle={aTrack.shortFileName}
           onClick={() => {
             EmbeddedPlayerRequester.generareTrackListFromArtist(artist)
               .then(response => dispatch(new LoadNewTrackListAction(response, aTrack.id)))
@@ -66,6 +72,12 @@ const AllTracksForArtistComponent: FC = () => {
         <MenuItemAddToPlayListComponent
           onClick={() => addAllTracksToPlayList()}
         />
+         <MenuItemSwitchDownloadComponent
+            on={displayDownloadButtons}
+            onClick={() => {
+              setDisplayDownloadButtons(!displayDownloadButtons)
+            }}
+          />
       </MenuComponent>
     </FadeInPage>
   );
