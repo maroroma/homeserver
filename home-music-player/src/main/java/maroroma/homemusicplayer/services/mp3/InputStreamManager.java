@@ -67,27 +67,27 @@ public class InputStreamManager {
         log.info("Local file cache cleared");
     }
 
-    @Scheduled(fixedRate = 10, timeUnit = java.util.concurrent.TimeUnit.MINUTES)
-    public void cleanOversizedCache() {
-        var filesIntoLocalCache = localFileSystemCacheDirectory().getFiles();
-
-        if (filesIntoLocalCache.size() > this.cacheMaxSize) {
-            log.info("local file cache is oversized : {} elements vs {} max size", filesIntoLocalCache.size(), this.cacheMaxSize);
-            var fileFromCurrentPlayListIntoCache = synchronizedPlayList.fullTrackList()
-                    .stream()
-                    .map(this::generateLocalCacheFileAdapter)
-                    .map(FileAdapter::pathAsBase64)
-                    .collect(Collectors.toSet());
-            log.info("{} elements will not be cleaned", fileFromCurrentPlayListIntoCache.size());
-            filesIntoLocalCache.stream()
-                    .filter(fileFromLocalCache -> !fileFromCurrentPlayListIntoCache.contains(fileFromLocalCache.pathAsBase64()))
-                    .forEach(FileAdapter::delete);
-
-            log.info("local file cache cleaned, {} remaining elements after cleanup process", localFileSystemCacheDirectory().getFiles().size());
-        } else {
-            log.info("local file cache is ok : {} elements vs {} max size", filesIntoLocalCache.size(), this.cacheMaxSize);
-        }
-    }
+//    @Scheduled(fixedRate = 10, timeUnit = java.util.concurrent.TimeUnit.MINUTES)
+//    public void cleanOversizedCache() {
+//        var filesIntoLocalCache = localFileSystemCacheDirectory().getFiles();
+//
+//        if (filesIntoLocalCache.size() > this.cacheMaxSize) {
+//            log.info("local file cache is oversized : {} elements vs {} max size", filesIntoLocalCache.size(), this.cacheMaxSize);
+//            var fileFromCurrentPlayListIntoCache = synchronizedPlayList.fullTrackList()
+//                    .stream()
+//                    .map(this::generateLocalCacheFileAdapter)
+//                    .map(FileAdapter::pathAsBase64)
+//                    .collect(Collectors.toSet());
+//            log.info("{} elements will not be cleaned", fileFromCurrentPlayListIntoCache.size());
+//            filesIntoLocalCache.stream()
+//                    .filter(fileFromLocalCache -> !fileFromCurrentPlayListIntoCache.contains(fileFromLocalCache.pathAsBase64()))
+//                    .forEach(FileAdapter::delete);
+//
+//            log.info("local file cache cleaned, {} remaining elements after cleanup process", localFileSystemCacheDirectory().getFiles().size());
+//        } else {
+//            log.info("local file cache is ok : {} elements vs {} max size", filesIntoLocalCache.size(), this.cacheMaxSize);
+//        }
+//    }
 
     @Scheduled(fixedDelay = 1000)
     @Synchronized

@@ -1,5 +1,6 @@
 package maroroma.homemusicplayer.services.caches;
 
+import maroroma.homemusicplayer.model.files.FileAdapter;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
 
 import java.util.*;
@@ -14,6 +15,10 @@ public class ParameterizedLock {
 
     public Object getLock(TrackEntity trackEntity) {
         return this.innerLockSupport.computeIfAbsent(trackEntity.getLibraryItemPath(), k -> new Object());
+    }
+
+    public Object getLock(FileAdapter fileAdapter) {
+        return this.innerLockSupport.computeIfAbsent(fileAdapter.pathAsBase64(),  k -> new Object());
     }
 
     public void clear() {

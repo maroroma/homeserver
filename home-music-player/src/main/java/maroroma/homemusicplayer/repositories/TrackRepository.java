@@ -13,4 +13,4 @@ public interface TrackRepository extends JpaRepository<TrackEntity, UUID> {
     List<TrackEntity> findAllByAlbum(AlbumEntity albumEntity);
 
     void deleteByAlbum(AlbumEntity albumEntity);
-}
+} 

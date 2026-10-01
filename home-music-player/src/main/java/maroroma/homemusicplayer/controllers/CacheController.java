@@ -2,6 +2,7 @@ package maroroma.homemusicplayer.controllers;
 
 import lombok.RequiredArgsConstructor;
 import maroroma.homemusicplayer.services.SimplePlayerService;
+import maroroma.homemusicplayer.services.caches.TracksCache;
 import maroroma.homemusicplayer.services.mp3.InputStreamManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,15 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CacheController {
 
-    private final InputStreamManager inputStreamManager;
-    private final SimplePlayerService simplePlayerService;
+    private final TracksCache tracksCache;
 
 
     @DeleteMapping("api/musicplayer/cache")
     public ResponseEntity<Object> clearCache() {
         // comme ça on peut cleaner sans pb de lecture/ecriture
-        simplePlayerService.stop();
-        inputStreamManager.clearAllLocalFileCache();
+        tracksCache.clearCache();
         return ResponseEntity.noContent().build();
     }
 }

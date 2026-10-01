@@ -3,6 +3,7 @@ package maroroma.homemusicplayer.services;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import maroroma.homemusicplayer.model.files.FileAdapter;
+import maroroma.homemusicplayer.services.caches.TracksCache;
 import maroroma.homemusicplayer.tools.MusicPlayerException;
 import maroroma.homemusicplayer.tools.Traper;
 import org.springframework.http.CacheControl;
@@ -18,6 +19,7 @@ public class LocalResourcesService {
     private final FilesFactory filesFactory;
     private final AlbumService albumService;
     private final TrackService trackService;
+    private final TracksCache tracksCache;
 
 
     public void getThumb(String base64ThumbFileName, HttpServletResponse response) {
@@ -49,7 +51,10 @@ public class LocalResourcesService {
     public void streamTrack(UUID trackId, HttpServletResponse response) {
         var track = this.trackService.findTrackById(trackId)
                 .orElseThrow(() -> new MusicPlayerException("Track with id " + trackId + " not found"));
-        this.getFile(this.filesFactory.getFileFromBase64Path(track.getLibraryItemPath()), response);
+
+        var trackFileAdapter = tracksCache.getTrackFileAdapter(track);
+
+        this.getFile(trackFileAdapter, response);
     }
 
 }
