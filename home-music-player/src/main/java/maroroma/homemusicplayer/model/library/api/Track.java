@@ -18,4 +18,9 @@ public class Track extends AbstractLibraryItem {
 
     private UUID albumId;
     private String shortFileName;
+
+    public Track lightWeight() {
+        this.setLibraryItemArts(null);
+        return this;
+    }
 }

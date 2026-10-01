@@ -10,6 +10,7 @@ import {Comparators} from "../../tools/Comparators";
 import MenuItemAddArtistComponent from "../menu/MenuItemAddArtistComponent";
 import MenuItemAdminComponent from "../menu/MenuItemAdminComponent";
 import MenuItemGoToPlaylistsComponent from "../menu/MenuItemGoToPlaylistsComponent";
+import MenuItemSearchComponent from "../menu/MenuItemSearchComponent";
 
 const AllArtistsComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -35,6 +36,7 @@ const AllArtistsComponent: FC = () => {
       <MenuComponent>
         <MenuItemAddArtistComponent onClick={() => navigate(Paths.ADD_ARTIST.resolve())}/>
         <MenuItemGoToPlaylistsComponent />
+        <MenuItemSearchComponent />
         <MenuItemAdminComponent onClick={() => navigate(Paths.ADMIN.resolve())} />
       </MenuComponent>
     </FadeInPage>

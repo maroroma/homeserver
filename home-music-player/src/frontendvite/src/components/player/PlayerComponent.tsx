@@ -24,6 +24,7 @@ import { NextTrackAction } from "../../state/actions/NextTrackAction";
 import { PreviousTrackAction } from "../../state/actions/PreviousTrackAction";
 import { ShuffleTrackListAction } from "../../state/actions/ShuffleTrackListAction";
 import MenuItemComponent from "../menu/MenuItemComponent";
+import MenuItemSearchComponent from "../menu/MenuItemSearchComponent";
 
 const PlayerComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -171,6 +172,7 @@ const PlayerComponent: FC = () => {
         <MenuItemGoToAllArtistComponent />
         <MenuItemAddToPlaylistsComponent currentTrack={playerStatus.track} />
         <MenuItemComponent icon={<List size={40}/>} onClick={() => navigate(Paths.CURRENT_TRACK_LIST.resolve())}/>
+        <MenuItemSearchComponent />
       </MenuComponent>
     </FadeInPage>
   );

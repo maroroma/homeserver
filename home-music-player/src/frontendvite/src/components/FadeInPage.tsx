@@ -13,6 +13,7 @@ type FadeInPageProps = {
   label?: string;
   libraryItemArts?: LibraryItemArts;
   icon?: React.ReactElement<Icon>;
+  customHeader?: React.ReactElement;
   onClick?: () => void;
   className?: string;
 };
@@ -23,6 +24,7 @@ const FadeInPage: FC<FadeInPageProps> = ({
   libraryItemArts,
   icon,
   onClick,
+  customHeader,
   className = ""
 }) => {
   return (
@@ -52,6 +54,12 @@ const FadeInPage: FC<FadeInPageProps> = ({
       ) : (
         <></>
       )}
+
+      {customHeader ? (
+        <div className="fixed-header">
+          {customHeader}
+        </div>
+      ) : (<></>)}
 
 
 

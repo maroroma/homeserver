@@ -25,7 +25,8 @@ function App() {
         Paths.CREATE_ARTIST_FOLDER.toRoute(),
         Paths.CREATE_ALBUM_PROJECT.toRoute(),
         Paths.ADD_TRACKS_TO_PROJECT.toRoute(),
-        Paths.CURRENT_TRACK_LIST.toRoute()
+        Paths.CURRENT_TRACK_LIST.toRoute(),
+        Paths.SEARCH.toRoute()
       ],
     },
   ]);

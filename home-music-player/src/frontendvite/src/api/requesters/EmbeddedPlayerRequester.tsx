@@ -11,6 +11,10 @@ export class EmbeddedPlayerRequester {
         return RequesterUtils.post("/api/musicplayer/embedded/tracklist", CreatePlayerRequest.forAlbum(album.id))
     }
 
+    public static generareTrackListFromAlbumId(albumId: string): Promise<TrackList> {
+        return RequesterUtils.post("/api/musicplayer/embedded/tracklist", CreatePlayerRequest.forAlbum(albumId))
+    }
+
     public static generareTrackListFromArtist(artist: Artist): Promise<any> {
         return RequesterUtils.post("/api/musicplayer/embedded/tracklist", CreatePlayerRequest.forArtist(artist.id))
     }

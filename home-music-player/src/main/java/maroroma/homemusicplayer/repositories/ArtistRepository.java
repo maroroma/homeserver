@@ -4,12 +4,16 @@ import maroroma.homemusicplayer.model.library.entities.ArtistEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface ArtistRepository extends JpaRepository<ArtistEntity, UUID> {
 
     Optional<ArtistEntity> findByName(String name);
     Optional<ArtistEntity> findByLibraryItemPath(String libraryItemPath);
+    List<ArtistEntity> findByNameContainsIgnoreCase(String expectedName);
+
 
 }

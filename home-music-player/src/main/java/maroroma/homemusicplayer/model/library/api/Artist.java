@@ -10,7 +10,7 @@ import java.util.*;
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class Artist extends AbstractLibraryItem {
 
     private List<UUID> albums;

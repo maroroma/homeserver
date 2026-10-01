@@ -13,6 +13,7 @@ import PlayerComponent from "../../components/player/PlayerComponent";
 import AddToPlayList from "../../components/playlists/AddToPlayList";
 import AllPlayListComponent from "../../components/playlists/AllPlayListComponent";
 import OnePlayListComponent from "../../components/playlists/OnePlayListComponent";
+import SearchComponent from "../../components/search/SearchComponent";
 import Path from "./Path";
 
 export default class Paths {
@@ -35,6 +36,9 @@ export default class Paths {
     
     public static readonly PLAYER = new Path("/player", () =>  <PlayerComponent />); 
     public static readonly CURRENT_TRACK_LIST = new Path("/currenttracklist", () =>  <CurrentTrackListComponent />); 
+
     public static readonly ADMIN = new Path("/admin", () =>  <AdminComponent />); 
+
+    public static readonly SEARCH = new Path("/search", () => <SearchComponent />);
 
 }
