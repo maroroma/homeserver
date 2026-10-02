@@ -10,10 +10,8 @@ import FanArtComponent from "../fanart/FanArtComponent";
 
 import "./PlayerComponent.css";
 import LibraryListItemRenderer from "../renderers/LibraryListItemRenderer";
-import IconListItemRenderer from "../renderers/IconListItemRenderer";
-import { ChevronDoubleLeft, ChevronDoubleRight, List, MusicNoteBeamed, Pause, Play, Shuffle, Stop, VolumeDown, VolumeUp, } from "react-bootstrap-icons";
+import { ChevronDoubleLeft, ChevronDoubleRight, List, Pause, Play, Shuffle, Stop, VolumeDown, VolumeUp, } from "react-bootstrap-icons";
 import MenuItemAddToPlaylistsComponent from "../menu/MenuItemAddToPlaylistsComponent";
-import { NameTransformer } from "../../tools/NameTransformer";
 import VynilComponent from "../thumb/VynilComponent";
 import { StopEmbeddedPlayerAction } from "../../state/actions/StopEmbeddedPlayerAction";
 import { VolumeDownAction } from "../../state/actions/VolumeDownAction";
@@ -25,6 +23,7 @@ import { PreviousTrackAction } from "../../state/actions/PreviousTrackAction";
 import { ShuffleTrackListAction } from "../../state/actions/ShuffleTrackListAction";
 import MenuItemComponent from "../menu/MenuItemComponent";
 import MenuItemSearchComponent from "../menu/MenuItemSearchComponent";
+import TrackListItemRenderer from "../renderers/TrackListItemRenderer";
 
 const PlayerComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -62,18 +61,17 @@ const PlayerComponent: FC = () => {
           </div>
           <Carousel controls={false} indicators={false} className="carousel">
             <Carousel.Item>
-              <IconListItemRenderer
-                icon={<MusicNoteBeamed />}
-                size="small"
-                label={NameTransformer.trackName(playerStatus.track)}
-                onClick={() =>
+              <TrackListItemRenderer
+               track={playerStatus.track}
+               displayMode="Play"
+               onPlay={() =>
                   navigate(
                     Paths.ONE_ALBUM.resolve([
                       playerStatus.artist.id,
                       playerStatus.album.id,
                     ])
-                  )
-                }
+                  )}
+                  size="small"
               />
             </Carousel.Item>
             <Carousel.Item>

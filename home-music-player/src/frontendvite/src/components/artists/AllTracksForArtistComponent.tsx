@@ -4,12 +4,9 @@ import { useArtist, useCustomNavigate, useLoadingEffect, } from "../hooks/Custom
 import { LibraryRequester } from "../../api/requesters/LibraryRequester";
 import type { Track } from "../../api/model/library/Track";
 import FadeInPage from "../FadeInPage";
-import IconListItemRenderer from "../renderers/IconListItemRenderer";
 import FanArtComponent from "../fanart/FanArtComponent";
 import MenuComponent from "../menu/MenuComponent";
 import MenuItemBackComponent from "../menu/MenuItemBackComponent";
-import { Play } from "react-bootstrap-icons";
-import { NameTransformer } from "../../tools/NameTransformer";
 import { Comparators } from "../../tools/Comparators";
 import MenuItemAddToPlayListComponent from "../menu/MenuItemAddToPlayListComponent";
 import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
@@ -17,6 +14,8 @@ import { EmbeddedPlayerRequester } from "../../api/requesters/EmbeddedPlayerRequ
 import { LoadNewTrackListAction } from "../../state/actions/LoadNewTrackListAction";
 import { AddTracksToTrackListAction } from "../../state/actions/AddTracksToTrackListAction";
 import MenuItemSwitchDownloadComponent from "../menu/MenuItemSwitchDownloadComponent";
+import type { TrackDisplayMode } from "../renderers/TrackListItemRenderer";
+import TrackListItemRenderer from "../renderers/TrackListItemRenderer";
 
 const AllTracksForArtistComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -24,7 +23,8 @@ const AllTracksForArtistComponent: FC = () => {
   const { artist } = useArtist();
 
   const [allTracks, setAllTracks] = useState<Track[]>([]);
-  const [displayDownloadButtons, setDisplayDownloadButtons] = useState(false);
+  const [trackDisplayMode, setTrackDisplayMode] = useState<TrackDisplayMode>("Play");
+
 
 
   useLoadingEffect(
@@ -50,15 +50,12 @@ const AllTracksForArtistComponent: FC = () => {
       onClick={() => navigate(Paths.ONE_ARTIST.resolve(artist.id))}
     >
       {allTracks.map((aTrack) => (
-        <IconListItemRenderer
+        <TrackListItemRenderer
           size="xsmall"
-          icon={<Play />}
-          label={NameTransformer.trackName(aTrack)}
+          track={aTrack}
           key={aTrack.id}
-          enableDownload={displayDownloadButtons}
-          downloadLink={EmbeddedPlayerRequester.trackDownloadUrl(aTrack)}
-          downloadTitle={aTrack.shortFileName}
-          onClick={() => {
+          displayMode={trackDisplayMode}
+          onPlay={() => {
             EmbeddedPlayerRequester.generareTrackListFromArtist(artist)
               .then(response => dispatch(new LoadNewTrackListAction(response, aTrack.id)))
           }}
@@ -72,12 +69,12 @@ const AllTracksForArtistComponent: FC = () => {
         <MenuItemAddToPlayListComponent
           onClick={() => addAllTracksToPlayList()}
         />
-         <MenuItemSwitchDownloadComponent
-            on={displayDownloadButtons}
-            onClick={() => {
-              setDisplayDownloadButtons(!displayDownloadButtons)
-            }}
-          />
+        <MenuItemSwitchDownloadComponent
+          on={trackDisplayMode === "Download"}
+          onClick={() => {
+            trackDisplayMode === "Download" ? setTrackDisplayMode("Play") : setTrackDisplayMode("Download")
+          }}
+        />
       </MenuComponent>
     </FadeInPage>
   );

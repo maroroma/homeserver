@@ -4,9 +4,7 @@ import { useAlbum, useArtist, useCustomNavigate, useLoadingEffect, } from "../ho
 import { LibraryRequester } from "../../api/requesters/LibraryRequester";
 import { Track } from "../../api/model/library/Track";
 import FadeInPage from "../FadeInPage";
-import IconListItemRenderer from "../renderers/IconListItemRenderer";
 import { NameTransformer } from "../../tools/NameTransformer";
-import { BookmarkPlus, Play } from "react-bootstrap-icons";
 import FanArtComponent from "../fanart/FanArtComponent";
 import MenuComponent from "../menu/MenuComponent";
 import MenuItemBackComponent from "../menu/MenuItemBackComponent";
@@ -24,6 +22,7 @@ import { AddTracksToTrackListAction } from "../../state/actions/AddTracksToTrack
 import MenuItemSubMenu from "../menu/MenuItemSubMenu";
 import MenuItemSwitchPlayListComponent from "../menu/MenuItemSwitchPlayListComponent";
 import MenuItemSwitchDownloadComponent from "../menu/MenuItemSwitchDownloadComponent";
+import TrackListItemRenderer, { type TrackDisplayMode } from "../renderers/TrackListItemRenderer";
 
 const OneAlbumComponent: FC = () => {
   const navigate = useCustomNavigate();
@@ -35,8 +34,7 @@ const OneAlbumComponent: FC = () => {
 
   const [allTracks, setAllTracks] = useState<Track[]>([]);
 
-  const [playListDisplayMode, setPlayListDisplayMode] = useState(false);
-  const [downloadDisplayMode, setDownloadDisplayMode] = useState(false);
+  const [trackDisplayMode, setTrackDisplayMode] = useState<TrackDisplayMode>("Play");
 
   useLoadingEffect(
     "Morceaux en cours de chargement",
@@ -79,22 +77,17 @@ const OneAlbumComponent: FC = () => {
       onClick={() => navigate(Paths.ONE_ARTIST.resolve(artistId))}
     >
       {allTracks.map((aTrack) => (
-        <IconListItemRenderer
+        <TrackListItemRenderer
           size="xsmall"
-          icon={playListDisplayMode ? <BookmarkPlus /> : <Play />}
-          enableDownload={downloadDisplayMode}
-          downloadTitle={aTrack.shortFileName}
-          downloadLink={EmbeddedPlayerRequester.trackDownloadUrl(aTrack)}
-          label={NameTransformer.trackName(aTrack)}
+          track={aTrack}
           key={aTrack.id}
-          onClick={() => {
-            if (playListDisplayMode) {
-              navigate(Paths.ADD_TO_PLAYLIST_FROM_ALBUM.resolve([aTrack.id, artist.id, album.id]))
-            } else {
-              EmbeddedPlayerRequester.generareTrackListFromAlbum(album)
-                .then(response => dispatch(new LoadNewTrackListAction(response, aTrack.id)));
-            }
-          }}
+          displayMode={trackDisplayMode}
+          onPlay={() =>
+            EmbeddedPlayerRequester.generareTrackListFromAlbum(album)
+              .then(response => dispatch(new LoadNewTrackListAction(response, aTrack.id)))}
+          onAddToFavorite={() =>
+            navigate(Paths.ADD_TO_PLAYLIST_FROM_ALBUM.resolve([aTrack.id, artist.id, album.id]))
+          }
         />
       ))}
       <FanArtComponent fanart={artist.libraryItemArts} />
@@ -108,18 +101,16 @@ const OneAlbumComponent: FC = () => {
         <MenuItemSubMenu>
 
           <MenuItemSwitchPlayListComponent
-            on={playListDisplayMode}
+            on={trackDisplayMode === "Favorite"}
             onClick={() => {
-              setPlayListDisplayMode(!playListDisplayMode)
-              setDownloadDisplayMode(false)
+              trackDisplayMode === "Favorite" ? setTrackDisplayMode("Play") : setTrackDisplayMode("Favorite");
             }}
           />
 
           <MenuItemSwitchDownloadComponent
-            on={downloadDisplayMode}
+            on={trackDisplayMode === "Download"}
             onClick={() => {
-              setDownloadDisplayMode(!downloadDisplayMode)
-              setPlayListDisplayMode(false)
+              trackDisplayMode === "Download" ? setTrackDisplayMode("Play") : setTrackDisplayMode("Download");
             }}
           />
 

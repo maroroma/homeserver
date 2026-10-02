@@ -9,6 +9,7 @@
     top: 0;
     background-color: var(--bs-body-bg);
     width: 100%;
+    z-index: 777;
 }
 
 .fadein-page .as-body {

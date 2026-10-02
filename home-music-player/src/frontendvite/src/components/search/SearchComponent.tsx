@@ -1,7 +1,7 @@
 import { useEffect, useState, type FC } from "react";
 import { useCustomNavigate, useDebounce } from "../hooks/CustomHooks";
 import FadeInPage from "../FadeInPage";
-import { Disc, MusicNote, MusicNoteBeamed, PeopleFill, Search } from "react-bootstrap-icons";
+import { Disc, MusicNoteBeamed, PeopleFill, Search } from "react-bootstrap-icons";
 import Paths from "../../tools/routes/Paths";
 import MenuComponent from "../menu/MenuComponent";
 import MenuItemBackComponent from "../menu/MenuItemBackComponent";
@@ -14,12 +14,14 @@ import { SearchResponse } from "../../api/model/search/SearchResponse";
 import { SearchRequester } from "../../api/requesters/SearchRequester";
 import IconListItemRenderer from "../renderers/IconListItemRenderer";
 import LibraryListItemRenderer from "../renderers/LibraryListItemRenderer";
-import { NameTransformer } from "../../tools/NameTransformer";
-import { LibraryItemArts } from "../../api/model/library/LibraryItemArts";
 import { EmbeddedPlayerRequester } from "../../api/requesters/EmbeddedPlayerRequester";
 import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
 import { LoadNewTrackListAction } from "../../state/actions/LoadNewTrackListAction";
 import { Comparators } from "../../tools/Comparators";
+import MenuItemSwitchPlayListComponent from "../menu/MenuItemSwitchPlayListComponent";
+import MenuItemSwitchDownloadComponent from "../menu/MenuItemSwitchDownloadComponent";
+import type { TrackDisplayMode } from "../renderers/TrackListItemRenderer";
+import TrackListItemRenderer from "../renderers/TrackListItemRenderer";
 
 const SearchComponent: FC = () => {
     const navigate = useCustomNavigate();
@@ -27,6 +29,8 @@ const SearchComponent: FC = () => {
     const [displayedSearchString, setDisplayedSearchString] = useState("");
     const debounceSearchString = useDebounce(displayedSearchString);
     const [searchResponse, setSearchResponse] = useState(SearchResponse.empty());
+    const [trackDisplayMode, setTrackDisplayMode] = useState<TrackDisplayMode>("LibraryItemArts");
+
 
     useEffect(() => {
         SearchRequester.search(debounceSearchString)
@@ -50,7 +54,6 @@ const SearchComponent: FC = () => {
                             size="lg"
                             value={displayedSearchString}
                             onChange={(event) => setDisplayedSearchString(event.target.value)}
-                        // isValid={validNewPlayListName}
                         />
                     </InputGroup>
                 </Stack>
@@ -67,18 +70,18 @@ const SearchComponent: FC = () => {
                         />
                     </Accordion.Header>
                     <Accordion.Body>
-                        {searchResponse.tracks.sort(Comparators.byTrackName()).map((aTrack, index) => (
-                            <LibraryListItemRenderer
-                                label={NameTransformer.trackName(aTrack)}
+                        {searchResponse.tracks.sort(Comparators.byTrackName()).map((aTrack) => (
+                            <TrackListItemRenderer
+                                track={aTrack}
                                 key={aTrack.id}
-                                // enableDownload={downloadMode}
-                                // downloadLink={EmbeddedPlayerRequester.trackDownloadUrl(aTrack)}
-                                downloadTitle={aTrack.shortFileName}
                                 size="xsmall"
-                                libraryItemArts={new LibraryItemArts(null, null, aTrack.albumId)}
-                                onClick={() => {
+                                displayMode={trackDisplayMode}
+                                onPlay={() => {
                                     EmbeddedPlayerRequester.generareTrackListFromAlbumId(aTrack.albumId)
                                         .then(response => dispatch(new LoadNewTrackListAction(response, aTrack.id)));
+                                }}
+                                onAddToFavorite={() => {
+                                    navigate(Paths.ADD_TO_PLAYLIST.resolve([aTrack.id]))
                                 }}
                             />
                         ))}
@@ -129,6 +132,19 @@ const SearchComponent: FC = () => {
             <MenuComponent>
                 <MenuItemBackComponent
                     onClick={() => navigate(Paths.ALL_ARTISTS.resolve())}
+                />
+                <MenuItemSwitchPlayListComponent
+                    on={trackDisplayMode === "Favorite"}
+                    onClick={() => {
+                        trackDisplayMode === "Favorite" ? setTrackDisplayMode("LibraryItemArts") : setTrackDisplayMode("Favorite");
+                    }}
+                />
+
+                <MenuItemSwitchDownloadComponent
+                    on={trackDisplayMode === "Download"}
+                    onClick={() => {
+                        trackDisplayMode === "Download" ? setTrackDisplayMode("LibraryItemArts") : setTrackDisplayMode("Download");
+                    }}
                 />
             </MenuComponent>
         </FadeInPage >
