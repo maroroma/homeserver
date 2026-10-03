@@ -53,6 +53,8 @@ const EmbeddedPlayerHandler: FC = () => {
                 onLoadStart={() => dispatch(ToastAction.loadingTrack())}
                 onLoadedData={() => dispatch(ToastAction.close())}
                 onEnded={() => dispatch(new NextTrackAction())}
+                // en cas d'erreur on tente de passer à un autre morceau, sinon le lecteur reste bloqué en mode chargement
+                onError={() => dispatch(new NextTrackAction())}
                 // onTimeUpdate={(value) => console.log("timeupdate", value.timeStamp, value.currentTarget.currentTime)}
                 src={EmbeddedPlayerRequester.trackDownloadUrl(playerStatus.track)}
             ></audio>

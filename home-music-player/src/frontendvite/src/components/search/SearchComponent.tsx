@@ -49,6 +49,7 @@ const SearchComponent: FC = () => {
                         className="thumb-scroll-transitioning" />
                     <InputGroup>
                         <Form.Control
+                            inputMode="search"
                             autoFocus
                             placeholder="search track name, artist or album"
                             size="lg"

@@ -2,6 +2,7 @@ package maroroma.homemusicplayer.services;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import maroroma.homemusicplayer.model.files.FileAdapter;
 import maroroma.homemusicplayer.services.caches.TracksCache;
 import maroroma.homemusicplayer.tools.MusicPlayerException;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.*;
 import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class LocalResourcesService {
@@ -49,12 +51,17 @@ public class LocalResourcesService {
     }
 
     public void streamTrack(UUID trackId, HttpServletResponse response) {
-        var track = this.trackService.findTrackById(trackId)
-                .orElseThrow(() -> new MusicPlayerException("Track with id " + trackId + " not found"));
+        try {
+            var track = this.trackService.findTrackById(trackId)
+                    .orElseThrow(() -> new MusicPlayerException("Track with id " + trackId + " not found"));
 
-        var trackFileAdapter = tracksCache.getTrackFileAdapter(track);
+            var trackFileAdapter = tracksCache.getTrackFileAdapter(track);
 
-        this.getFile(trackFileAdapter, response);
+            this.getFile(trackFileAdapter, response);
+        } catch (Exception e) {
+            log.error("erreur lors de la récupération du morceau " + trackId);
+            throw e;
+        }
     }
 
 }
