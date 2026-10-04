@@ -5,7 +5,6 @@ import { Tools, Trash2Fill } from "react-bootstrap-icons";
 import Paths from "../../tools/routes/Paths";
 import MenuComponent from "../menu/MenuComponent";
 import MenuItemBackComponent from "../menu/MenuItemBackComponent";
-import { PlayerStatusEvent } from "../../api/model/player/PlayerStatusEvent";
 import { PlayerRequester } from "../../api/requesters/PlayerRequester";
 import { Button, Table } from "react-bootstrap";
 
@@ -13,17 +12,19 @@ import "./AdminComponent.css"
 import { useMusicPlayerContext } from "../../state/MusicPlayerContext";
 import { ToastAction } from "../../state/actions/ToastAction";
 import { AlbumProjectRequester } from "../../api/requesters/AlbumProjectRequester";
+import { ApplicationStats } from "../../api/model/administration/ApplicationStats";
+import { AdministrationRequester } from "../../api/requesters/AdministrationRequester";
 
 const AdminComponent: FC = () => {
     const navigate = useCustomNavigate();
     const { dispatch } = useMusicPlayerContext();
 
 
-    const [fullPlayerStatus, setFullPlayerStatus] = useState(PlayerStatusEvent.empty())
+    const [applicationStats, setApplicationStats] = useState(ApplicationStats.empty())
 
     useEffect(() => {
-        PlayerRequester.getFullPlayerStatus()
-            .then(fullPlayerStatus => setFullPlayerStatus(fullPlayerStatus));
+        AdministrationRequester.getApplicationStats()
+            .then(fullPlayerStatus => setApplicationStats(fullPlayerStatus));
     }, [])
 
     return (
@@ -34,28 +35,26 @@ const AdminComponent: FC = () => {
         >
             <Table striped bordered hover className="all-status">
                 <tr>
-                    <td>STATUS</td>
-                    <td>{fullPlayerStatus.playerStatus}</td>
+                    <td>NB TRACKS</td>
+                    <td>{applicationStats.nbTracks}</td>
                 </tr>
                 <tr>
-                    <td>VOLUME</td>
-                    <td>{fullPlayerStatus.volume}</td>
+                    <td>NB ALBUMS</td>
+                    <td>{applicationStats.nbAlbums}</td>
                 </tr>
                 <tr>
-                    <td>TRACK</td>
-                    <td>{fullPlayerStatus.track ? fullPlayerStatus.track.name : "-"}</td>
+                    <td>NB ARTISTS</td>
+                    <td>{applicationStats.nbArtists}</td>
                 </tr>
                 <tr>
-                    <td>ARTIST</td>
-                    <td>{fullPlayerStatus.artist ? fullPlayerStatus.artist.name : "-"}</td>
-                </tr>
-                <tr>
-                    <td>ALBUM</td>
-                    <td>{fullPlayerStatus.album ? fullPlayerStatus.album.name : "-"}</td>
+                    <td>LOCAL CACHE</td>
+                    <td>
+                        {`${applicationStats.nbLocalCacheItems}/${applicationStats.nbMaxCacheItems}`}
+                    </td>
                 </tr>
                 <tr>
                     <td>MEMORY</td>
-                    <td>{`${fullPlayerStatus.memoryStatus.percentageUsedMemory} %`}</td>
+                    <td>{`${applicationStats.memoryStatus.percentageUsedMemory} %`}</td>
                 </tr>
             </Table>
 

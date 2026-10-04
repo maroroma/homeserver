@@ -1,5 +1,6 @@
 package maroroma.homemusicplayer.services.caches;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import maroroma.homemusicplayer.model.files.FileAdapter;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
@@ -21,6 +22,7 @@ public class TracksCache {
     private final ParameterizedLock parameterizedLock = new ParameterizedLock();
     private final String localFileSystemCachePath;
     private final FilesFactory filesFactory;
+    @Getter
     private final int cacheMaxSize;
 
     public TracksCache(FilesFactory filesFactory,
@@ -91,6 +93,10 @@ public class TracksCache {
         } else {
             log.info("local file cache is ok : {} elements vs {} max size", filesIntoLocalCache.size(), this.cacheMaxSize);
         }
+    }
+
+    public int getNbItemsInCache() {
+        return localFileSystemCacheDirectory().getFiles().size();
     }
 
     public void clearCache() {
