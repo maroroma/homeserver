@@ -10,6 +10,7 @@ import maroroma.homemusicplayer.services.AlbumService;
 import maroroma.homemusicplayer.services.ArtistService;
 import maroroma.homemusicplayer.services.FilesFactory;
 import maroroma.homemusicplayer.services.PlayListService;
+import maroroma.homemusicplayer.services.caches.TracksCache;
 import maroroma.homemusicplayer.services.mappers.entities.TrackMapper;
 import maroroma.homemusicplayer.tools.CustomAssert;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class EmbeddedPlayerService {
     private final PlayListService playListService;
     private final FilesFactory filesFactory;
     private final TrackMapper trackMapper;
+    private final TracksCache tracksCache;
 
 
     public TrackList generatePlayList(@RequestBody CreatePlayerRequest createPlayerRequest) {
@@ -47,13 +49,18 @@ public class EmbeddedPlayerService {
                 createPlayerRequest.getPlayListId()
         );
 
-        var tracks = extractTracks(createPlayerRequest)
+        var trackEntities = extractTracks(createPlayerRequest)
                 .stream()
                 .flatMap(Collection::stream)
+                .toList();
+
+        tracksCache.preLoadTrackList(trackEntities);
+
+        var trackApis = trackEntities.stream()
                 .map(trackMapper::mapToModel)
                 .toList();
 
-        return TrackList.builder().tracks(tracks).build();
+        return TrackList.builder().tracks(trackApis).build();
     }
 
     private Optional<List<TrackEntity>> extractTracks(AbstractAlbumOrArtistSourceRequest abstractAlbumOrArtistSourceRequest) {

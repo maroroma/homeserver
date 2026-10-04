@@ -5,11 +5,14 @@ import maroroma.homemusicplayer.model.files.FileAdapter;
 import maroroma.homemusicplayer.model.library.entities.TrackEntity;
 import maroroma.homemusicplayer.services.FilesFactory;
 import maroroma.homemusicplayer.tools.FileUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -20,7 +23,6 @@ public class TracksCache {
     private final FilesFactory filesFactory;
     private final int cacheMaxSize;
 
-
     public TracksCache(FilesFactory filesFactory,
                        @Value("${musicplayer.caches.localcache.directory}") String localFileSystemCachePath,
                        @Value("${musicplayer.caches.localcache.max-size}") int cacheMaxSize
@@ -30,6 +32,29 @@ public class TracksCache {
         this.cacheMaxSize = cacheMaxSize;
     }
 
+    @Async()
+    public void preLoadTrackList(List<TrackEntity> trackEntities) {
+        var preloadId = UUID.randomUUID();
+        log.info("Preload [{}] for {} tracks",
+                preloadId,
+                trackEntities.size());
+
+        var start = System.currentTimeMillis();
+
+        CollectionUtils.emptyIfNull(trackEntities)
+                .forEach(trackEntity -> {
+                    try {
+                        getTrackFileAdapter(trackEntity);
+                    } catch (Exception e) {
+                        log.warn("Preload [{}] met error while preloading {}", preloadId, trackEntity.getId());
+                    }
+                });
+
+        log.info("Preload [{}] ended in {} ms",
+                preloadId,
+                System.currentTimeMillis() - start
+        );
+    }
 
     public FileAdapter getTrackFileAdapter(TrackEntity trackEntityToLoad) {
         var remoteTrackFileAdapter = this.filesFactory.getFileFromBase64Path(trackEntityToLoad.getLibraryItemPath());
